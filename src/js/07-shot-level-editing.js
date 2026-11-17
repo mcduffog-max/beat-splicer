@@ -13,6 +13,12 @@ function showShot(i){
   $("shotPanel").hidden=false; $("shotThumb").src=c&&c.thumb||"";
   const ft=x=>`${Math.floor(x/60)}:${(x%60).toFixed(1).padStart(4,"0")}`;
   $("shotInfo").textContent=`Shot ${i+1} of ${S.plan.length} · ${ft(s.start)}–${ft(s.end)} (${(s.end-s.start).toFixed(1)} s) · ${c?c.name:"?"}${c&&c.kind!=="image"?` from ${s.src.toFixed(1)} s`:""}${s._lock?" · locked: kept through remixes and exports":s._manual?" · your choice (lock it to keep it through a remix)":""}`;
+  { const wb=$("shotWhy"); wb.innerHTML=""; const R=s._manual?null:s.why; if(R&&R.length){ const h=document.createElement("div"); h.textContent="Why this shot:"; h.style.fontWeight="600"; wb.appendChild(h);
+      R.forEach(r=>{ const row=document.createElement("div"); row.style.cssText="display:flex;gap:8px;align-items:center;flex-wrap:wrap;margin-top:4px"; const t=document.createElement("span"); t.textContent="• "+r.t; row.appendChild(t);
+        if(r.veto==="line"){ const b=document.createElement("button"); b.type="button"; b.className="chip"; b.textContent="Wrong match"; b.title="This clip doesn't show that line: never pair them again";
+          b.onclick=()=>{ S.vetoes.add(lyKey(r.line)+"|"+clipKey(s.clip)); saveProjectSoon(); const opt=shotOptions(i,1)[0]; if(opt) setShot(i,opt.clip,opt.src,`Noted: that clip won't be matched to “${r.line}” again.`); }; row.appendChild(b); }
+        wb.appendChild(row); }); }
+    else if(s._manual){ wb.textContent="Your choice."; } }
   $("shotLock").textContent=s._lock?"Unlock":"Lock"; $("shotRev").textContent=s._rev?"Forwards":"Reverse"; $("shotRev").disabled=!c||c.kind==="image"; $("shotOpts").innerHTML=""; drawTimeline();
 }
 function shotOptions(i,n){ const seg=S.plan[i], out=[], ctx=shotCtx(i), used=new Set([seg.clip]);

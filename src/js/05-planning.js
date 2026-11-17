@@ -107,6 +107,22 @@ function continuityCost(seg,s,ctx){ const p=ctx.prevSm; if(!p||seg.drop||seg._ne
   if(ma>0.02&&mb>0.02){ const cos=(p.dx*s.dx+p.dy*s.dy)/(ma*mb); c+=cos<-0.3?0.45:cos>0.5?-0.25:0; }   // pans that fight each other jar; matching movement flows
   c+=0.3*Math.min(1,Math.hypot((s.fx||0.5)-(p.fx||0.5),(s.fy||0.5)-(p.fy||0.5))*1.6)-0.1;        // the eye stays near where it was looking
   return c; }
+/* Why a shot was chosen: the strongest few reasons, in words. A lyric or story match can be vetoed. */
+function shotReasons(seg,pick){ const W=pick.why, out=[], c=S.clips[pick.clip], ln=S.lyrics?lyricAt(seg.start+Math.min(0.4,(seg.end-seg.start)/2)):null;
+  if(W.se<-0.12&&ln) out.push({k:-W.se*2,t:`Shows what's sung: “${ln.text}”`,veto:"line",line:ln.text});
+  else if(W.ly<-0.2&&ln) out.push({k:-W.ly*1.5,t:`Matches the words: “${ln.text}”`,veto:"line",line:ln.text});
+  if(W.ou<-0.3){ const a=(actsFor([0,S.an.duration])||[]).find(x=>seg.start>=x.t0&&seg.start<x.t1), nm=a?(ACTS.find(x=>x[0]===a.key)||[])[1]:null; out.push({k:-W.ou,t:`Fits the story${nm?`: ${String(nm).split(": ").pop()}`:""}`,veto:"story"}); }
+  if(W.st<-0.25) out.push({k:-W.st,t:"Right kind of shot for this point in the song"});
+  if(shotImportance(seg)>=1&&W.q<0.15) out.push({k:0.6,t:"Sharp, full-quality footage for a key moment"});
+  if(W.cn<-0.15) out.push({k:-W.cn,t:"Movement carries on from the shot before"});
+  if(W.dcol!=null&&W.dcol<0.06) out.push({k:0.3,t:"Colours sit with the shot before"});
+  if(seg.e>0.7&&pick.sm&&(pick.sm.motion||0)>6) out.push({k:0.4,t:"Lots of movement for a loud passage"});
+  if(seg.drop) out.push({k:0.5,t:"Lands on the drop"});
+  if(W.share<0.2) out.push({k:0.2,t:"Footage you haven't seen much yet"});
+  if(!out.length) out.push({k:0.1,t:"Keeps the edit varied: this footage isn't used nearby"});
+  return out.sort((a,b)=>b.k-a.k).slice(0,3); }
+S.vetoes=S.vetoes||new Set();
+function vetoCost(seg,ci){ if(!S.vetoes.size||!S.lyrics) return 0; const ln=lyricAt(seg.start+Math.min(0.4,(seg.end-seg.start)/2)); return ln&&S.vetoes.has(lyKey(ln.text)+"|"+clipKey(ci))?3:0; }
 function chooseClip(seg, ctx, exclude){
   if(S._dry){ ctx._dryI=(ctx._dryI||0)+1; const ok=S.clips.map((c,i)=>i).filter(i=>S.clips[i].samples&&!S.clips[i].off&&i!==exclude&&!isExcluded(i)); const ci=ok[ctx._dryI%Math.max(1,ok.length)]??0; return {clip:ci,src:0}; }
   if(ctx.fresh===undefined) ctx.fresh=recentClipKeys();
@@ -129,15 +145,15 @@ function chooseClip(seg, ctx, exclude){
       if(s.cut||s.dark) cost+=2.5;
       if(s.sharp!=null && S._sharpP20 && s.sharp<S._sharpP20*0.8) cost+=0.5;          // soft or blurred moments lose
       if(s.bright>235) cost+=0.3;                                                         // blown-out frames lose
-      if(s.col && ctx.prevCol && !seg.drop && !seg._newSection){ const dc=(Math.abs(s.col[0]-ctx.prevCol[0])+Math.abs(s.col[1]-ctx.prevCol[1])+Math.abs(s.col[2]-ctx.prevCol[2]))/765; cost+=0.6*dc; } // neighbouring shots sit together in colour
+      let dcol=null; if(s.col && ctx.prevCol && !seg.drop && !seg._newSection){ const dc=(Math.abs(s.col[0]-ctx.prevCol[0])+Math.abs(s.col[1]-ctx.prevCol[1])+Math.abs(s.col[2]-ctx.prevCol[2]))/765; dcol=dc; cost+=0.6*dc; } // neighbouring shots sit together in colour
       { const fz=fatigue(), mk=clipKey(ci)+"@"+Math.round(start); const fm=(fz.mom.get(mk)||0)+0.5*((fz.mom.get(clipKey(ci)+"@"+(Math.round(start)-1))||0)+(fz.mom.get(clipKey(ci)+"@"+(Math.round(start)+1))||0)); cost+=0.7*Math.min(2,fm); } // and a different moment of any clip that did feature
       if(clip.kind!=="image" && ctx.lastSrc && ctx.lastSrc.has(ci)){ // the next use of a clip carries on from where the last one ended
         const ls=ctx.lastSrc.get(ci), room=clip.dur-ls-0.3>=D;
         if(room){ if(start<ls-0.05) cost+=2.2; else if(start-ls<1.5) cost-=0.35; } else if(start<ls-0.05) cost+=0.6; }                                   // don't start on a source cut, flash or black frame
       if(clip.kind!=="image"){ for(const x of clip.samples) if((x.cut||x.dark) && x.t>start+0.1 && x.t<start+D-0.1){ cost+=1.5; break; } } // or run through one
       if(seg.e>0.7 && (clip.kind==="image" || s.mN<0.2)) cost+=0.35;  // loud moments want movement
-      cost+=qualityCost(seg,clip,s,ctx)+continuityCost(seg,s,ctx)+seeCost(seg,s);
-      cost+=share+storyCost(seg,clip,ci,s,ctx)+motifCost(seg,clip,ci,s)+outlineCost(seg,clip,ci,s,ctx)+lyricCost(seg,clip,ci,s);
+      const W={q:qualityCost(seg,clip,s,ctx), cn:continuityCost(seg,s,ctx), se:seeCost(seg,s,ci), st:storyCost(seg,clip,ci,s,ctx), mo:motifCost(seg,clip,ci,s), ou:outlineCost(seg,clip,ci,s,ctx), ly:lyricCost(seg,clip,ci,s)+vetoCost(seg,ci), share, dcol};
+      cost+=W.q+W.cn+W.se+W.share+W.st+W.mo+W.ou+W.ly;
       { const raw=clip.kind==="image"?0:(s.motion||0), still=Math.max(0,1-raw/1.2); // only genuinely still footage is penalised; any real motion is welcome
         if(ctx.short) cost+=1.6*still+(clip.kind==="image"?0.6+Math.max(0,D-1)*0.8:0);  // short-form lives on movement; a still never holds long
         else if(seg.e>0.6) cost+=0.5*still; }
@@ -149,7 +165,7 @@ function chooseClip(seg, ctx, exclude){
       for(const [a,b] of used) if(start<b && start+D>a) cost+=0.8;
       cost+=jit.get(ci)*(mode==="beat"?1:Math.max(0.15,variety));
       if(!Number.isFinite(cost)) cost=50; // a broken score must never decide a shot (or knock every clip out)
-      if(cost<bestCost){ bestCost=cost; best={clip:ci, src:start}; }
+      if(cost<bestCost){ bestCost=cost; best={clip:ci, src:start, why:W, sm:s}; }
     }
   });
   return best;
@@ -163,7 +179,7 @@ function buildPlan(){ refreshExclusion(); refreshFilter(); motifSetup(); setTime
   annotateStory(segs);
   for(const seg of segs){
     const pick=chooseClip(seg,ctx,-1) || {clip:S.clips.findIndex(c=>c.samples), src:0};
-    seg.clip=pick.clip; seg.src=pick.src;
+    seg.clip=pick.clip; seg.src=pick.src; seg.why=pick.why?shotReasons(seg,pick):null;
     noteUse(ctx,seg,pick.clip,pick.src);
   }
   const dc=dcut();

@@ -397,3 +397,4 @@ details.diag{margin-top:12px}
 .work.portrait .statusrow{flex-direction:column;align-items:flex-start;gap:8px}
 .work.portrait .stats{clear:both;padding-top:2px}
 details.diag>summary{cursor:pointer;color:var(--muted);font-size:14px}
+@media (max-width:999px){ .work{max-height:none!important;top:auto} } /* the desktop sticky height must never clip or overlap on phones */

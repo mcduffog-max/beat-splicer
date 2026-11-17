@@ -49,7 +49,7 @@ async function seeReady(){ S._seeLines=null; if(!S.lyrics||!S.lyrics.lines.lengt
     const map=new Map(); texts.forEach((t,i)=>{ const q=vs[i]; let m=0,m2=0; for(const v of all){ const d=dotV(q,v); m+=d; m2+=d*d; } m/=all.length; map.set(t,{q,m,sd:Math.sqrt(Math.max(1e-6,m2/all.length-m*m))}); });
     S._seeLines=map; if(!S.running) buildPlan(); }catch(e){} }
 /* the cost term: a moment that shows what's being sung wins the shot */
-function seeCost(seg,s){ const M=S._seeLines; if(!M||!S.lyrics) return 0; const ln=lyricAt(seg.start+Math.min(0.4,(seg.end-seg.start)/2)); if(!ln) return 0; const L=M.get(ln.text), v=sampleVec(s); if(!L||!v) return 0;
+function seeCost(seg,s,ci){ const M=S._seeLines; if(!M||!S.lyrics) return 0; const ln=lyricAt(seg.start+Math.min(0.4,(seg.end-seg.start)/2)); if(!ln) return 0; const L=M.get(ln.text), v=sampleVec(s); if(!L||!v) return 0;
   const z=(dotV(L.q,v)-L.m)/L.sd; return -0.45*Math.max(0,Math.min(3,z-0.5)); }
 /* search: type what you're after, see the clips that show it */
 async function seeSearch(q){ q=String(q||"").trim(); if(!q) return []; const [qv]=await embedTexts([q]); const hits=[];

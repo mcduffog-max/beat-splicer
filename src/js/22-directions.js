@@ -101,7 +101,7 @@ async function saveProject(){ try{ if(navigator.storage&&navigator.storage.persi
       clips.push({name:c.name,fileKey:await putFile(c.file),kind:c.kind||"video",dur:c.dur,samples:c.samples,thumb:c.thumb,w:c.w,h:c.h,crop:c.crop,mute:!!c.mute,tags:c.tags||null,mv:c.mv||1,off:!!c.off,wm:c.wm,faces:faceSave(c)}); }
     const ovs=S.overlays.map(o=>({name:o.name,pos:o.pos,size:o.size,opacity:o.opacity,blend:o.blend,timing:o.timing,anim:o.anim,file:o.file})).filter(o=>o.file);
     { const want=new Set([audioKey,...clips.map(c=>c.fileKey)]); for(const k of [...S.savedKeys]){ if(!want.has(k)){ await PDB.del(k); S.savedKeys.delete(k); } } } // files no longer in the project
-    await PDB.put("project",{v:2,style:S.style,trims:S.trims||[],locks:[...(S.locks||new Map())],lyrics:S.lyrics||null,outline:S.outline||null,castMode:S.castMode,sceneMode:S.sceneMode,faceCast:S.faceCast||[],cast:S.cast,mainChar:S.mainChar,meta:S.meta||null,saved:Date.now(),audioKey,audioName:S.audioName,an:S.an,clips,skipped:S.clips.filter((c,ci)=>c.samples&&!c.off&&!isExcluded(ci)).length-clips.length,overlays:ovs,seed:S.seed,winPick:S.winPick||0,direct:S.direct||null,titles:S.titles,eps:S.eps,protagonist:S.protagonist||null});
+    await PDB.put("project",{v:2,vetoes:[...(S.vetoes||[])],style:S.style,trims:S.trims||[],locks:[...(S.locks||new Map())],lyrics:S.lyrics||null,outline:S.outline||null,castMode:S.castMode,sceneMode:S.sceneMode,faceCast:S.faceCast||[],cast:S.cast,mainChar:S.mainChar,meta:S.meta||null,saved:Date.now(),audioKey,audioName:S.audioName,an:S.an,clips,skipped:S.clips.filter((c,ci)=>c.samples&&!c.off&&!isExcluded(ci)).length-clips.length,overlays:ovs,seed:S.seed,winPick:S.winPick||0,direct:S.direct||null,titles:S.titles,eps:S.eps,protagonist:S.protagonist||null});
   }catch(e){ /* storage full or unavailable: the project just won't survive a refresh */ }
 }
 async function offerRestore(){
@@ -111,7 +111,7 @@ async function offerRestore(){
     $("restoreBtn").onclick=()=>restoreProject(p); $("freshBtn").onclick=async()=>{ try{ const db=await PDB.open(); db.transaction("kv","readwrite").objectStore("kv").clear(); }catch(e){} S.savedKeys=new Set(); $("restoreBox").hidden=true; };
   }catch(e){} }
 async function restoreProject(p){
-  $("restoreBox").hidden=true; S._restoring=true; status("Restoring your project…");
+  $("restoreBox").hidden=true; S._restoring=true; status("Restoring your project…"); S.vetoes=new Set(p.vetoes||[]);
   try{
     if(p.audioKey) p.audio=await PDB.get(p.audioKey);
     for(const c of p.clips){ if(c.fileKey&&!c.file) c.file=await PDB.get(c.fileKey); }
