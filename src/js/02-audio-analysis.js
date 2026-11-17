@@ -69,11 +69,15 @@ async function analyzeAudio(buf, onProg, opt){ opt=opt||{};
      The winner fixes the tempo family (syncopated styles like dembow or funk fool simpler methods); the octave stays with the
      tracking above. How far the winner stands above the field says how sure we can be that there's a steady beat at all. */
   let beatConf=3, scanFixed=false;
-  { const lim=Math.min(T,Math.round(fr*90)); let tot=0; for(let i=0;i<lim;i++) tot+=onAll[i];
-    const lift=(b,sub)=>{ const L=fr*60/b/sub; let best=0; for(let ph=0;ph<L;ph+=0.5){ let cap=0,n=0; for(let t=ph;t<lim-2;t+=L){ const f=Math.round(t); cap+=Math.max(onAll[f],onAll[f+1]||0,f>0?onAll[f-1]:0); n++; } const cov=n*3/lim; if(cov>0) best=Math.max(best,(cap/(tot||1))/cov); } return best; };
-    const sc=[]; for(let b=55;b<=190;b+=0.5){ const pr=Math.exp(-0.5*Math.log2(b/110)**2); sc.push([b,(0.5*lift(b,1)+0.5*lift(b,2))*(0.6+0.4*pr)]); }
-    const top=sc.reduce((a,x)=>x[1]>a[1]?x:a), med=sc.map(x=>x[1]).sort((a,b)=>a-b)[sc.length>>1];
-    beatConf=top[1]/(med||1);
+  { // scanned over three 90-second stretches (opening, middle, late) and the steadiest one decides: a quiet intro shouldn't make a song look beatless
+    const scan=(a0,lim)=>{ let tot=0; for(let i=a0;i<lim;i++) tot+=onAll[i]; const span=lim-a0;
+      const lift=(b,sub)=>{ const L=fr*60/b/sub; let best=0; for(let ph=0;ph<L;ph+=0.5){ let cap=0,n=0; for(let t=a0+ph;t<lim-2;t+=L){ const f=Math.round(t); cap+=Math.max(onAll[f],onAll[f+1]||0,f>0?onAll[f-1]:0); n++; } const cov=n*3/span; if(cov>0) best=Math.max(best,(cap/(tot||1))/cov); } return best; };
+      const sc=[]; for(let b=55;b<=190;b+=0.5){ const pr=Math.exp(-0.5*Math.log2(b/110)**2); sc.push([b,(0.5*lift(b,1)+0.5*lift(b,2))*(0.6+0.4*pr)]); }
+      const top=sc.reduce((a,x)=>x[1]>a[1]?x:a), med=sc.map(x=>x[1]).sort((a,b)=>a-b)[sc.length>>1]; return {top, conf:top[1]/(med||1)}; };
+    const W90=Math.round(fr*90), starts=T>W90*1.5?[0,Math.round(T*0.5-W90/2),Math.round(T*0.75-W90/2)]:[0];
+    let pick=null; const rs=[]; for(const a0 of starts){ const r=scan(Math.max(0,a0),Math.min(T,Math.max(0,a0)+W90)); rs.push(r); if(!pick||r.conf>pick.conf) pick=r; }
+    const top=pick.top; beatConf=pick.conf;
+    { const agree=rs.filter(r=>r!==pick&&[1,2,0.5].some(k=>Math.abs(r.top[0]/(top[0]*k)-1)<0.03)).length; if(agree>=1&&beatConf<2.2) beatConf=Math.min(2.2,beatConf+0.35*agree); } // the same tempo found in separate stretches of the song is a steady beat, even when each stretch alone is unsure
     const fam=b=>[1,2,0.5].some(r=>Math.abs(b/(top[0]*r)-1)<0.03);
     if(beatConf>=4.5 && bpm>140 && Math.abs(bpm/(top[0]*2)-1)<0.03 && top[0]>=60 && top[0]<=100){ bpm=top[0]; P=60*fr/bpm; scanFixed=true; } // e.g. reggae one-drop: the skank doubles the apparent tempo
     else if(beatConf>=2 && !fam(bpm)){ const c=[top[0],top[0]*2,top[0]/2].filter(x=>x>=55&&x<=200); bpm=c.reduce((a,x)=>Math.abs(Math.log(x/bpm))<Math.abs(Math.log(a/bpm))?x:a); P=60*fr/bpm; scanFixed=true; }
@@ -102,6 +106,9 @@ async function analyzeAudio(buf, onProg, opt){ opt=opt||{};
     else if(bpm>95 && beats.length>16 && Math.min(ev,od)<0.45*Math.max(ev,od)){ const keep=ev>=od?0:1; beats=beats.filter((_,i)=>i%2===keep); bpm/=2; P*=2; }
     else if(bpm<80 && beats.length>8){ const mids=beats.slice(0,-1).map((b,i)=>(b+beats[i+1])/2); const mv=mids.reduce((x,b)=>x+val(b),0)/(mids.length||1);
       if(!opt.x && (mv>0.7*(ev+od)/2 || (bpm<72 && beatConf>=2.5 && mv>0.45*(ev+od)/2))){ beats=[...beats,...mids].sort((x,y)=>x-y); bpm*=2; P/=2; } }
+    if(!opt.x && bpm<75 && beatConf>=2 && beats.length>8){ const va=b=>{ const f=Math.round((b-off)*sr/H); let m=0; for(let d=-2;d<=2;d++){ const v=onAll[Math.min(T-1,Math.max(0,f+d))]; if(v>m) m=v; } return m; };
+      const mids=beats.slice(0,-1).map((b,i)=>(b+beats[i+1])/2), mv=mids.reduce((x,b)=>x+va(b),0)/(mids.length||1), bv=beats.reduce((x,b)=>x+va(b),0)/(beats.length||1);
+      if(mv>0.5*bv){ beats=[...beats,...mids].sort((x,y)=>x-y); bpm*=2; P/=2; } } // e.g. a kick on 1 and 3 with a snare on 2 and 4 that lives above the kick drum's band
     // the person's own call wins: Double or Half from the tempo chips
     if(opt.x===2 && beats.length>4){ const mids=beats.slice(0,-1).map((b,i)=>(b+beats[i+1])/2); beats=[...beats,...mids].sort((x,y)=>x-y); bpm*=2; P/=2; }
     else if(opt.x===0.5 && beats.length>8){ let e2=0,o2=0; beats.forEach((b,i)=>{ if(i%2) o2+=val(b); else e2+=val(b); }); const keep=e2>=o2?0:1; beats=beats.filter((_,i)=>i%2===keep); bpm/=2; P*=2; }

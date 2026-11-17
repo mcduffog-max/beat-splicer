@@ -81,8 +81,23 @@ $("foldAll").onclick=()=>{ STEPS().forEach(d=>{ d.open=false; d._touched=true; }
 $("clipMore").onclick=()=>{ S.clipsAll=!S.clipsAll; renderClips(); };
 $("epsMore").onclick=()=>{ S.epsAll=!S.epsAll; buildEndpointUI(); };
 function songInfoText(){ const v=$("songVer").value; return `${S.audioName}${v!=="orig"?SONG_VER_SUFFIX[v]:""}, ${fmtTime(S.an.duration)}${S.an.feel&&S.an.feel.free==="beatless"?"":` at about ${Math.round(S.an.bpm)} BPM`}. Feel: ${S.an.feel?S.an.feel.label:"4/4"}`; }
-function renderSections(){ const el=$("songSecs"); if(!el) return; const AS=S.an?songSections():[]; el.hidden=!AS.length; if(!AS.length) return;
-  const ch=AS.filter(s=>s.chorus); el.textContent=`Sections: ${AS.map(s=>s.label.replace(/ \d+$/,"")).join(", ")}.${ch.length?` First chorus at ${fmtTime(ch[0].t0)}.`:" No chorus found that comes back, so Shorts open on the strongest moment."}`; }
+let SECPLAY=null;
+function stopSection(){ if(!SECPLAY) return; try{ SECPLAY.src.stop(); }catch(e){} try{ SECPLAY.actx.close(); }catch(e){} SECPLAY=null; renderSections(); }
+async function playSection(i){ const AS=songSections(), s=AS[i]; if(!s||!S.audioBuf) return; const was=SECPLAY&&SECPLAY.i; stopSection(); if(was===i) return; stopListen&&stopListen();
+  const actx=new (window.AudioContext||window.webkitAudioContext)(); await actx.resume(); const src=actx.createBufferSource(); src.buffer=S.audioBuf; src.connect(actx.destination);
+  src.start(0,s.t0,Math.min(s.t1-s.t0,30)); src.onended=()=>{ if(SECPLAY&&SECPLAY.src===src) stopSection(); }; SECPLAY={actx,src,i}; renderSections(); }
+function markChorus(i,yes){ const AS=songSections(), g=AS[i]&&AS[i].group; if(g==null) return;
+  AS.forEach(s=>{ if(yes){ if(s.group===g) s.chorus=true; else if(s.chorus) s.chorus=false; } else if(s.group===g) s.chorus=false; s.kind=s.chorus?"chorus":(s.kind==="chorus"?"verse":s.kind); });
+  let nC=0,nV=0; AS.forEach(s=>{ if(s.chorus) s.label=`chorus ${++nC}`; else if(s.kind==="verse") s.label=`verse ${++nV}`; else s.label=s.kind; }); S.an._secByHand=true;
+  S._actsC={}; buildPlan(); saveProjectSoon&&saveProjectSoon(); renderSections(); status(yes?"Marked as the chorus. Shorts and the story now use your choice.":"Not the chorus: noted."); }
+function renderSections(){ const el=$("songSecs"); if(!el) return; const AS=S.an?songSections():[]; el.hidden=!AS.length; if(!AS.length) return; el.innerHTML="";
+  const lead=document.createElement("div"); const ch=AS.filter(s=>s.chorus);
+  lead.textContent=ch.length?`Sections${S.an._secByHand?" (corrected by you)":""}. First chorus at ${fmtTime(ch[0].t0)}. Tap one to hear it.`:"Sections. No chorus found that comes back, so Shorts open on the strongest moment. Tap one to hear it."; el.appendChild(lead);
+  const row=document.createElement("div"); row.style.cssText="display:flex;flex-wrap:wrap;gap:6px;margin-top:6px";
+  AS.forEach((s,i)=>{ const b=document.createElement("button"); b.type="button"; b.className="chip"; const on=SECPLAY&&SECPLAY.i===i; if(s.chorus){ b.style.fontWeight="700"; b.style.boxShadow="inset 0 0 0 1.5px var(--ink)"; } b.setAttribute("aria-pressed",String(on));
+    b.textContent=`${on?"■ ":""}${s.label.replace(/^./,c=>c.toUpperCase())} ${fmtTime(s.t0)}`; b.title=on?"Stop":"Play this section"; b.onclick=()=>playSection(i); row.appendChild(b); }); el.appendChild(row);
+  if(SECPLAY){ const s=AS[SECPLAY.i], fx=document.createElement("div"); fx.style.cssText="display:flex;flex-wrap:wrap;gap:6px;align-items:center;margin-top:6px"; const t=document.createElement("span"); t.textContent=`Playing ${s.label}.`; fx.appendChild(t);
+    const y=document.createElement("button"); y.type="button"; y.className="chip"; y.textContent=s.chorus?"Not the chorus":"This is the chorus"; y.onclick=()=>markChorus(SECPLAY.i,!s.chorus); fx.appendChild(y); el.appendChild(fx); } }
 function renderTempo(){ renderSections(); const r=$("tempoRow"); if(!r) return; const an=S.an, show=!!an&&!(an.feel&&an.feel.free); r.hidden=!show; if(!show) return;
   const x=an.tempoX||1, base=an.bpm/x; r.querySelectorAll("[data-x]").forEach(b=>{ const bx=+b.dataset.x; b.classList.toggle("on",bx===x); b.setAttribute("aria-pressed",bx===x); b.textContent=bx===1?`As found (${Math.round(base)})`:bx===2?`Double (${Math.round(base*2)})`:`Half (${Math.round(base/2)})`; b.hidden=bx!==x&&(bx===2&&base*2>210||bx===0.5&&base/2<45); });
   $("tempoNote").textContent=x===1?"If the cuts feel too slow or too busy, try another speed.":""; }

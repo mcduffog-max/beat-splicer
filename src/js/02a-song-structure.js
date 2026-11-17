@@ -44,6 +44,8 @@ function songStructure(buf, an){
   cand.sort((a,b)=>b[0]-a[0]); const cuts=[0];
   for(const [,j] of cand){ if(cuts.every(c=>Math.abs(c-j)>=4)&&j<=nb-4) cuts.push(j); }
   cuts.sort((a,b)=>a-b); cuts.push(nb);
+  for(let guard=0;guard<20;guard++){ let split=null; for(let i=0;i<cuts.length-1;i++){ const a=cuts[i], z=cuts[i+1]; if(z-a<=24) continue; let bj=-1,bv=-1; for(let j=a+4;j<=z-4;j++){ const v=nov[j]+(j%4===0?0.02:0); if(v>bv){ bv=v; bj=j; } } if(bj>0){ split=bj; break; } }
+    if(split==null) break; cuts.push(split); cuts.sort((a,b)=>a-b); }
   let segs=[]; for(let i=0;i<cuts.length-1;i++) segs.push({b0:cuts[i],b1:cuts[i+1]});
   // repeats: two sections are the same part when their bars line up in harmony and texture
   const segSim=(A,Bs)=>{ const la=A.b1-A.b0, lb=Bs.b1-Bs.b0, len=Math.min(la,lb); let best=-1;
