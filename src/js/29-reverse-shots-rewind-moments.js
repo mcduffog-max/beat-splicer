@@ -19,7 +19,7 @@ function beatInfo(t){
 }
 function readFx(){
   const look=$("look").value==="own"?ownLook():(LOOKS[$("look").value]||LOOKS.none);
-  return { fit:$("fit").value, zoom:+$("zoom").value, kb:$("kb").checked, filter:look.f, look,
+  return { fit:$("fit").value, zoom:+$("zoom").value, kb:$("kb").checked, filter:look.f, look, gpu:gpuOn(),
     pulse:$("fxPulse").checked, shake:$("fxShake").checked, glitch:$("fxGlitch").checked,
     grain:$("fxGrain").checked, vignette:$("fxVignette").checked, bars:$("fxBars").checked,
     hook:$("hookText").value.trim(), end:$("endText").value.trim(),
@@ -170,7 +170,7 @@ function borderPost(o,t,win,F){
 }
 function postFx(o,t,win,F,bi,opts={}){
   const {g,W,H,ep}=o;
-  lensFx(o,t,opts);
+  const gpu=gpuFinish(o,t,F,opts); lensFx(o,t,gpu?{...opts,gpuDone:true}:opts); // the GPU pass did lens, grade and blur; the canvas adds only rack focus and tilt-shift
   if(F.fisheye) fisheyeFx(o,0.22);
   if(F.mirror) mirrorFx(o);
   motifPost(o,t,F,bi,opts,win);
@@ -179,7 +179,7 @@ function postFx(o,t,win,F,bi,opts={}){
   if(F.look.grad) for(const [mode,col,cx,cy] of F.look.grad){ const gr=g.createRadialGradient(W*cx,H*cy,0,W*cx,H*cy,Math.hypot(W,H)*0.6); gr.addColorStop(0,col); gr.addColorStop(1,"rgba(0,0,0,0)"); g.globalCompositeOperation=mode; g.fillStyle=gr; g.fillRect(0,0,W,H); }
   g.globalCompositeOperation="source-over";
   if(F.wash) washFx(o,bi);
-  if(F.look.over) for(const [mode,col] of F.look.over){ g.globalCompositeOperation=mode; g.fillStyle=col; g.fillRect(0,0,W,H); }
+  if(F.look.over&&!gpu) for(const [mode,col] of F.look.over){ g.globalCompositeOperation=mode; g.fillStyle=col; g.fillRect(0,0,W,H); }
   g.globalCompositeOperation="source-over";
   if(F.glitch && !opts.still && bi && (bi.drop || (bi.down && bi.e>0.82)) && bi.ph<0.22){
     const r=rng(bi.i*7919+1), n=7;

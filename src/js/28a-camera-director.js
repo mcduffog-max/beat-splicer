@@ -58,6 +58,7 @@ function maskedLayer(o,layer,mask){ const {g,W,H}=o, w=layer.width, h=layer.heig
   g.imageSmoothingEnabled=true; g.imageSmoothingQuality="high"; g.drawImage(layer,0,0,W,H); }
 function lensFx(o,t,opts){ const seg=o._seg; if(!seg||!FILTER_OK) return; const lens=lensFor(seg), {g,W,H}=o, tl=t-seg.start;
   if(seg._rack&&tl>=0&&tl<0.4){ const a=Math.pow(1-tl/0.4,1.6); g.globalAlpha=a; g.imageSmoothingEnabled=true; g.drawImage(lensLayer(o,"blur(3.3px)"),0,0,W,H); g.globalAlpha=1; } // rack focus into the chorus
+  if(opts&&opts.gpuDone&&lens!=="tiltshift") return;
   switch(lens){
     case "telephoto": maskedLayer(o,lensLayer(o,"blur(2px)"),(G,w,h)=>{ const gr=G.createRadialGradient(w/2,h*0.45,Math.min(w,h)*0.28,w/2,h*0.45,Math.hypot(w,h)*0.55); gr.addColorStop(0,"rgba(0,0,0,0)"); gr.addColorStop(1,"rgba(0,0,0,0.9)"); return gr; }); break;
     case "tiltshift": maskedLayer(o,lensLayer(o,"blur(2.6px) saturate(1.3)"),(G,w,h)=>{ const gr=G.createLinearGradient(0,0,0,h); gr.addColorStop(0,"rgba(0,0,0,1)"); gr.addColorStop(0.3,"rgba(0,0,0,0)"); gr.addColorStop(0.62,"rgba(0,0,0,0)"); gr.addColorStop(1,"rgba(0,0,0,1)"); return gr; }); break;

@@ -317,7 +317,7 @@ function drawClip(o,v,clip,F,scale=1,dx=0,dy=0,ex=null){
   if(!ready(v)) return;
   const st=v&&v.timestamp!=null?v.timestamp/1e6:(v&&v.tagName==="VIDEO"?v.currentTime:(v&&v._t!=null?v._t:null)), ecr=viewCrop(clip,o.W,o.H,F,st);
   const {g,W,H}=o, [sx,sy,sw,sh]=srcRect(v,clip,ecr);
-  if(FILTER_OK) g.filter=matchFilter(o,clip,F.filter);
+  if(FILTER_OK) g.filter=matchFilter(o,clip,F.gpu?"none":F.filter); // with the GPU pass the look is applied once, to the whole frame
   if(ex && ex.rot){ g.save(); g.translate(W/2,H/2); g.rotate(ex.rot); g.translate(-W/2,-H/2); }
   if(ex && ex.parallax){
     const tw=48, th=Math.max(8,Math.round(48*H/W)); if(tiny.width!==tw||tiny.height!==th){ tiny.width=tw; tiny.height=th; }
