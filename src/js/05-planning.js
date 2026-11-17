@@ -136,7 +136,7 @@ function chooseClip(seg, ctx, exclude){
         if(room){ if(start<ls-0.05) cost+=2.2; else if(start-ls<1.5) cost-=0.35; } else if(start<ls-0.05) cost+=0.6; }                                   // don't start on a source cut, flash or black frame
       if(clip.kind!=="image"){ for(const x of clip.samples) if((x.cut||x.dark) && x.t>start+0.1 && x.t<start+D-0.1){ cost+=1.5; break; } } // or run through one
       if(seg.e>0.7 && (clip.kind==="image" || s.mN<0.2)) cost+=0.35;  // loud moments want movement
-      cost+=qualityCost(seg,clip,s,ctx)+continuityCost(seg,s,ctx);
+      cost+=qualityCost(seg,clip,s,ctx)+continuityCost(seg,s,ctx)+seeCost(seg,s);
       cost+=share+storyCost(seg,clip,ci,s,ctx)+motifCost(seg,clip,ci,s)+outlineCost(seg,clip,ci,s,ctx)+lyricCost(seg,clip,ci,s);
       { const raw=clip.kind==="image"?0:(s.motion||0), still=Math.max(0,1-raw/1.2); // only genuinely still footage is penalised; any real motion is welcome
         if(ctx.short) cost+=1.6*still+(clip.kind==="image"?0.6+Math.max(0,D-1)*0.8:0);  // short-form lives on movement; a still never holds long

@@ -24,7 +24,7 @@ function setLyrics(text,src){
   L.sort((x,y)=>x.t-y.t); L.forEach((l,i)=>{ const nx=L[i+1]; l.end=nx?(P.timed?Math.min(nx.t,l.t+12):nx.t):Math.min(S.an.duration,l.t+(P.timed?6:(l.t-(L[i-1]||{t:l.t-6}).t))); });
   L=L.filter(l=>!l.gap&&l.end>l.t+0.2);
   S.lyrics={lines:L.map(l=>({t:+l.t.toFixed(2),end:+l.end.toFixed(2),text:l.text.slice(0,140),img:localImagery(l.text)})),src,exact:P.timed,song:S.audioName};
-  renderLyrics(); if(S.outline){ if(!S.outline.board||S.outline.src!=="ai") S.outline.board=templateBoard(S.outline); renderOutline(); } saveProjectSoon(); if(!S.running) buildPlan();
+  renderLyrics(); if(S.outline){ if(!S.outline.board||S.outline.src!=="ai") S.outline.board=templateBoard(S.outline); renderOutline(); } saveProjectSoon(); if(!S.running) buildPlan(); if(S.clips.some(c=>c.samples&&c.samples.some(s=>s.ce))) seeReady();
   if(aiProvider()) aiLyrics().catch(e=>crumb("lyrics AI failed: "+(e&&e.message||e))); }
 function localImagery(text){ const s=" "+text.toLowerCase()+" "; const scenes=[]; for(const [k,re] of SCENE_WORDS) if(re.test(s)&&!scenes.includes(k)) scenes.push(k);
   const words=[...new Set(s.replace(/[^a-z' ]/g," ").split(/\s+/).filter(w=>w.length>=4&&!LY_STOP.has(w)))].slice(0,6); return {scenes:scenes.slice(0,2),words,types:[],shot:null}; }

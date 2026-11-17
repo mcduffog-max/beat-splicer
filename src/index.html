@@ -155,6 +155,11 @@
             <button class="chip" id="clearHist" type="button">Clear history</button>
             <span id="libCount"></span>
           </div>
+          <div id="seeBox" class="small" hidden style="margin:4px 0 8px">
+            <div id="seeInfo"></div>
+            <div class="btns" style="margin:6px 0 0"><button class="btn" id="seeBtn" type="button">Learn what's in my clips</button></div>
+            <div id="seeSearchRow" hidden style="margin-top:6px"><input type="search" id="seeQ" placeholder="Find clips showing… e.g. night city, fire, a crowd" aria-label="Find clips by what they show"><div id="seeHits" style="display:flex;gap:6px;flex-wrap:wrap;margin-top:6px"></div></div>
+          </div>
           <div id="castBar" class="small" hidden style="display:flex;flex-wrap:wrap;gap:6px;align-items:center;margin:0 0 6px"></div>
           <div id="sceneBar" class="small" hidden style="display:flex;flex-wrap:wrap;gap:6px;align-items:center;margin:0 0 6px"></div>
           <div class="clips" id="clipList"></div>

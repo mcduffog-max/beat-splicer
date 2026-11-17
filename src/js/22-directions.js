@@ -130,7 +130,7 @@ async function restoreProject(p){
     if(p.direct){ S.direct=p.direct; $("direct").value=p.direct; }
     $("audioInfo").textContent=`${S.audioName}, ${fmtTime(S.an.duration)} at about ${Math.round(S.an.bpm)} BPM. Feel: ${S.an.feel?S.an.feel.label:"4/4"}`; renderTempo(); $("listen").disabled=false;
     buildEndpointUI(); renderClips(); renderOverlays(); buildPlan(); syncCapWith(); renderTitles();
-    setTimeout(()=>backfillFlow().catch(()=>{}),4000);
+    setTimeout(()=>backfillFlow().catch(()=>{}),4000); if(S.clips.some(c=>c.samples&&c.samples.some(s=>s.ce))) setTimeout(()=>seeReady(),1500);
     status("Project restored."+(p.skipped?` Add the ${p.skipped} very large clip${p.skipped===1?"":"s"} again if you want them.`:""));
   }catch(e){ crumb("restore failed: "+(e&&e.message||e)); status(`Couldn’t restore that project (${String(e&&e.message||e).slice(0,120)}). Add your audio and clips again.`,true); }
   finally{ S._restoring=false; }
