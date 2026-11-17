@@ -212,7 +212,7 @@ async function autopilot(){
     const ranked=rankDirectors().filter(d=>!GIMMICK.includes(d.name)).slice(0,6), pool=ranked.map((d,i)=>{ let x=(1/(1+i*0.5))*learnW("style",d.name); hist.slice(-5).forEach((hh,k,a)=>{ if(hh.dir===d.name) x*=(a.length-k)===1?0.001:(a.length-k)===2?0.08:0.5; }); return [d,x]; }); // never the style of the video just before
     const top=[]; for(let k=0;k<2&&pool.length;k++){ const d=weightedPick(pool); top.push(d); pool.splice(pool.findIndex(p=>p[0]===d),1); }
     // rhythm personality, colour look and lettering also rotate
-    const recent=k=>hist.slice(-2).map(hh=>hh[k]), paceName=weightedPick([["tight",1],["classic",1.2],["spacious",1]].filter(p=>!recent("pace").slice(-1).includes(p[0])).map(p=>[p[0],p[1]*learnW("pace",p[0])])); S._paceName=paceName;
+    const recent=k=>hist.slice(-2).map(hh=>hh[k]), nb=noteBias(), paceName=weightedPick([["tight",1],["classic",1.2],["spacious",1]].filter(p=>!recent("pace").slice(-1).includes(p[0])||nb.pace===p[0]).map(p=>[p[0],p[1]*learnW("pace",p[0])*(nb.pace===p[0]?4:1)])); S._paceName=paceName;
     S._paceK={tight:0.85,classic:1,spacious:1.22}[paceName];
     const LOOKPOOL={awakening:["vivid","glossy","tealorange","neon"],temperature:["none","glossy","moody"],twoworlds:["none","vivid","glossy"]}[dirId]||["none","tealorange","warmfilm","vivid","moody","glossy","painterly","fincher","cold","bw"];
     const textPick=weightedPick(["clean","box","cinema","impact","serif"].filter(t=>!recent("text").includes(t)).map(t=>[t,learnW("text",t)]));
@@ -225,7 +225,7 @@ async function autopilot(){
       if(small>0.6){ w.vintage*=1.6; w.indie*=1.6; w.clean*=0.4; w.epic*=0.8; } // grain and glow suit soft, small footage; clinical glass shows it up
       return weightedPick(Object.entries(w).filter(([k])=>!recent("lens").includes(k)).map(([k,x])=>[k,x*learnW("lensKit","kit:"+k)])); })();
     const camEnergy=(()=>{ const body=S.an.E.filter(v=>v>0.05), e=body.reduce((a,b)=>a+b,0)/Math.max(1,body.length); const base=calm||S.an.bpm<85?"gentle":(S.an.bpm>125&&e>0.55)?"bold":"normal";
-      return weightedPick(["gentle","normal","bold"].map(k=>[k,(k===base?5:1)*learnW("camEnergy",k)])); })();
+      const nb2=noteBias(); return weightedPick(["gentle","normal","bold"].map(k=>[k,(k===(nb2.en||base)?5:1)*learnW("camEnergy",k)])); })();
     const dress=()=>{ setControl("camMoves","director"); setControl("lens","kit:"+lensKit); setControl("camEnergy",camEnergy); const cur=$("look").value; if(recent("look").includes(cur)||!LOOKPOOL.includes(cur)||dirId==="awakening"&&cur==="bw"){ const opts=LOOKPOOL.filter(l=>!recent("look").includes(l)&&!(dirId==="awakening"&&l==="bw")); if(opts.length) setControl("look",weightedPick(opts.map(l=>[l,learnW("look",l)]))); } setControl("textStyle",textPick); setControl("sigTrans",sigPick); };
     let best=null, tried=0; const seeds=big?2:3;
     // restraint: the footage carries the edit; no overlays or zooms layered on top of it

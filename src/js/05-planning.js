@@ -117,6 +117,8 @@ function shotReasons(seg,pick){ const W=pick.why, out=[], c=S.clips[pick.clip], 
   if(shotImportance(seg)>=1&&W.q<0.15) out.push({k:0.6,t:"Sharp, full-quality footage for a key moment"});
   if(W.cn<-0.15) out.push({k:-W.cn,t:"Movement carries on from the shot before"});
   { const pr=phraseReason(seg); if(pr) out.push({k:0.9,t:pr}); }
+  if(W.om<-1) out.push({k:2,t:seg._motifSlot===1?"Plants the returning image":seg._motifSlot===3?"Closes on the returning image":"The returning image comes back, changed"});
+  if(W.nt<-0.2){ const ph=notePhaseAt(seg.start); if(ph) out.push({k:-W.nt,t:`Fits your note: “${ph.text}”`}); }
   if(W.mc<-0.1) out.push({k:0.5-W.mc,t:"Match cut: its shapes line up with where the shot before ended"});
   if(W.rt<-0.15) out.push({k:-W.rt,t:"Like the shots that hold your viewers on YouTube"});
   if(W.pl<-0.2) out.push({k:-W.pl,t:"Stays in the same place for a few shots, from a new angle"});
@@ -158,8 +160,8 @@ function chooseClip(seg, ctx, exclude){
       if(clip.kind!=="image"){ for(const x of clip.samples) if((x.cut||x.dark) && x.t>start+0.1 && x.t<start+D-0.1){ cost+=1.5; break; } } // or run through one
       if(clip.wm&&clip.wm.length&&wmBlocked(clip,start,D)) cost+=6; // a watermark that can't be framed out: use other footage
       if(seg.e>0.7 && (clip.kind==="image" || s.mN<0.2)) cost+=0.35;  // loud moments want movement
-      const W={q:qualityCost(seg,clip,s,ctx), cn:continuityCost(seg,s,ctx), se:seeCost(seg,s,ci), st:storyCost(seg,clip,ci,s,ctx), mo:motifCost(seg,clip,ci,s), ou:outlineCost(seg,clip,ci,s,ctx), ly:lyricCost(seg,clip,ci,s)+vetoCost(seg,ci), pl:placeCost(seg,ci,ctx), rt:retentionCost(seg,clip,s,ctx), mc:clip.kind==="image"?0:matchCutCost(seg,clip,ci,start,ctx), share, dcol};
-      cost+=W.q+W.cn+W.se+W.share+W.st+W.mo+W.ou+W.ly+W.pl+W.mc+W.rt;
+      const W={q:qualityCost(seg,clip,s,ctx), cn:continuityCost(seg,s,ctx), se:seeCost(seg,s,ci), st:storyCost(seg,clip,ci,s,ctx), mo:motifCost(seg,clip,ci,s), ou:outlineCost(seg,clip,ci,s,ctx), ly:lyricCost(seg,clip,ci,s)+vetoCost(seg,ci), pl:placeCost(seg,ci,ctx), rt:retentionCost(seg,clip,s,ctx), om:ownMotifCost(seg,ci,s), nt:noteCost(seg,clip,s), mc:clip.kind==="image"?0:matchCutCost(seg,clip,ci,start,ctx), share, dcol};
+      cost+=W.q+W.cn+W.se+W.share+W.st+W.mo+W.ou+W.ly+W.pl+W.mc+W.rt+W.om+W.nt;
       { const raw=clip.kind==="image"?0:(s.motion||0), still=Math.max(0,1-raw/1.2); // only genuinely still footage is penalised; any real motion is welcome
         if(ctx.short) cost+=1.6*still+(clip.kind==="image"?0.6+Math.max(0,D-1)*0.8:0);  // short-form lives on movement; a still never holds long
         else if(seg.e>0.6) cost+=0.5*still;
@@ -181,7 +183,7 @@ function chooseClip(seg, ctx, exclude){
 function buildPlan(){ refreshExclusion(); refreshFilter(); motifSetup(); setTimeout(wmCatchUp,0);
   if(!S.an || !S.clips.some(c=>c.samples)) { S.plan=null; drawTimeline(); renderStats(); updateButtons(); return; }
   normaliseClips();
-  const segs=phraseShape(makeSegments(S.an,+$("pace").value),S.an); applyTrims(segs);
+  const segs=phraseShape(makeSegments(S.an,+$("pace").value),S.an); applyTrims(segs); markMotifSlots(segs,false);
   const ctx={ recent:[], usage:new Map(), rand:rng(S.seed), order:filmOrder(), acts:actsFor([0,S.an.duration]) };
   annotateStory(segs);
   for(const seg of segs){

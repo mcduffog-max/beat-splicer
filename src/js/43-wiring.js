@@ -21,7 +21,7 @@ $("autoBtn").onclick=autopilot;
 $("newDir").onclick=()=>{ S._avoidDir=[motifId(),...dirHistory().slice(-2).map(x=>x.motif)]; autopilot(); };
 $("motif").addEventListener("change",()=>{ saveSettings(); renderStyleState(); if(!S.running) buildPlan(); });
 $("sigTrans").addEventListener("change",()=>{ saveSettings(); if(!S.running) buildPlan(); });
-["fxReverse","camMoves","lens","camEnergy","colMatch","cutAction","matchCuts","phrasing","restraint"].forEach(id=>$(id).addEventListener("change",()=>{ saveSettings(); if(!S.running) buildPlan(); }));
+["fxReverse","camMoves","lens","camEnergy","colMatch","cutAction","matchCuts","phrasing","restraint","ownMotif"].forEach(id=>$(id).addEventListener("change",()=>{ saveSettings(); if(!S.running) buildPlan(); }));
 $("ownMusic").addEventListener("change",()=>{ saveSettings(); if(S.plan) writeTitles(false); });
 $("songVer").addEventListener("change",()=>{ saveSettings(); applySongVersion(); });
 ["audTexture","audRadio","audFilterDrop","audStutter","audEcho","sfxWhoosh","sfxImpact","sfxRiser"].forEach(id=>$(id).addEventListener("change",saveSettings));
@@ -132,3 +132,5 @@ sampleP.then(s=>{ if(!s){ $("rvClaude").checked=false; $("rvClaude").disabled=tr
   new MutationObserver(sync).observe(pr,{attributes:true,attributeFilter:["hidden","value","max"]}); sync(); setInterval(sync,400); })();
 
 
+
+{ let tn=0; $("dirNote").addEventListener("input",()=>{ clearTimeout(tn); tn=setTimeout(()=>{ saveSettings(); S._notePh=null; if(!S.running) buildPlan(); },700); }); }
