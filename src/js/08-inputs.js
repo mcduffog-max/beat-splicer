@@ -89,8 +89,9 @@ async function loadAudio(file,cachedAn){
 /* Heavy work (studying clips, listening to songs, reading footage) runs one job at a time, never side by side:
    running them together doubles the memory and can freeze or crash the tab. Later jobs wait their turn. */
 let _heavy=Promise.resolve(), _heavyN=0;
+var _heavyCur=null; // the job running now, so diagnostics can name what is busy
 function heavy(label,fn){ _heavyN++; if(_heavyN>1) status(`${label} will start when the current analysis finishes…`);
-  const run=_heavy.then(async()=>{ crumb("start: "+label.toLowerCase()); const r=await fn(); crumb("finished: "+label.toLowerCase()); return r; })
+  const run=_heavy.then(async()=>{ crumb("start: "+label.toLowerCase()); _heavyCur={label,at:Date.now()}; const r=await fn(); _heavyCur=null; crumb("finished: "+label.toLowerCase()); return r; })
     .finally(async()=>{ _heavyN--; if(_heavyN===0){ crumb("idle"); if(S._deferredSong){ const d=S._deferredSong; S._deferredSong=null; await loadAudio(d.file,d.an); renderSongs(); } } });
   _heavy=run.catch(()=>{}).then(()=>new Promise(r=>setTimeout(r,1200))); // a breather between jobs so the browser can free memory
   return run; }
