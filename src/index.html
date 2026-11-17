@@ -1,0 +1,561 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Beat Splicer</title>
+<script>try{var t=localStorage.getItem("beatsplicerTheme");if(t==="light"||t==="dark")document.documentElement.setAttribute("data-theme",t);}catch(e){}</script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@62..125,400..800&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@700;800&family=Bebas+Neue&family=Anton&family=Playfair+Display:ital,wght@1,700&family=Permanent+Marker&display=swap" rel="stylesheet">
+<style>/*@STYLE@*/</style>
+</head>
+<body>
+<div class="wrap">
+  <div id="restoreBox" class="panel" hidden style="margin-bottom:14px;border-color:var(--cobalt)">
+    <b id="restoreText">Pick up where you left off?</b>
+    <div class="btns"><button class="btn primary" id="restoreBtn">Restore my project</button><button class="btn" id="freshBtn">Start fresh</button></div>
+  </div>
+  <header class="appbar">
+    <div class="brand"><span class="mark" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i></span><h1>Beat Splicer</h1></div>
+    <div class="bar-actions">
+      <label class="btn quiet" for="openProj" title="Open a saved project file">Open</label>
+      <input type="file" id="openProj" accept=".json,application/json" hidden>
+      <button class="btn quiet" id="saveProj" title="Save this project as a file">Save</button>
+      <button class="btn quiet icon" id="themeBtn" type="button" aria-label="Theme: matches your device" title="Theme: matches your device"></button>
+    </div>
+  </header>
+  <div class="relink"><label class="btn primary" for="relinkInput" id="relinkLbl" hidden>Choose the media folder</label><input type="file" id="relinkInput" webkitdirectory multiple hidden><p class="small" id="projInfo"></p></div>
+  <section class="hero" id="autoBox">
+    <div class="hero-text">
+      <p class="lead">Add a song and your clips, then let it cut.</p>
+      <p>Do everything reads your footage, chooses the story, pace, transitions, sound and titles, tries several cuts and keeps the best.</p>
+    </div>
+    <div class="hero-actions">
+      <button class="btn primary big" id="autoBtn" disabled>Do everything</button>
+      <button class="btn" id="newDir" disabled>Try another direction</button>
+    </div>
+    <div id="autoOut" class="small"></div>
+  </section>
+  <div class="grid">
+    <div class="panel">
+      <div class="viewbar" role="group" aria-label="How many settings to show"><button type="button" class="seg" id="viewSimple">Essentials</button><button type="button" class="seg" id="viewAll">All settings</button></div>
+      <details class="step" open>
+        <summary><span class="num">1</span><span class="st"><h2>Your song</h2><small>The song, its sound and effects</small></span></summary>
+        <div class="step-body">
+          <label class="drop" id="audioDrop">
+            <input type="file" id="audioInput" accept="audio/*,.wav,.mp3,.m4a,.aac,.ogg,.flac">
+            <strong>Choose an audio file</strong> or drop it here
+          </label>
+          <div class="small" id="audioInfo" style="margin-top:6px">WAV files from Web Audio Recorder work, as do MP3 and M4A.</div>
+          <div id="tempoRow" class="small" hidden style="display:flex;align-items:center;gap:6px;flex-wrap:wrap;margin-top:6px">Beat <button class="chip" type="button" data-x="0.5">Half speed</button><button class="chip" type="button" data-x="1">As found</button><button class="chip" type="button" data-x="2">Double speed</button><span id="tempoNote"></span></div>
+          <div id="longAudio" hidden style="margin-top:8px;padding:10px;border:1px solid var(--cobalt);border-radius:9px">
+            <p class="small" id="longText" style="margin:0 0 6px"></p>
+            <div class="btns" style="margin:0;align-items:center">
+              <label class="small">Start at <input id="longStart" value="0:00" style="width:70px;font:inherit;padding:4px 6px;border-radius:6px;border:1px solid var(--line);background:var(--bg);color:var(--ink)"></label>
+              <label class="small">Length <select id="longLen"><option value="180">3 min</option><option value="240">4 min</option><option value="360" selected>6 min</option><option value="480">8 min</option><option value="600">10 min</option></select></label>
+              <button class="btn primary" id="longGo">Use this section</button><button class="btn" id="longCancel">Cancel</button>
+            </div>
+          </div>
+          <div class="btns" style="margin-top:8px">
+            <label class="btn" for="songFolder" style="cursor:pointer">Choose a folder of songs</label>
+            <input type="file" id="songFolder" webkitdirectory multiple hidden>
+            <button class="btn primary" id="comboBtn" disabled>Find the best song and clips</button>
+            <button class="btn" id="moreSongs" hidden>Analyse more songs</button>
+          </div>
+          <div id="songList" class="small" style="margin-top:6px"></div>
+          <div id="comboOut" class="small" style="margin-top:6px"></div>
+          <div class="btns"><button class="btn" id="listen" disabled>Listen with EQ</button></div>
+          <details id="lyricsBox">
+            <summary>Lyrics</summary>
+            <p class="small" id="lyricsInfo" style="margin:6px 0">Add the lyrics and shots follow the words: what’s sung about shows up as it’s sung. A .lrc file is timed to the line; plain lyrics are spread across the sung parts of the song.</p>
+            <div class="btns" style="margin-top:6px"><label class="btn" for="lyricsFile">Add a lyrics file</label><input type="file" id="lyricsFile" accept=".lrc,.txt,text/plain" hidden><button class="btn" id="lyricsPasteBtn" type="button">Paste lyrics</button><button class="btn" id="lyricsAI" type="button" hidden>Read the lyrics with AI</button><button class="btn quiet" id="lyricsClear" type="button" hidden>Remove</button></div>
+            <div id="lyricsPasteBox" hidden><textarea id="lyricsPaste" rows="7" placeholder="Paste the lyrics, one line per sung line. Lines starting with a time like [01:23.40] are used exactly."></textarea><div class="btns"><button class="btn primary" id="lyricsUse" type="button">Use these lyrics</button></div></div>
+            <div class="btns" style="margin-top:4px"><button class="btn" id="lyFind" type="button">Find synced lyrics</button><button class="btn" id="lyTapStart" type="button" hidden>Time by tapping</button></div>
+            <div id="lyNudge" class="small" hidden style="display:flex;align-items:center;gap:6px;flex-wrap:wrap;margin-top:6px">Timing <button class="chip" type="button" data-n="-0.25">Earlier 0.25 s</button><button class="chip" type="button" data-n="-0.05">−0.05</button><button class="chip" type="button" data-n="0.05">+0.05</button><button class="chip" type="button" data-n="0.25">Later 0.25 s</button><span id="lyNudgeVal"></span></div>
+            <div id="lyTap" hidden>
+              <p class="small" style="margin:8px 0 4px">Tap the button the moment each line starts. Go back if you miss one; stop any time, and lines you didn’t reach keep their estimated times.</p>
+              <div class="lytap-now" id="lyTapNow"></div><div class="small" id="lyTapNext"></div>
+              <div class="btns"><button class="btn primary big" id="lyTapBtn" type="button">Tap: line starts</button><button class="btn" id="lyTapBack" type="button">Back a line</button><button class="btn" id="lyTapStop" type="button">Done</button></div>
+              <div class="small" id="lyTapClock"></div>
+            </div>
+            <label class="check"><input type="checkbox" id="lyricMatch" checked> Match shots to the lyrics</label>
+            <label class="check"><input type="checkbox" id="lyricShow"> Show the lyrics on screen</label>
+            <div id="lyricsList" class="small"></div>
+          </details>
+          <details class="adv" id="soundBox">
+            <summary>Sound: EQ, volume and fades</summary>
+            <div class="presets" id="presets"></div>
+            <div id="eqTop"></div>
+            <details>
+              <summary>Graphic EQ (10 bands)</summary>
+              <div id="eqBands" style="margin-top:6px"></div>
+            </details>
+            <label class="check"><input type="checkbox" id="fadeIn" checked> Fade in at the start</label>
+            <label class="check"><input type="checkbox" id="fadeOut" checked> Fade out at the end</label>
+          </details>
+          <details class="adv" id="audFx">
+            <summary>Audio effects</summary>
+            <label class="row" style="margin-top:8px">Song version <select id="songVer"><option value="orig" selected>Original</option><option value="spedup">Sped up (+20%)</option><option value="nightcore">Nightcore (+30%)</option><option value="slowed">Slowed + reverb (−15%)</option></select></label>
+            <label class="row">Texture <select id="audTexture"><option value="none" selected>Clean</option><option value="lofi">Lo-fi vinyl</option><option value="cassette">Cassette warmth</option></select></label>
+            <label class="check"><input type="checkbox" id="audRadio"> Radio intro: starts small, opens up at the first big moment</label>
+            <label class="check"><input type="checkbox" id="audFilterDrop"> Muffle the last two beats before each drop, then slam open</label>
+            <label class="check"><input type="checkbox" id="audStutter"> Stutter the last beat before each drop</label>
+            <label class="check"><input type="checkbox" id="audEcho"> Echo throw as each loud section ends</label>
+            <label class="row">Ending (full-length) <select id="songEnd"><option value="natural" selected>Natural</option><option value="tape">Tape stop</option></select></label>
+            <h3 class="sub">Sound effects</h3>
+            <label class="check"><input type="checkbox" id="sfxWhoosh"> Whoosh on effect transitions</label>
+            <label class="check"><input type="checkbox" id="sfxImpact"> Impact hit on drops</label>
+            <label class="check"><input type="checkbox" id="sfxRiser"> Riser into drops</label>
+            <div class="small" style="margin-top:4px">Drops, build-ups and section ends are found in the song automatically. Listen and Preview play these too.</div>
+          </details>
+          <details class="adv" id="spaceBox">
+            <summary>3D sound</summary>
+            <label class="row" style="margin-top:8px">Effect
+              <select id="space">
+                <option value="off" selected>Off</option>
+                <option value="wide">Wide stereo</option>
+                <option value="8d">8D orbit (circles your head)</option>
+                <option value="hall">Concert hall</option>
+                <option value="pingpong">Cut-synced ping-pong</option>
+              </select>
+            </label>
+            <label class="row">Amount <input type="range" id="spaceAmt" min="0" max="1" step="0.05" value="0.5"></label>
+            <div class="small">Best on headphones. Ping-pong swings the sound left and right on every cut.</div>
+          </details>
+        </div>
+      </details>
+
+      <details class="step">
+        <summary><span class="num">2</span><span class="st"><h2>Video clips</h2><small>Footage, characters and backgrounds</small></span></summary>
+        <div class="step-body">
+          <label class="drop" id="videoDrop">
+            <input type="file" id="videoInput" accept="video/*,image/*,.mp4,.mov,.webm,.m4v,.jpg,.jpeg,.png,.webp" multiple>
+            <strong>Choose video clips and photos</strong> or drop them here
+          </label>
+          <label class="drop" id="folderDrop" style="margin-top:8px">
+            <input type="file" id="folderInput" webkitdirectory multiple>
+            <strong>Choose a whole folder</strong> (on a computer)
+          </label>
+          <details class="adv">
+            <summary>Using Google Drive, OneDrive or iCloud</summary>
+            <p class="small"><b>On a phone:</b> tap Choose video clips, then pick Google Drive, OneDrive or iCloud Drive in the file browser that opens (Browse on iPhone, the menu on Android).</p>
+            <p class="small"><b>On a computer:</b> install Google Drive for desktop or OneDrive, then use Choose a whole folder and pick the synced folder. You can also drag folders straight onto this page.</p>
+          </details>
+          <div id="libBar" class="adv small" style="display:flex;flex-wrap:wrap;gap:8px;align-items:center;margin:6px 0">
+            <label>Sort <select id="libSort"><option value="order">As added</option><option value="fit">Best fit for this song</option><option value="motion">Most movement</option><option value="bright">Brightest</option><option value="long">Longest</option><option value="fresh">Least used recently</option><option value="cast">Most screen time for chosen characters</option><option value="name">Name</option></select></label>
+            <label>Show <select id="libShow"><option value="all">All clips</option><option value="in">In the edit</option><option value="out">Left out</option><option value="fresh">Not used recently</option><option value="recent">Used recently</option><option value="lookalike">Look-alikes</option></select></label>
+            <button class="chip" id="libUseAll" type="button">Use all shown</button><button class="chip" id="libOffAll" type="button">Leave out all shown</button>
+          </div>
+          <div class="small" style="display:flex;flex-wrap:wrap;gap:8px;align-items:center;margin:0 0 6px">
+            <label>Don’t use clips from my last <select id="exclN"><option value="0" selected>— (off)</option><option value="1">1 version</option><option value="2">2 versions</option><option value="3">3 versions</option><option value="5">5 versions</option></select></label>
+            <button class="chip" id="clearHist" type="button">Clear history</button>
+            <span id="libCount"></span>
+          </div>
+          <div id="castBar" class="small" hidden style="display:flex;flex-wrap:wrap;gap:6px;align-items:center;margin:0 0 6px"></div>
+          <div id="sceneBar" class="small" hidden style="display:flex;flex-wrap:wrap;gap:6px;align-items:center;margin:0 0 6px"></div>
+          <div class="clips" id="clipList"></div>
+          <button class="chip more" id="clipMore" type="button" hidden></button>
+          <div class="small" id="clipInfo" style="margin-top:6px">Add as many as you like. More variety gives better matches.</div>
+          <label class="adv check" style="margin-top:10px"><input type="checkbox" id="aiImagery"> My footage includes realistic AI-generated people, places or scenes</label>
+          <div class="adv small" style="margin:-4px 0 6px">YouTube requires you to disclose realistic AI content when uploading. Disclosing doesn’t reduce reach; not disclosing can get a label you can’t remove.</div>
+          <label class="adv check" style="margin-top:10px"><input type="checkbox" id="clipSound"> Include sound from the video clips</label>
+          <label class="adv row" id="clipSoundRow" hidden>Clip volume <input type="range" id="clipVol" min="0" max="1.5" step="0.05" value="0.6"></label>
+          <div class="adv small" id="clipSoundNote" hidden>Mixed under your music. Tap the speaker on any clip to mute just that one.</div>
+          <label class="adv row" style="margin-top:8px">Photo motion
+            <select id="stillMotion">
+              <option value="auto" selected>Automatic (follows the music)</option>
+              <option value="zoomin">Slow zoom in</option>
+              <option value="zoomout">Slow zoom out</option>
+              <option value="pan">Pan across</option>
+              <option value="drift">Drift and tilt</option>
+              <option value="bounce">Bounce on the beat</option>
+              <option value="parallax">Depth float (blurred backdrop)</option>
+            </select>
+          </label>
+          <div id="cropEditor" hidden>
+            <h3 id="cropTitle">Crop</h3>
+            <canvas id="cropCanvas" width="320" height="180"></canvas>
+            <div id="cropSliders"></div>
+            <div class="btns">
+              <button class="btn" id="cropAll">Use on all clips</button>
+              <button class="btn" id="cropReset">Reset</button>
+              <button class="btn primary" id="cropDone">Done</button>
+            </div>
+            <div class="small" style="margin-top:6px">Trim black bars, shaky edges or a corner logo from your own footage. The trimmed picture is then scaled to fill the frame.</div>
+          </div>
+        </div>
+      </details>
+
+      <details class="step">
+        <summary><span class="num">3</span><span class="st"><h2>Story and pace</h2><small>Pace, story outline and direction</small></span></summary>
+        <div class="step-body">
+          <label class="adv row">Match to
+            <select id="mode">
+              <option value="beat">Beat only</option>
+              <option value="energy" selected>Beat and energy</option>
+              <option value="mood">Beat, energy and mood</option>
+            </select>
+          </label>
+          <label class="row">Cut pace <input type="range" id="pace" min="0.5" max="2" step="0.25" value="1"></label>
+          <div class="ends"><span>Relaxed</span><span>Frantic</span></div>
+          <label class="adv row">Variety <input type="range" id="variety" min="0" max="1" step="0.05" value="0.25"></label>
+          <div class="ends"><span>Best match</span><span>Surprise me</span></div>
+          <h3 class="adv sub">Story</h3>
+          <label class="adv check"><input type="checkbox" id="storyOn" checked> Tell a story from start to finish</label>
+          <label class="adv row">Story shape
+            <select id="storyShape">
+              <option value="peak" selected>Build to the peak (push in as it builds)</option>
+              <option value="journey">Journey (keeps your filming order)</option>
+              <option value="portrait">Character portrait (stays with the main subject)</option>
+            </select>
+          </label>
+          <details id="outlineBox">
+            <summary>Story outline (five acts)</summary>
+            <p class="small" style="margin:6px 0">The outline decides who and where each part of the video is about: the setup, rising action, climax, aftermath and new normal. Edit anything, and the clips are chosen to match.</p>
+            <div class="btns" style="margin:4px 0"><button class="btn" id="outlineWrite" type="button" disabled>Write the outline</button><label class="check" style="margin:0 0 0 8px"><input type="checkbox" id="outlineOn" checked> Choose clips by the outline</label></div>
+            <p class="small" id="outlineInfo" style="margin:4px 0"></p>
+            <div id="outlineActs"></div>
+          </details>
+          <label class="adv check"><input type="checkbox" id="faceFrame" checked> Face-aware framing (crops and close-ups follow faces)</label>
+          <div class="btns" style="margin:4px 0"><button class="btn" id="tagBtn" disabled>Read my footage with AI</button><button class="btn" id="faceBtn" disabled>Find characters by face</button></div>
+          <p class="small" id="faceInfo" style="margin:2px 0 6px">Face recognition runs on this device (nothing is uploaded). Anyone who appears in at least two clips becomes a character you can pick to sort by.</p>
+          <p class="small" id="tagInfo" style="margin:4px 0 8px">AI looks at frames from each clip and notes shot size, faces, expression and subject, so the story can open wide, push in to faces and eyes as the music builds, and pull back at the end.</p>
+          <div class="btns"><button class="btn primary" id="shuffle" disabled>Remix</button>
+            <button class="btn" id="verPrev" disabled aria-label="Previous version">‹</button><button class="btn" id="verNext" disabled aria-label="Next version">›</button></div>
+          <p class="small" id="verInfo" style="margin:6px 0 0"></p>
+          <div class="small" style="margin-top:6px">Tap a block on the timeline to swap that shot.</div>
+        </div>
+      </details>
+
+      <details class="step">
+        <summary><span class="num">4</span><span class="st"><h2>Look</h2><small>Style, effects, text and border</small></span></summary>
+        <div class="step-body">
+          <div class="stylecard">
+            <h3 class="sub" style="margin-top:4px">Style</h3>
+            <p class="small" style="margin:2px 0 8px">One choice sets the whole look and feel. Your newest choice wins: pick one here, or press Do everything and it picks for you. Anything you change further down adjusts it.</p>
+            <div class="presets" id="styleAuto"><button type="button" class="chip" id="styleAutoChip" title="Do everything picks a style for each new cut, from the music and your footage">Automatic</button><button type="button" class="chip" id="styleAiChip" title="Claude looks at your footage and the music data and picks a director">Ask AI to choose</button></div>
+            <div class="small" style="margin-top:8px">Looks</div>
+            <div class="presets" id="styles"></div>
+            <div class="small" style="margin-top:6px">Directors</div>
+            <div class="presets" id="dstyles"></div>
+            <p class="small" id="styleNow" style="margin:8px 0 2px;color:var(--ink);font-weight:600"></p>
+            <p class="small" id="styleDesc" style="min-height:1.5em;margin:0 0 6px"></p>
+          <label class="row">Visual idea
+            <select id="motif">
+              <option value="none" selected>Straight cut: footage and rhythm only</option>
+              <option value="twoworlds">Two worlds: verses in cool footage, choruses in warm</option>
+              <option value="awakening">Colour awakening: black and white until the song opens up</option>
+              <option value="refrain">Visual refrain: the chorus has its own returning shots</option>
+              <option value="breathing">Breathing frame: the letterbox opens with the music</option>
+              <option value="echoes">Echoes: motion trails on the peaks</option>
+              <option value="temperature">Temperature arc: cold to warm across the song</option>
+              <option value="lightdark">Light to dark: bright footage first, dark last</option>
+              <option value="mirror">Mirror moments: symmetry on the choruses</option>
+              <option value="heldbreath">Held breath: a freeze before each drop</option>
+            </select>
+          </label>
+            <p class="small" id="motifDesc" style="margin:-4px 0 6px"></p>
+          </div>
+          <div hidden><label>Auto-direct <select id="direct">
+              <option value="off" selected>Off (use my settings)</option>
+              <option value="auto">Choose a director for me</option>
+            </select></label><p id="directWhy"></p><button id="aiDirect" disabled>Ask AI to choose</button></div>
+          <label class="adv row">Transitions
+            <select id="trans">
+              <option value="auto" selected>Automatic (follows the music)</option>
+              <option value="cut">Hard cuts</option>
+              <option value="crossfade">Crossfade</option>
+              <option value="dip">Dip to black</option>
+              <option value="flash">Flash</option>
+              <option value="zoom">Zoom punch</option>
+              <option value="whip">Whip slide</option>
+              <option value="zoomthru">Zoom-through</option>
+              <option value="spin">Spin</option>
+              <option value="mask">Mask wipe</option>
+              <option value="match">Match cut</option>
+              <option value="zoomout">Pull-back</option>
+            </select>
+          </label>
+          <label class="adv row">Signature transition
+            <select id="sigTrans"><option value="mixed" selected>Mixed (the style decides)</option><option value="whip">Whip slide</option><option value="zoomthru">Zoom-through</option><option value="spin">Spin</option><option value="mask">Mask wipe</option><option value="flash">Flash</option><option value="zoom">Zoom punch</option><option value="zoomout">Pull-back</option><option value="dip">Dip to black</option></select>
+          </label>
+          <label class="adv row">Length <input type="range" id="trLen" min="0.1" max="1.2" step="0.05" value="0.4"></label>
+          <div class="ends"><span>Snappy</span><span>Slow</span></div>
+          <label class="row">Colour
+            <select id="look">
+              <option value="none" selected>Natural</option>
+              <option value="tealorange">Teal and orange</option>
+              <option value="warmfilm">Warm film</option>
+              <option value="vivid">Vivid pop</option>
+              <option value="moody">Moody</option>
+              <option value="bw">Black and white</option>
+              <option value="vhs">Retro VHS</option>
+              <option value="neon">Neon red and blue</option>
+              <option value="glossy">Glossy pop</option>
+              <option value="painterly">Painterly blue-green</option>
+              <option value="fincher">Dark and desaturated</option>
+              <option value="cold">Cold steel</option>
+            </select>
+          </label>
+          <label class="adv row">Framing
+            <select id="fit">
+              <option value="fill" selected>Fill the frame (crops edges)</option>
+              <option value="fit">Fit whole shot (black bars)</option>
+              <option value="blur">Fit whole shot (blurred bars)</option>
+            </select>
+          </label>
+          <label class="adv check"><input type="checkbox" id="wmAvoid" checked> Keep watermarks and logos out of the edit (crops or reframes around them, per format)</label>
+          <label class="adv row">Zoom <input type="range" id="zoom" min="1" max="1.5" step="0.05" value="1"></label>
+          <div class="ends"><span>100%</span><span>150%</span></div>
+          <details class="adv">
+            <summary>Beat effects</summary>
+            <label class="check"><input type="checkbox" id="fxPulse"> Zoom pulse on every beat</label>
+            <label class="check"><input type="checkbox" id="fxShake"> Camera shake on big hits</label>
+            <label class="check"><input type="checkbox" id="fxRamp" checked> Speed ramps into drops (velocity edits)</label>
+            <label class="check"><input type="checkbox" id="fxReverse" checked> Occasional reverse shots (rewind moments)</label>
+            <label class="row">Camera moves <select id="camMoves"><option value="music" selected>Push in and pull out with the music</option><option value="in">Push in only</option><option value="off">Off</option></select></label>
+            <label class="check"><input type="checkbox" id="fxGlitch"> Glitch on drops</label>
+            <label class="check"><input type="checkbox" id="kb"> Slow push-in on every shot</label>
+            <label class="check"><input type="checkbox" id="fxGrain"> Film grain</label>
+            <label class="check"><input type="checkbox" id="fxVignette"> Vignette</label>
+            <label class="check"><input type="checkbox" id="fxBars"> Cinematic bars (landscape only)</label>
+            <h3 class="sub">Director techniques</h3>
+            <label class="check"><input type="checkbox" id="fxFisheye"> Fisheye lens bulge</label>
+            <label class="check"><input type="checkbox" id="fxSplit"> Split letterbox (mini copies in the bars)</label>
+            <label class="check"><input type="checkbox" id="fxMultiply"> Multiply on the beat (1, 4, 9 copies)</label>
+            <label class="check"><input type="checkbox" id="fxMirror"> Mirror symmetry</label>
+            <label class="check"><input type="checkbox" id="fxStrobe"> Strobe on big hits</label>
+            <label class="check"><input type="checkbox" id="fxHandheld"> Handheld sway</label>
+            <label class="check"><input type="checkbox" id="fxWash"> Colour wash that changes every bar</label>
+            <label class="check"><input type="checkbox" id="fxDoodles"> Hand-drawn doodles on the beat</label>
+            <label class="row">Slow motion
+              <select id="slowmo">
+                <option value="off" selected>Off</option>
+                <option value="quiet">Quiet parts</option>
+                <option value="all">Throughout</option>
+              </select>
+            </label>
+          </details>
+          <details>
+            <summary>On-screen text</summary>
+            <label class="row">Text style
+              <select id="textStyle">
+                <option value="clean" selected>Clean (Montserrat)</option>
+                <option value="box">Caption box</option>
+                <option value="cinema">Cinematic (Bebas Neue)</option>
+                <option value="impact">Bold condensed (Anton)</option>
+                <option value="serif">Elegant serif (Playfair)</option>
+                <option value="hand">Marker (Permanent Marker)</option>
+              </select>
+            </label>
+            <label class="check"><input type="checkbox" id="autoTitles"> Title every platform automatically</label>
+            <label class="check"><input type="checkbox" id="payoffOn"> Short payoff word at the drop (short-form)</label>
+            <div class="btns"><button class="btn" id="titleBtn" disabled>Write new titles</button></div>
+            <div id="titleList" class="small"></div>
+            <div class="small" style="margin-top:6px">Each platform gets its own opening line: 2 to 6 words, on screen from the first frame, in the top third of the safe zone and held long enough to read twice. Music-video exports get a lower-third title card instead. Titles are checked against ones you’ve used before.</div>
+            <h3 class="sub">Your own title (used when automatic titles are off)</h3>
+            <input type="text" id="hookText" maxlength="60" placeholder="e.g. Wait for the drop">
+            <h3 class="sub">Ending (full-length videos)</h3>
+            <label class="check"><input type="checkbox" id="endStyle" checked> Finish with the song: trim trailing silence; the final shot pulls back and the picture freezes or fades the way the music ends</label>
+            <label class="check"><input type="checkbox" id="endCard" checked> End card with the song and artist (top left, leaving room for YouTube’s end-screen buttons)</label>
+            <h3 class="sub">Progress border</h3>
+            <label class="row">Show on <select id="progScope"><option value="all" selected>All videos</option><option value="short">Short videos only</option></select></label>
+            <label class="row">Border <select id="progBorder"><option value="line" selected>Line floating over the picture</option><option value="frame">Rounded frame (black margin) with line</option><option value="off">Off</option></select></label>
+            <label class="row">Direction <select id="progDir"><option value="fill" selected>Fills up as the video plays</option><option value="drain">Empties as the video plays (countdown)</option></select></label>
+            <label class="row">Line colour <select id="progColor"><option value="white" selected>White</option><option value="black">Black</option></select></label>
+            <label class="check"><input type="checkbox" id="progShadow" checked> Drop shadow</label>
+            <label class="row">Line opacity <input type="range" id="progOpacity" min="0.3" max="1" step="0.05" value="0.8"></label>
+            <div class="ends"><span>Subtle</span><span>Solid</span></div>
+            <div class="small">A fine line with curved corners runs around the picture and completes as the video finishes. On vertical videos it sits in from the sides, so phones that trim the edges of a Short still show all of it.</div>
+            <h3 class="sub">End card text (short videos)</h3>
+            <input type="text" id="endText" maxlength="60" placeholder="e.g. Follow for part 2">
+            <div class="small" style="margin-top:6px">Text pops in on the beat and is placed inside each platform’s safe zone automatically.</div>
+          </details>
+        </div>
+      </details>
+
+      <details class="adv step">
+        <summary><span class="num">5</span><span class="st"><h2>Overlays</h2><small>Watermark and graphics</small></span></summary>
+        <div class="step-body">
+          <label class="drop" id="ovDrop">
+            <input type="file" id="ovInput" accept="image/png,image/webp,image/jpeg,image/gif,image/svg+xml" multiple>
+            <strong>Add a logo, sticker or graphic</strong> (PNG with a transparent background works best)
+          </label>
+          <div id="ovList"></div>
+          <h3 class="sub">Brand watermark</h3>
+          <label class="drop" id="brandDrop">
+            <input type="file" id="brandInput" accept="image/png,image/webp,image/jpeg,image/svg+xml">
+            <strong>Choose your logo</strong> for the watermark
+          </label>
+          <div id="brandPreview" class="small" style="margin:6px 0"></div>
+          <input type="text" id="brandText" maxlength="40" placeholder="Handle or copyright, e.g. @paulmakes or © Paul 2026">
+          <label class="row" style="margin-top:8px">Style
+            <select id="brandMode">
+              <option value="off" selected>Off</option>
+              <option value="corner">Corner mark</option>
+              <option value="tiled">Tiled across the frame (anti-copy)</option>
+              <option value="both">Corner mark and faint tiling</option>
+            </select>
+          </label>
+          <label class="row">Position
+            <select id="brandPos">
+              <option value="br" selected>Bottom right</option><option value="bl">Bottom left</option>
+              <option value="tr">Top right</option><option value="tl">Top left</option>
+            </select>
+          </label>
+          <label class="row">Size <input type="range" id="brandSize" min="0.05" max="0.3" step="0.01" value="0.12"></label>
+          <label class="row">Opacity <input type="range" id="brandOpacity" min="0.15" max="1" step="0.05" value="0.7"></label>
+          <label class="check"><input type="checkbox" id="brandOutro" checked> Big logo on the closing seconds</label>
+          <label class="check"><input type="checkbox" id="brandSkipTv"> Leave the watermark off TV exports</label>
+          <label class="check"><input type="checkbox" id="brandKeep" checked> Remember my brand on this device</label>
+          <h3 class="sub">Built-in overlays</h3>
+          <label class="check"><input type="checkbox" id="ovLeaks"> Light leaks</label>
+          <label class="check"><input type="checkbox" id="ovBokeh"> Bokeh sparkle (pulses with the beat)</label>
+          <label class="check"><input type="checkbox" id="ovDust"> Dust and film scratches</label>
+          <h3 class="sub">Lower-third title</h3>
+          <input type="text" id="ovLower" maxlength="50" placeholder="e.g. Paul, Sydney">
+          <div class="small" style="margin-top:6px">Shown from second 1 to 6. Logos and titles are kept inside each platform’s safe zone.</div>
+        </div>
+      </details>
+
+      <details class="step">
+        <summary><span class="num">6</span><span class="st"><h2>Publish</h2><small>Formats, titles and making the videos</small></span></summary>
+        <div class="step-body">
+          <div class="small">Tick everywhere you’ll post. Each gets its own size, length and loudness.</div>
+          <div class="eps" id="eps"></div>
+          <button class="chip more" id="epsMore" type="button" hidden></button>
+          <label class="adv row">Short-form length
+            <select id="shortLen">
+              <option value="rec" selected>Recommended for each platform</option>
+              <option value="0">As long as allowed</option>
+              <option value="60">Best 60 seconds</option>
+              <option value="30">Best 30 seconds</option>
+              <option value="15">Best 15 seconds</option>
+            </select>
+          </label>
+          <div class="small" style="margin:-2px 0 8px">Short versions use the most energetic part of the song and open on a strong beat.</div>
+          <label class="adv check"><input type="checkbox" id="proRules" checked> Apply industry rules automatically (recommended)</label>
+          <details class="adv" id="proBox">
+            <summary>Industry checklist</summary>
+            <div id="proList" class="small" style="margin-top:6px">Add audio and clips to see how each export measures up.</div>
+          </details>
+          <h3 class="sub">Names</h3>
+          <label class="row">Project name <input type="text" id="projName" maxlength="60" placeholder="Worked out from your content"></label>
+          <label class="row">Artist <input type="text" id="artistName" maxlength="60" placeholder="Filled in from the song file when it has tags"></label>
+          <label class="check"><input type="checkbox" id="ownMusic"> This is my own music (titles may say “Official Video”)</label>
+          <label class="adv row">File names
+            <select id="nameScheme">
+              <option value="title" selected>Title, platform, size</option>
+              <option value="date">Date first, for archives</option>
+              <option value="platform">Platform first, for uploading</option>
+            </select>
+          </label>
+          <div class="adv btns" style="margin:4px 0"><button class="btn" id="aiName" disabled>Name it with AI</button></div>
+          <p class="adv small" id="namePreview" style="margin:4px 0 10px;word-break:break-word"></p>
+          <label class="adv row">Preview as <select id="previewEp"></select></label>
+          <label class="adv check"><input type="checkbox" id="showSafe" checked> Show safe zone while previewing</label>
+
+          <div class="adv ai" id="aiBox">
+            <label class="check" style="margin-top:0"><input type="checkbox" id="aiGate"> Ask for an AI review before exporting</label>
+            <div class="small">Reviewers</div>
+            <div class="revs">
+              <label class="check"><input type="checkbox" id="rvClaude" checked> Claude</label>
+              <label class="check"><input type="checkbox" id="rvOpenai"> ChatGPT</label>
+              <label class="check"><input type="checkbox" id="rvGemini"> Gemini</label>
+              <label class="check"><input type="checkbox" id="rvGrok"> Grok</label>
+            </div>
+            <div class="small">Reviewers see a sheet of still frames and your settings, nothing else. Claude asks your permission before anything is sent. The others use API keys you add below.</div>
+            <details id="keysBox">
+              <summary>Connect ChatGPT, Gemini or Grok</summary>
+              <p class="small" id="hostedNote" hidden><b>One extra step:</b> the version of this app hosted in Claude can only talk to Claude. Save a copy to your computer, open the saved file in Chrome or Edge, and the other reviewers work there with your own API keys.</p>
+              <div class="btns" id="dlAppRow" hidden><button class="btn" id="dlApp">Save a copy of this app</button></div>
+              <div class="keyrow"><b>ChatGPT (OpenAI)</b><input type="password" id="keyOpenai" placeholder="API key from platform.openai.com" autocomplete="off"><input type="text" id="modelOpenai" value="chat-latest" aria-label="OpenAI model"></div>
+              <div class="keyrow"><b>Gemini (Google)</b><input type="password" id="keyGemini" placeholder="API key from aistudio.google.com" autocomplete="off"><input type="text" id="modelGemini" value="gemini-flash-latest" aria-label="Gemini model"></div>
+              <div class="keyrow"><b>Grok (xAI)</b><input type="password" id="keyGrok" placeholder="API key from console.x.ai" autocomplete="off"><input type="text" id="modelGrok" value="grok-4.5" aria-label="Grok model"></div>
+              <label class="check"><input type="checkbox" id="keepKeys"> Remember keys on this computer, locked with a passphrase</label>
+              <div class="keyrow" id="passRow" hidden><input type="password" id="keyPass" placeholder="Passphrase (at least 8 characters)" autocomplete="new-password"><div class="btns" style="margin:0"><button class="btn" id="lockKeys">Save locked keys</button></div></div>
+              <div class="keyrow" id="unlockRow" hidden><b>Saved keys are locked</b><input type="password" id="unlockPass" placeholder="Passphrase" autocomplete="current-password"><div class="btns" style="margin:0"><button class="btn" id="unlockKeys">Unlock</button><button class="btn" id="forgetKeys">Forget saved keys</button></div></div>
+              <p class="small">Keys go straight from your browser to that company over an encrypted connection, and nowhere else. Saved keys are encrypted (AES-256) with your passphrase, which is never stored. For extra safety, create a separate key for this app with a monthly spending limit, and delete it if you stop using the app.</p>
+            </details>
+            <div class="btns"><button class="btn" id="aiBtn" disabled>Get AI review</button></div>
+            <div id="aiOut" hidden></div>
+          </div>
+
+          <div class="adv ai">
+            <b style="font-size:14px">Captions and hashtags</b>
+            <label class="row" style="grid-template-columns:96px 1fr">Write with <select id="capWith"></select></label>
+            <input type="text" id="capTopic" maxlength="200" placeholder="What’s the video about? e.g. Summer road trip with friends">
+            <div class="btns"><button class="btn" id="capBtn" disabled>Write captions</button></div>
+            <div id="capOut"></div>
+          </div>
+
+          <label class="adv row" style="margin-top:12px">Recording
+            <select id="engine">
+              <option value="auto" selected>Automatic</option>
+              <option value="exact">Frame-accurate</option>
+              <option value="compat">Most compatible</option>
+            </select>
+          </label>
+          <p class="adv small" id="engineNote" style="margin:0"></p>
+          <p class="small" id="gateNote" style="margin:12px 0 0;color:var(--danger)" hidden></p>
+          <div class="btns" style="margin-top:14px">
+            <button class="btn primary" id="render" disabled>Make videos</button>
+          </div>
+          <details class="diag" id="diagBox">
+            <summary>Diagnostics</summary>
+            <div class="btns" style="margin-top:10px"><button class="btn" id="diagBtn" type="button">Run diagnostics</button></div>
+            <p class="small" style="margin:6px 0 0">Checks what this device can do and, with a song and clips added, makes a 6-second test video with your footage. Copy the report and send it to whoever is helping you.</p>
+            <div id="diagOut" hidden><pre id="diagText"></pre><div class="btns"><button class="btn primary" id="diagCopy" type="button">Copy report</button><button class="btn" id="diagSave" type="button">Save report</button></div></div>
+          </details>
+          <div class="small" style="margin-top:6px">Videos are made in real time, up to three formats at once. Keep this tab open and visible while it runs.</div>
+        </div>
+      </details>
+    </div>
+
+    <div class="work">
+      <div class="stage" id="stageBox">
+        <canvas id="stage" width="960" height="540" hidden></canvas>
+        <div class="empty" id="stageEmpty">Your edit plays here once you’ve added audio and clips.</div>
+      </div>
+      <div class="stagebar" id="stageBar"><button class="btn primary" id="makeNow" disabled title="Make the videos ticked in Publish (YouTube Shorts unless you pick others)">Make video</button><button class="btn" id="preview" disabled>Preview</button><button class="btn" id="remix2" disabled>Remix</button><button class="btn" id="zipNow" hidden title="Download every video you've made, with publishing notes, as one ZIP">Download ZIP</button><button class="btn quiet" id="foldAll" type="button" title="Close every section">Collapse all</button></div>
+      <div class="titlebar" id="titleBar"><input type="text" id="quickTitle" maxlength="60" placeholder="Add a title (optional)" aria-label="Title shown at the start of the video (optional)"></div>
+      <div class="statusrow"><div class="wheel" id="wheel" hidden aria-hidden="true"><svg viewBox="0 0 44 44"><circle class="trk" cx="22" cy="22" r="18"/><circle class="arc" id="wheelArc" cx="22" cy="22" r="18"/></svg><span id="wheelPct"></span></div><div class="status" id="status" role="status"></div></div>
+      <div class="stats" id="stats"></div>
+      <div class="tlbar"><button class="btn" id="undoBtn" type="button" disabled title="Undo (Ctrl/⌘ Z)">Undo</button><button class="btn" id="redoBtn" type="button" disabled title="Redo (Shift Ctrl/⌘ Z)">Redo</button>
+        <span class="tlzoom"><button class="btn icon" id="zoomOut" type="button" aria-label="Zoom out" title="Zoom out">−</button><button class="btn icon" id="zoomIn" type="button" aria-label="Zoom in" title="Zoom in">+</button></span>
+        <span class="small tlhint" id="tlHint">Hold and drag a cut to trim it, a shot onto another to swap them, or along the waveform to scrub.</span></div>
+      <div class="tl-wrap"><canvas id="timeline" aria-label="Timeline of cuts" tabindex="0"></canvas></div>
+      <div id="shotPanel" hidden style="margin-top:8px;padding:10px;border:1px solid var(--line);border-radius:9px">
+        <div style="display:flex;gap:10px;align-items:center;flex-wrap:wrap">
+          <img id="shotThumb" alt="" style="width:96px;height:54px;object-fit:cover;border-radius:6px;background:#000">
+          <div class="small" id="shotInfo" style="flex:1;min-width:180px"></div>
+        </div>
+        <div class="btns" style="margin:8px 0 0">
+          <button class="btn" id="shotSwap">Swap</button><button class="btn" id="shotMore">More options</button>
+          <button class="btn" id="shotBack" title="Start this shot half a second earlier in its clip">◀ 0.5 s</button><button class="btn" id="shotFwd" title="Start this shot half a second later in its clip">0.5 s ▶</button>
+          <button class="btn" id="shotRev" title="Play this shot backwards">Reverse</button><button class="btn" id="shotLock">Lock</button><button class="btn" id="shotUndo" disabled>Undo</button><button class="btn" id="shotClose">Done</button>
+        </div>
+        <div id="shotOpts" style="display:flex;gap:6px;flex-wrap:wrap;margin-top:6px"></div>
+      </div>
+      <div class="btns" style="margin-top:4px"><button class="btn" id="errBtn" hidden>Copy error details</button></div>
+      <progress id="prog" value="0" max="1" hidden class="vh"></progress>
+      <div class="result" id="result">
+        <video id="resultVideo" controls playsinline hidden></video>
+        <div id="results"></div>
+        <div class="btns"><button class="btn primary" id="zipBtn">Save all as a ZIP package</button><button class="btn" id="folderBtn" hidden>Save all into a folder</button></div>
+        <div class="btns"><button class="btn" id="freeBtn">Free up space</button></div>
+        <p class="small" id="storeInfo" style="margin:4px 0 0"></p>
+        <div class="small" style="margin-top:6px" id="zipNote">The package holds a named folder with every video plus publishing notes with each platform’s specs.</div>
+      </div>
+    </div>
+  </div>
+</div>
+<div id="offscreen" aria-hidden="true" style="position:fixed;left:-10000px;top:0;width:1px;height:1px;overflow:hidden"></div>
+
+<script id="app">
+/*@APP@*/</script>
+</body>
+</html>
