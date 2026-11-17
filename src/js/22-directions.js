@@ -168,7 +168,7 @@ function weightedPick(pairs){ const tot=pairs.reduce((a,p)=>a+p[1],0); let r=Mat
 /* choose by fit AND by what hasn't been done lately: the last three directions are all but ruled out, older ones are discounted */
 function pickDirection(avoid){
   const hist=dirHistory().slice(-6), fit=feasibleMotifs();
-  return weightedPick(Object.keys(fit).filter(k=>fit[k]>0).map(k=>{ let x=fit[k]*(k==="none"?0.6:1); hist.forEach((hh,i)=>{ if(hh.motif===k) x*=(hist.length-i)<=3?0.02:0.4; }); if(avoid&&avoid.includes(k)) x*=0.005; return [k,x]; }));
+  return weightedPick(Object.keys(fit).filter(k=>fit[k]>0).map(k=>{ let x=fit[k]*(k==="none"?0.6:1); hist.forEach((hh,i)=>{ if(hh.motif===k) x*=(hist.length-i)<=3?0.02:0.4; }); if(avoid&&avoid.includes(k)) x*=0.005; return [k,x*learnW("motif",k)]; }));
 }
 function versionScore(){
   let ok=0,warn=0,fail=0,total=0; const mot=[];
@@ -209,15 +209,15 @@ async function autopilot(){
     const dirId=pickDirection(S._avoidDir); S._avoidDir=null; setControl("motif",dirId);
     say(`Direction: ${MOTIF_INFO[dirId][0]}. ${MOTIF_INFO[dirId][1][0].toUpperCase()+MOTIF_INFO[dirId][1].slice(1)}.`);
     // style: any of the six best-suited, weighted away from the ones used lately
-    const ranked=rankDirectors().filter(d=>!GIMMICK.includes(d.name)).slice(0,6), pool=ranked.map((d,i)=>{ let x=1/(1+i*0.5); hist.slice(-5).forEach((hh,k,a)=>{ if(hh.dir===d.name) x*=(a.length-k)===1?0.001:(a.length-k)===2?0.08:0.5; }); return [d,x]; }); // never the style of the video just before
+    const ranked=rankDirectors().filter(d=>!GIMMICK.includes(d.name)).slice(0,6), pool=ranked.map((d,i)=>{ let x=(1/(1+i*0.5))*learnW("style",d.name); hist.slice(-5).forEach((hh,k,a)=>{ if(hh.dir===d.name) x*=(a.length-k)===1?0.001:(a.length-k)===2?0.08:0.5; }); return [d,x]; }); // never the style of the video just before
     const top=[]; for(let k=0;k<2&&pool.length;k++){ const d=weightedPick(pool); top.push(d); pool.splice(pool.findIndex(p=>p[0]===d),1); }
     // rhythm personality, colour look and lettering also rotate
-    const recent=k=>hist.slice(-2).map(hh=>hh[k]), paceName=weightedPick([["tight",1],["classic",1.2],["spacious",1]].filter(p=>!recent("pace").slice(-1).includes(p[0])));
+    const recent=k=>hist.slice(-2).map(hh=>hh[k]), paceName=weightedPick([["tight",1],["classic",1.2],["spacious",1]].filter(p=>!recent("pace").slice(-1).includes(p[0])).map(p=>[p[0],p[1]*learnW("pace",p[0])])); S._paceName=paceName;
     S._paceK={tight:0.85,classic:1,spacious:1.22}[paceName];
     const LOOKPOOL={awakening:["vivid","glossy","tealorange","neon"],temperature:["none","glossy","moody"],twoworlds:["none","vivid","glossy"]}[dirId]||["none","tealorange","warmfilm","vivid","moody","glossy","painterly","fincher","cold","bw"];
-    const textPick=weightedPick(["clean","box","cinema","impact","serif"].filter(t=>!recent("text").includes(t)).map(t=>[t,1]));
-    const calm=!!(S.an.feel&&S.an.feel.free), sigPick=calm?"mixed":weightedPick(["whip","zoomthru","spin","mask","flash","zoom","zoomout","dip","mixed"].filter(t=>!recent("sig").includes(t)).map(t=>[t,t==="mixed"?0.6:1]));
-    const dress=()=>{ const cur=$("look").value; if(recent("look").includes(cur)||!LOOKPOOL.includes(cur)||dirId==="awakening"&&cur==="bw"){ const opts=LOOKPOOL.filter(l=>!recent("look").includes(l)&&!(dirId==="awakening"&&l==="bw")); if(opts.length) setControl("look",opts[Math.floor(Math.random()*opts.length)]); } setControl("textStyle",textPick); setControl("sigTrans",sigPick); };
+    const textPick=weightedPick(["clean","box","cinema","impact","serif"].filter(t=>!recent("text").includes(t)).map(t=>[t,learnW("text",t)]));
+    const calm=!!(S.an.feel&&S.an.feel.free), sigPick=calm?"mixed":weightedPick(["whip","zoomthru","spin","mask","flash","zoom","zoomout","dip","mixed"].filter(t=>!recent("sig").includes(t)).map(t=>[t,(t==="mixed"?0.6:1)*learnW("sig",t)]));
+    const dress=()=>{ const cur=$("look").value; if(recent("look").includes(cur)||!LOOKPOOL.includes(cur)||dirId==="awakening"&&cur==="bw"){ const opts=LOOKPOOL.filter(l=>!recent("look").includes(l)&&!(dirId==="awakening"&&l==="bw")); if(opts.length) setControl("look",weightedPick(opts.map(l=>[l,learnW("look",l)]))); } setControl("textStyle",textPick); setControl("sigTrans",sigPick); };
     let best=null, tried=0; const seeds=big?2:3;
     // restraint: the footage carries the edit; no overlays or zooms layered on top of it
     const restrain=()=>["fxDoodles","fxStrobe","fxGlitch","fxShake","fxMultiply","fxSplit","fxFisheye","fxMirror","fxWash","fxPulse","kb","fxHandheld"].forEach(id=>setControl(id,false));
@@ -234,6 +234,7 @@ async function autopilot(){
     await breathe(); S._cur=planState(); S._curJ=JSON.stringify(S._cur.snap); S._lastPush=0;
     if($("autoTitles").checked){ status("Writing titles…"); await writeTitles(!!aiId); say(`Titles written for ${S.eps.length} platform${S.eps.length===1?"":"s"}${aiId?" from your footage":""}.`); }
     else say($("hookText").value.trim()?`Title: “${$("hookText").value.trim()}”.`:"No on-screen title. Type one under the preview if you want one.");
+    { const L=learned(); if(L&&$("learnOn")&&$("learnOn").checked&&L.n>=2){ const s=learnSummary(L).filter(x=>x.startsWith("Working")); if(s.length) say(`Leaning towards what has kept your viewers (${L.n} Shorts): ${s.map(x=>x.replace("Working: ","").replace(/ \(.*$/,"")).join(", ")}.`); } }
     { const se=S.eps.map(EP).find(e=>e&&e.short); if(se){ windowFor(se); say(S._hookWhy?`The ${se.name} opens on ${S._hookWhy}, so viewers recognise the song in the first second.`:`The ${se.name} opens on the strongest beat it could find. Add the song’s lyrics for an opening on the chorus.`); } }
     await breathe(); renderChecklist();
     status(best.sc.fail?"Settings chosen, but something is blocking export. See the checklist in step 6.":"All set. Press Preview to watch it, or Make videos.");

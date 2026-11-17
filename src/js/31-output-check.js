@@ -153,6 +153,7 @@ async function makeVideosInner(skipGate){
   $("offscreen").innerHTML=""; $("prog").hidden=true;
   if(S.results.length){ status("Checking each file against its plan…");
     for(const r of S.results) recordUsage(r.plan);
+    try{ logRecipes(S.results); }catch(e){}
     for(const r of S.results){ try{ r.check=await verifyExport(r); }catch(e){ r.check={ok:null,notes:["Couldn’t check this file."]}; } await new Promise(res=>setTimeout(res,50)); }
     S.clipAudio={}; // release decoded clip sound
     renderResults(); }

@@ -510,6 +510,20 @@
           <div class="btns" style="margin-top:14px">
             <button class="btn primary" id="render" disabled>Make videos</button>
           </div>
+          <details class="diag" id="ytBox" hidden>
+            <summary>YouTube: learn from your results, upload</summary>
+            <div id="ytSetup" class="small" style="margin-top:8px">
+              <p style="margin:0 0 6px">Connect your channel so the app can see which Shorts keep viewers and lean towards what works, and upload or schedule Shorts from here. It needs a Google client ID from your own free Google Cloud project.</p>
+              <input type="text" id="ytClient" placeholder="…apps.googleusercontent.com" aria-label="Google OAuth client ID" autocomplete="off">
+              <div class="btns" style="margin-top:6px"><button class="btn" id="ytSave" type="button">Save client ID</button></div>
+            </div>
+            <div id="ytLive" hidden style="margin-top:8px">
+              <div class="btns" style="margin:0"><button class="btn" id="ytRead" type="button">Read my results</button><button class="btn quiet" id="ytForget" type="button">Disconnect</button></div>
+              <div class="small" id="ytWho" style="margin-top:6px"></div>
+              <div class="small" id="ytOut" style="margin-top:6px"></div>
+              <label class="check" style="margin-top:8px"><input type="checkbox" id="learnOn" checked> Do everything leans towards what keeps your viewers</label>
+            </div>
+          </details>
           <details class="diag" id="diagBox">
             <summary>Diagnostics</summary>
             <div class="btns" style="margin-top:10px"><button class="btn" id="diagBtn" type="button">Run diagnostics</button></div>

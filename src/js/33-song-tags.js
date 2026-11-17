@@ -98,6 +98,7 @@ function renderResults(){
       row.appendChild(sh); }
     else if(UPLOAD[r.ep.id]){ const a=document.createElement("a"); a.className="btn"; a.href=UPLOAD[r.ep.id]; a.target="_blank"; a.rel="noopener"; a.textContent="Upload page"; row.appendChild(a); }
     else row.appendChild(document.createElement("span"));
+    try{ ytUploadUI(r,row); }catch(e){}
     box.appendChild(row);
   });
   (S.extras||[]).forEach(x=>{
