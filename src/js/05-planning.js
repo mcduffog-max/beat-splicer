@@ -186,9 +186,9 @@ function buildPlan(){ refreshExclusion(); refreshFilter(); motifSetup(); setTime
   const dc=dcut();
   if(dc && dc.pattern) for(let i=2;i<segs.length;i++){ if(i%4<2) continue; const p=segs[i-2], c=S.clips[p.clip], D=segs[i].end-segs[i].start, next=p.src+(p.end-p.start);
     if(c && (c.kind==="image" || next+D<c.dur-0.05)){ segs[i].clip=p.clip; segs[i].src=c.kind==="image"?0:next; segs[i]._pattern=true; } }
-  applyRefrain(segs); advanceClips(segs); assignFocus(segs); assignReverse(segs,typeof short!=="undefined"?short:false); assignCamera(segs,typeof short!=="undefined"?short:false);
+  applyRefrain(segs); advanceClips(segs); assignFocus(segs); assignReverse(segs,typeof short!=="undefined"?short:false); actionAlign(segs); assignCamera(segs,typeof short!=="undefined"?short:false);
   applyLocks(segs); if(S.sel!=null && !segs[S.sel]) S.sel=null;
-  S.plan=segs; assignTransitions(); drawTimeline(); renderStats(); updateButtons(); saveProjectSoon(); if(S.sel!=null) showShot(S.sel);
+  S.plan=segs; assignTransitions(); clearTimeout(S._actT); S._actT=setTimeout(()=>measureAction().catch(()=>{}),3000); drawTimeline(); renderStats(); updateButtons(); saveProjectSoon(); if(S.sel!=null) showShot(S.sel);
 }
 /* A clip that comes back never shows the same frames twice: each return carries on forward from its last use, or,
    when the clip has no room left ahead, steps back before its first. Refrains and bookends return to the same clip and
