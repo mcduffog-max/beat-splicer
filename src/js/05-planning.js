@@ -151,6 +151,7 @@ function chooseClip(seg, ctx, exclude){
         const ls=ctx.lastSrc.get(ci), room=clip.dur-ls-0.3>=D;
         if(room){ if(start<ls-0.05) cost+=2.2; else if(start-ls<1.5) cost-=0.35; } else if(start<ls-0.05) cost+=0.6; }                                   // don't start on a source cut, flash or black frame
       if(clip.kind!=="image"){ for(const x of clip.samples) if((x.cut||x.dark) && x.t>start+0.1 && x.t<start+D-0.1){ cost+=1.5; break; } } // or run through one
+      if(clip.wm&&clip.wm.length&&wmBlocked(clip,start,D)) cost+=6; // a watermark that can't be framed out: use other footage
       if(seg.e>0.7 && (clip.kind==="image" || s.mN<0.2)) cost+=0.35;  // loud moments want movement
       const W={q:qualityCost(seg,clip,s,ctx), cn:continuityCost(seg,s,ctx), se:seeCost(seg,s,ci), st:storyCost(seg,clip,ci,s,ctx), mo:motifCost(seg,clip,ci,s), ou:outlineCost(seg,clip,ci,s,ctx), ly:lyricCost(seg,clip,ci,s)+vetoCost(seg,ci), share, dcol};
       cost+=W.q+W.cn+W.se+W.share+W.st+W.mo+W.ou+W.ly;

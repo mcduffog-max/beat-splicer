@@ -344,7 +344,6 @@ function drawClip(o,v,clip,F,scale=1,dx=0,dy=0,ex=null){
     px=Math.min(0,Math.max(W-sw*k,W/2-fx*k)); py=Math.min(0,Math.max(H-sh*k,H*0.42-fy*k)); // face centred, eyes near the upper third
   }
   const dw=sw*k, dh=sh*k; g.drawImage(v,sx,sy,sw,sh,px+dx,py+dy,dw,dh);
-  if(clip._wmc&&clip._wmc.blur.length&&ecr===clip._wmc.cr) wmSoften(o,v,clip,sw/Math.max(0.05,1-ecr.l-ecr.r),sh/Math.max(0.05,1-ecr.t-ecr.b),sx,sy,k,px+dx,py+dy);
   if(ex && ex.rot) g.restore();
   if(FILTER_OK) g.filter="none";
 }

@@ -52,26 +52,19 @@ function viewCrop(clip,W,H,F,st){
   const view=cr=>{ const rw=(1-cr.l-cr.r)*vw, rh=(1-cr.t-cr.b)*vh; let x0=cr.l,x1=1-cr.r,y0=cr.t,y1=1-cr.b; const k=fill?Math.max(W/rw,H/rh):Math.min(W/rw,H/rh);
     if(fill){ if(rw/rh>A){ const s=rh*A/vw, c=(x0+x1)/2; x0=c-s/2; x1=c+s/2; } else { const s=rw/A/vh, c=(y0+y1)/2; y0=c-s/2; y1=c+s/2; } } return {x0,x1,y0,y1,k}; };
   const hits=(b,v)=>Math.min(b.x1,v.x1)-Math.max(b.x0,v.x0)>0.004&&Math.min(b.y1,v.y1)-Math.max(b.y0,v.y0)>0.004;
-  let cr={...base}; const k0=view(cr).k, blur=[];
+  let cr={...base}; const k0=view(cr).k, left=[];
+  // the picture itself is never altered: a mark is framed out (a tighter crop on its side), or the shot avoids it
   for(const b of on){ if(!hits(b,view(cr))) continue; const cx=(b.x0+b.x1)/2, cy=(b.y0+b.y1)/2, cand=[]; let best=null;
-    cand.push(cy<0.5?{...cr,t:Math.max(cr.t,b.y1)}:{...cr,b:Math.max(cr.b,1-b.y0)}); cand.push(cx<0.5?{...cr,l:Math.max(cr.l,b.x1)}:{...cr,r:Math.max(cr.r,1-b.x0)});
-    for(const c of cand){ if(1-c.l-c.r<0.35||1-c.t-c.b<0.35) continue; const v=view(c); if(hits(b,v)) continue; const cost=v.k/k0; if(cost<=1.45&&(!best||cost<best.cost)) best={c,cost}; }
-    if(best) cr=best.c; else blur.push(b); } // can't be cropped away without zooming too far: soften it instead
-  clip._wmc={key,cr,blur}; if(clip._wmcs.size>24) clip._wmcs.clear(); clip._wmcs.set(key,clip._wmc); return cr;
+    const vy=cy<0.5?{t:Math.max(cr.t,b.y1)}:{b:Math.max(cr.b,1-b.y0)}, hx=cx<0.5?{l:Math.max(cr.l,b.x1)}:{r:Math.max(cr.r,1-b.x0)};
+    cand.push({...cr,...vy},{...cr,...hx},{...cr,...vy,...hx});
+    for(const lim of [1.45,1.9]){ for(const c of cand){ if(1-c.l-c.r<0.3||1-c.t-c.b<0.3) continue; const v=view(c); if(hits(b,v)) continue; const cost=v.k/k0; if(cost<=lim&&(!best||cost<best.cost)) best={c,cost}; } if(best) break; } // a closer crop first; a tighter one if that's what it takes
+    if(best) cr=best.c; else left.push(b); } // in the middle of the picture: no crop can lose it, so the shot planner steers clear of this moment
+  clip._wmc={key,cr,blur:[],left}; if(clip._wmcs.size>24) clip._wmcs.clear(); clip._wmcs.set(key,clip._wmc); return cr;
 }
-const wmTiny=document.createElement("canvas"), wmTinyG=wmTiny.getContext("2d"), wmOff=document.createElement("canvas"), wmOffG=wmOff.getContext("2d");
-/* a mark that can't be cropped away is defocused in place: the area around it, heavily blurred, with soft feathered edges */
-function wmSoften(o,v,clip,vw,vh,sx,sy,k,px,py){ const m=clip._wmc; if(!m||!m.blur.length) return; const {g}=o;
-  for(const b of m.blur){ const mx=(b.x1-b.x0)*0.35, my=(b.y1-b.y0)*0.35, x0=Math.max(0,b.x0-mx), y0=Math.max(0,b.y0-my), x1=Math.min(1,b.x1+mx), y1=Math.min(1,b.y1+my);
-    const bx=x0*vw, by=y0*vh, bw=(x1-x0)*vw, bh=(y1-y0)*vh, X=px+(bx-sx)*k, Y=py+(by-sy)*k, DW=Math.ceil(bw*k), DH=Math.ceil(bh*k); if(DW<4||DH<4) continue;
-    const tw=Math.max(3,Math.round(DW/14)), th=Math.max(3,Math.round(DH/14)); if(wmTiny.width!==tw||wmTiny.height!==th){ wmTiny.width=tw; wmTiny.height=th; }
-    try{ wmTinyG.drawImage(v,bx,by,bw,bh,0,0,tw,th); }catch(e){ continue; }
-    if(wmOff.width<DW||wmOff.height<DH){ wmOff.width=Math.max(wmOff.width,DW); wmOff.height=Math.max(wmOff.height,DH); }
-    wmOffG.globalCompositeOperation="source-over"; wmOffG.clearRect(0,0,DW,DH); wmOffG.imageSmoothingEnabled=true; wmOffG.imageSmoothingQuality="high"; wmOffG.drawImage(wmTiny,0,0,DW,DH);
-    const fx=(b.x0-x0)/(x1-x0), fx2=(b.x1-x0)/(x1-x0), fy=(b.y0-y0)/(y1-y0), fy2=(b.y1-y0)/(y1-y0); wmOffG.globalCompositeOperation="destination-in";
-    let gr=wmOffG.createLinearGradient(0,0,DW,0); gr.addColorStop(0,x0===0?"#000":"rgba(0,0,0,0)"); gr.addColorStop(Math.max(0.01,fx),"#000"); gr.addColorStop(Math.min(0.99,fx2),"#000"); gr.addColorStop(1,x1===1?"#000":"rgba(0,0,0,0)"); wmOffG.fillStyle=gr; wmOffG.fillRect(0,0,DW,DH);
-    gr=wmOffG.createLinearGradient(0,0,0,DH); gr.addColorStop(0,y0===0?"#000":"rgba(0,0,0,0)"); gr.addColorStop(Math.max(0.01,fy),"#000"); gr.addColorStop(Math.min(0.99,fy2),"#000"); gr.addColorStop(1,y1===1?"#000":"rgba(0,0,0,0)"); wmOffG.fillStyle=gr; wmOffG.fillRect(0,0,DW,DH);
-    wmOffG.globalCompositeOperation="source-over"; g.drawImage(wmOff,0,0,DW,DH,X,Y,DW,DH); } }
+/* does a watermark stay in view anywhere in [start, start+D] for this format? Then that moment of the clip isn't used. */
+function wmBlocked(clip,start,D,ep){ if(!clip.wm||!clip.wm.length||clip.kind==="image"||!$("wmAvoid").checked) return false; ep=ep||EP(S.eps[0])||EP("shorts"); if(!ep) return false;
+  const F={fit:$("fit")?$("fit").value:"fill"}, ts=[start,start+D/2,Math.max(start,start+D-0.05)];
+  for(const t of ts){ if(!clip.wm.some(b=>b.a==null||(t>=b.a-0.05&&t<=b.b+0.05))) continue; viewCrop(clip,ep.w,ep.h,F,t); if(clip._wmc&&clip._wmc.left&&clip._wmc.left.length) return true; } return false; }
 async function wmScan(c){ const v=document.createElement("video"); v.muted=true; v.playsInline=true; v.preload="auto"; v.src=c.url; try{ await waitEvent(v,"loadeddata",20000); const dur=v.duration, m=wmCanvas(v), fr=[], n=Math.max(3,Math.min(12,Math.ceil(dur/1.5)));
     const ts=[]; for(let i=0;i<n;i++){ const t=Math.max(0,(dur-0.3)*(i+0.5)/n); ts.push(t); await seekTo(v,t); fr.push(wmGrab(m,v)); } c.wm=detectWatermarks(fr,m.w,m.h,ts,dur); c._wmc=null; c._wmcs=null; }
   catch(e){ c.wm=[]; } finally{ v.removeAttribute("src"); v.load(); } }
