@@ -50,12 +50,13 @@ function drawPicture(o,plan,cur,t,pool,F){
   g.globalAlpha=1; g.globalCompositeOperation="source-over"; g.fillStyle="#000"; g.fillRect(0,0,W,H);
   let ks=kbScale(F,seg,t)*ps, ex=null, ox=0, oy=0;
   { const mv=moveOf(seg,t,W,H,bi); ks*=mv.s; ox+=mv.dx; oy+=mv.dy; }
+  o._seg=seg; { const dm=clip.kind!=="image"&&directorMove(seg,t,W,H,bi); if(dm){ ks*=dm.s; ox+=dm.dx; oy+=dm.dy; if(dm.rot) ex={...(ex||{}),rot:dm.rot}; } }
   if(clip.kind==="image"){ const m=stillMotion(F,seg,cur,t,W,H); ks*=m.s; ox=m.dx||0; oy=m.dy||0; ex=m; }
   if(seg._focus){ ex={...(ex||{}),focus:seg._focus,prog:(t-seg.start)/Math.max(0.3,seg.end-seg.start)}; }
   const D=(o2,v2,c2,F2,sc,dx,dy)=>drawClip(o2,v2,c2,F2,sc,dx+ox,dy+oy,ex);
   if(!inTr) D(o,el,clip,F,ks,sx,sy);
   else {
-    const p=ease(Math.min(1,local/tr.dur)); let oks=kbScale(F,prev,t)*ps, oex=null;
+    const p=ease(Math.min(1,local/tr.dur)); let oks=kbScale(F,prev,t)*ps, oex=null; const pdm=oclip.kind!=="image"&&directorMove(prev,t,W,H,bi); if(pdm){ oks*=pdm.s; oex={dx0:pdm.dx,dy0:pdm.dy}; }
     if(oclip.kind==="image"){ const m=stillMotion(F,prev,cur-1,t,W,H); oks*=m.s; oex={...m,dx0:m.dx||0,dy0:m.dy||0}; }
     if(prev._focus){ oex={...(oex||{dx0:0,dy0:0}),focus:prev._focus,prog:1}; }
     const OD=(sc,dx,dy)=>drawClip(o,oel,oclip,F,sc,dx+(oex?oex.dx0:0),dy+(oex?oex.dy0:0),oex);
@@ -169,6 +170,7 @@ function borderPost(o,t,win,F){
 }
 function postFx(o,t,win,F,bi,opts={}){
   const {g,W,H,ep}=o;
+  lensFx(o,t,opts);
   if(F.fisheye) fisheyeFx(o,0.22);
   if(F.mirror) mirrorFx(o);
   motifPost(o,t,F,bi,opts,win);

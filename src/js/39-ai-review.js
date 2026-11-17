@@ -77,7 +77,7 @@ function applyFix(fix){
 
 async function renderStill(o,segIdx,t,F,guides){
   const seg=curPlan()[segIdx], clip=S.clips[seg.clip]; F=fxFor(F,seg,segIdx);
-  const {g,W,H}=o; g.fillStyle="#000"; g.fillRect(0,0,W,H);
+  const {g,W,H}=o; g.fillStyle="#000"; g.fillRect(0,0,W,H); o._seg=seg;
   if(clip.kind==="image"){
     const m=stillMotion(F,seg,segIdx,t,W,H); if(seg._focus){ m.focus=seg._focus; m.prog=(t-seg.start)/Math.max(0.3,seg.end-seg.start); } drawClip(o,clip.img,clip,F,kbScale(F,seg,t)*m.s,m.dx||0,m.dy||0,m);
     postFx(o,t,windowFor(o.ep),F,beatInfo(t),{still:true,guides}); return;
@@ -85,7 +85,8 @@ async function renderStill(o,segIdx,t,F,guides){
   const v=document.createElement("video"); v.muted=true; v.playsInline=true; v.preload="auto"; v.src=clip.url;
   try{ await waitEvent(v,"loadeddata",8000); }catch(e){ return; }
   await seekTo(v,Math.min(clip.dur-0.1,srcTimeAt(seg,Math.max(seg.start,t),F)));
-  { const mv=moveOf(seg,t,W,H,beatInfo(t)); drawClip(o,v,clip,F,kbScale(F,seg,t)*mv.s,mv.dx,mv.dy,seg._focus?{focus:seg._focus,prog:(t-seg.start)/Math.max(0.3,seg.end-seg.start)}:null); } // reference frames use the same framing and camera moves as the export
+  { const mv=moveOf(seg,t,W,H,beatInfo(t)), dm=directorMove(seg,t,W,H,beatInfo(t))||{s:1,dx:0,dy:0,rot:0}; const ex=seg._focus?{focus:seg._focus,prog:(t-seg.start)/Math.max(0.3,seg.end-seg.start)}:{}; if(dm.rot) ex.rot=dm.rot;
+    drawClip(o,v,clip,F,kbScale(F,seg,t)*mv.s*dm.s,mv.dx+dm.dx,mv.dy+dm.dy,ex); } // reference frames use the same framing and camera moves as the export
   postFx(o,t,windowFor(o.ep),F,beatInfo(t),{still:true,guides});
   v.removeAttribute("src"); v.load();
 }

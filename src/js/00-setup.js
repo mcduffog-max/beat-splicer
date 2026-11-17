@@ -43,11 +43,12 @@ S.eps=["shorts"]; // YouTube Shorts unless the person picks others
 const LOOK_IDS=["mode","pace","variety","trans","trLen","fit","zoom","kb","fadeIn","fadeOut","look","fxPulse","fxShake","fxGlitch","fxGrain","fxVignette","fxBars","hookText","endText","space","spaceAmt","shortLen","previewEp","showSafe","aiGate",
   "fxFisheye","fxSplit","fxMultiply","fxMirror","fxStrobe","fxHandheld","fxWash","fxDoodles","slowmo",
   "rvClaude","rvOpenai","rvGemini","rvGrok","modelOpenai","modelGemini","modelGrok","keepKeys","capTopic",
-  "stillMotion","textStyle","ovLeaks","ovBokeh","ovDust","ovLower","clipSound","clipVol","projName","nameScheme","proRules","autoTitles","payoffOn","artistName","engine","storyOn","storyShape","faceFrame","aiImagery","exclN","fxRamp","motif","sigTrans","fxReverse","camMoves","ownMusic","songVer","audTexture","audRadio","audFilterDrop","audStutter","audEcho","songEnd","sfxWhoosh","sfxImpact","sfxRiser","endStyle","endCard","wmAvoid","progBorder","progScope","progOpacity","progDir","progColor","progShadow","lyricMatch","lyricShow"];
+  "stillMotion","lens","textStyle","ovLeaks","ovBokeh","ovDust","ovLower","clipSound","clipVol","projName","nameScheme","proRules","autoTitles","payoffOn","artistName","engine","storyOn","storyShape","faceFrame","aiImagery","exclN","fxRamp","motif","sigTrans","fxReverse","camMoves","ownMusic","songVer","audTexture","audRadio","audFilterDrop","audStutter","audEcho","songEnd","sfxWhoosh","sfxImpact","sfxRiser","endStyle","endCard","wmAvoid","progBorder","progScope","progOpacity","progDir","progColor","progShadow","lyricMatch","lyricShow"];
 function saveSettings(){ try{ const look={}; LOOK_IDS.forEach(id=>{ const el=$(id); if(el) look[id]=el.type==="checkbox"?el.checked:el.value; });
-  localStorage.setItem("beatsplicer2",JSON.stringify({EQ,look,eps:S.eps,t2:1})); }catch(e){} }
+  localStorage.setItem("beatsplicer2",JSON.stringify({EQ,look,eps:S.eps,t2:1,t3:1})); }catch(e){} }
 function loadSettings(){ try{ const s=JSON.parse(localStorage.getItem("beatsplicer2")||"null"); if(!s) return;
   if(!s.t2&&s.look){ s.look.autoTitles=false; s.look.payoffOn=false; } // Nov 2026: no titles unless the person adds one
+  if(!s.t3&&s.look){ s.look.camMoves="director"; } // Nov 2026: the camera director becomes the default
   if(s.EQ) Object.assign(EQ,s.EQ);
   if(Array.isArray(s.eps)) S.eps=s.eps.filter(id=>EP(id));
   if(s.look) LOOK_IDS.forEach(id=>{ const el=$(id); if(!el||!(id in s.look)) return; if(el.type==="checkbox") el.checked=!!s.look[id]; else el.value=id==="textStyle"?normStyle(s.look[id]):s.look[id]; });

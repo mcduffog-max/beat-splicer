@@ -376,6 +376,7 @@ function kbScale(F,seg,t){
    final shot; other longer shots alternate. Moving footage gets a gentle move; still footage a stronger one. */
 function assignCamera(segs,short){
   const mode=$("camMoves")?$("camMoves").value:"off", r=rng((S.seed||1)*17+3), n=segs.length; let last=null;
+  if(mode==="director"){ segs.forEach(s=>{ s._cam=null; s._camA=0; }); assignDirector(segs,short); return; }
   segs.forEach((s,i)=>{ s._cam=null; s._camA=0; const D=s.end-s.start, c=S.clips[s.clip]; if(mode==="off"||!c||c.kind==="image"||s._freeze&&D<1) return;
     if(s._focus&&s._focus.z1>s._focus.z0+0.02) return; // already pushing in on a face
     const sm=c.samples&&c.samples.reduce((a,x)=>Math.abs(x.t-s.src)<Math.abs(a.t-s.src)?x:a,c.samples[0]), mov=sm?(sm.motion||0):2;
