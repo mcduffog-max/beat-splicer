@@ -117,6 +117,7 @@ function shotReasons(seg,pick){ const W=pick.why, out=[], c=S.clips[pick.clip], 
   if(shotImportance(seg)>=1&&W.q<0.15) out.push({k:0.6,t:"Sharp, full-quality footage for a key moment"});
   if(W.cn<-0.15) out.push({k:-W.cn,t:"Movement carries on from the shot before"});
   if(W.mc<-0.1) out.push({k:0.5-W.mc,t:"Match cut: its shapes line up with where the shot before ended"});
+  if(W.rt<-0.15) out.push({k:-W.rt,t:"Like the shots that hold your viewers on YouTube"});
   if(W.pl<-0.2) out.push({k:-W.pl,t:"Stays in the same place for a few shots, from a new angle"});
   if(W.dcol!=null&&W.dcol<0.06) out.push({k:0.3,t:"Colours sit with the shot before"});
   if(seg.e>0.7&&pick.sm&&(pick.sm.motion||0)>6) out.push({k:0.4,t:"Lots of movement for a loud passage"});
@@ -156,8 +157,8 @@ function chooseClip(seg, ctx, exclude){
       if(clip.kind!=="image"){ for(const x of clip.samples) if((x.cut||x.dark) && x.t>start+0.1 && x.t<start+D-0.1){ cost+=1.5; break; } } // or run through one
       if(clip.wm&&clip.wm.length&&wmBlocked(clip,start,D)) cost+=6; // a watermark that can't be framed out: use other footage
       if(seg.e>0.7 && (clip.kind==="image" || s.mN<0.2)) cost+=0.35;  // loud moments want movement
-      const W={q:qualityCost(seg,clip,s,ctx), cn:continuityCost(seg,s,ctx), se:seeCost(seg,s,ci), st:storyCost(seg,clip,ci,s,ctx), mo:motifCost(seg,clip,ci,s), ou:outlineCost(seg,clip,ci,s,ctx), ly:lyricCost(seg,clip,ci,s)+vetoCost(seg,ci), pl:placeCost(seg,ci,ctx), mc:clip.kind==="image"?0:matchCutCost(seg,clip,ci,start,ctx), share, dcol};
-      cost+=W.q+W.cn+W.se+W.share+W.st+W.mo+W.ou+W.ly+W.pl+W.mc;
+      const W={q:qualityCost(seg,clip,s,ctx), cn:continuityCost(seg,s,ctx), se:seeCost(seg,s,ci), st:storyCost(seg,clip,ci,s,ctx), mo:motifCost(seg,clip,ci,s), ou:outlineCost(seg,clip,ci,s,ctx), ly:lyricCost(seg,clip,ci,s)+vetoCost(seg,ci), pl:placeCost(seg,ci,ctx), rt:retentionCost(seg,clip,s,ctx), mc:clip.kind==="image"?0:matchCutCost(seg,clip,ci,start,ctx), share, dcol};
+      cost+=W.q+W.cn+W.se+W.share+W.st+W.mo+W.ou+W.ly+W.pl+W.mc+W.rt;
       { const raw=clip.kind==="image"?0:(s.motion||0), still=Math.max(0,1-raw/1.2); // only genuinely still footage is penalised; any real motion is welcome
         if(ctx.short) cost+=1.6*still+(clip.kind==="image"?0.6+Math.max(0,D-1)*0.8:0);  // short-form lives on movement; a still never holds long
         else if(seg.e>0.6) cost+=0.5*still; }
@@ -205,6 +206,9 @@ function advanceClips(plan){
       for(const a of [lastEnd+0.04, hi+0.04]) if(pick==null&&a+D<=room&&!hit(a)) pick=a;              // forward from where it was last seen
       if(pick==null&&lo-0.04-D>=0&&!hit(lo-0.04-D)) pick=lo-0.04-D;                                      // or back before where it was first seen
       if(pick==null){ const gaps=[]; let prev=0; [...U].sort((a,b)=>a[0]-b[0]).forEach(([x,y])=>{ if(x-prev>=D+0.08) gaps.push(prev+0.04); prev=Math.max(prev,y); }); if(room-prev>=D+0.04) gaps.push(prev+0.04); if(gaps.length) pick=gaps.reduce((a,g)=>Math.abs(g-lastEnd)<Math.abs(a-lastEnd)?g:a); } // or any stretch not yet shown
+      if(pick==null&&!s._bookend&&!s._refrain&&!s._pattern&&!s._ramp){ // every stretch of this clip is already in the edit: another clip takes the shot
+        let alt=null; try{ alt=chooseClip(s,{recent:[s.clip],usage:new Map(),rand:rng(Math.round(s.start*100)+7)},s.clip); }catch(e){}
+        const ac=alt&&S.clips[alt.clip]; if(ac){ const U2=used.get(alt.clip)||[]; if(ac.kind==="image"||!U2.some(([x,y])=>Math.min(y,alt.src+D)-Math.max(x,alt.src)>0.04)){ s.clip=alt.clip; s.src=alt.src; s._act=null; if(ac.kind!=="image"){ U2.push([s.src,s.src+D]); used.set(alt.clip,U2); } continue; } } }
       if(pick==null&&!s._bookend&&room>D){ let best=null; const ov=a=>U.reduce((t,[x,y])=>t+Math.max(0,Math.min(y,a+D)-Math.max(x,a)),0);   // every moment already shown: the least-repeated stretch, never the same start
         for(let a=0;a+D<=room;a+=0.25){ const v=ov(a)+(U.some(([x])=>Math.abs(x-a)<0.3)?99:0)+Math.abs(a-lastEnd)*0.01; if(!best||v<best.v) best={a,v}; } if(best&&best.v<99) pick=best.a; }
       if(pick!=null) s.src=+pick.toFixed(3);

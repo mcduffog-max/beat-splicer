@@ -66,7 +66,7 @@ function makeExportPlan(ep,win){
         if(at-s.start<0.4){ s.end=win[1]; segs.length=i+1; s._endShot=true; s._split=true; }
         else { s.end=at; segs.length=i+1; segs.push({...cloneSeg(s),start:at,end:win[1],_split:true,_endShot:true,tr:EN.type==="stop"?{type:"cut",dur:0}:{type:"crossfade",dur:Math.min(0.9,(win[1]-at)*0.25)}}); }
         segs[segs.length-1]._endInfo=EN; } } }
-  const ctx={recent:[],usage:new Map(),rand:rng(S.seed+Math.round(win[0]*100)+(short?1:0)),order:filmOrder(),short,acts:actsFor(win)}, lastSeen=new Map();
+  const ctx={recent:[],usage:new Map(),rand:rng(S.seed+Math.round(win[0]*100)+(short?1:0)),order:filmOrder(),short,win,acts:actsFor(win)}, lastSeen=new Map();
   annotateStory(segs);
   for(let i=0;i<segs.length;i++){
     const s=segs[i], rel=s.start-win[0];

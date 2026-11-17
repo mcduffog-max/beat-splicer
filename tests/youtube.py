@@ -5,11 +5,28 @@ from playwright.async_api import async_playwright
 NOW=int(time.time()*1000); DAY=86400000
 FAKE_GIS="window.google={accounts:{oauth2:{initTokenClient:(o)=>({requestAccessToken:()=>setTimeout(()=>o.callback({access_token:'tok123',expires_in:3600}),10)})}}};"
 # 12 recipes over 12 days: chorus openings and 'tight' pace do better
-recs=[]; vids=[]; rows=[]
+import random
+random.seed(3)
+recs=[]; vids=[]; rows=[]; curves={}
 for k in range(12):
     chorus = k%2==0; tight = k%3==0
     at=NOW-(14-k)*DAY
     recs.append({"key":f"r{k}","at":at,"ep":"shorts","file":f"Song {k}.mp4","song":f"Song Number {k} Alpha","artist":"Band","dur":28.5,"opening":"chorus" if chorus else "strongest moment","style":"Symmetry" if k%4<2 else "Painterly surreal","motif":"none","look":"vivid","pace":"tight" if tight else "classic","text":"clean","sig":"mixed","length":"recommended","title":"no title","ytId":None})
+    shots=[]; t=0.0
+    while t<28.4:
+        L=round(random.uniform(0.9,2.0),2); shots.append({"a":round(t,2),"b":round(min(28.5,t+L),2),"m":random.choice([0,1,2]),"k":"i" if random.random()<0.3 else "v","sc":-1,"tr":"cut","cam":"","act":0,"mc":0}); t+=L
+    recs[-1]["shots"]=shots
+    def rate(sh): return 0.02+(0.03 if sh["k"]=="i" else 0)+(-0.012 if sh["m"]==2 else 0)
+    pts=[]; 
+    for q in range(1,101):
+        x=q/100*28.5; r=1.0
+        for sh in shots:
+            a,b=sh["a"],sh["b"]
+            if x<=a: break
+            r*=(1-rate(sh))**(min(x,b)-a)
+        r*=0.75 if x>1 else 1-0.25*x
+        pts.append([q/100,round(r,4),0.5])
+    curves[f"vid{k}"]=pts
     vids.append({"id":f"vid{k}","title":f"Band Song Number {k} Alpha","at":at+DAY//2})
     stay=0.30+(0.12 if chorus else 0)+(0.05 if tight else 0)
     rows.append([f"vid{k}",1000,int(1000*stay),17,60+20*stay,20,1,0])
@@ -18,6 +35,8 @@ async def api(route):
     if "/channels?" in u: body={"items":[{"id":"UC1","snippet":{"title":"McDuffOG"},"contentDetails":{"relatedPlaylists":{"uploads":"UU1"}}}]}
     elif "/playlistItems?" in u: body={"items":[{"contentDetails":{"videoId":v["id"],"videoPublishedAt":time.strftime('%Y-%m-%dT%H:%M:%SZ',time.gmtime(v["at"]/1000))},"snippet":{"title":v["title"],"publishedAt":""}} for v in vids]}
     elif "/videos?part=contentDetails" in u: body={"items":[{"id":v["id"],"contentDetails":{"duration":"PT28S"}} for v in vids]}
+    elif "youtubeanalytics" in u and "elapsedVideoTimeRatio" in u:
+        vid=re.search(r"video==([A-Za-z0-9_]+)",u).group(1); body={"columnHeaders":[{"name":n} for n in ["elapsedVideoTimeRatio","audienceWatchRatio","relativeRetentionPerformance"]],"rows":curves.get(vid,[])}
     elif "youtubeanalytics" in u: body={"columnHeaders":[{"name":n} for n in ["video","views","engagedViews","averageViewDuration","averageViewPercentage","likes","shares","subscribersGained"]],"rows":rows}
     elif "upload/youtube/v3/videos" in u and route.request.method=="POST":
         await route.fulfill(status=200, headers={"Location":"https://www.googleapis.com/upload/session/abc","Access-Control-Expose-Headers":"Location","Access-Control-Allow-Origin":"*"}, body="{}"); return
@@ -50,7 +69,10 @@ async def main():
         await pg.wait_for_function("/Scheduled on YouTube|Uploaded/.test($('status').textContent) || $('status').classList.contains('err')", timeout=30000)
         print("upload:", await pg.inner_text("#status"), "| recipe linked:", await pg.evaluate("recipes().at(-1).ytId"))
         await pg.locator("#results").screenshot(path="/home/claude/yt81.png")
-        ok=(await pg.evaluate("learnW('opening','chorus')>1.2 && learnW('pace','tight')>1.05 && recipes().at(-1).ytId==='NEWVID1'")) and not errs
+        sl=await pg.evaluate("(()=>{ const B=learned().shots.body; return {photo:B.k.i.eff, video:B.k.v.eff, busy:B.m['2'].eff, still:B.m['0'].eff, nv:learned().shots.nv}; })()"); print("shot effects:", sl)
+        rc=await pg.evaluate("(()=>{ const img={kind:'image',samples:[{t:0,motion:null}]}, vid={kind:'video',samples:[{t:1,motion:8}]}, seg={start:10,end:11.5,e:0.6}, ctx={short:true,win:[0,30]}; return [retentionCost(seg,img,img.samples[0],ctx), retentionCost(seg,vid,vid.samples[0],ctx)]; })()"); print("planning cost photo vs busy video:", rc)
+        print("shots recorded with the new Short:", await pg.evaluate("(recipes().at(-1).shots||[]).length"))
+        ok=(await pg.evaluate("learnW('opening','chorus')>1.2 && learnW('pace','tight')>1.05 && recipes().at(-1).ytId==='NEWVID1'")) and sl["photo"]>sl["video"] and sl["busy"]<sl["still"] and rc[0]>rc[1] and await pg.evaluate("(recipes().at(-1).shots||[]).length>5") and not errs
         print("PASS" if ok else "FAIL", "YouTube learning and upload"); await b.close()
         import sys; sys.exit(0 if ok else 1)
 asyncio.run(main())

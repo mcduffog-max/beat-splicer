@@ -27,8 +27,8 @@ function matchRef(plan){ if(plan._cmRef) return plan._cmRef; const st=plan.map(s
 /* the correction for one shot: channel gains, exposure and contrast, as numbers the shot info panel can describe */
 function shotCorrection(seg,plan){ const mode=$("colMatch")?$("colMatch").value:"gentle", k=MATCH_STRENGTH[mode]; if(!k) return null;
   const st=shotStats(seg), ref=matchRef(plan||curPlan()||[]); if(!st||ref.none) return null; const cl=(v,a,b)=>Math.max(a,Math.min(b,v));
-  const castW=k*cl(1-(st.sat-0.18)/0.3,0.25,1);                                        // a deeply coloured scene keeps most of its colour
-  const dR=cl((ref.rg-st.rg)*castW,-0.14,0.14), dB=cl((ref.bg-st.bg)*castW,-0.14,0.14);
+  const castW=k*cl(1-(st.sat-0.25)/0.35,0.35,1);                                        // a deeply coloured scene keeps most of its colour
+  const dR=cl((ref.rg-st.rg)*castW,-0.16,0.16), dB=cl((ref.bg-st.bg)*castW,-0.16,0.16);
   let gr=Math.exp(dR), gb=Math.exp(dB), gg=1; const lum=0.299*gr+0.587*gg+0.114*gb; gr/=lum; gg/=lum; gb/=lum; // white balance without changing brightness
   let e=Math.pow(Math.max(8,ref.L)/Math.max(8,st.L),k); e=cl(e,0.8,1.35); if(st.L<50) e=Math.min(e,1.12); if(st.L>190) e=Math.max(e,0.92); // night stays night
   let c=st.sp>0&&ref.sp>0?Math.pow(ref.sp/st.sp,k*0.6):1; c=cl(c,0.88,1.2);

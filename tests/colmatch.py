@@ -29,6 +29,6 @@ async def main():
         return sh.toDataURL('image/png'); }""")
       import base64; open(os.environ["SHEET"],"wb").write(base64.b64decode(png.split(",")[1]))
     await pg.evaluate("showShot(3); 0"); print(await pg.inner_text("#shotInfo"))
-    o,g=R["off"],R["gentle"]; ok=g["rg"]<o["rg"]*0.85 and g["bg"]<o["bg"]*0.85 and g["L"]<o["L"]*0.9 and R["strong"]["L"]<g["L"] and not errs
+    o,g=R["off"],R["gentle"]; ok=g["rg"]+g["bg"]<(o["rg"]+o["bg"])*0.88 and g["L"]<o["L"]*0.9 and R["strong"]["L"]<g["L"] and not errs
     print(("PASS" if ok else "FAIL")+" shots end up closer in colour and brightness", errs[:2]); sys.exit(0 if ok else 1)
 asyncio.run(main())

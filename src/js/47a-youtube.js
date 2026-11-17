@@ -14,10 +14,10 @@ async function ytFetch(url,opt){ const t=await ytToken(true); const r=await fetc
 const isoDur=s=>{ const m=/PT(?:(\d+)H)?(?:(\d+)M)?(?:(\d+(?:\.\d+)?)S)?/.exec(s||""); return m?(+m[1]||0)*3600+(+m[2]||0)*60+(+m[3]||0):0; };
 /* recipes: what each export was made with */
 function recipes(){ try{ return JSON.parse(localStorage.getItem("beatsplicerRecipes")||"[]"); }catch(e){ return []; } }
-function saveRecipes(a){ try{ localStorage.setItem("beatsplicerRecipes",JSON.stringify(a.slice(-600))); }catch(e){} }
+function saveRecipes(a){ a=a.slice(-600); a.forEach((r,i)=>{ if(i<a.length-200&&r.shots) delete r.shots; }); /* shot lists kept for the latest 200 */ try{ localStorage.setItem("beatsplicerRecipes",JSON.stringify(a)); }catch(e){} }
 function recipeFor(r){ const v=id=>$(id)?$(id).value:null; return {key:Math.random().toString(36).slice(2,10), at:Date.now(), ep:r.ep.id, file:resultName(r), song:songTitle(), artist:$("artistName").value.trim(),
   dur:+(r.win[1]-r.win[0]).toFixed(1), opening:/chorus/.test(S._hookWhy||"")?"chorus":/drop/.test(S._hookWhy||"")?"drop":S._hookWhy?"section":"strongest moment",
-  style:S.style&&S.style.name||(v("direct")&&v("direct")!=="off"?v("direct"):"none"), motif:v("motif"), look:v("look"), pace:S._paceName||"set by hand", text:v("textStyle"), sig:v("sigTrans"), lensKit:v("lens"), camEnergy:v("camEnergy"), length:r.ep.short?(v("shortLen")==="rec"?"recommended":v("shortLen")+" s"):"full", title:($("hookText").value.trim()?"own title":"no title"), ytId:null}; }
+  style:S.style&&S.style.name||(v("direct")&&v("direct")!=="off"?v("direct"):"none"), motif:v("motif"), look:v("look"), pace:S._paceName||"set by hand", text:v("textStyle"), sig:v("sigTrans"), lensKit:v("lens"), camEnergy:v("camEnergy"), length:r.ep.short?(v("shortLen")==="rec"?"recommended":v("shortLen")+" s"):"full", title:($("hookText").value.trim()?"own title":"no title"), ytId:null, shots:(r.ep.short||r.win[1]-r.win[0]<=180)?shotDigest(r):null}; }
 function logRecipes(results){ const a=recipes(); results.forEach(r=>{ if(r._recipe) return; r._recipe=recipeFor(r); a.push(r._recipe); }); saveRecipes(a); }
 /* read the channel: its Shorts, their numbers */
 async function ytReadChannel(){ const ch=await (await ytFetch("https://www.googleapis.com/youtube/v3/channels?part=snippet,contentDetails&mine=true")).json(); const c=ch.items&&ch.items[0]; if(!c) throw new Error("No YouTube channel on this Google account");
@@ -49,9 +49,12 @@ function learnSummary(L){ if(!L) return []; const all=[]; Object.entries(L.eff).
   all.sort((a,b)=>b.eff-a.eff); const pct=x=>`${x>0?"+":""}${Math.round(x*100)} points`; const words=x=>`${LEARN_KEYS[x.k]}: ${x.val} (${pct(x.eff)} on ${x.n} Shorts)`;
   return [...all.filter(x=>x.eff>0.005).slice(0,3).map(x=>"Working: "+words(x)), ...all.filter(x=>x.eff<-0.005).slice(-2).reverse().map(x=>"Not working: "+words(x))]; }
 async function ytLearn(){ const out=$("ytOut"); out.textContent="Reading your channel…";
-  try{ const vids=await ytReadChannel(), pairs=matchRecipes(vids), L=learnFrom(pairs); if(L) try{ localStorage.setItem("beatsplicerLearn",JSON.stringify(L)); }catch(e){}
+  try{ const vids=await ytReadChannel(), pairs=matchRecipes(vids), L=learnFrom(pairs);
+    if(L){ const withShots=pairs.filter(p=>p.r.shots&&p.r.shots.length).sort((a,b)=>(b.v.at||0)-(a.v.at||0)).slice(0,40), items=[];
+      for(let i=0;i<withShots.length;i++){ const p=withShots[i]; out.textContent=`Reading where viewers leave: ${i+1} of ${withShots.length}…`; try{ items.push({shots:p.r.shots,R:await ytRetention(p.v),dur:p.v.dur,v:p.v}); }catch(e){} }
+      if(items.length) L.shots=learnShots(items); try{ localStorage.setItem("beatsplicerLearn",JSON.stringify(L)); }catch(e){} }
     const lines=[`${YT.channel.title}: ${vids.length} Shorts read, ${pairs.length} linked to the settings that made them.`];
-    if(!pairs.length) lines.push("None of these were made with this version of the app yet, so there's nothing to learn from so far. Shorts you make from now on are tracked."); else lines.push(...learnSummary(L));
+    if(!pairs.length) lines.push("None of these were made with this version of the app yet, so there's nothing to learn from so far. Shorts you make from now on are tracked."); else { lines.push(...learnSummary(L)); if(L.shots&&L.shots.nv) lines.push(...shotSummary(L.shots)); else if(pairs.some(p=>p.r.shots)) lines.push("Second-by-second retention isn't available for these yet: YouTube needs a few days of views."); }
     if(L&&L.n<6) lines.push("Early days: the app leans on these only gently until more Shorts come in.");
     out.innerHTML=""; lines.forEach(t=>{ const d=document.createElement("div"); d.textContent=t; out.appendChild(d); }); renderYT(); }
   catch(e){ out.textContent="Couldn't read your channel: "+(e&&e.message||e); } }
