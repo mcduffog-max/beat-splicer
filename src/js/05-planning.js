@@ -49,7 +49,7 @@ function makeSegments(an,pace){
     const e=E[i], Dd=directOn(), dp=Dd?Dd[secOf(e)].p:1;
     let L;
     if(build.has(i)){ const k=build.get(i); L=k>4?4:k>2?2:1; L=Math.min(L,k); }   // 2 bars out: a bar, then half bars, then beats
-    else { const allowed=(an.meter===3)?[1,2,3,6,9,12]:[1,2,3,4,6,8,12,16]; const want=target(e)*feelK(an)*drive(an,i,e)/(pace*dp)/period; L=allowed.reduce((a,b)=>Math.abs(b-want)<Math.abs(a-want)?b:a); }
+    else { const allowed=(an.meter===3)?[1,2,3,6,9,12]:[1,2,3,4,6,8,12,16]; const want=target(e)*refPaceK(e,target(e))*feelK(an)*drive(an,i,e)/(pace*dp)/period; L=allowed.reduce((a,b)=>Math.abs(b-want)<Math.abs(a-want)?b:a); }
     if(L*period<0.3) L=Math.ceil(0.3/period);
     let end=i+L;
     const M=an.meter||4;
@@ -160,7 +160,7 @@ function chooseClip(seg, ctx, exclude){
       if(clip.kind!=="image"){ for(const x of clip.samples) if((x.cut||x.dark) && x.t>start+0.1 && x.t<start+D-0.1){ cost+=1.5; break; } } // or run through one
       if(clip.wm&&clip.wm.length&&wmBlocked(clip,start,D)) cost+=6; // a watermark that can't be framed out: use other footage
       if(seg.e>0.7 && (clip.kind==="image" || s.mN<0.2)) cost+=0.35;  // loud moments want movement
-      const W={q:qualityCost(seg,clip,s,ctx), cn:continuityCost(seg,s,ctx), se:seeCost(seg,s,ci), st:storyCost(seg,clip,ci,s,ctx), mo:motifCost(seg,clip,ci,s), ou:outlineCost(seg,clip,ci,s,ctx), ly:lyricCost(seg,clip,ci,s)+vetoCost(seg,ci), pl:placeCost(seg,ci,ctx), rt:retentionCost(seg,clip,s,ctx), om:ownMotifCost(seg,ci,s), nt:noteCost(seg,clip,s), mc:clip.kind==="image"?0:matchCutCost(seg,clip,ci,start,ctx), share, dcol};
+      const W={q:qualityCost(seg,clip,s,ctx), cn:continuityCost(seg,s,ctx), se:seeCost(seg,s,ci), st:storyCost(seg,clip,ci,s,ctx), mo:motifCost(seg,clip,ci,s), ou:outlineCost(seg,clip,ci,s,ctx), ly:lyricCost(seg,clip,ci,s)+vetoCost(seg,ci), pl:placeCost(seg,ci,ctx), rt:retentionCost(seg,clip,s,ctx), om:ownMotifCost(seg,ci,s), nt:noteCost(seg,clip,s), rf:refMotionCost(clip,s), mc:clip.kind==="image"?0:matchCutCost(seg,clip,ci,start,ctx), share, dcol};
       cost+=tasteSum(W); // each judgement weighted by what your blind picks have taught (all 1 until then)
       { const raw=clip.kind==="image"?0:(s.motion||0), still=Math.max(0,1-raw/1.2); // only genuinely still footage is penalised; any real motion is welcome
         if(ctx.short) cost+=1.6*still+(clip.kind==="image"?0.6+Math.max(0,D-1)*0.8:0);  // short-form lives on movement; a still never holds long

@@ -5,7 +5,7 @@
    scores for every judgement), so over time the edit follows your taste rather than my guesses. The AI reviewer can
    also judge a pair from contact sheets when you're busy; its picks count half. Every pick is kept, so the app can say
    how often the newly learned weights win. */
-const TASTE_TERMS={q:"picture quality",cn:"movement flowing across cuts",se:"shots showing what's sung",st:"the story arc",mo:"the visual idea",ou:"the story outline",ly:"lyric matches",pl:"staying in a place",mc:"match cuts",rt:"what holds your viewers",om:"the returning image",nt:"your director's note",share:"fresh footage"};
+const TASTE_TERMS={q:"picture quality",cn:"movement flowing across cuts",se:"shots showing what's sung",st:"the story arc",mo:"the visual idea",ou:"the story outline",ly:"lyric matches",pl:"staying in a place",mc:"match cuts",rt:"what holds your viewers",om:"the returning image",nt:"your director's note",share:"fresh footage",rf:"your reference's liveliness"};
 function tasteLoad(){ try{ const t=JSON.parse(localStorage.getItem("beatsplicerTaste")||"null"); if(t&&t.w) return t; }catch(e){} return {w:{},n:0,log:[]}; }
 function tasteSave(t){ try{ t.log=t.log.slice(-200); localStorage.setItem("beatsplicerTaste",JSON.stringify(t)); }catch(e){} }
 let TASTE=tasteLoad(), TASTE_OVR=null; // TASTE_OVR: weights in force while one side of a comparison is being built

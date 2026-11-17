@@ -19,11 +19,11 @@ function phraseShape(segs,an){ if(!segs||segs.length<3||!$("phrasing")||!$("phra
     if(t-a.start<minL||b.end-t<minL) continue; a.end=t; b.start=t; b._vocal=true; }
   // 2. off-beat cuts where the music hits on the "and"
   let lastSync=-99;
-  for(let j=1;j<segs.length;j++){ const a=segs[j-1], b=segs[j]; if(b.drop||b.build||b._vocal||b.e<0.55||b.start-lastSync<12) continue;
-    const i=beatIdx(B,b.start); if(i<1||Math.abs(B[i]-b.start)>0.03) continue; const h=H[i-1]||0; if(h<1.15) continue;
+  for(let j=1;j<segs.length;j++){ const a=segs[j-1], b=segs[j]; if(b.drop||b.build||b._vocal||b.e<0.55||b.start-lastSync<refSyncGap()) continue;
+    const i=beatIdx(B,b.start); if(i<1||Math.abs(B[i]-b.start)>0.03) continue; const h=H[i-1]||0; if(h<(refSyncGap()<=7?0.9:1.15)) continue;
     const t=B[i-1]+sw*(B[i]-B[i-1]); if(t-a.start<minL||b.end-t<minL) continue; a.end=t; b.start=t; b._sync=true; lastSync=t; }
   // 3. long takes where the song breathes
-  const dur=an.duration||B[B.length-1]||1, want=dur>=150?2:1, cands=[]; let takeLen=2*M*P; if(takeLen<3.5) takeLen*=2; takeLen=Math.min(6.5,takeLen);
+  const dur=an.duration||B[B.length-1]||1, want=refTakes(dur)??(dur>=150?2:1), cands=[]; let takeLen=2*M*P; if(takeLen<3.5) takeLen*=2; takeLen=Math.min(6.5,takeLen);
   for(let j=0;j<segs.length;j++){ const s0=segs[j]; if(s0.start<8||chorusAt(s0.start)) continue; let k=j, end=s0.start;
     while(k<segs.length&&end-s0.start<takeLen-0.05){ end=segs[k].end; k++; } if(end-s0.start<takeLen*0.8||end-s0.start>takeLen*1.35) continue;
     const run=segs.slice(j,k); if(run.some(s=>s.drop||s.build||s._vocal&&s!==s0||chorusAt(s.start))) continue;
