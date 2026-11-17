@@ -7,8 +7,8 @@ android {
         applicationId "com.mcduffog.beatsplicer"
         minSdkVersion rootProject.ext.minSdkVersion
         targetSdkVersion rootProject.ext.targetSdkVersion
-        versionCode 1
-        versionName "1.0"
+        versionCode((project.findProperty("buildNumber") ?: "1").toString().toInteger())
+        versionName "2.0." + (project.findProperty("buildNumber") ?: "1")
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
         aaptOptions {
              // Files and dirs to omit from the packaged assets dir, modified to accommodate modern web apps.
@@ -16,7 +16,20 @@ android {
             ignoreAssetsPattern = '!.svn:!.git:!.ds_store:!*.scc:.*:!CVS:!thumbs.db:!picasa.ini:!*~'
         }
     }
+    // one fixed key for every build, so a new version installs over the old one (Android refuses an update signed
+    // with a different key). It's only for this sideloaded app; the Update button fetches from this repository alone.
+    signingConfigs {
+        fixed {
+            storeFile file("beatsplicer.keystore")
+            storePassword "beatsplicer"
+            keyAlias "beatsplicer"
+            keyPassword "beatsplicer"
+        }
+    }
     buildTypes {
+        debug {
+            signingConfig signingConfigs.fixed
+        }
         release {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'

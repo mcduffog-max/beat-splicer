@@ -29,7 +29,7 @@ jobs:
           ANDROID_HOME: /usr/local/lib/android/sdk
         run: |
           chmod +x gradlew
-          ./gradlew assembleDebug --no-daemon
+          ./gradlew assembleDebug --no-daemon -PbuildNumber=${{ github.run_number }}
           cp app/build/outputs/apk/debug/app-debug.apk ../beat-splicer.apk
       - uses: actions/upload-artifact@v4
         with:
@@ -39,9 +39,10 @@ jobs:
         uses: softprops/action-gh-release@v2
         with:
           tag_name: android-latest
-          name: Beat Splicer for Android (latest)
+          name: Beat Splicer for Android (build ${{ github.run_number }})
           body: |
             Install on your phone: open this page on the phone, tap beat-splicer.apk, then allow installs from your browser when Android asks.
+            Build: ${{ github.run_number }}
             Built from ${{ github.sha }}.
           files: beat-splicer.apk
           prerelease: false
