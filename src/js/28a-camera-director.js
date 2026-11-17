@@ -33,7 +33,7 @@ function assignDirector(segs,short){ const mode=$("camMoves")?$("camMoves").valu
     prevMove=mv; });
 }
 /* the move itself, at time t; offsets are clamped to the slack the scale gives, so no black edges */
-function directorMove(seg,t,W,H,bi){ const m=seg._dmove; if(!m) return null; const D=Math.max(0.3,seg.end-seg.start), tl=Math.max(0,t-seg.start), p=Math.min(1,tl/D), d=seg._ddir||1, amp=seg._amp?Math.min(1.4,seg._amp/2):1;
+function directorMove(seg,t,W,H,bi){ const m=seg._dmove; if(!m) return null; const D=Math.max(0.3,seg.end-seg.start), tl=Math.max(0,t-seg.start), p=Math.min(1,tl/D), d=seg._ddir||1, en={gentle:0.6,normal:1,bold:1.35}[$("camEnergy")?$("camEnergy").value:"normal"]||1, amp=(seg._amp?Math.min(1.4,seg._amp/2):1)*en;
   const beat=bi?Math.exp(-bi.ph*9)*(bi.down?1:0.45):0; let s=1, dx=0, dy=0, rot=0;
   switch(m){
     case "settle": s=1.07; dx=d*(p-0.5)*W*0.045*amp; break;
@@ -48,9 +48,8 @@ function directorMove(seg,t,W,H,bi){ const m=seg._dmove; if(!m) return null; con
   return {s,dx,dy,rot}; }
 /* lens character */
 const LENS_INFO={natural:"Natural",telephoto:"Long lens: compressed, soft edges",anamorphic:"Anamorphic: streaked highlights, oval vignette",tiltshift:"Tilt-shift: miniature look",vintage:"Vintage glass: warm halation",dreamy:"Diffusion: soft glow"};
-function lensFor(seg){ const v=$("lens")?$("lens").value:"auto"; if(v!=="auto") return v; if(!seg) return "natural";
-  const sec=camSection(seg.start+0.05); if(sec==="bridge") return "dreamy"; if(sec==="chorus"||seg.drop||seg.e>0.78) return "natural";
-  if(sec==="intro"||sec==="outro") return "vintage"; const cin=/Cinematic|Dark precision|Dreamlike|Stark/.test((S.style&&S.style.name)||$("direct").value||""); return cin?"anamorphic":"telephoto"; }
+function lensFor(seg){ const v=$("lens")?$("lens").value:"kit:cinema"; if(v==="tiltshift") return "tiltshift"; if(v==="none") return "natural"; const p=lensProfile(seg);
+  return {modern:"natural",cooke:"telephoto",helios:"telephoto",petzval:"telephoto",anamorphic:"anamorphic",k35:"vintage",super8:"vintage",film16:"vintage",promist:"dreamy"}[p]||"natural"; } // the 2D look used when WebGL isn't available
 let _lensC=null, _lensG=null;
 function lensLayer(o,css){ const {W,H}=o, w=Math.max(16,Math.round(W/6)), h=Math.max(16,Math.round(H/6)); if(!_lensC){ _lensC=document.createElement("canvas"); _lensG=_lensC.getContext("2d"); }
   if(_lensC.width!==w||_lensC.height!==h){ _lensC.width=w; _lensC.height=h; } _lensG.filter=css||"none"; _lensG.clearRect(0,0,w,h); _lensG.drawImage(o.canvas,0,0,w,h); _lensG.filter="none"; return _lensC; }
@@ -64,11 +63,11 @@ function lensFx(o,t,opts){ const seg=o._seg; if(!seg||!FILTER_OK) return; const 
     case "tiltshift": maskedLayer(o,lensLayer(o,"blur(2.6px) saturate(1.3)"),(G,w,h)=>{ const gr=G.createLinearGradient(0,0,0,h); gr.addColorStop(0,"rgba(0,0,0,1)"); gr.addColorStop(0.3,"rgba(0,0,0,0)"); gr.addColorStop(0.62,"rgba(0,0,0,0)"); gr.addColorStop(1,"rgba(0,0,0,1)"); return gr; }); break;
     case "dreamy": g.globalCompositeOperation="screen"; g.globalAlpha=0.32; g.drawImage(lensLayer(o,"blur(4px)"),0,0,W,H); g.globalAlpha=1; g.globalCompositeOperation="source-over"; break;
     case "vintage": g.globalCompositeOperation="screen"; g.globalAlpha=0.22; g.drawImage(lensLayer(o,"blur(3.3px) sepia(0.8) saturate(2.4) hue-rotate(-18deg) brightness(0.9)"),0,0,W,H); g.globalAlpha=1; g.globalCompositeOperation="source-over"; break;
-    case "anamorphic": { o._anaN=(o._anaN||0)+1; let keep=o._anaPts, w=o._anaW||1, h=o._anaH||1; // highlights found every fourth frame: streaks hold steady and cost little
+    case "streaks": case "anamorphic": { o._anaN=(o._anaN||0)+1; let keep=o._anaPts, w=o._anaW||1, h=o._anaH||1; // highlights found every fourth frame: streaks hold steady and cost little
       if(!keep||o._anaN%4===1||opts&&opts.still){ const L=lensLayer(o,"none"), lg=_lensG; w=L.width; h=L.height; const d=lg.getImageData(0,0,w,h).data, pts=[];
         for(let y=2;y<h-2;y+=2) for(let x=2;x<w-2;x+=2){ const i=(y*w+x)*4, l=0.299*d[i]+0.587*d[i+1]+0.114*d[i+2]; if(l>242) pts.push([x,y,l]); }
         pts.sort((a,b)=>b[2]-a[2]); keep=[]; for(const p of pts){ if(keep.every(q=>Math.abs(q[1]-p[1])>3||Math.abs(q[0]-p[0])>w*0.2)) keep.push(p); if(keep.length>=5) break; } o._anaPts=keep; o._anaW=w; o._anaH=h; }
       g.globalCompositeOperation="screen"; for(const [x,y] of keep){ const X=x/w*W, Y=y/h*H, len=W*0.55, th=Math.max(2,H*0.004); const gr=g.createLinearGradient(X-len,0,X+len,0); gr.addColorStop(0,"rgba(90,150,255,0)"); gr.addColorStop(0.5,"rgba(150,200,255,0.55)"); gr.addColorStop(1,"rgba(90,150,255,0)"); g.fillStyle=gr; g.fillRect(X-len,Y-th/2,len*2,th); }
-      g.globalCompositeOperation="source-over"; if(!o._oval){ const gr=g.createRadialGradient(0,0,0.55,0,0,1.05); gr.addColorStop(0,"rgba(0,0,0,0)"); gr.addColorStop(1,"rgba(0,0,0,0.45)"); o._oval=gr; }
+      g.globalCompositeOperation="source-over"; if(lens==="streaks") break; if(!o._oval){ const gr=g.createRadialGradient(0,0,0.55,0,0,1.05); gr.addColorStop(0,"rgba(0,0,0,0)"); gr.addColorStop(1,"rgba(0,0,0,0.45)"); o._oval=gr; }
       g.save(); g.translate(W/2,H/2); g.scale(W*0.62,H*0.5); g.fillStyle=o._oval; g.fillRect(-1,-1.2,2,2.4); g.restore(); break; } }
 }

@@ -17,7 +17,7 @@ function recipes(){ try{ return JSON.parse(localStorage.getItem("beatsplicerReci
 function saveRecipes(a){ try{ localStorage.setItem("beatsplicerRecipes",JSON.stringify(a.slice(-600))); }catch(e){} }
 function recipeFor(r){ const v=id=>$(id)?$(id).value:null; return {key:Math.random().toString(36).slice(2,10), at:Date.now(), ep:r.ep.id, file:resultName(r), song:songTitle(), artist:$("artistName").value.trim(),
   dur:+(r.win[1]-r.win[0]).toFixed(1), opening:/chorus/.test(S._hookWhy||"")?"chorus":/drop/.test(S._hookWhy||"")?"drop":S._hookWhy?"section":"strongest moment",
-  style:S.style&&S.style.name||(v("direct")&&v("direct")!=="off"?v("direct"):"none"), motif:v("motif"), look:v("look"), pace:S._paceName||"set by hand", text:v("textStyle"), sig:v("sigTrans"), length:r.ep.short?(v("shortLen")==="rec"?"recommended":v("shortLen")+" s"):"full", title:($("hookText").value.trim()?"own title":"no title"), ytId:null}; }
+  style:S.style&&S.style.name||(v("direct")&&v("direct")!=="off"?v("direct"):"none"), motif:v("motif"), look:v("look"), pace:S._paceName||"set by hand", text:v("textStyle"), sig:v("sigTrans"), lensKit:v("lens"), camEnergy:v("camEnergy"), length:r.ep.short?(v("shortLen")==="rec"?"recommended":v("shortLen")+" s"):"full", title:($("hookText").value.trim()?"own title":"no title"), ytId:null}; }
 function logRecipes(results){ const a=recipes(); results.forEach(r=>{ if(r._recipe) return; r._recipe=recipeFor(r); a.push(r._recipe); }); saveRecipes(a); }
 /* read the channel: its Shorts, their numbers */
 async function ytReadChannel(){ const ch=await (await ytFetch("https://www.googleapis.com/youtube/v3/channels?part=snippet,contentDetails&mine=true")).json(); const c=ch.items&&ch.items[0]; if(!c) throw new Error("No YouTube channel on this Google account");
@@ -37,7 +37,7 @@ function matchRecipes(vids){ const R=recipes(), used=new Set(), pairs=[];
         const dt=(v.at-x.at)/864e5; if(dt<-1||dt>14) return; if(Math.abs((v.dur||0)-x.dur)>2.5) return; const sc=cover-Math.abs(dt)*0.05-(dt<0?0.3:0); /* published after it was made, and soon after */ if(!best||sc>best.sc) best={x,sc}; }); r=best&&best.x; }
     if(r){ used.add(r.key); pairs.push({v,r}); } }); return pairs; }
 /* what's working: each choice's effect on how many viewers stay, against the channel's own average */
-const LEARN_KEYS={opening:"Opening",style:"Style",pace:"Rhythm",look:"Colour look",text:"Lettering",sig:"Signature transition",motif:"Visual idea",length:"Short length",title:"On-screen title"};
+const LEARN_KEYS={lensKit:"Lenses",camEnergy:"Camera energy",opening:"Opening",style:"Style",pace:"Rhythm",look:"Colour look",text:"Lettering",sig:"Signature transition",motif:"Visual idea",length:"Short length",title:"On-screen title"};
 function ytScore(v){ const stay=v.engagedViews&&v.views?v.engagedViews/v.views:null, apv=v.averageViewPercentage!=null?v.averageViewPercentage/100:null; return stay!=null?stay+0.25*(apv||0):apv; }
 function learnFrom(pairs){ const xs=pairs.map(p=>({...p,s:ytScore(p.v)})).filter(p=>p.s!=null); if(!xs.length) return null; const mean=xs.reduce((a,p)=>a+p.s,0)/xs.length;
   const eff={}; Object.keys(LEARN_KEYS).forEach(k=>{ const g={}; xs.forEach(p=>{ const val=p.r[k]; if(val==null) return; (g[val]=g[val]||[]).push(p.s-mean); });

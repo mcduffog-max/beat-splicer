@@ -217,7 +217,16 @@ async function autopilot(){
     const LOOKPOOL={awakening:["vivid","glossy","tealorange","neon"],temperature:["none","glossy","moody"],twoworlds:["none","vivid","glossy"]}[dirId]||["none","tealorange","warmfilm","vivid","moody","glossy","painterly","fincher","cold","bw"];
     const textPick=weightedPick(["clean","box","cinema","impact","serif"].filter(t=>!recent("text").includes(t)).map(t=>[t,learnW("text",t)]));
     const calm=!!(S.an.feel&&S.an.feel.free), sigPick=calm?"mixed":weightedPick(["whip","zoomthru","spin","mask","flash","zoom","zoomout","dip","mixed"].filter(t=>!recent("sig").includes(t)).map(t=>[t,(t==="mixed"?0.6:1)*learnW("sig",t)]));
-    const dress=()=>{ const cur=$("look").value; if(recent("look").includes(cur)||!LOOKPOOL.includes(cur)||dirId==="awakening"&&cur==="bw"){ const opts=LOOKPOOL.filter(l=>!recent("look").includes(l)&&!(dirId==="awakening"&&l==="bw")); if(opts.length) setControl("look",weightedPick(opts.map(l=>[l,learnW("look",l)]))); } setControl("textStyle",textPick); setControl("sigTrans",sigPick); };
+    // the camera: a lens kit and an energy that suit the style, the song and the footage (and what has kept viewers)
+    const lensKit=(()=>{ const sty=(top[0]&&top[0].name)||"", w={cinema:1.2,epic:0.8,vintage:0.8,indie:0.7,dream:0.6,clean:0.7};
+      if(/Cinematic|Dark precision|Stark|Symmetry/.test(sty)){ w.epic*=2.2; w.cinema*=1.4; } if(/Dreamlike|Painterly|Fisheye glam/.test(sty)){ w.dream*=2.2; w.vintage*=1.4; } if(/Playful|one-take|Infinite/.test(sty)){ w.indie*=2; w.vintage*=1.5; } if(/Glossy|Frantic|Glitch|Doodle/.test(sty)){ w.clean*=2; w.cinema*=1.2; }
+      if(calm||S.an.bpm<88){ w.dream*=1.6; w.vintage*=1.3; w.clean*=0.6; } if(S.an.bpm>128){ w.clean*=1.5; w.dream*=0.6; }
+      const vids=S.clips.filter(c=>c.samples&&!c.off&&c.kind!=="image"), small=vids.filter(c=>Math.max(c.w||0,c.h||0)<1200).length/Math.max(1,vids.length);
+      if(small>0.6){ w.vintage*=1.6; w.indie*=1.6; w.clean*=0.4; w.epic*=0.8; } // grain and glow suit soft, small footage; clinical glass shows it up
+      return weightedPick(Object.entries(w).filter(([k])=>!recent("lens").includes(k)).map(([k,x])=>[k,x*learnW("lensKit","kit:"+k)])); })();
+    const camEnergy=(()=>{ const body=S.an.E.filter(v=>v>0.05), e=body.reduce((a,b)=>a+b,0)/Math.max(1,body.length); const base=calm||S.an.bpm<85?"gentle":(S.an.bpm>125&&e>0.55)?"bold":"normal";
+      return weightedPick(["gentle","normal","bold"].map(k=>[k,(k===base?5:1)*learnW("camEnergy",k)])); })();
+    const dress=()=>{ setControl("camMoves","director"); setControl("lens","kit:"+lensKit); setControl("camEnergy",camEnergy); const cur=$("look").value; if(recent("look").includes(cur)||!LOOKPOOL.includes(cur)||dirId==="awakening"&&cur==="bw"){ const opts=LOOKPOOL.filter(l=>!recent("look").includes(l)&&!(dirId==="awakening"&&l==="bw")); if(opts.length) setControl("look",weightedPick(opts.map(l=>[l,learnW("look",l)]))); } setControl("textStyle",textPick); setControl("sigTrans",sigPick); };
     let best=null, tried=0; const seeds=big?2:3;
     // restraint: the footage carries the edit; no overlays or zooms layered on top of it
     const restrain=()=>["fxDoodles","fxStrobe","fxGlitch","fxShake","fxMultiply","fxSplit","fxFisheye","fxMirror","fxWash","fxPulse","kb","fxHandheld"].forEach(id=>setControl(id,false));
@@ -226,9 +235,10 @@ async function autopilot(){
       const sc=versionScore(); await breathe(); if(!best||sc.total>best.sc.total) best={dir:d.name,snap:snapshot(),sc}; } }
     S._hold=true; try{ restore(best.snap); $("direct").value=best.dir; S._autoRun=true; try{ setDirect(best.dir,"chosen by Do everything"); }finally{ S._autoRun=false; } }finally{ S._hold=false; } restrain(); setControl("motif",dirId); setControl("look",best.snap.look.look); setControl("textStyle",best.snap.look.textStyle); setControl("sigTrans",sigPick); setControl("pace",best.snap.look.pace); S.seed=best.snap.seed; S.winPick=best.snap.winPick; buildPlan();
     await breathe();
-    try{ const hh=dirHistory(); hh.push({motif:dirId,dir:best.dir,look:$("look").value,text:$("textStyle").value,pace:paceName,sig:sigPick,t:Date.now()}); localStorage.setItem("beatsplicerDirections",JSON.stringify(hh.slice(-12))); }catch(e){}
+    try{ const hh=dirHistory(); hh.push({motif:dirId,dir:best.dir,lens:lensKit,look:$("look").value,text:$("textStyle").value,pace:paceName,sig:sigPick,t:Date.now()}); localStorage.setItem("beatsplicerDirections",JSON.stringify(hh.slice(-12))); }catch(e){}
     S.versions.push({...snapshot(),print:currentPrint()}); S.verIdx=S.versions.length-1; renderVersions(); setStyleState(best.dir,"auto",true);
     say(`Style: ${best.dir}, with a ${paceName} rhythm, the “${$("look").selectedOptions[0].textContent}” colour look, ${$("textStyle").selectedOptions[0].textContent.toLowerCase()} lettering${sigPick!=="mixed"?` and ${$("sigTrans").selectedOptions[0].textContent.toLowerCase()} as its signature transition`:""}.`);
+    say(`Camera: ${LENS_KITS[lensKit].name.toLowerCase()} lenses (${[["verse","verses"],["chorus","choruses"],["bridge","the bridge"]].map(([k,w])=>`${w} on ${LENSES[LENS_KITS[lensKit][k]].name.split(/ \(| style|:/)[0]}`).join(", ")}), ${camEnergy} camera moves that follow the song's sections.`);
     say(`Tried ${tried} cuts in this direction and kept the strongest: ${best.sc.ok} checks passed${best.sc.warn?`, ${best.sc.warn} to look at`:""}${best.sc.fail?`, ${best.sc.fail} blocking export`:""}.`);
     say(`Movement: at least ${best.sc.motion}% of every cut shows genuinely moving footage. Not happy with the idea? “Try another direction” picks a different one.`);
     await breathe(); S._cur=planState(); S._curJ=JSON.stringify(S._cur.snap); S._lastPush=0;
