@@ -136,7 +136,7 @@ function chooseClip(seg, ctx, exclude){
   const D=seg.end-seg.start, mode=$("mode").value, variety=+$("variety").value;
   const nC=nFamilies(), fair=((ctx.total||0)+1)/nC; // variety counts look-alike families, not files
   const minGap=Math.min(20,Math.max(3,(S.an?S.an.duration:60)/nC*0.5)), jit=new Map();
-  let best=null, bestCost=Infinity;
+  let best=null, bestCost=Infinity; const topM=ctx._topM||0, perClip=topM?new Map():null; // the beam asks for the best few clips, not just the best
   S.clips.forEach((clip,ci)=>{
     if(!clip.samples || clip.off || ci===exclude || isExcluded(ci)) return;
     jit.set(ci,ctx.rand()); // one random draw per clip, so long clips with many start points don't win more often
@@ -175,8 +175,11 @@ function chooseClip(seg, ctx, exclude){
       cost+=jit.get(ci)*(mode==="beat"?1:Math.max(0.15,variety));
       if(!Number.isFinite(cost)) cost=50; // a broken score must never decide a shot (or knock every clip out)
       if(cost<bestCost){ bestCost=cost; best={clip:ci, src:start, why:W, sm:s}; }
+      if(topM){ const b=perClip.get(ci); if(!b||cost<b.cost) perClip.set(ci,{clip:ci, src:start, why:W, sm:s, cost}); }
     }
   });
+  if(best) best.cost=bestCost;
+  if(topM) ctx._cands=[...perClip.values()].sort((a,b)=>a.cost-b.cost).slice(0,topM);
   return best;
 }
 
@@ -186,11 +189,7 @@ function buildPlan(){ refreshExclusion(); refreshFilter(); motifSetup(); setTime
   const segs=phraseShape(makeSegments(S.an,+$("pace").value),S.an); applyTrims(segs); markMotifSlots(segs,false);
   const ctx={ recent:[], usage:new Map(), rand:rng(S.seed), order:filmOrder(), acts:actsFor([0,S.an.duration]) };
   annotateStory(segs);
-  for(const seg of segs){
-    const pick=chooseClip(seg,ctx,-1) || {clip:S.clips.findIndex(c=>c.samples), src:0};
-    seg.clip=pick.clip; seg.src=pick.src; seg._mcut=!!(pick.why&&pick.why.mc<-0.1); seg._W=pick.why||null; seg.why=pick.why?shotReasons(seg,pick):null;
-    noteUse(ctx,seg,pick.clip,pick.src);
-  }
+  planShots(segs,ctx);
   const dc=dcut();
   if(dc && dc.pattern) for(let i=2;i<segs.length;i++){ if(i%4<2) continue; const p=segs[i-2], c=S.clips[p.clip], D=segs[i].end-segs[i].start, next=p.src+(p.end-p.start);
     if(c && (c.kind==="image" || next+D<c.dur-0.05)){ segs[i].clip=p.clip; segs[i].src=c.kind==="image"?0:next; segs[i]._pattern=true; } }
@@ -263,3 +262,22 @@ function assignTransitionsRaw(plan){
   });
 }
 
+
+/* ---------------- Planning the whole video at once ----------------
+   Picking each shot as the best one at that moment can spend a great clip early that the chorus needed, or paint the
+   edit into a corner. A beam search keeps the few most promising versions of the edit alive at every shot (each
+   extended with its best few clips), and at the end keeps the version whose shots add up to the lowest total cost.
+   Wider for small libraries, narrower for big ones, so it stays quick on the phone. */
+function beamWidth(){ if(!$("planWhole")||!$("planWhole").checked||S._dry) return 1; const n=S.clips.filter(c=>c.samples&&!c.off).length; if(S._auto&&n>150) return 1; /* big libraries: Do everything tries cuts quickly, then the chosen one is planned whole */ return n<=150?4:n<=400?3:2; }
+function cloneCtx(c){ const o={...c}; for(const k of ["usage","count","lastAt","famCount","famLast","lastSrc"]) if(c[k] instanceof Map) o[k]=new Map(c[k]);
+  if(c.usage instanceof Map) o.usage=new Map([...c.usage].map(([k,v])=>[k,v.slice()])); o.recent=(c.recent||[]).slice(); if(c.recentF) o.recentF=c.recentF.slice(); delete o._cands; return o; }
+function applyPick(seg,pick){ seg.clip=pick.clip; seg.src=pick.src; seg._mcut=!!(pick.why&&pick.why.mc<-0.1); seg._W=pick.why||null; seg.why=pick.why?shotReasons(seg,pick):null; }
+function planShots(segs,ctx){ const K=beamWidth(), fallback={clip:S.clips.findIndex(c=>c.samples), src:0, cost:0};
+  if(K<=1){ let tot=0; for(const seg of segs){ const pick=chooseClip(seg,ctx,-1)||fallback; tot+=pick.cost||0; applyPick(seg,pick); noteUse(ctx,seg,pick.clip,pick.src); } S._planCost=tot; return; }
+  let beams=[{ctx, picks:[], total:0}];
+  for(const seg of segs){ const next=[];
+    for(const b of beams){ b.ctx._topM=K; const best=chooseClip(seg,b.ctx,-1); b.ctx._topM=0; const cands=(b.ctx._cands&&b.ctx._cands.length?b.ctx._cands:[best||fallback]);
+      for(const c of cands){ const nc=cloneCtx(b.ctx); seg._mcut=!!(c.why&&c.why.mc<-0.1); noteUse(nc,seg,c.clip,c.src); next.push({ctx:nc, picks:b.picks.concat([c]), total:b.total+(c.cost||0)}); } }
+    next.sort((a,b)=>a.total-b.total); const seen=new Set(); beams=[];
+    for(const n of next){ const key=n.picks.slice(-3).map(p=>p.clip+"@"+Math.round(p.src)).join(","); if(seen.has(key)) continue; seen.add(key); beams.push(n); if(beams.length>=K) break; } }
+  const win=beams[0]; segs.forEach((seg,i)=>applyPick(seg,win.picks[i]||fallback)); Object.assign(ctx,win.ctx); S._planCost=win.total; }

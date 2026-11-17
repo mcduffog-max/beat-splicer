@@ -254,5 +254,5 @@ async function autopilot(){
     await breathe(); renderChecklist();
     status(best.sc.fail?"Settings chosen, but something is blocking export. See the checklist in step 6.":"All set. Press Preview to watch it, or Make videos.");
   }catch(e){ showError(e,"Do everything"); }
-  finally{ S._auto=false; S._quiet=false; S._hold=false; btn.disabled=!S.plan; try{ drawTimeline(); renderStats(); updateButtons(); }catch(e){} }
+  finally{ const wasBig=S.clips.filter(c=>c.samples&&!c.off).length>150; S._auto=false; S._quiet=false; S._hold=false; if(wasBig&&S.plan&&!S.running) try{ buildPlan(); }catch(e){} btn.disabled=!S.plan; try{ drawTimeline(); renderStats(); updateButtons(); }catch(e){} }
 }
