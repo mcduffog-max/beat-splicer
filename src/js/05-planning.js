@@ -190,13 +190,23 @@ function buildPlan(){ refreshExclusion(); refreshFilter(); motifSetup(); setTime
   applyLocks(segs); if(S.sel!=null && !segs[S.sel]) S.sel=null;
   S.plan=segs; assignTransitions(); drawTimeline(); renderStats(); updateButtons(); saveProjectSoon(); if(S.sel!=null) showShot(S.sel);
 }
+/* A clip that comes back never shows the same frames twice: each return carries on forward from its last use, or,
+   when the clip has no room left ahead, steps back before its first. Refrains and bookends return to the same clip and
+   move on with it; only the Short's loop shot is meant to sit just before the opening. */
 function advanceClips(plan){
-  const last=new Map();
-  for(const s of plan){ const c=S.clips[s.clip]; if(!c||c.kind==="image"){ continue; } const D=(s.end-s.start)*(s._ramp?RAMP_SPAN:(s._rate||1));
-    if(s._refrain) continue; // a refrain shot always returns to the same moment
-    if(last.has(s.clip) && !s._loop && !s._bookend && !s._pattern){ const ls=last.get(s.clip);
-      if(s.src<ls-0.05){ if(c.dur-ls-0.3>=D) s.src=ls+0.04; else if(c.dur-0.3>=D) s.src=Math.max(0,Math.min(c.dur-D-0.3,(ls+0.04)%Math.max(0.5,c.dur-D-0.3))); } }
-    last.set(s.clip,s.src+D); }
+  const used=new Map();
+  for(const s of plan){ const c=S.clips[s.clip]; if(!c||c.kind==="image") continue; const D=(s.end-s.start)*(s._ramp?RAMP_SPAN:(s._rate||1)), room=Math.max(0,c.dur-0.15);
+    const U=used.get(s.clip)||[]; const hit=(a)=>U.some(([x,y])=>Math.min(y,a+D)-Math.max(x,a)>0.04);
+    if(U.length&&!s._loop&&!s._lock&&!s._manual&&hit(s.src)){
+      const lastEnd=U[U.length-1][1], hi=Math.max(...U.map(u=>u[1])), lo=Math.min(...U.map(u=>u[0])); let pick=null;
+      for(const a of [lastEnd+0.04, hi+0.04]) if(pick==null&&a+D<=room&&!hit(a)) pick=a;              // forward from where it was last seen
+      if(pick==null&&lo-0.04-D>=0&&!hit(lo-0.04-D)) pick=lo-0.04-D;                                      // or back before where it was first seen
+      if(pick==null){ const gaps=[]; let prev=0; [...U].sort((a,b)=>a[0]-b[0]).forEach(([x,y])=>{ if(x-prev>=D+0.08) gaps.push(prev+0.04); prev=Math.max(prev,y); }); if(room-prev>=D+0.04) gaps.push(prev+0.04); if(gaps.length) pick=gaps.reduce((a,g)=>Math.abs(g-lastEnd)<Math.abs(a-lastEnd)?g:a); } // or any stretch not yet shown
+      if(pick==null&&!s._bookend&&room>D){ let best=null; const ov=a=>U.reduce((t,[x,y])=>t+Math.max(0,Math.min(y,a+D)-Math.max(x,a)),0);   // every moment already shown: the least-repeated stretch, never the same start
+        for(let a=0;a+D<=room;a+=0.25){ const v=ov(a)+(U.some(([x])=>Math.abs(x-a)<0.3)?99:0)+Math.abs(a-lastEnd)*0.01; if(!best||v<best.v) best={a,v}; } if(best&&best.v<99) pick=best.a; }
+      if(pick!=null) s.src=+pick.toFixed(3);
+      else if(s._bookend&&s._pre){ s.clip=s._pre.clip; s.src=s._pre.src; s._bookend=false; const c2=S.clips[s.clip], U2=used.get(s.clip)||[]; used.set(s.clip,U2); U2.push([s.src,s.src+D]); continue; } } // no unseen footage left to return to: the closing shot stays as it was
+    U.push([s.src,s.src+D]); used.set(s.clip,U); }
 }
 function filmOrder(){ const list=S.clips.map((c,i)=>({i,t:c.file&&c.file.lastModified||0,n:c.name})).filter(x=>S.clips[x.i].samples);
   list.sort((a,b)=>a.t-b.t||a.n.localeCompare(b.n,undefined,{numeric:true})); const m=new Map(); list.forEach((x,k)=>m.set(x.i,list.length>1?k/(list.length-1):0.5)); return m; }

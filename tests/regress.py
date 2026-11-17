@@ -69,6 +69,8 @@ async def main():
         ok("Compact layout: one step open, Preview and Remix by the screen", lay==["Publish","stageBar","stageBar",True], str(lay))
         wy=await pg.evaluate("(()=>{ showShot(5); const r=$('shotPanel').getBoundingClientRect(), w=document.querySelector('.work').getBoundingClientRect(); return [S.plan.every(s=>s._manual||(s.why&&s.why.length)), $('shotWhy').textContent.startsWith('Why this shot'), r.bottom<=w.bottom+1||getComputedStyle(document.querySelector('.work')).overflowY==='auto']; })()")
         ok("Every shot says why it was chosen, and the panel fits the page", all(wy), str(wy))
+        ov=await pg.evaluate("(()=>{ let bad=0; for(const P of [S.plan, makeExportPlan(EP('youtube'),windowFor(EP('youtube')))]){ const U=new Map(); P.forEach(s=>{ const c=S.clips[s.clip]; if(!c||c.kind==='image') return; const a=s.src, b=s.src+(s.end-s.start), u=U.get(s.clip)||[]; if(u.some(([x,y])=>Math.min(y,b)-Math.max(x,a)>0.05)) bad++; u.push([a,b]); U.set(s.clip,u); }); } return bad; })()")
+        ok("A returning clip moves on: no frames shown twice", ov==0, f"{ov} repeats")
         # F. save and restore with trims and locks
         await pg.evaluate("S.locks.set(lockKey(S.plan[3]),{clip:S.plan[3].clip,src:S.plan[3].src,rev:false}); S.plan[3]._lock=true; 0")
         await pg.evaluate("saveProject()"); n=await pg.evaluate("S.plan.length"); tr=await pg.evaluate("S.trims.length")

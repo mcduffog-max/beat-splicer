@@ -112,7 +112,7 @@ function makeExportPlan(ep,win){
   // bookend: a long-form story ends on the place it began
   if(storyOn() && !short && segs.length>6){ const l=segs[segs.length-1], need=l.end-l.start+0.3;
     const cand=segs.slice(0,Math.max(1,Math.floor(segs.length*0.15))).find(f=>{ const c=S.clips[f.clip]; return c && (c.kind==="image"||c.dur>=need); }); // the opening shot, or the first establishing shot that is long enough
-    if(cand){ const c=S.clips[cand.clip]; l.clip=cand.clip; l.src=c.kind==="image"?0:Math.max(0,Math.min(c.dur-need+0.2,cand.src)); l._bookend=true; } }
+    if(cand){ const c=S.clips[cand.clip]; l._pre={clip:l.clip,src:l.src}; l.clip=cand.clip; l.src=c.kind==="image"?0:Math.max(0,Math.min(c.dur-need+0.2,cand.src+(cand.end-cand.start)+0.04)); l._bookend=true; } } // the place it began, a moment on
   assignTransitions(segs);
   segs.forEach((s,i)=>{ if(i===0||s._loop) s.tr={type:"cut",dur:0}; else if(short && s.tr) s.tr.dur=Math.min(s.tr.dur,0.25); });
   { const l=segs[segs.length-1]; if(l&&l._endInfo){ const EN=l._endInfo; if(EN.freezeAt!=null&&l.end-EN.freezeAt>0.1) l._freeze=l.end-EN.freezeAt; l._ramp=false; l._rev=false; l._endShot=true; } }
