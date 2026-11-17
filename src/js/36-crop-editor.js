@@ -40,6 +40,7 @@ $("cropAll").onclick=()=>{ const c=S.clips[S.cropIdx]; if(!c) return; S.clips.fo
 function updateButtons(){
   const ready=!!S.plan, busy=!!S.running;
   $("preview").disabled=!ready || (busy && S.running.record);
+  if($("cmpOpen")) $("cmpOpen").disabled=!ready||busy;
   $("render").disabled=!ready || (busy && !S.running.record);
   $("preview").textContent= busy && !S.running.record ? "Stop preview" : "Preview";
   $("render").textContent= busy && S.running.record ? "Stop" : (S.eps.length>1?`Make ${S.eps.length} videos`:"Make video");

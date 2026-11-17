@@ -398,3 +398,6 @@ details.diag{margin-top:12px}
 .work.portrait .stats{clear:both;padding-top:2px}
 details.diag>summary{cursor:pointer;color:var(--muted);font-size:14px}
 @media (max-width:999px){ .work{max-height:none!important;top:auto} } /* the desktop sticky height must never clip or overlap on phones */
+
+.cmpbox{margin:8px 0;padding:10px;border:1px solid var(--line,#8884);border-radius:10px;display:flex;flex-direction:column;gap:8px}
+.cmpbox .row{display:flex;flex-wrap:wrap;gap:6px}

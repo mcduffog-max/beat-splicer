@@ -161,7 +161,7 @@ function chooseClip(seg, ctx, exclude){
       if(clip.wm&&clip.wm.length&&wmBlocked(clip,start,D)) cost+=6; // a watermark that can't be framed out: use other footage
       if(seg.e>0.7 && (clip.kind==="image" || s.mN<0.2)) cost+=0.35;  // loud moments want movement
       const W={q:qualityCost(seg,clip,s,ctx), cn:continuityCost(seg,s,ctx), se:seeCost(seg,s,ci), st:storyCost(seg,clip,ci,s,ctx), mo:motifCost(seg,clip,ci,s), ou:outlineCost(seg,clip,ci,s,ctx), ly:lyricCost(seg,clip,ci,s)+vetoCost(seg,ci), pl:placeCost(seg,ci,ctx), rt:retentionCost(seg,clip,s,ctx), om:ownMotifCost(seg,ci,s), nt:noteCost(seg,clip,s), mc:clip.kind==="image"?0:matchCutCost(seg,clip,ci,start,ctx), share, dcol};
-      cost+=W.q+W.cn+W.se+W.share+W.st+W.mo+W.ou+W.ly+W.pl+W.mc+W.rt+W.om+W.nt;
+      cost+=tasteSum(W); // each judgement weighted by what your blind picks have taught (all 1 until then)
       { const raw=clip.kind==="image"?0:(s.motion||0), still=Math.max(0,1-raw/1.2); // only genuinely still footage is penalised; any real motion is welcome
         if(ctx.short) cost+=1.6*still+(clip.kind==="image"?0.6+Math.max(0,D-1)*0.8:0);  // short-form lives on movement; a still never holds long
         else if(seg.e>0.6) cost+=0.5*still;
@@ -188,7 +188,7 @@ function buildPlan(){ refreshExclusion(); refreshFilter(); motifSetup(); setTime
   annotateStory(segs);
   for(const seg of segs){
     const pick=chooseClip(seg,ctx,-1) || {clip:S.clips.findIndex(c=>c.samples), src:0};
-    seg.clip=pick.clip; seg.src=pick.src; seg._mcut=!!(pick.why&&pick.why.mc<-0.1); seg.why=pick.why?shotReasons(seg,pick):null;
+    seg.clip=pick.clip; seg.src=pick.src; seg._mcut=!!(pick.why&&pick.why.mc<-0.1); seg._W=pick.why||null; seg.why=pick.why?shotReasons(seg,pick):null;
     noteUse(ctx,seg,pick.clip,pick.src);
   }
   const dc=dcut();
