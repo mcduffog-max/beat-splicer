@@ -18,4 +18,4 @@ Live app: https://mcduffog-max.github.io/beat-splicer/
 
 `python3 tests/regress.py http://localhost:8765/` runs 17 checks with Playwright against a served `dist/`
 (`cd dist && python3 -m http.server 8765`). They expect the test clips and songs described in the
-engineering notes. `python3 tests/sections.py` checks that choruses are found within one beat on two test songs. `python3 tests/lyrics.py` checks that lyrics are found automatically and lined up with the recording. Run all three before every push.
+engineering notes. `python3 tests/sections.py` checks that choruses are found within one beat on two test songs. `python3 tests/lyrics.py` checks that lyrics are found automatically and lined up with the recording. `python3 tests/footage.py` (run from the folder with qlib/ and plib/, made by `tests/mkq.sh`) checks that soft footage stays out of key moments and cuts follow the direction of movement. Run all four before every push.

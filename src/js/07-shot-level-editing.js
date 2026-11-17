@@ -5,7 +5,7 @@ const lockKey=s=>Math.round(s.start*20); // a shot is identified by when it star
 function applyLocks(segs){ if(!S.locks||!S.locks.size) return; for(const s of segs){ const L=S.locks.get(lockKey(s)); if(L && S.clips[L.clip] && S.clips[L.clip].samples){ s.clip=L.clip; s.src=L.src; s._manual=true; s._lock=true; if(L.rev){ s._rev=true; s._manualRev=true; } } } }
 function shotCtx(i){ const ctx={ recent:S.plan.slice(Math.max(0,i-3),i).map(s=>s.clip), usage:new Map(), rand:rng((Math.random()*1e9)|0) }; ctx.recentF=ctx.recent.map(famOf);
   S.plan.forEach((s,j)=>{ if(j===i) return; if(!ctx.usage.has(s.clip)) ctx.usage.set(s.clip,[]); ctx.usage.get(s.clip).push([s.src,s.src+(s.end-s.start)]); });
-  const prev=S.plan[i-1]; if(prev){ const c=S.clips[prev.clip], sm=c&&c.samples&&c.samples.reduce((a,x)=>Math.abs(x.t-prev.src)<Math.abs(a.t-prev.src)?x:a,c.samples[0]); if(sm&&sm.col) ctx.prevCol=sm.col; }
+  const prev=S.plan[i-1]; if(prev){ const c=S.clips[prev.clip], sm=c&&c.samples&&c.samples.reduce((a,x)=>Math.abs(x.t-prev.src)<Math.abs(a.t-prev.src)?x:a,c.samples[0]); if(sm&&sm.col) ctx.prevCol=sm.col; ctx.prevSm=sm||null; }
   return ctx; }
 function setShot(i,clip,src,msg){ pushUndo(); const s=S.plan[i]; s.clip=clip; s.src=src; s._manual=true; if(s._lock) S.locks.set(lockKey(s),{clip,src,rev:!!s._rev}); showShot(i); drawTimeline(); markEdited(); if(msg) status(msg); }
 function showShot(i){

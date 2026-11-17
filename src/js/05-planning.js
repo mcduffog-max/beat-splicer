@@ -74,7 +74,7 @@ function noteUse(ctx,seg,clip,src){
   ctx.count=ctx.count||new Map(); ctx.count.set(clip,(ctx.count.get(clip)||0)+1); ctx.total=(ctx.total||0)+1;
   ctx.lastAt=ctx.lastAt||new Map(); ctx.lastAt.set(clip,seg.end);
   const f=famOf(clip); ctx.famCount=ctx.famCount||new Map(); ctx.famCount.set(f,(ctx.famCount.get(f)||0)+1); ctx.famLast=ctx.famLast||new Map(); ctx.famLast.set(f,seg.end); ctx.recentF=ctx.recent.map(famOf);
-  const cs=S.clips[clip], smp=cs&&cs.samples&&cs.samples.reduce((a,x)=>Math.abs(x.t-src)<Math.abs(a.t-src)?x:a,cs.samples[0]); if(smp&&smp.col) ctx.prevCol=smp.col;
+  const cs=S.clips[clip], smp=cs&&cs.samples&&cs.samples.reduce((a,x)=>Math.abs(x.t-src)<Math.abs(a.t-src)?x:a,cs.samples[0]); if(smp&&smp.col) ctx.prevCol=smp.col; ctx.prevSm=smp||null;
   ctx.lastSrc=ctx.lastSrc||new Map(); ctx.lastSrc.set(clip,src+(seg.end-seg.start)*(seg._rate||1));
 }
 /* Recency memory: what recent versions and exports used, fading with age. Most recent counts fully, four back about a tenth.
@@ -90,6 +90,23 @@ function fatigue(){ if(S._fatigue) return S._fatigue; const m=usageMem(), clip=n
   S._fatigue={clip,mom,open,fam}; return S._fatigue; }
 function recentClipKeys(){ const s=new Set(); const add=p=>{ if(p&&p.shots) p.shots.forEach(x=>s.add(x.split("@")[0])); };
   if(S.versions&&S.versions.length){ const v=S.versions[Math.max(0,S.verIdx-0)]; if(S.verIdx>0) add(S.versions[S.verIdx-1].print); } loadHistory().slice(-2).forEach(add); return s; }
+/* Shot quality, weighted by how much the moment matters: soft, shaky, badly exposed or blown-up footage
+   is kept out of the loud passages, the drops and the choruses first. */
+function shotImportance(seg){ let k=0.4; if(seg.e>0.7) k+=0.6; if(seg.drop) k+=0.6; try{ const AS=S.an&&S.an.sections; if(AS&&AS.some(x=>x.chorus&&seg.start>=x.t0-0.05&&seg.start<x.t1)) k+=0.6; }catch(e){} return k; }
+function upscaleCost(clip){ const ep=EP(S.eps[0])||EP("shorts"); if(!ep||!clip.w||!clip.h) return 0; const cropW=Math.min(clip.w,clip.h*ep.w/ep.h), up=ep.w/Math.max(1,cropW); return up<=1.6?0:up<=2.4?0.2:up<=3.2?0.5:0.9; }
+function qualityCost(seg,clip,s,ctx){ if(clip.kind==="image") return 0.4*upscaleCost(clip); const med=S._sharpMed; let p=0;
+  const sr=med&&s.sharp>0?s.sharp/med:1; p+=2.5*Math.max(0,0.85-sr);                       // softer than most of the library
+  if(s.bright<30) p+=0.4; else if(s.bright>225) p+=0.3;                                    // murky or washed out
+  if((s.motion||0)>14&&sr<0.75) p+=0.4;                                                    // lots of movement and soft: camera shake or motion blur
+  p+=upscaleCost(clip);                                                                     // blown up to fill the frame
+  return shotImportance(seg)*p; }
+/* Continuity: a cut flows when movement carries on in the same direction and the eye lands where it already was.
+   At a drop or a new section the change itself is the point, so continuity isn't asked for there. */
+function continuityCost(seg,s,ctx){ const p=ctx.prevSm; if(!p||seg.drop||seg._newSection||!p.fl||!s.fl) return 0; let c=0;
+  const ma=Math.hypot(p.dx,p.dy), mb=Math.hypot(s.dx,s.dy);
+  if(ma>0.02&&mb>0.02){ const cos=(p.dx*s.dx+p.dy*s.dy)/(ma*mb); c+=cos<-0.3?0.45:cos>0.5?-0.25:0; }   // pans that fight each other jar; matching movement flows
+  c+=0.3*Math.min(1,Math.hypot((s.fx||0.5)-(p.fx||0.5),(s.fy||0.5)-(p.fy||0.5))*1.6)-0.1;        // the eye stays near where it was looking
+  return c; }
 function chooseClip(seg, ctx, exclude){
   if(S._dry){ ctx._dryI=(ctx._dryI||0)+1; const ok=S.clips.map((c,i)=>i).filter(i=>S.clips[i].samples&&!S.clips[i].off&&i!==exclude&&!isExcluded(i)); const ci=ok[ctx._dryI%Math.max(1,ok.length)]??0; return {clip:ci,src:0}; }
   if(ctx.fresh===undefined) ctx.fresh=recentClipKeys();
@@ -119,6 +136,7 @@ function chooseClip(seg, ctx, exclude){
         if(room){ if(start<ls-0.05) cost+=2.2; else if(start-ls<1.5) cost-=0.35; } else if(start<ls-0.05) cost+=0.6; }                                   // don't start on a source cut, flash or black frame
       if(clip.kind!=="image"){ for(const x of clip.samples) if((x.cut||x.dark) && x.t>start+0.1 && x.t<start+D-0.1){ cost+=1.5; break; } } // or run through one
       if(seg.e>0.7 && (clip.kind==="image" || s.mN<0.2)) cost+=0.35;  // loud moments want movement
+      cost+=qualityCost(seg,clip,s,ctx)+continuityCost(seg,s,ctx);
       cost+=share+storyCost(seg,clip,ci,s,ctx)+motifCost(seg,clip,ci,s)+outlineCost(seg,clip,ci,s,ctx)+lyricCost(seg,clip,ci,s);
       { const raw=clip.kind==="image"?0:(s.motion||0), still=Math.max(0,1-raw/1.2); // only genuinely still footage is penalised; any real motion is welcome
         if(ctx.short) cost+=1.6*still+(clip.kind==="image"?0.6+Math.max(0,D-1)*0.8:0);  // short-form lives on movement; a still never holds long

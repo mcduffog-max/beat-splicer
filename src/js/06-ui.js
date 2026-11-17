@@ -21,7 +21,7 @@ function buildFamilies(){
     if(ok>=Math.min(2,A.fp.length,B.fp.length)) par.set(find(ix[a]),find(ix[b])); }
   const size=new Map(); S.clips.forEach((c,i)=>{ c.fam=par.has(i)?"f"+find(i):null; if(c.fam) size.set(c.fam,(size.get(c.fam)||0)+1); });
   S.clips.forEach(c=>{ c.famSize=c.fam?size.get(c.fam):1; if(c.famSize<=1) c.fam=null; });
-  const sh=S.clips.flatMap(c=>(c.samples||[]).map(s=>s.sharp).filter(v=>v!=null)).sort((a,b)=>a-b); S._sharpP20=sh.length?sh[Math.floor(sh.length*0.2)]:null;
+  const sh=S.clips.flatMap(c=>(c.samples||[]).map(s=>s.sharp).filter(v=>v!=null)).sort((a,b)=>a-b); S._sharpP20=sh.length?sh[Math.floor(sh.length*0.2)]:null; S._sharpMed=sh.length?sh[sh.length>>1]:null;
   S._fatigue=null; S._families=new Set(S.clips.map(c=>c.fam).filter(Boolean)).size;
 }
 const FAM_CD=16, FAM_HD=12;
