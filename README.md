@@ -18,4 +18,4 @@ Live app: https://mcduffog-max.github.io/beat-splicer/
 
 `python3 tests/regress.py http://localhost:8765/` runs 17 checks with Playwright against a served `dist/`
 (`cd dist && python3 -m http.server 8765`). They expect the test clips and songs described in the
-engineering notes. Run them before every push.
+engineering notes. `python3 tests/sections.py` checks that choruses are found within one beat on two test songs. Run both before every push.

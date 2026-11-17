@@ -7,6 +7,7 @@ function windowFor(ep){
   const B=S.an.beats, E=S.an.E; let best=0, bs=-1; const cands=[];
   // hooks: where a scrolling viewer recognises the song in the first second
   const hooks=[]; if(ep.short){ try{ const L0=S.lyrics; if(L0&&L0.exact!==false){ lyricSections().forEach(sec=>{ const ln=L0.lines.find(l=>l.t>=sec.t0-0.05); if(ln) hooks.push({t:ln.t,k:sec.chorus?1:0.2,why:sec.chorus?`the chorus: “${ln.text}”`:`a new section: “${ln.text}”`}); }); }
+    if(!hooks.length){ const AS=songSections(); const nC=AS.filter(s=>s.chorus).length; AS.forEach(s=>{ if(s.chorus) hooks.push({t:s.t0,k:nC>=2?0.9:0.5,why:`the ${s.label.replace(/ \d+$/,"")} (heard in the music)`}); else if(s.kind!=="intro") hooks.push({t:s.t0,k:0.15,why:`the start of the ${s.label.replace(/ \d+$/,"")}`}); }); }
     const M=songMarks(); M.drops.forEach(t=>hooks.push({t,k:0.35,why:"the drop"})); M.entries.forEach(t=>hooks.push({t,k:0.2,why:"a section entry"})); }catch(e){} }
   const hookAt=st=>{ let b=null; for(const x of hooks){ const d=x.t-st; if(d>=-0.15&&d<=1.2){ const k=x.k*(1-Math.max(0,d-0.35)/1.2); if(!b||k>b.k) b={k,why:x.why}; } } return b; }; // a downbeat on, or just before, the hook (vocals often come in on a pickup)
   for(let i=0;i<B.length;i++){

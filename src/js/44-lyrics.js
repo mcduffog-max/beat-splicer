@@ -81,7 +81,9 @@ $("foldAll").onclick=()=>{ STEPS().forEach(d=>{ d.open=false; d._touched=true; }
 $("clipMore").onclick=()=>{ S.clipsAll=!S.clipsAll; renderClips(); };
 $("epsMore").onclick=()=>{ S.epsAll=!S.epsAll; buildEndpointUI(); };
 function songInfoText(){ const v=$("songVer").value; return `${S.audioName}${v!=="orig"?SONG_VER_SUFFIX[v]:""}, ${fmtTime(S.an.duration)}${S.an.feel&&S.an.feel.free==="beatless"?"":` at about ${Math.round(S.an.bpm)} BPM`}. Feel: ${S.an.feel?S.an.feel.label:"4/4"}`; }
-function renderTempo(){ const r=$("tempoRow"); if(!r) return; const an=S.an, show=!!an&&!(an.feel&&an.feel.free); r.hidden=!show; if(!show) return;
+function renderSections(){ const el=$("songSecs"); if(!el) return; const AS=S.an?songSections():[]; el.hidden=!AS.length; if(!AS.length) return;
+  const ch=AS.filter(s=>s.chorus); el.textContent=`Sections: ${AS.map(s=>s.label.replace(/ \d+$/,"")).join(", ")}.${ch.length?` First chorus at ${fmtTime(ch[0].t0)}.`:" No chorus found that comes back, so Shorts open on the strongest moment."}`; }
+function renderTempo(){ renderSections(); const r=$("tempoRow"); if(!r) return; const an=S.an, show=!!an&&!(an.feel&&an.feel.free); r.hidden=!show; if(!show) return;
   const x=an.tempoX||1, base=an.bpm/x; r.querySelectorAll("[data-x]").forEach(b=>{ const bx=+b.dataset.x; b.classList.toggle("on",bx===x); b.setAttribute("aria-pressed",bx===x); b.textContent=bx===1?`As found (${Math.round(base)})`:bx===2?`Double (${Math.round(base*2)})`:`Half (${Math.round(base/2)})`; b.hidden=bx!==x&&(bx===2&&base*2>210||bx===0.5&&base/2<45); });
   $("tempoNote").textContent=x===1?"If the cuts feel too slow or too busy, try another speed.":""; }
 async function setTempo(x){ if(!S.audioBuf||!S.an||S.running||(S.an.tempoX||1)===x) return; $("prog").hidden=false;

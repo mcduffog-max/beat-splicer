@@ -11,7 +11,8 @@ function actsFor(win){ if(!S.an) return null; const [w0,w1]=win, L=w1-w0, B=S.an
   let sE=w0+L*0.18; const en=ix.find(i=>B[i]>w0+L*0.1&&B[i]<w0+L*0.3&&E[i]>=0.62); if(en!=null) sE=B[en]; sE=Math.min(sE,cS-L*0.1);
   const rS=Math.max(cE+L*0.05,w1-Math.max(L*0.1,Math.min(12,L*0.15)));
   let bounds=[sE,cS,cE,rS], by="energy";
-  const SEC=lyricSections(); if(S.lyrics&&SEC.length>=3&&L>=S.an.duration*0.85){ // the setup runs to the first chorus, the climax is the last big chorus, the outro is the new normal
+  const LS=lyricSections(), fromLyrics=!!(S.lyrics&&LS.length>=3), SEC=fromLyrics?LS:songSections().map(s=>({t0:s.t0,t1:s.t1,chorus:s.chorus,name:s.label}));
+  if(SEC.length>=3&&SEC.some(s=>s.chorus)&&L>=S.an.duration*0.85){ // the setup runs to the first chorus, the climax is the last big chorus, the outro is the new normal
     const inW=SEC.filter(s=>s.t0>=w0-0.5&&s.t1<=w1+0.5), ch=inW.filter(s=>s.chorus);
     const first=ch.find(s=>(s.t0-w0)/L>=0.08&&(s.t0-w0)/L<=0.45); const sE2=first?first.t0:inW[0]?Math.min(inW[0].t1,w0+L*0.3):null;
     const lastC=[...ch].reverse().find(s=>(s.t0-w0)/L>=0.45&&(s.t0-w0)/L<=0.85);
@@ -19,7 +20,7 @@ function actsFor(win){ if(!S.an) return null; const [w0,w1]=win, L=w1-w0, B=S.an
     if(sE2&&lastC){ const after=SEC.filter(s=>s.t0>lastC.t0+0.5&&s.t0<w1-1), out=after.length?after[after.length-1].t0:Math.min(lastC.t1+L*0.06,w1-L*0.06);
       let rS3=Math.min(Math.max(out,lastC.t0+L*0.14),w1-L*0.05), cE3=Math.min(lastC.t1,rS3-L*0.05); if(cE3<lastC.t0+L*0.06) cE3=lastC.t0+L*0.06;
       let b2=[sE2,lastC.t0,cE3,rS3];
-      const ok=b2.every((x,i)=>x>(i?b2[i-1]:w0)+L*0.03)&&b2[3]<w1-L*0.03; if(ok){ bounds=b2; by="lyrics"; } } }
+      const ok=b2.every((x,i)=>x>(i?b2[i-1]:w0)+L*0.03)&&b2[3]<w1-L*0.03; if(ok){ bounds=b2; by=fromLyrics?"lyrics":"song"; } } }
   const r=[[w0,bounds[0]],[bounds[0],bounds[1]],[bounds[1],bounds[2]],[bounds[2],bounds[3]],[bounds[3],w1]].map(([a,b],i)=>({key:ACTS[i][0],t0:a,t1:Math.max(a+0.01,b),by})); S._actsC[key]=r; return r; }
 /* the song's lyric structure: lines that come back are the chorus; lines are grouped into sections by the pauses between them */
 const lyKey=t=>String(t||"").toLowerCase().replace(/[^a-z0-9' ]/g,"").replace(/\s+/g," ").trim();
@@ -97,7 +98,7 @@ function renderOutline(){ const box=$("outlineActs"); if(!box) return; box.inner
   if(o.logline){ const p=document.createElement("p"); p.className="small"; p.style.cssText="margin:6px 0;font-style:italic"; p.textContent=o.logline; box.appendChild(p); }
   o.acts.forEach((A,i)=>{ const d=document.createElement("div"); d.style.cssText="border:1px solid var(--line);border-radius:10px;padding:8px 10px;margin:6px 0";
     const hd=document.createElement("div"); hd.style.cssText="font-weight:600;margin-bottom:4px"; hd.textContent=`${i+1}. ${ACTS[i][1]}${acts?`  ·  ${fmtTime(acts[i].t0)}–${fmtTime(acts[i].t1)}`:""}`; d.appendChild(hd);
-    if(i===0&&acts&&acts[0].by==="lyrics"){ const nb=document.createElement("div"); nb.className="small"; nb.style.margin="-2px 0 6px"; nb.textContent="Acts follow the lyrics: the setup runs to the first chorus and the climax lands on the last big chorus."; d.appendChild(nb); }
+    if(i===0&&acts&&(acts[0].by==="lyrics"||acts[0].by==="song")){ const nb=document.createElement("div"); nb.className="small"; nb.style.margin="-2px 0 6px"; nb.textContent=`Acts follow the ${acts[0].by==="lyrics"?"lyrics":"song's sections"}: the setup runs to the first chorus and the climax lands on the last big chorus.`; d.appendChild(nb); }
     const ta=document.createElement("textarea"); ta.value=A.summary||""; ta.rows=2; ta.placeholder=ACTS[i][2]; ta.style.cssText="width:100%;box-sizing:border-box;font:inherit;padding:6px;border-radius:8px;border:1px solid var(--line);background:var(--bg);color:var(--ink)"; ta.oninput=()=>{ A.summary=ta.value; outlineEdited(); }; d.appendChild(ta);
     const row=(label,items,has,toggle)=>{ if(!items.length) return; const r=document.createElement("div"); r.className="small"; r.style.cssText="display:flex;flex-wrap:wrap;gap:4px;align-items:center;margin-top:4px"; const l=document.createElement("span"); l.textContent=label; l.style.marginRight="4px"; r.appendChild(l);
       items.forEach(([k,t])=>{ const b=document.createElement("button"); b.type="button"; b.className="chip"; b.textContent=t; b.setAttribute("aria-pressed",String(has(k))); b.onclick=()=>{ toggle(k); outlineEdited(); renderOutline(); }; r.appendChild(b); }); d.appendChild(r); };
