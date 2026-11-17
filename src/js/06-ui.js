@@ -3,9 +3,18 @@
 /* Videos you've made: each export run is remembered as one entry (every format it produced), newest last. */
 function madeMem(){ try{ return JSON.parse(localStorage.getItem("beatsplicerMade")||"[]"); }catch(e){ return []; } }
 function recordMade(results){ try{ const plans=results.map(r=>r.plan).filter(Boolean); if(!plans.length) return; const keys=new Set(); plans.forEach(P=>P.forEach(s=>{ if(S.clips[s.clip]) keys.add(clipKey(s.clip)); }));
-    const m=madeMem(), sig=[...keys].sort().join(","); if(m.length&&m[m.length-1].sig===sig) return; m.push({t:Date.now(), song:S.audioName||"", clips:[...keys], sig}); localStorage.setItem("beatsplicerMade",JSON.stringify(m.slice(-12))); }catch(e){} }
+    const spans={}; plans.forEach(P=>P.forEach(s=>{ const c=S.clips[s.clip]; if(!c||c.kind==="image") return; const k=clipKey(s.clip), a=s.src||0, b=a+(s.end-s.start)*(s._ramp?RAMP_SPAN:(s._rate||1)); (spans[k]=spans[k]||[]).push([+a.toFixed(2),+b.toFixed(2)]); })); // the stretch of each clip actually shown
+    const m=madeMem(), sig=[...keys].sort().join(","); if(m.length&&m[m.length-1].sig===sig) return; m.push({t:Date.now(), song:S.audioName||"", clips:[...keys], spans, sig}); localStorage.setItem("beatsplicerMade",JSON.stringify(m.slice(-12))); }catch(e){} }
 /* "Don't reuse clips from my last N videos": the newest video's clips go first, then older ones, for as long as enough
    fresh footage is left for the formats being made; anything that can't be kept out is let back in oldest-first. */
+/* Footage already shown in videos you've made, per clip: a clip can come back in a later video, but only with footage
+   past what was shown (or any stretch not shown yet), so every video stays fresh. On unless the setting is off. */
+function shownBefore(){ const mode=$("exclN")?$("exclN").value:"adv"; if(mode==="0") return null; const m=madeMem(), key=m.length+":"+(m.length?m[m.length-1].t:0);
+  if(S._shown&&S._shown.key===key) return S._shown.map; const map=new Map();
+  m.forEach(v=>Object.entries(v.spans||{}).forEach(([k,L])=>{ const a=map.get(k)||[]; L.forEach(x=>a.push(x)); map.set(k,a); }));
+  map.forEach((L,k)=>{ L.sort((x,y)=>x[0]-y[0]); const out=[]; L.forEach(([a,b])=>{ const l=out[out.length-1]; if(l&&a<=l[1]+0.1) l[1]=Math.max(l[1],b); else out.push([a,b]); }); map.set(k,out); });
+  S._shown={key,map}; return map; }
+function shownSpans(ci){ const m=shownBefore(); return m&&m.get(clipKey(ci))||null; }
 function excludedKeys(need){ const n=+($("exclN")&&$("exclN").value)||0; S._exclPartial=null; if(!n) return null; const vids=madeMem().slice(-n).reverse(); if(!vids.length) return null;
   const keyIdx=new Map(); S.clips.forEach((c,i)=>{ if(c.samples&&!c.off) keyIdx.set(clipKey(i),i); });
   const set=new Set(), fams=new Set(), freshLeft=()=>S.clips.filter((c,i)=>c.samples&&!c.off&&!set.has(clipKey(i))&&!(c.fam&&fams.has(c.fam))).length; let wanted=0, skipped=0;

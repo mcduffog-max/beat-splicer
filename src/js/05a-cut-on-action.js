@@ -23,7 +23,7 @@ function actCutInside(c,a,b){ const m=c._act; for(let k=Math.floor(a*ACT_FPS);k<
 function actionAlign(plan){ if(!plan||!S.an||!S.an.beats||!$("cutAction")||!$("cutAction").checked) return 0; let moved=0;
   plan.forEach((s,i)=>{ const c=S.clips[s.clip]; s._act=null; if(actSkip(s,c)||actMissing(s,c)) return;
     const r=s._rate||1, D=(s.end-s.start)*r, base=s._actBase!=null&&s._actBaseClip===s.clip?s._actBase:s.src||0; s._actBase=base; s._actBaseClip=s.clip;
-    const span=x=>(x.end-x.start)*Math.max(1,x._rate||1), others=plan.filter((x,j)=>j!==i&&x.clip===s.clip).map(x=>[x.src||0,(x.src||0)+span(x)]); // generous spans: slow motion is counted at full length
+    const span=x=>(x.end-x.start)*Math.max(1,x._rate||1), others=plan.filter((x,j)=>j!==i&&x.clip===s.clip).map(x=>[x.src||0,(x.src||0)+span(x)]).concat((shownSpans(s.clip)||[]).filter(([x0,x1])=>!(base<x1&&base+D>x0))); // and never slide into footage an earlier video showed // generous spans: slow motion is counted at full length
     const s0=actScore(s,c,base); if(s0<0) return; let best=base, bs=s0;
     for(let d=-ACT_SLIDE*ACT_FINE;d<=ACT_SLIDE*ACT_FINE;d++){ if(!d) continue; const src=base+d/(ACT_FPS*ACT_FINE); if(src<0.05||src+D>c.dur-0.1) continue;
       if(others.some(([a,b])=>src<b+0.05&&src+span(s)>a-0.05)) continue; if(actCutInside(c,Math.min(src,base),Math.max(src,base)+D)) continue;

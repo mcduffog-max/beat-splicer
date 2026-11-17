@@ -85,7 +85,7 @@ function applyTheme(t){ if(t!=="light"&&t!=="dark") t="system"; const r=document
 $("themeBtn").onclick=()=>{ const cur=$("themeBtn").dataset.mode||"system"; applyTheme({system:"dark",dark:"light",light:"system"}[cur]); };
 try{ matchMedia("(prefers-color-scheme: dark)").addEventListener("change",()=>{ try{ drawTimeline(); }catch(e){} }); }catch(e){}
 applyTheme((()=>{ try{ return localStorage.getItem("beatsplicerTheme")||"system"; }catch(e){ return "system"; } })());
-loadSettings(); try{ if(!localStorage.getItem("beatsplicerBorder3")){ if($("progBorder").value==="frame") $("progBorder").value="line"; localStorage.setItem("beatsplicerBorder3","1"); saveSettings(); } }catch(e){} loadKeys(); loadBrand(); buildSoundUI(); buildCropUI(); buildStyleUI(); buildEndpointUI(); sizeStage();
+loadSettings(); try{ if(!localStorage.getItem("beatsplicerAdv1")){ if($("exclN").value==="0"||!$("exclN").value) $("exclN").value="adv"; localStorage.setItem("beatsplicerAdv1","1"); saveSettings(); } }catch(e){} /* reusing clips with fresh footage is the new default */ try{ if(!localStorage.getItem("beatsplicerBorder3")){ if($("progBorder").value==="frame") $("progBorder").value="line"; localStorage.setItem("beatsplicerBorder3","1"); saveSettings(); } }catch(e){} loadKeys(); loadBrand(); buildSoundUI(); buildCropUI(); buildStyleUI(); buildEndpointUI(); sizeStage();
 $("clipSoundRow").hidden=!$("clipSound").checked; $("clipSoundNote").hidden=!$("clipSound").checked;
 renderClips(); drawTimeline(); updateButtons();
 if(NATIVE&&$("diagCopy")) $("diagCopy").textContent="Send report";

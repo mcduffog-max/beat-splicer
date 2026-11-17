@@ -172,6 +172,7 @@ function chooseClip(seg, ctx, exclude){
       const ri=Math.max(ctx.recent.lastIndexOf(ci),(ctx.recentF||[]).lastIndexOf(fm)); if(ri>=0){ const ago=ctx.recent.length-ri; cost+= ago<=1?3:1.8/ago; } // a look-alike of a recent shot counts as a repeat
       const used=ctx.usage.get(ci)||[];
       for(const [a,b] of used) if(start<b && start+D>a) cost+=0.8;
+      { const sh=clip.kind!=="image"&&shownSpans(ci); if(sh&&sh.some(([a,b])=>start<b-0.05&&start+D>a+0.05)) cost+=1.2; } // footage an earlier video already showed
       cost+=jit.get(ci)*(mode==="beat"?1:Math.max(0.15,variety));
       if(!Number.isFinite(cost)) cost=50; // a broken score must never decide a shot (or knock every clip out)
       if(cost<bestCost){ bestCost=cost; best={clip:ci, src:start, why:W, sm:s}; }
@@ -203,7 +204,7 @@ function buildPlan(){ refreshExclusion(); refreshFilter(); motifSetup(); setTime
 function advanceClips(plan){
   const used=new Map();
   for(const s of plan){ const c=S.clips[s.clip]; if(!c||c.kind==="image") continue; const D=(s.end-s.start)*(s._ramp?RAMP_SPAN:(s._rate||1)), room=Math.max(0,c.dur-0.15);
-    const U=used.get(s.clip)||[]; const hit=(a)=>U.some(([x,y])=>Math.min(y,a+D)-Math.max(x,a)>0.04);
+    const U=used.get(s.clip)||(shownSpans(s.clip)||[]).map(x=>x.slice()); const hit=(a)=>U.some(([x,y])=>Math.min(y,a+D)-Math.max(x,a)>0.04);
     if(U.length&&!s._loop&&!s._lock&&!s._manual&&hit(s.src)){
       const lastEnd=U[U.length-1][1], hi=Math.max(...U.map(u=>u[1])), lo=Math.min(...U.map(u=>u[0])); let pick=null;
       for(const a of [lastEnd+0.04, hi+0.04]) if(pick==null&&a+D<=room&&!hit(a)) pick=a;              // forward from where it was last seen
