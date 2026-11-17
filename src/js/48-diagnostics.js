@@ -85,6 +85,6 @@ function applyTheme(t){ if(t!=="light"&&t!=="dark") t="system"; const r=document
 $("themeBtn").onclick=()=>{ const cur=$("themeBtn").dataset.mode||"system"; applyTheme({system:"dark",dark:"light",light:"system"}[cur]); };
 try{ matchMedia("(prefers-color-scheme: dark)").addEventListener("change",()=>{ try{ drawTimeline(); }catch(e){} }); }catch(e){}
 applyTheme((()=>{ try{ return localStorage.getItem("beatsplicerTheme")||"system"; }catch(e){ return "system"; } })());
-loadSettings(); try{ if(!localStorage.getItem("beatsplicerBorder2")){ if($("progBorder").value==="frame") $("progBorder").value="line"; localStorage.setItem("beatsplicerBorder2","1"); } }catch(e){} loadKeys(); loadBrand(); buildSoundUI(); buildCropUI(); buildStyleUI(); buildEndpointUI(); sizeStage();
+loadSettings(); try{ if(!localStorage.getItem("beatsplicerBorder3")){ if($("progBorder").value==="frame") $("progBorder").value="line"; localStorage.setItem("beatsplicerBorder3","1"); saveSettings(); } }catch(e){} loadKeys(); loadBrand(); buildSoundUI(); buildCropUI(); buildStyleUI(); buildEndpointUI(); sizeStage();
 $("clipSoundRow").hidden=!$("clipSound").checked; $("clipSoundNote").hidden=!$("clipSound").checked;
 renderClips(); drawTimeline(); updateButtons();
