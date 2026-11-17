@@ -76,6 +76,7 @@ function noteUse(ctx,seg,clip,src){
   const f=famOf(clip); ctx.famCount=ctx.famCount||new Map(); ctx.famCount.set(f,(ctx.famCount.get(f)||0)+1); ctx.famLast=ctx.famLast||new Map(); ctx.famLast.set(f,seg.end); ctx.recentF=ctx.recent.map(famOf);
   const cs=S.clips[clip], smp=cs&&cs.samples&&cs.samples.reduce((a,x)=>Math.abs(x.t-src)<Math.abs(a.t-src)?x:a,cs.samples[0]); if(smp&&smp.col) ctx.prevCol=smp.col; ctx.prevSm=smp||null;
   ctx.lastSrc=ctx.lastSrc||new Map(); ctx.lastSrc.set(clip,src+(seg.end-seg.start)*(seg._rate||1));
+  shotLangNote(ctx,seg,clip,src);
 }
 /* Recency memory: what recent versions and exports used, fading with age. Most recent counts fully, four back about a tenth.
    Clips, the exact moments within them, and the opening shot are all remembered. */
@@ -115,6 +116,8 @@ function shotReasons(seg,pick){ const W=pick.why, out=[], c=S.clips[pick.clip], 
   if(W.st<-0.25) out.push({k:-W.st,t:"Right kind of shot for this point in the song"});
   if(shotImportance(seg)>=1&&W.q<0.15) out.push({k:0.6,t:"Sharp, full-quality footage for a key moment"});
   if(W.cn<-0.15) out.push({k:-W.cn,t:"Movement carries on from the shot before"});
+  if(W.mc<-0.1) out.push({k:0.5-W.mc,t:"Match cut: its shapes line up with where the shot before ended"});
+  if(W.pl<-0.2) out.push({k:-W.pl,t:"Stays in the same place for a few shots, from a new angle"});
   if(W.dcol!=null&&W.dcol<0.06) out.push({k:0.3,t:"Colours sit with the shot before"});
   if(seg.e>0.7&&pick.sm&&(pick.sm.motion||0)>6) out.push({k:0.4,t:"Lots of movement for a loud passage"});
   if(seg.drop) out.push({k:0.5,t:"Lands on the drop"});
@@ -153,8 +156,8 @@ function chooseClip(seg, ctx, exclude){
       if(clip.kind!=="image"){ for(const x of clip.samples) if((x.cut||x.dark) && x.t>start+0.1 && x.t<start+D-0.1){ cost+=1.5; break; } } // or run through one
       if(clip.wm&&clip.wm.length&&wmBlocked(clip,start,D)) cost+=6; // a watermark that can't be framed out: use other footage
       if(seg.e>0.7 && (clip.kind==="image" || s.mN<0.2)) cost+=0.35;  // loud moments want movement
-      const W={q:qualityCost(seg,clip,s,ctx), cn:continuityCost(seg,s,ctx), se:seeCost(seg,s,ci), st:storyCost(seg,clip,ci,s,ctx), mo:motifCost(seg,clip,ci,s), ou:outlineCost(seg,clip,ci,s,ctx), ly:lyricCost(seg,clip,ci,s)+vetoCost(seg,ci), share, dcol};
-      cost+=W.q+W.cn+W.se+W.share+W.st+W.mo+W.ou+W.ly;
+      const W={q:qualityCost(seg,clip,s,ctx), cn:continuityCost(seg,s,ctx), se:seeCost(seg,s,ci), st:storyCost(seg,clip,ci,s,ctx), mo:motifCost(seg,clip,ci,s), ou:outlineCost(seg,clip,ci,s,ctx), ly:lyricCost(seg,clip,ci,s)+vetoCost(seg,ci), pl:placeCost(seg,ci,ctx), mc:clip.kind==="image"?0:matchCutCost(seg,clip,ci,start,ctx), share, dcol};
+      cost+=W.q+W.cn+W.se+W.share+W.st+W.mo+W.ou+W.ly+W.pl+W.mc;
       { const raw=clip.kind==="image"?0:(s.motion||0), still=Math.max(0,1-raw/1.2); // only genuinely still footage is penalised; any real motion is welcome
         if(ctx.short) cost+=1.6*still+(clip.kind==="image"?0.6+Math.max(0,D-1)*0.8:0);  // short-form lives on movement; a still never holds long
         else if(seg.e>0.6) cost+=0.5*still; }
@@ -180,7 +183,7 @@ function buildPlan(){ refreshExclusion(); refreshFilter(); motifSetup(); setTime
   annotateStory(segs);
   for(const seg of segs){
     const pick=chooseClip(seg,ctx,-1) || {clip:S.clips.findIndex(c=>c.samples), src:0};
-    seg.clip=pick.clip; seg.src=pick.src; seg.why=pick.why?shotReasons(seg,pick):null;
+    seg.clip=pick.clip; seg.src=pick.src; seg._mcut=!!(pick.why&&pick.why.mc<-0.1); seg.why=pick.why?shotReasons(seg,pick):null;
     noteUse(ctx,seg,pick.clip,pick.src);
   }
   const dc=dcut();

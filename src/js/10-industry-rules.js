@@ -125,6 +125,7 @@ function makeExportPlan(ep,win){
     if(raw!=null && raw<0.4 && s.end-s.start>0.5 && s._beat!=="reflect"){ const moves=["pan","tilt","pull","drift","push","handheld"]; s._move=moves[(i*5+Math.floor(s.start))%moves.length]; s._dir=i%2?1:-1; }
     if(i>0 && s.e<0.55 && s.tr && s.tr.type==="cut" && !s.drop && Math.abs(s._bN-segs[i-1]._bN)>0.55) s.tr={type:"crossfade",dur:Math.min(0.18,(s.end-s.start)*0.3)};
   });
+  advanceClips(segs); // a last check once every shot is final: no stretch of footage is shown twice
   return segs;
 }
 

@@ -39,12 +39,12 @@ async function seeAll(){ if(!seeAvailable()||S._seeBusy) return; const todo=S.cl
             sm.forEach(s=>{ if(!s.ce){ const nb=pick.reduce((a,x)=>Math.abs(x.t-s.t)<Math.abs(a.t-s.t)?x:a,pick[0]); s.ce=nb.ce; } }); }catch(e){} finally{ v.removeAttribute("src"); v.load(); URL.revokeObjectURL(url); } }
         if(n%3===0||n===todo.length-1) status(`Learning what's in your clips: ${n+1} of ${todo.length}. You can keep working.`);
         if(n%25===24) saveProjectSoon(); }
-      seeReady(); saveProjectSoon(); status("Done: the app knows what's in your clips. Lyrics now find shots that show what's sung."); if(!S.running) buildPlan(); }); }
+      await seeShotLanguage(); S._placeKey=null; seeReady(); saveProjectSoon(); status("Done: the app knows what's in your clips. Lyrics now find shots that show what's sung."); if(!S.running) buildPlan(); }); }
   catch(e){ status("Couldn't load the picture-and-word model: "+(e&&e.message||e),true); }
   finally{ S._seeBusy=false; renderSee(); } }
 function seeCount(){ let n=0,t=0; S.clips.forEach(c=>(c.samples||[]).forEach(s=>{ t++; if(s.ce) n++; })); return [n,t]; }
 /* once clips are read, each lyric line is described too, and scored against every moment of footage */
-async function seeReady(){ S._seeLines=null; if(!S.lyrics||!S.lyrics.lines.length) return; try{ const texts=[...new Set(S.lyrics.lines.map(l=>l.text).filter(Boolean))]; const vs=await embedTexts(texts);
+async function seeReady(){ S._seeLines=null; if(!seeShotLanguageSaved()&&S.clips.some(c=>c.samples&&c.samples.some(x=>x.ce))) seeShotLanguage().then(()=>{ S._placeKey=null; if(S._seeScale&&!S.running) buildPlan(); }); if(!S.lyrics||!S.lyrics.lines.length) return; try{ const texts=[...new Set(S.lyrics.lines.map(l=>l.text).filter(Boolean))]; const vs=await embedTexts(texts);
     const all=[]; S.clips.forEach(c=>(c.samples||[]).forEach(s=>{ const v=sampleVec(s); if(v) all.push(v); })); if(!all.length) return;
     const map=new Map(); texts.forEach((t,i)=>{ const q=vs[i]; let m=0,m2=0; for(const v of all){ const d=dotV(q,v); m+=d; m2+=d*d; } m/=all.length; map.set(t,{q,m,sd:Math.sqrt(Math.max(1e-6,m2/all.length-m*m))}); });
     S._seeLines=map; if(!S.running) buildPlan(); }catch(e){} }

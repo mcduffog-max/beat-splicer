@@ -1,7 +1,7 @@
 /* ---------------- Reading the footage: shot size, faces, expression, subject ----------------
    Scale: 0 extreme wide, 1 wide, 2 medium, 3 medium close-up, 4 close-up, 5 extreme close-up (eyes). */
 const SCALE_NAMES=["extreme wide","wide","medium","medium close-up","close-up","extreme close-up"];
-function tagAt(clip,t){ if(!clip||!clip.tags||!clip.tags.length) return null; return clip.tags.reduce((a,x)=>Math.abs(x.t-t)<Math.abs(a.t-t)?x:a,clip.tags[0]); }
+function tagAt(clip,t){ if(!clip) return null; if(!clip.tags||!clip.tags.length) return seeTagAt(clip,t); /* no AI review notes: what the picture-and-word model read, if anything */ return clip.tags.reduce((a,x)=>Math.abs(x.t-t)<Math.abs(a.t-t)?x:a,clip.tags[0]); }
 function tagPoints(c){ if(c.kind==="image") return [0]; const d=c.dur; return d<4?[d*0.5]:[d*0.15,d*0.5,d*0.85]; }
 async function frameAt(c,t,size){
   const cv=document.createElement("canvas"), g=cv.getContext("2d"); let src;
