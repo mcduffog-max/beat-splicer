@@ -134,3 +134,4 @@ sampleP.then(s=>{ if(!s){ $("rvClaude").checked=false; $("rvClaude").disabled=tr
 
 
 { let tn=0; $("dirNote").addEventListener("input",()=>{ clearTimeout(tn); tn=setTimeout(()=>{ saveSettings(); S._notePh=null; if(!S.running) buildPlan(); },700); }); }
+$("houseSave").onclick=saveHouseStyle; $("houseOn").addEventListener("change",saveSettings); renderHouse();

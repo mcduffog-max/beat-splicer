@@ -7,7 +7,7 @@ function planPrint(plan,win,step=0.5){ const out=[]; let k=0;
   for(let t=win[0]+0.01;t<win[1];t+=step){ while(k<plan.length-1 && t>=plan[k].end) k++; const s=plan[k]; out.push(clipKey(s.clip)+"@"+Math.floor((s.src+Math.max(0,t-s.start))/1.5)); }
   return out; }
 const FX_IDS=["fxPulse","fxShake","fxGlitch","fxGrain","fxVignette","fxBars","kb","fxFisheye","fxSplit","fxMultiply","fxMirror","fxStrobe","fxHandheld","fxWash","fxDoodles"];
-function styleSig(){ return {look:$("look").value, dir:S.direct||"", trans:$("trans").value, fx:FX_IDS.filter(id=>$(id).checked).join(",")}; }
+function styleSig(){ const v=id=>$(id)?($(id).type==="checkbox"?String($(id).checked):$(id).value):""; return {look:$("look").value, dir:S.direct||"", trans:$("trans").value, fx:FX_IDS.filter(id=>$(id).checked).join(","), more:[v("lens"),v("camEnergy"),v("motif"),v("sigTrans"),v("textStyle"),S._paceName||""].join("|")}; }
 function currentPrint(){ if(!S.plan) return null; const ep=EP(S.eps[0])||ENDPOINTS[0], w=windowFor(ep), plan=makeExportPlan(ep,w)||S.plan;
   return {shots:planPrint(plan,w,1), style:styleSig(), ep:ep.id, title:smartTitle(), date:today()}; }
 function printSim(a,b){
@@ -18,7 +18,8 @@ function printSim(a,b){
   const jac=inter/Math.max(1,A.size+B.size-inter);
   const fa=new Set(a.style.fx.split(",").filter(Boolean)), fb=new Set(b.style.fx.split(",").filter(Boolean)); let fi=0; fa.forEach(x=>{ if(fb.has(x)) fi++; });
   const fx=(fa.size+fb.size)?fi/(fa.size+fb.size-fi):1;
-  const st=((a.style.look===b.style.look)+(a.style.dir===b.style.dir)+(a.style.trans===b.style.trans)+fx)/4;
+  const ma=(a.style.more||"").split("|"), mb=(b.style.more||"").split("|"), mo=ma.length===mb.length&&ma.length>1?ma.filter((x,i)=>x&&x===mb[i]).length/ma.length:0.5;
+  const st=((a.style.look===b.style.look&&a.style.look!=="own")+(a.style.dir===b.style.dir)+(a.style.trans===b.style.trans)+fx+2*mo)/6; /* "own" differs every video */
   return 0.45*shot+0.25*jac+0.30*st;
 }
 function loadHistory(){ try{ return JSON.parse(localStorage.getItem("beatsplicerHistory")||"[]"); }catch(e){ return []; } }
@@ -68,3 +69,9 @@ function rankDirectors(){ const f=songFeatures(); const out=[];
     out.push({name, sc:2*tempo+1.5*(1-Math.abs(f.energy-p.energy))+1.2*(1-Math.abs(f.motion-p.motion))+1*(1-Math.abs(f.bright-p.bright))+0.6*(1-Math.abs(f.bass-p.bass))+feelFit, why:"also suits this song"}); }
   return out.sort((a,b)=>b.sc-a.sc); }
 
+
+/* house style: the lettering and ending that make the channel recognisable, kept while everything else varies */
+function houseStyle(){ try{ return JSON.parse(localStorage.getItem("beatsplicerHouse")||"null"); }catch(e){ return null; } }
+function saveHouseStyle(){ const h={text:$("textStyle").value, end:$("endStyle")?$("endStyle").checked:null, at:Date.now()}; try{ localStorage.setItem("beatsplicerHouse",JSON.stringify(h)); }catch(e){}
+  $("houseOn").checked=true; saveSettings(); renderHouse(); status(`House style kept: ${$("textStyle").selectedOptions[0].textContent.toLowerCase()} lettering and ${h.end?"finishing with the song":"your own ending"}. Do everything keeps these and varies the rest.`); }
+function renderHouse(){ const h=houseStyle(), el=$("houseInfo"); if(!el) return; el.textContent=h?`Kept: ${h.text} lettering, ${h.end?"finishing with the song":"your own ending"}.`:"Nothing kept yet."; }

@@ -182,7 +182,7 @@ function versionScore(){
     { const loud=P.filter(s=>s.e>0.7).map(s=>Math.min(s.end,w[1])-Math.max(s.start,w[0])).filter(d=>d>0); // momentum lives in the loud passages
       if(loud.length>=4){ const aL=loud.reduce((a,b)=>a+b,0)/loud.length; total-=5*Math.max(0,aL-(ep.short?1.3:1.6)); } }
     if(P.some(s=>s._accent)) total+=ep.short?1.5:1; }
-  total+=ok-2*warn-6*fail; const c=closestTo(currentPrint(),loadHistory()); if(c) total+=3*(1-c.sim);
+  total+=ok-2*warn-6*fail; const c=closestTo(currentPrint(),loadHistory()); if(c) total+=5*(1-c.sim); // novelty against your own recent videos
   return {total,ok,warn,fail,motion:Math.round(100*(mot.length?Math.min(...mot):0))};
 }
 async function autopilot(){
@@ -214,8 +214,8 @@ async function autopilot(){
     // rhythm personality, colour look and lettering also rotate
     const recent=k=>hist.slice(-2).map(hh=>hh[k]), nb=noteBias(), paceName=weightedPick([["tight",1],["classic",1.2],["spacious",1]].filter(p=>!recent("pace").slice(-1).includes(p[0])||nb.pace===p[0]).map(p=>[p[0],p[1]*learnW("pace",p[0])*(nb.pace===p[0]?4:1)])); S._paceName=paceName;
     S._paceK={tight:0.85,classic:1,spacious:1.22}[paceName];
-    const LOOKPOOL={awakening:["vivid","glossy","tealorange","neon"],temperature:["none","glossy","moody"],twoworlds:["none","vivid","glossy"]}[dirId]||["none","tealorange","warmfilm","vivid","moody","glossy","painterly","fincher","cold","bw"];
-    const textPick=weightedPick(["clean","box","cinema","impact","serif"].filter(t=>!recent("text").includes(t)).map(t=>[t,learnW("text",t)]));
+    const LOOKPOOL={awakening:["own","vivid","glossy"],temperature:["own","none","moody"],twoworlds:["own","none","vivid"]}[dirId]||["own","none","warmfilm","moody","painterly","fincher","cold","bw","tealorange","vivid","glossy"], LOOKW={own:5,none:1.5,tealorange:0.3,glossy:0.4,vivid:0.5,neon:0.2,vhs:0.2}; // its own grade first; trend looks rarely
+    let textPick=weightedPick(["clean","box","cinema","impact","serif"].filter(t=>!recent("text").includes(t)).map(t=>[t,learnW("text",t)]));
     const calm=!!(S.an.feel&&S.an.feel.free), sigPick=calm?"mixed":weightedPick(["whip","zoomthru","spin","mask","flash","zoom","zoomout","dip","mixed"].filter(t=>!recent("sig").includes(t)).map(t=>[t,(t==="mixed"?0.6:1)*learnW("sig",t)]));
     // the camera: a lens kit and an energy that suit the style, the song and the footage (and what has kept viewers)
     const lensKit=(()=>{ const sty=(top[0]&&top[0].name)||"", w={cinema:1.2,epic:0.8,vintage:0.8,indie:0.7,dream:0.6,clean:0.7};
@@ -226,7 +226,9 @@ async function autopilot(){
       return weightedPick(Object.entries(w).filter(([k])=>!recent("lens").includes(k)).map(([k,x])=>[k,x*learnW("lensKit","kit:"+k)])); })();
     const camEnergy=(()=>{ const body=S.an.E.filter(v=>v>0.05), e=body.reduce((a,b)=>a+b,0)/Math.max(1,body.length); const base=calm||S.an.bpm<85?"gentle":(S.an.bpm>125&&e>0.55)?"bold":"normal";
       const nb2=noteBias(); return weightedPick(["gentle","normal","bold"].map(k=>[k,(k===(nb2.en||base)?5:1)*learnW("camEnergy",k)])); })();
-    const dress=()=>{ setControl("camMoves","director"); setControl("lens","kit:"+lensKit); setControl("camEnergy",camEnergy); const cur=$("look").value; if(recent("look").includes(cur)||!LOOKPOOL.includes(cur)||dirId==="awakening"&&cur==="bw"){ const opts=LOOKPOOL.filter(l=>!recent("look").includes(l)&&!(dirId==="awakening"&&l==="bw")); if(opts.length) setControl("look",weightedPick(opts.map(l=>[l,learnW("look",l)]))); } setControl("textStyle",textPick); setControl("sigTrans",sigPick); };
+    const dress=()=>{ setControl("camMoves","director"); setControl("lens","kit:"+lensKit); setControl("camEnergy",camEnergy); const cur=$("look").value; if(cur!=="own"&&recent("look").includes(cur)||!LOOKPOOL.includes(cur)||dirId==="awakening"&&cur==="bw"){ const opts=LOOKPOOL.filter(l=>(l==="own"||!recent("look").includes(l))&&!(dirId==="awakening"&&l==="bw")); if(opts.length) setControl("look",weightedPick(opts.map(l=>[l,(LOOKW[l]||1)*learnW("look",l)]))); } if($("look").value!=="own"&&S._ownPick) setControl("look","own"); setControl("textStyle",textPick); setControl("sigTrans",sigPick); }; // a style's preset look gives way to the video's own grade most of the time
+    const HS=houseStyle(); if(HS&&$("houseOn").checked){ textPick=HS.text||textPick; if(HS.end!=null) setControl("endStyle",!!HS.end); } // the channel's own lettering and ending
+    S._ownPick=Math.random()<0.75*learnW("look","own");
     let best=null, tried=0; const seeds=big?2:3;
     // restraint: the footage carries the edit; no overlays or zooms layered on top of it
     const restrain=()=>["fxDoodles","fxStrobe","fxGlitch","fxShake","fxMultiply","fxSplit","fxFisheye","fxMirror","fxWash","fxPulse","kb","fxHandheld"].forEach(id=>setControl(id,false));
@@ -238,6 +240,8 @@ async function autopilot(){
     try{ const hh=dirHistory(); hh.push({motif:dirId,dir:best.dir,lens:lensKit,look:$("look").value,text:$("textStyle").value,pace:paceName,sig:sigPick,t:Date.now()}); localStorage.setItem("beatsplicerDirections",JSON.stringify(hh.slice(-12))); }catch(e){}
     S.versions.push({...snapshot(),print:currentPrint()}); S.verIdx=S.versions.length-1; renderVersions(); setStyleState(best.dir,"auto",true);
     say(`Style: ${best.dir}, with a ${paceName} rhythm, the “${$("look").selectedOptions[0].textContent}” colour look, ${$("textStyle").selectedOptions[0].textContent.toLowerCase()} lettering${sigPick!=="mixed"?` and ${$("sigTrans").selectedOptions[0].textContent.toLowerCase()} as its signature transition`:""}.`);
+    { const c=closestTo(currentPrint(),loadHistory()); if(c) say(`Novelty: ${Math.round((1-c.sim)*100)}% different from the closest of your recent videos${c.sim>0.6?" (close: “Try another direction” for something further away)":""}.`); }
+    if($("look").value==="own") say(`Colour: a grade of its own, built from this footage and song (${ownLookWords()}).`);
     say(`Camera: ${LENS_KITS[lensKit].name.toLowerCase()} lenses (${[["verse","verses"],["chorus","choruses"],["bridge","the bridge"]].map(([k,w])=>`${w} on ${LENSES[LENS_KITS[lensKit][k]].name.split(/ \(| style|:/)[0]}`).join(", ")}), ${camEnergy} camera moves that follow the song's sections.`);
     { const bo=S.plan.filter(s=>s._bold&&s.tr); if(bo.length&&restraint()!=="any") say(`Restraint: ${bo.length===1?"one bold moment":`${bo.length} bold moments`}, ${bo.map(s=>`${{whip:"a whip pan",zoom:"a punch zoom",zoomout:"a pull-back",zoomthru:"a zoom-through",spin:"a spin",mask:"a wipe",flash:"a flash"}[s.tr.type]||s.tr.type} at ${fmtTime(s.start)}`).join(" and ")}; everything else cuts clean.`); }
     say(`Tried ${tried} cuts in this direction and kept the strongest: ${best.sc.ok} checks passed${best.sc.warn?`, ${best.sc.warn} to look at`:""}${best.sc.fail?`, ${best.sc.fail} blocking export`:""}.`);

@@ -18,7 +18,7 @@ function beatInfo(t){
   return {i, ph:t-B[i], e:E[i], down:isDownAt(S.an,i), drop:i>=4 && E[i]-E[i-4]>0.3};
 }
 function readFx(){
-  const look=LOOKS[$("look").value]||LOOKS.none;
+  const look=$("look").value==="own"?ownLook():(LOOKS[$("look").value]||LOOKS.none);
   return { fit:$("fit").value, zoom:+$("zoom").value, kb:$("kb").checked, filter:look.f, look,
     pulse:$("fxPulse").checked, shake:$("fxShake").checked, glitch:$("fxGlitch").checked,
     grain:$("fxGrain").checked, vignette:$("fxVignette").checked, bars:$("fxBars").checked,
