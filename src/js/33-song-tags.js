@@ -93,7 +93,8 @@ function renderResults(){
     const save=document.createElement("button"); save.className="btn"; save.textContent="Save";
     save.onclick=()=>saveFile(resultName(r), r.blob);
     row.append(info,play,save);
-    if(canShareFiles()){ const sh=document.createElement("button"); sh.className="btn"; sh.textContent="Share";
+    if(NATIVE){ const sh=document.createElement("button"); sh.className="btn"; sh.textContent="Share"; sh.onclick=()=>nativeShare(resultName(r),r.blob,captionFor(r.ep)); row.appendChild(sh); }
+    else if(canShareFiles()){ const sh=document.createElement("button"); sh.className="btn"; sh.textContent="Share";
       sh.onclick=async()=>{ try{ await navigator.share({files:[new File([r.blob],resultName(r),{type:r.blob.type||"video/mp4"})], text:captionFor(r.ep)||undefined}); }catch(e){ if(e&&e.name!=="AbortError") status("Sharing isn’t available here. Use Save instead.",true); } };
       row.appendChild(sh); }
     else if(UPLOAD[r.ep.id]){ const a=document.createElement("a"); a.className="btn"; a.href=UPLOAD[r.ep.id]; a.target="_blank"; a.rel="noopener"; a.textContent="Upload page"; row.appendChild(a); }
@@ -110,6 +111,7 @@ function renderResults(){
   });
 }
 async function saveFile(name,data){
+  if(NATIVE&&await nativeSave(name,data)) return; // the Android app writes straight into Movies/Beat Splicer
   const dl=await downloadsP;
   if(dl){
     try{ await dl.save({filename:name,data}); status("Saved "+name+"."); return; }

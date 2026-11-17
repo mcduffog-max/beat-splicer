@@ -1,0 +1,6 @@
+{
+  "appId": "com.mcduffog.beatsplicer",
+  "appName": "Beat Splicer",
+  "webDir": "dist",
+  "android": { "allowMixedContent": false, "captureInput": true, "webContentsDebuggingEnabled": true }
+}

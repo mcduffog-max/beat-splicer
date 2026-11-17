@@ -5,7 +5,7 @@
    client ID (a free Google Cloud project), and an address of its own: not available inside claude.ai. */
 const YT={scopes:"https://www.googleapis.com/auth/youtube.readonly https://www.googleapis.com/auth/yt-analytics.readonly https://www.googleapis.com/auth/youtube.upload", token:null, exp:0, channel:null};
 function ytClientId(){ try{ return localStorage.getItem("beatsplicerYTClient")||""; }catch(e){ return ""; } }
-function ytAvailable(){ return !HOSTED; }
+function ytAvailable(){ return !HOSTED&&!NATIVE; } // Google sign-in refuses app web views: in the Android app, Share sends videos to the YouTube app
 function loadGIS(){ if(window.google&&google.accounts&&google.accounts.oauth2) return Promise.resolve(); return new Promise((res,rej)=>{ const s=document.createElement("script"); s.src="https://accounts.google.com/gsi/client"; s.onload=()=>res(); s.onerror=()=>rej(new Error("Couldn't reach Google sign-in")); document.head.appendChild(s); }); }
 async function ytToken(interactive){ if(YT.token&&Date.now()<YT.exp-60000) return YT.token; const id=ytClientId(); if(!id) throw new Error("Add your Google client ID first");
   await loadGIS(); return new Promise((res,rej)=>{ const tc=google.accounts.oauth2.initTokenClient({client_id:id, scope:YT.scopes, callback:r=>{ if(r&&r.access_token){ YT.token=r.access_token; YT.exp=Date.now()+(+r.expires_in||3600)*1000; res(YT.token); } else rej(new Error(r&&r.error||"Sign-in was cancelled")); }, error_callback:e=>rej(new Error(e&&e.type||"Sign-in was cancelled"))});

@@ -96,7 +96,7 @@ class ElemSlot{
   close(){ if(this.v){ this.v.pause(); this.v.removeAttribute("src"); this.v.load(); this.v.remove(); this.v=null; } this.clip=null; }
 }
 let _wake=null;
-async function stayAwake(on){ try{ if(on && navigator.wakeLock && !_wake){ _wake=await navigator.wakeLock.request("screen"); _wake.addEventListener("release",()=>{ _wake=null; }); } else if(!on && _wake){ await _wake.release(); _wake=null; } }catch(e){} }
+async function stayAwake(on){ if(NATIVE&&await nativeAwake(on)) return; try{ if(on && navigator.wakeLock && !_wake){ _wake=await navigator.wakeLock.request("screen"); _wake.addEventListener("release",()=>{ _wake=null; }); } else if(!on && _wake){ await _wake.release(); _wake=null; } }catch(e){} }
 document.addEventListener("visibilitychange",()=>{ if(!document.hidden && S.running && S.running.record) stayAwake(true); }); // the lock drops when the tab is hidden; take it back
 function exportLog(x){ try{ localStorage.setItem("beatsplicerExportLog",JSON.stringify({...x,at:Date.now(),song:S.audioName,clips:S.clips.length,mem:performance.memory?Math.round(performance.memory.usedJSHeapSize/1e6):null,ua:navigator.userAgent.slice(0,120)})); }catch(e){} }
 function lastExportNotice(){ try{ const l=JSON.parse(localStorage.getItem("beatsplicerExportLog")||"null"); if(!l||l.stage==="done") return;
