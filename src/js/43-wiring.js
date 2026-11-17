@@ -33,7 +33,7 @@ $("artistName").addEventListener("input",()=>{ S._artistAuto=false; });
 $("exclN").addEventListener("change",()=>{ saveSettings(); refreshExclusion(true); _rcT=0; renderClips(); if(!S.running) buildPlan(); });
 $("libUseAll").onclick=()=>{ libOrder().forEach(i=>{ if(S.clips[i].samples) S.clips[i].off=false; }); _rcT=0; renderClips(); buildPlan(); saveProjectSoon(); };
 $("libOffAll").onclick=()=>{ libOrder().forEach(i=>{ if(S.clips[i].samples) S.clips[i].off=true; }); _rcT=0; renderClips(); buildPlan(); saveProjectSoon(); };
-$("clearHist").onclick=()=>{ localStorage.removeItem("beatsplicerUsage"); S._fatigue=null; refreshExclusion(true); _rcT=0; renderClips(); if(!S.running) buildPlan(); status("History cleared: every clip counts as fresh again."); };
+$("clearHist").onclick=()=>{ localStorage.removeItem("beatsplicerUsage"); localStorage.removeItem("beatsplicerMade"); S._fatigue=null; refreshExclusion(true); _rcT=0; renderClips(); if(!S.running) buildPlan(); status("History cleared: every clip counts as fresh again."); };
 $("trans").addEventListener("input",()=>{ S._transManual=$("trans").value!=="auto"; });
 $("songFolder").onchange=e=>{ const fs=[...e.target.files]; e.target.value=""; addSongFolder(fs); };
 $("comboBtn").onclick=bestCombo;

@@ -41,7 +41,7 @@ function renderVersions(note){
   const c=closestTo(v.print,others), diff=c?Math.round((1-c.sim)*100):100;
   $("verInfo").textContent=`Version ${S.verIdx+1} of ${n}${c?`, ${diff}% different from the closest other version`:""}${v.direct?` (${v.direct})`:""}.${note?" "+note:""}`;
 }
-async function remix(){ if(S.plan) recordUsage(S.plan); refreshExclusion(true);
+async function remix(){ if(S.plan){ const ep=S.eps.map(EP).filter(Boolean)[0]; recordUsage(ep?(makeExportPlan(ep,windowFor(ep))||S.plan):S.plan); } refreshExclusion(true); // what the replaced version would actually have shown
   if(!S.plan || S.running) return;
   if(!S.versions.length){ S.versions.push({...snapshot(),print:currentPrint()}); S.verIdx=0; }
   const refs=S.versions.map(v=>v.print).concat(loadHistory());

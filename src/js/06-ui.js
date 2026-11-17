@@ -1,13 +1,23 @@
 /* ---------------- UI: clips, stats, timeline ---------------- */
 /* clips from the last N versions/exports are left out of the edit entirely (not just discouraged) */
-function excludedKeys(){ const n=+($("exclN")&&$("exclN").value)||0; if(!n) return null; const m=usageMem().slice(-n), s=new Set(); m.forEach(r=>r.clips.forEach(k=>s.add(k))); return s; }
+/* Videos you've made: each export run is remembered as one entry (every format it produced), newest last. */
+function madeMem(){ try{ return JSON.parse(localStorage.getItem("beatsplicerMade")||"[]"); }catch(e){ return []; } }
+function recordMade(results){ try{ const plans=results.map(r=>r.plan).filter(Boolean); if(!plans.length) return; const keys=new Set(); plans.forEach(P=>P.forEach(s=>{ if(S.clips[s.clip]) keys.add(clipKey(s.clip)); }));
+    const m=madeMem(), sig=[...keys].sort().join(","); if(m.length&&m[m.length-1].sig===sig) return; m.push({t:Date.now(), song:S.audioName||"", clips:[...keys], sig}); localStorage.setItem("beatsplicerMade",JSON.stringify(m.slice(-12))); }catch(e){} }
+/* "Don't reuse clips from my last N videos": the newest video's clips go first, then older ones, for as long as enough
+   fresh footage is left for the formats being made; anything that can't be kept out is let back in oldest-first. */
+function excludedKeys(need){ const n=+($("exclN")&&$("exclN").value)||0; S._exclPartial=null; if(!n) return null; const vids=madeMem().slice(-n).reverse(); if(!vids.length) return null;
+  const keyIdx=new Map(); S.clips.forEach((c,i)=>{ if(c.samples&&!c.off) keyIdx.set(clipKey(i),i); });
+  const set=new Set(), fams=new Set(), freshLeft=()=>S.clips.filter((c,i)=>c.samples&&!c.off&&!set.has(clipKey(i))&&!(c.fam&&fams.has(c.fam))).length; let wanted=0, skipped=0;
+  for(const v of vids) for(const k of v.clips){ if(set.has(k)) continue; const i=keyIdx.get(k); if(i==null) continue; wanted++; const f=S.clips[i].fam;
+    set.add(k); const addF=f&&!fams.has(f); if(addF) fams.add(f); if(freshLeft()<need){ set.delete(k); if(addF) fams.delete(f); skipped++; } }
+  if(skipped) S._exclPartial={kept:wanted-skipped, wanted}; S._exclFamPre=fams; return set.size?set:null; }
 function isExcluded(ci){ if(S._filtOut&&S._filtOut.has(ci)) return true; const ex=S._excl; if(!ex) return false; if(ex.has(clipKey(ci))) return true; const c=S.clips[ci]; return !!(c&&c.fam&&S._exclFam&&S._exclFam.has(c.fam)); }
 function refreshExclusion(force){
   if(!force && S._exclSet) return; S._exclSet=true; // worked out once per new version, so the current edit never excludes itself
-  S._excl=excludedKeys(); S._exclRelaxed=false; S._exclFam=null;
-  if(S._excl){ S._exclFam=new Set(); S.clips.forEach((c,i)=>{ if(c.fam&&S._excl.has(clipKey(i))) S._exclFam.add(c.fam); }); }
-  if(S._excl){ const ok=S.clips.filter((c,i)=>c.samples&&!c.off&&!S._excl.has(clipKey(i))).length, need=S.an?Math.max(6,...S.eps.map(EP).filter(Boolean).map(ep=>{ try{ return needFor(ep).min; }catch(e){ return 6; } })):6;
-    if(ok<need){ S._exclRelaxed=true; S._excl=null; } } // too few would be left: say so rather than break the edit
+  const need=S.an?Math.max(6,...S.eps.map(EP).filter(Boolean).map(ep=>{ try{ return needFor(ep).min; }catch(e){ return 6; } })):6;
+  S._excl=excludedKeys(need); S._exclRelaxed=false; S._exclFam=S._excl?S._exclFamPre:null;
+  // too few fresh clips: excludedKeys has already let the oldest ones back in, and says how many
 }
 /* Clips that look alike (same composition and colours: variants of one prompt, re-renders, near-identical takes) are
    grouped into a family. Variety, recency and the exclusion all treat a family as one clip, so lookalikes don't repeat. */
@@ -51,7 +61,7 @@ function renderClips(){ const nw=performance.now(); if(S.clips.length>60 && nw-_
   refreshExclusion(false);
   const box=$("clipList"); box.innerHTML="";
   const order=libOrder(), ready=S.clips.filter(c=>c.samples).length, inEdit=S.clips.filter((c,i)=>c.samples&&!c.off&&!isExcluded(i)).length, exN=S._excl?S.clips.filter((c,i)=>c.samples&&S._excl.has(clipKey(i))).length:0;
-  $("libCount").textContent=`${S.clips.length} clips · ${inEdit} in the edit${S.castSel&&S.castSel.size?` · ${S.castMode==="except"?"without":"featuring"} ${[...S.castSel].map(k=>k.startsWith("t:")?k.slice(2)+"s":castLabel(k)).join(" or ")}`:""}${S.sceneSel&&S.sceneSel.size?` · ${S.sceneMode==="except"?"not set in":"set in"} ${[...S.sceneSel].map(sceneLabel).join(" or ").toLowerCase()}`:""}${S._filtRelaxed?" · too few clips match, so the edit uses all of them":""}${S._families?` · ${S._families} look-alike group${S._families===1?"":"s"}`:""}${exN?` · ${exN} kept out (used recently)`:""}${S.clips.length-ready?` · ${S.clips.length-ready} still being studied`:""}${S._exclRelaxed?" · not enough fresh clips for this format, so recent ones are allowed":""}${order.length!==S.clips.length?` · showing ${order.length}`:""}`;
+  $("libCount").textContent=`${S.clips.length} clips · ${inEdit} in the edit${S.castSel&&S.castSel.size?` · ${S.castMode==="except"?"without":"featuring"} ${[...S.castSel].map(k=>k.startsWith("t:")?k.slice(2)+"s":castLabel(k)).join(" or ")}`:""}${S.sceneSel&&S.sceneSel.size?` · ${S.sceneMode==="except"?"not set in":"set in"} ${[...S.sceneSel].map(sceneLabel).join(" or ").toLowerCase()}`:""}${S._filtRelaxed?" · too few clips match, so the edit uses all of them":""}${S._families?` · ${S._families} look-alike group${S._families===1?"":"s"}`:""}${exN?` · ${exN} kept out (in your last ${$("exclN").value} video${$("exclN").value==="1"?"":"s"})`:""}${S._exclPartial?` · ${S._exclPartial.wanted-S._exclPartial.kept} let back in: not enough fresh footage for this format`:""}${S.clips.length-ready?` · ${S.clips.length-ready} still being studied`:""}${S._exclRelaxed?" · not enough fresh clips for this format, so recent ones are allowed":""}${order.length!==S.clips.length?` · showing ${order.length}`:""}`;
   const lim=S.clipsAll?Infinity:9, shown=order.filter((i,k)=>k<lim||i===S.cropIdx); { const mb=$("clipMore"); if(mb){ mb.hidden=order.length<=9; mb.textContent=S.clipsAll?"Show fewer clips":`Show all ${order.length} clips`; } }
   shown.forEach(i=>{ const c=S.clips[i];
     const d=document.createElement("div"); d.className="clip"+(c.samples?"":" busy"); d.style.setProperty("--hue",hue(i));
