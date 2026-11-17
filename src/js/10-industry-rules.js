@@ -116,7 +116,7 @@ function makeExportPlan(ep,win){
   assignTransitions(segs);
   segs.forEach((s,i)=>{ if(i===0||s._loop) s.tr={type:"cut",dur:0}; else if(short && s.tr) s.tr.dur=Math.min(s.tr.dur,0.25); });
   { const l=segs[segs.length-1]; if(l&&l._endInfo){ const EN=l._endInfo; if(EN.freezeAt!=null&&l.end-EN.freezeAt>0.1) l._freeze=l.end-EN.freezeAt; l._ramp=false; l._rev=false; l._endShot=true; } }
-  applyRefrain(segs); advanceClips(segs); assignFocus(segs); assignReverse(segs,typeof short!=="undefined"?short:false); actionAlign(segs); assignCamera(segs,typeof short!=="undefined"?short:false);
+  applyRefrain(segs); advanceClips(segs); assignFocus(segs); assignReverse(segs,typeof short!=="undefined"?short:false); restrainMoves(segs); actionAlign(segs); assignCamera(segs,typeof short!=="undefined"?short:false);
   segs.forEach((s,i)=>{
     const c=S.clips[s.clip], smp=c&&c.samples?c.samples.reduce((a,x)=>Math.abs(x.t-s.src)<Math.abs(a.t-s.src)?x:a,c.samples[0]):null;
     s._mN=c&&c.kind==="image"?0.35:smp?smp.mN||0:0.5; s._bN=smp?smp.bN||0.5:0.5;

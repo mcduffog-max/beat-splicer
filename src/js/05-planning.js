@@ -192,7 +192,7 @@ function buildPlan(){ refreshExclusion(); refreshFilter(); motifSetup(); setTime
   const dc=dcut();
   if(dc && dc.pattern) for(let i=2;i<segs.length;i++){ if(i%4<2) continue; const p=segs[i-2], c=S.clips[p.clip], D=segs[i].end-segs[i].start, next=p.src+(p.end-p.start);
     if(c && (c.kind==="image" || next+D<c.dur-0.05)){ segs[i].clip=p.clip; segs[i].src=c.kind==="image"?0:next; segs[i]._pattern=true; } }
-  applyRefrain(segs); advanceClips(segs); assignFocus(segs); assignReverse(segs,typeof short!=="undefined"?short:false); actionAlign(segs); assignCamera(segs,typeof short!=="undefined"?short:false);
+  applyRefrain(segs); advanceClips(segs); assignFocus(segs); assignReverse(segs,typeof short!=="undefined"?short:false); restrainMoves(segs); actionAlign(segs); assignCamera(segs,typeof short!=="undefined"?short:false);
   applyLocks(segs); if(S.sel!=null && !segs[S.sel]) S.sel=null;
   S.plan=segs; assignTransitions(); clearTimeout(S._actT); S._actT=setTimeout(()=>measureAction().catch(()=>{}),3000); drawTimeline(); renderStats(); updateButtons(); saveProjectSoon(); if(S.sel!=null) showShot(S.sel);
 }
@@ -235,6 +235,7 @@ function budgetTransitions(plan){
   // the kept effect cuts in the energetic passages all use this video's signature transition; quiet dissolves stay as they are
   const sig=$("sigTrans")&&$("sigTrans").value; if(sig&&sig!=="mixed"&&!free){ const len=+$("trLen").value;
     for(const {i} of cand){ const s=plan[i]; if(!keep.has(i)||s.e<0.45||s.tr.type==="match") continue; s.tr={type:sig,dur:Math.min(sig==="dip"?len*1.2:len*0.7,0.45*(s.end-s.start))}; } }
+  restrainTransitions(plan,cand.filter(c=>keep.has(c.i)));
 }
 function assignTransitions(plan){ plan=plan||S.plan; if(!plan) return; assignTransitionsRaw(plan); budgetTransitions(plan); }
 function assignTransitionsRaw(plan){
