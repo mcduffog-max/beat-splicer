@@ -20,12 +20,13 @@ jobs:
         with:
           distribution: temurin
           java-version: 21
-      - uses: android-actions/setup-android@v3
       - run: npm ci --no-audit --no-fund
       - run: node build.mjs
       - run: npx cap sync android
-      - name: Build the APK
+      - name: Build the APK (the runner already has the Android SDK)
         working-directory: android
+        env:
+          ANDROID_HOME: /usr/local/lib/android/sdk
         run: |
           chmod +x gradlew
           ./gradlew assembleDebug --no-daemon
