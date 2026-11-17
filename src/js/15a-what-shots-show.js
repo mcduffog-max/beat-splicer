@@ -9,7 +9,7 @@ function seeAvailable(){ return !HOSTED&&typeof WebAssembly!=="undefined"; }
 async function seeModel(onProg){ if(_see) return _see; if(_seeLoading) return _seeLoading;
   _seeLoading=(async()=>{ const T=await import(SEE.lib); if(SEE.local){ T.env.allowRemoteModels=false; T.env.allowLocalModels=true; T.env.localModelPath=SEE.local; }
     if(T.env.backends&&T.env.backends.onnx&&T.env.backends.onnx.wasm) T.env.backends.onnx.wasm.numThreads=1; // phones: one thread keeps memory flat
-    const opt={dtype:SEE.dtype, progress_callback:p=>{ if(onProg&&p&&p.status==="progress"&&p.total) onProg(p.file,p.loaded/p.total); }};
+    const gpu=await webgpuReady().catch(()=>false), opt={dtype:SEE.dtype, ...(gpu&&!SEE.local?{device:"webgpu"}:{}), progress_callback:p=>{ if(onProg&&p&&p.status==="progress"&&p.total) onProg(p.file,p.loaded/p.total); }};
     const proc=await T.AutoProcessor.from_pretrained(SEE.model), tok=await T.AutoTokenizer.from_pretrained(SEE.model);
     const vis=await T.CLIPVisionModelWithProjection.from_pretrained(SEE.model,opt), txt=await T.CLIPTextModelWithProjection.from_pretrained(SEE.model,opt);
     _see={T,proc,tok,vis,txt}; return _see; })();

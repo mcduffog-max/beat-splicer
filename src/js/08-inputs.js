@@ -77,6 +77,7 @@ async function loadAudio(file,cachedAn){
     $("audioInfo").textContent=`${file.name}, ${fmtTime(S.an.duration)}${S.an.feel&&S.an.feel.free==="beatless"?"":` at about ${Math.round(S.an.bpm)} BPM`}. Feel: ${S.an.feel?S.an.feel.label:"4/4"}`; renderTempo();
     if(S._pendingLyrics){ const pl=S._pendingLyrics; S._pendingLyrics=null; setLyrics(pl.text,pl.src); }
     else setTimeout(()=>{ try{ autoLyrics(); }catch(e){} },0);
+    setTimeout(()=>{ btReferee().catch(()=>{}); },1500); // a neural second opinion on the beat, where the device can run it
     foldAfter("Your song",S.clips.length?null:"Video clips"); status("Audio ready."); $("listen").disabled=false; syncCapWith(); updateNamePreview(); crumb("song ready");
     buildPlan();
   }catch(err){

@@ -113,6 +113,7 @@ async function analyzeAudio(buf, onProg, opt){ opt=opt||{};
     if(opt.x===2 && beats.length>4){ const mids=beats.slice(0,-1).map((b,i)=>(b+beats[i+1])/2); beats=[...beats,...mids].sort((x,y)=>x-y); bpm*=2; P/=2; }
     else if(opt.x===0.5 && beats.length>8){ let e2=0,o2=0; beats.forEach((b,i)=>{ if(i%2) o2+=val(b); else e2+=val(b); }); const keep=e2>=o2?0:1; beats=beats.filter((_,i)=>i%2===keep); bpm/=2; P*=2; }
   }
+  if(opt.beats&&opt.beats.length>8){ beats=opt.beats.filter(t=>t>=0&&t<dur).slice(); const n=beats.length, mi=(n-1)/2, mt=beats.reduce((a,b)=>a+b,0)/n; let sxy=0,sxx=0; beats.forEach((b,i)=>{ sxy+=(i-mi)*(b-mt); sxx+=(i-mi)**2; }); bpm=60/(sxy/sxx); P=60*fr/bpm; } /* tempo from a straight-line fit through all the beats: steadier than any one gap */ // a neural beat tracker's beats, when one ran
   if(beats.length<4){ beats=[]; for(let t=0;t<dur;t+=0.5) beats.push(t); }
   // fill gaps before first / after last tracked beat with the grid
   const period=60/bpm;
@@ -122,7 +123,7 @@ async function analyzeAudio(buf, onProg, opt){ opt=opt||{};
   /* Free time: no steady beat (ambient) or a tempo that breathes (rubato ballads). A rigid grid would cut against the music,
      so the music's own events become the "beats": note and chord onsets for rubato, swells and changes for ambient. */
   let free=null;
-  if(beatConf<2.0){
+  if(beatConf<2.0&&!opt.beats){
     const s=[...onAll].sort((a,b)=>a-b), q=s[Math.floor(s.length*(beatConf<1.4?0.97:0.88))]||0, ev=[], str=[];
     const gap=beatConf<1.4?2.5:Math.max(0.35,period*0.55);
     for(let f=2;f<T-2;f++){ const v=onAll[f]; if(v>q && v>=onAll[f-1] && v>=onAll[f+1] && v>=onAll[f-2] && v>=onAll[f+2]){ const t=f*H/sr+off; if(!ev.length||t-ev[ev.length-1]>=gap){ ev.push(t); str.push(v); } else if(v>str[str.length-1]){ ev[ev.length-1]=t; str[str.length-1]=v; } } }
@@ -167,6 +168,9 @@ async function analyzeAudio(buf, onProg, opt){ opt=opt||{};
     const [c3,p3]=contrast(3), [c4]=contrast(4);
     if(c3>0.5 && c3>c4*1.25){ meter=3; down=p3; }
   }
+  if(opt.downs&&opt.downs.length>2){ const near=t=>{ let k=0,bd=1e9; beats.forEach((b,i)=>{ const d=Math.abs(b-t); if(d<bd){ bd=d; k=i; } }); return bd<0.08?k:-1; };
+    const idx=opt.downs.map(near).filter(i=>i>=0), gaps=idx.slice(1).map((x,i)=>x-idx[i]).filter(g=>g>=2&&g<=6), cnt={}; gaps.forEach(g=>cnt[g]=(cnt[g]||0)+1);
+    const m=+Object.entries(cnt).sort((a,b)=>b[1]-a[1])[0]?.[0]||meter; if(m===3||m===4){ meter=m; const ph={}; idx.forEach(i=>{ const k=i%meter; ph[k]=(ph[k]||0)+1; }); down=+Object.entries(ph).sort((a,b)=>b[1]-a[1])[0][0]; } }
   // swing: where the "and" really falls between beats (0.5 straight, about 0.6 to 0.7 swung)
   let swing=0.5;
   if(!free){ const ph=[]; for(let i=0;i+1<beats.length;i++){ const a=(beats[i]-off)*sr/H, b=(beats[i+1]-off)*sr/H; let bf=-1,bv=0; for(let f=Math.round(a+(b-a)*0.4);f<=Math.round(a+(b-a)*0.8)&&f<T;f++){ if(onHi[f]>bv){ bv=onHi[f]; bf=f; } } if(bf>=0&&bv>0) ph.push((bf-a)/(b-a)); }
