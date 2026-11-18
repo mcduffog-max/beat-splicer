@@ -22,7 +22,7 @@ function seeTagAt(clip,t){ const V=S._seeScale; if(!V||!clip||!clip.samples) ret
   return (s._stag={t:s.t, scale:+scale.toFixed(2), faces, inten:0, role:scale<=1.2?"establishing":"", fchars:[...new Set(near.filter(f=>f.id).map(f=>f.id))], see:true}); }
 /* places: clips whose overall picture is close enough to be the same location */
 function placeVec(c){ if(c._pv) return c._pv; const vs=(c.samples||[]).map(sampleVec).filter(Boolean); if(!vs.length) return null; const m=new Float32Array(vs[0].length); vs.forEach(v=>{ for(let i=0;i<m.length;i++) m[i]+=v[i]; }); return (c._pv=unitVec(m)); }
-function places(){ const ok=S.clips.filter(c=>c.samples&&!c.off), withV=ok.filter(c=>placeVec(c)), key=withV.length+":"+S.clips.length;
+function places(){ if(S._placesGen&&S._placesGen===S._planGen) return S._places; S._placesGen=S._planGen; const ok=S.clips.filter(c=>c.samples&&!c.off), withV=ok.filter(c=>placeVec(c)), key=withV.length+":"+S.clips.length;
   if(S._placeKey===key) return S._places; S._placeKey=key; S._places=null; S.clips.forEach(c=>{ c._place=null; });
   if(withV.length<Math.max(4,ok.length*0.6)) return null;
   const r=rng(11), sims=[]; for(let k=0;k<Math.min(6000,withV.length*withV.length);k++){ const a=withV[Math.floor(r()*withV.length)], b=withV[Math.floor(r()*withV.length)]; if(a!==b) sims.push(dotV(a._pv,b._pv)); }

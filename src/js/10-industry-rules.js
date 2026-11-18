@@ -25,9 +25,12 @@ const CALM_DIRECTORS=["Playful one-take","Dreamlike calm","Stark monochrome"];
 /* seamless loop for short-form: the last shot is the moment just before the opening frame, so the replay runs straight on */
 function loopTail(segs){ if(segs.length<2) return; const f=segs[0], l=segs[segs.length-1], Dl=l.end-l.start, fc=S.clips[f.clip], D0=f.end-f.start; if(!fc||l._lock||l._manual) return;
   if(fc.kind!=="image" && f.src<Dl-0.01 && fc.dur>=Dl+D0+0.1 && !f._lock && !f._manual) f.src=Dl; // start the opener a little later in its clip so the last shot can be the moment just before it
+  if(fc.kind!=="image"){ const sh=shownSpans(f.clip)||[], used=segs.slice(1,-1).filter(x=>x.clip===f.clip).map(x=>[x.src,x.src+(x.end-x.start)]), busy=sh.concat(used), clear=a=>!busy.some(([x,y])=>Math.min(y,a+D0)-Math.max(x,a-Dl)>0.04);
+    if(!clear(f.src)){ let ok=null; if(!f._lock&&!f._manual) for(let a=Dl; a+D0<=fc.dur-0.1; a+=0.25){ if(clear(a)){ ok=a; break; } } // the loop's lead-in and the opener both need footage no earlier video showed
+      if(ok==null) return; f.src=+ok.toFixed(3); } }
   if(fc.kind==="image" || f.src>=Dl-0.01){ l.clip=f.clip; l.src=fc.kind==="image"?0:Math.max(0,f.src-Dl); l._rev=false; l._loop=true; } }
 function makeExportPlan(ep,win){
-  if(!S.plan) return null;
+  if(!S.plan) return null; S._planGen=(S._planGen||0)+1;
   const base=S.plan.filter(s=>s.end>win[0]+0.01 && s.start<win[1]-0.01).map(cloneSeg);
   if(!base.length) return S.plan;
   if(!PRO()){ if(!ep.short) return S.plan; // industry rules off: still loop short-form cleanly, nothing else changes

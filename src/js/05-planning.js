@@ -184,7 +184,7 @@ function chooseClip(seg, ctx, exclude){
   return best;
 }
 
-function buildPlan(){ refreshExclusion(); refreshFilter(); motifSetup(); setTimeout(wmCatchUp,0);
+function buildPlan(){ S._planGen=(S._planGen||0)+1; refreshExclusion(); refreshFilter(); motifSetup(); setTimeout(wmCatchUp,0);
   if(!S.an || !S.clips.some(c=>c.samples)) { S.plan=null; drawTimeline(); renderStats(); updateButtons(); return; }
   normaliseClips();
   const segs=phraseShape(makeSegments(S.an,+$("pace").value),S.an); applyTrims(segs); markMotifSlots(segs,false);
@@ -210,7 +210,7 @@ function advanceClips(plan){
       for(const a of [lastEnd+0.04, hi+0.04]) if(pick==null&&a+D<=room&&!hit(a)) pick=a;              // forward from where it was last seen
       if(pick==null&&lo-0.04-D>=0&&!hit(lo-0.04-D)) pick=lo-0.04-D;                                      // or back before where it was first seen
       if(pick==null){ const gaps=[]; let prev=0; [...U].sort((a,b)=>a[0]-b[0]).forEach(([x,y])=>{ if(x-prev>=D+0.08) gaps.push(prev+0.04); prev=Math.max(prev,y); }); if(room-prev>=D+0.04) gaps.push(prev+0.04); if(gaps.length) pick=gaps.reduce((a,g)=>Math.abs(g-lastEnd)<Math.abs(a-lastEnd)?g:a); } // or any stretch not yet shown
-      if(pick==null&&!s._bookend&&!s._refrain&&!s._pattern&&!s._ramp){ // every stretch of this clip is already in the edit: another clip takes the shot
+      if(pick==null&&!s._bookend){ // every stretch of this clip is already in the edit: another clip takes the shot
         let alt=null; try{ alt=chooseClip(s,{recent:[s.clip],usage:new Map(),rand:rng(Math.round(s.start*100)+7)},s.clip); }catch(e){}
         const ac=alt&&S.clips[alt.clip]; if(ac){ const U2=used.get(alt.clip)||[]; if(ac.kind==="image"||!U2.some(([x,y])=>Math.min(y,alt.src+D)-Math.max(x,alt.src)>0.04)){ s.clip=alt.clip; s.src=alt.src; s._act=null; if(ac.kind!=="image"){ U2.push([s.src,s.src+D]); used.set(alt.clip,U2); } continue; } } }
       if(pick==null&&!s._bookend&&room>D){ let best=null; const ov=a=>U.reduce((t,[x,y])=>t+Math.max(0,Math.min(y,a+D)-Math.max(x,a)),0);   // every moment already shown: the least-repeated stretch, never the same start
@@ -269,19 +269,22 @@ function assignTransitionsRaw(plan){
    edit into a corner. A beam search keeps the few most promising versions of the edit alive at every shot (each
    extended with its best few clips), and at the end keeps the version whose shots add up to the lowest total cost.
    Wider for small libraries, narrower for big ones, so it stays quick on the phone. */
-function beamWidth(){ if(!$("planWhole")||!$("planWhole").checked||S._dry) return 1; const n=S.clips.filter(c=>c.samples&&!c.off).length; if(S._auto&&n>150) return 1; /* big libraries: Do everything tries cuts quickly, then the chosen one is planned whole */ return n<=150?4:n<=400?3:2; }
+function beamWidth(nShots){ if(!$("planWhole")||!$("planWhole").checked||S._dry||S._auto) return 1; /* Do everything tries its cuts quickly; the chosen one is planned whole at the end */
+  const n=S.clips.filter(c=>c.samples&&!c.off).length; let K=n<=150?4:n<=400?3:2;
+  if(S._shotMs&&nShots){ const fit=Math.floor(1800/Math.max(0.01,S._shotMs*nShots)); K=Math.max(1,Math.min(K,fit)); } // slower phones and longer songs: a narrower beam, so a rebuild stays under about two seconds
+  return K; }
 function cloneCtx(c){ const o={...c}; for(const k of ["usage","count","lastAt","famCount","famLast","lastSrc"]) if(c[k] instanceof Map) o[k]=new Map(c[k]);
   if(c.usage instanceof Map) o.usage=new Map([...c.usage].map(([k,v])=>[k,v.slice()])); o.recent=(c.recent||[]).slice(); if(c.recentF) o.recentF=c.recentF.slice(); delete o._cands; return o; }
 function applyPick(seg,pick){ seg.clip=pick.clip; seg.src=pick.src; seg._mcut=!!(pick.why&&pick.why.mc<-0.1); seg._W=pick.why||null; seg.why=pick.why?shotReasons(seg,pick):null; }
-function planShots(segs,ctx){ const K=beamWidth(), fallback={clip:S.clips.findIndex(c=>c.samples), src:0, cost:0};
-  if(K<=1){ let tot=0; for(const seg of segs){ const pick=chooseClip(seg,ctx,-1)||fallback; tot+=pick.cost||0; applyPick(seg,pick); noteUse(ctx,seg,pick.clip,pick.src); } S._planCost=tot; return; }
+function planShots(segs,ctx){ const K=beamWidth(segs.length), t0=performance.now(), fallback={clip:S.clips.findIndex(c=>c.samples), src:0, cost:0};
+  if(K<=1){ let tot=0; for(const seg of segs){ const pick=chooseClip(seg,ctx,-1)||fallback; tot+=pick.cost||0; applyPick(seg,pick); noteUse(ctx,seg,pick.clip,pick.src); } S._planCost=tot; S._shotMs=(performance.now()-t0)/Math.max(1,segs.length); return; }
   let beams=[{ctx, picks:[], total:0}];
   for(const seg of segs){ const next=[];
     for(const b of beams){ b.ctx._topM=K; const best=chooseClip(seg,b.ctx,-1); b.ctx._topM=0; const cands=(b.ctx._cands&&b.ctx._cands.length?b.ctx._cands:[best||fallback]);
       for(const c of cands){ const nc=cloneCtx(b.ctx); seg._mcut=!!(c.why&&c.why.mc<-0.1); noteUse(nc,seg,c.clip,c.src); next.push({ctx:nc, picks:b.picks.concat([c]), total:b.total+(c.cost||0)}); } }
     next.sort((a,b)=>a.total-b.total); const seen=new Set(); beams=[];
     for(const n of next){ const key=n.picks.slice(-3).map(p=>p.clip+"@"+Math.round(p.src)).join(","); if(seen.has(key)) continue; seen.add(key); beams.push(n); if(beams.length>=K) break; } }
-  const win=beams[0]; segs.forEach((seg,i)=>applyPick(seg,win.picks[i]||fallback)); Object.assign(ctx,win.ctx); S._planCost=win.total; }
+  const win=beams[0]; segs.forEach((seg,i)=>applyPick(seg,win.picks[i]||fallback)); Object.assign(ctx,win.ctx); S._planCost=win.total; S._shotMs=(performance.now()-t0)/Math.max(1,segs.length)/K; }
 
 /* ---------------- Footage that lasts the whole shot ----------------
    A shot must never ask for more footage than its clip has: past the clip's end the picture would stop dead while the

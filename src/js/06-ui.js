@@ -9,7 +9,7 @@ function recordMade(results){ try{ const plans=results.map(r=>r.plan).filter(Boo
    fresh footage is left for the formats being made; anything that can't be kept out is let back in oldest-first. */
 /* Footage already shown in videos you've made, per clip: a clip can come back in a later video, but only with footage
    past what was shown (or any stretch not shown yet), so every video stays fresh. On unless the setting is off. */
-function shownBefore(){ const mode=$("exclN")?$("exclN").value:"adv"; if(mode==="0") return null; const m=madeMem(), key=m.length+":"+(m.length?m[m.length-1].t:0);
+function shownBefore(){ const mode=$("exclN")?$("exclN").value:"adv"; if(mode==="0") return null; if(S._shown&&S._shownGen===S._planGen&&S._planGen) return S._shown.map; S._shownGen=S._planGen; const m=madeMem(), key=m.length+":"+(m.length?m[m.length-1].t:0);
   if(S._shown&&S._shown.key===key) return S._shown.map; const map=new Map();
   m.forEach(v=>Object.entries(v.spans||{}).forEach(([k,L])=>{ const a=map.get(k)||[]; L.forEach(x=>a.push(x)); map.set(k,a); }));
   map.forEach((L,k)=>{ L.sort((x,y)=>x[0]-y[0]); const out=[]; L.forEach(([a,b])=>{ const l=out[out.length-1]; if(l&&a<=l[1]+0.1) l[1]=Math.max(l[1],b); else out.push([a,b]); }); map.set(k,out); });
