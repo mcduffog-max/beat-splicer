@@ -70,7 +70,7 @@ $("projName").addEventListener("change",saveSettings); $("nameScheme").addEventL
 $("aiName").onclick=aiName;
 $("folderBtn").onclick=saveToFolder;
 if(window.showDirectoryPicker && !HOSTED){ $("folderBtn").hidden=false; }
-$("audioInput").addEventListener("change",e=>{ const f=e.target.files[0]; e.target.value=""; if(f) heavy("Reading the song",()=>loadAudio(f)); });
+$("audioInput").addEventListener("change",e=>{ const f=e.target.files[0]; e.target.value=""; if(f) heavy("Reading the song",async()=>loadAudio(NATIVE?(await keepFiles([f]))[0]:f)); });
 $("videoInput").addEventListener("change",e=>{ addClips(e.target.files); e.target.value=""; });
 ["mode","pace","variety"].forEach(id=>$(id).addEventListener("change",()=>{ saveSettings(); if(!S.running) buildPlan(); }));
 ["trans","trLen"].forEach(id=>$(id).addEventListener("change",()=>{ saveSettings(); assignTransitions(); drawTimeline(); }));

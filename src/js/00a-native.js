@@ -23,3 +23,19 @@ async function nativeShare(name,blob,text){ const SH=NP("Share"); if(!SH) return
   catch(e){ if(!/cancel/i.test(String(e&&e.message||e))) status("Couldn't share: "+(e&&e.message||e),true); } }
 async function nativeAwake(on){ const K=NP("KeepAwake"); if(!K) return false; try{ if(on) await K.keepAwake(); else await K.allowSleep(); return true; }catch(e){ return false; } }
 if(NATIVE) document.documentElement.classList.add("native");
+/* Android lends the app the files you pick only for a while: after the app has been closed, or the phone needed
+   memory, reading them fails ("the requested file could not be read"). So in the app, each clip and song you add is
+   copied once into the app's own private storage, and the app works from that copy from then on. Copies of files no
+   longer in your project are cleared when space runs short. */
+async function keptDir(){ if(!navigator.storage||!navigator.storage.getDirectory) return null; try{ return await (await navigator.storage.getDirectory()).getDirectoryHandle("kept",{create:true}); }catch(e){ return null; } }
+async function keepFiles(files){ files=[...files]; if(!NATIVE||!files.length) return files; const dir=await keptDir(); if(!dir) return files;
+  const name=f=>`${f.size}-${f.lastModified}-${f.name}`.replace(/[\\/:*?"<>|]/g,"_").slice(0,180), out=[];
+  try{ const live=new Set([...(S.clips||[]).map(c=>c.file&&c.file._kept).filter(Boolean), S.audioFile&&S.audioFile._kept, ...files.map(name)].filter(Boolean)); let total=0, entries=[];
+    for await (const [n,h] of dir.entries()){ try{ const f=await h.getFile(); total+=f.size; entries.push([n,f.size]); }catch(e){} }
+    if(total>2.5e9) for(const [n] of entries) if(!live.has(n)) try{ await dir.removeEntry(n); }catch(e){} }catch(e){}
+  for(let i=0;i<files.length;i++){ const f=files[i], n=name(f);
+    try{ let h=null; try{ h=await dir.getFileHandle(n); const g=await h.getFile(); if(g.size!==f.size) h=null; }catch(e){ h=null; }
+      if(!h){ status(`Keeping a copy of your files in the app (so Android can't take them back): ${i+1} of ${files.length}…`); h=await dir.getFileHandle(n,{create:true}); const w=await h.createWritable(); await f.stream().pipeTo(w); }
+      const g=await h.getFile(), k=new File([g],f.name,{type:f.type,lastModified:f.lastModified}); k._kept=n; out.push(k); }
+    catch(e){ crumb("couldn't keep a copy of "+f.name+": "+(e&&e.message||e)); out.push(f); } }
+  return out; }

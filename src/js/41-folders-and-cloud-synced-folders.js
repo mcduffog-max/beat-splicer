@@ -14,7 +14,7 @@ async function filesFromDrop(dt){
   return out;
 }
 async function takeFiles(files,{preferAudio}={}){
-  files=[...files].filter(f=>!/^\./.test(f.name));
+  files=[...files].filter(f=>!/^\./.test(f.name)); if(NATIVE) files=await keepFiles(files); // in the Android app, work from the app's own copies
   const audio=files.filter(isAudio), video=files.filter(f=>isVideo(f)||isImage(f));
   if(audio.length && (preferAudio || !S.audioBuf)) await loadAudio(audio[0]);
   if(video.length) await addClips(video);
