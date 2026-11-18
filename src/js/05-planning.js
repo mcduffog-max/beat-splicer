@@ -195,7 +195,7 @@ function buildPlan(){ refreshExclusion(); refreshFilter(); motifSetup(); setTime
   if(dc && dc.pattern) for(let i=2;i<segs.length;i++){ if(i%4<2) continue; const p=segs[i-2], c=S.clips[p.clip], D=segs[i].end-segs[i].start, next=p.src+(p.end-p.start);
     if(c && (c.kind==="image" || next+D<c.dur-0.05)){ segs[i].clip=p.clip; segs[i].src=c.kind==="image"?0:next; segs[i]._pattern=true; } }
   applyRefrain(segs); advanceClips(segs); assignFocus(segs); assignReverse(segs,typeof short!=="undefined"?short:false); restrainMoves(segs); actionAlign(segs); assignCamera(segs,typeof short!=="undefined"?short:false);
-  applyLocks(segs); if(S.sel!=null && !segs[S.sel]) S.sel=null;
+  applyLocks(segs); fitFootage(segs); if(S.sel!=null && !segs[S.sel]) S.sel=null;
   S.plan=segs; assignTransitions(); clearTimeout(S._actT); S._actT=setTimeout(()=>measureAction().catch(()=>{}),3000); drawTimeline(); renderStats(); updateButtons(); saveProjectSoon(); if(S.sel!=null) showShot(S.sel);
 }
 /* A clip that comes back never shows the same frames twice: each return carries on forward from its last use, or,
@@ -282,3 +282,24 @@ function planShots(segs,ctx){ const K=beamWidth(), fallback={clip:S.clips.findIn
     next.sort((a,b)=>a.total-b.total); const seen=new Set(); beams=[];
     for(const n of next){ const key=n.picks.slice(-3).map(p=>p.clip+"@"+Math.round(p.src)).join(","); if(seen.has(key)) continue; seen.add(key); beams.push(n); if(beams.length>=K) break; } }
   const win=beams[0]; segs.forEach((seg,i)=>applyPick(seg,win.picks[i]||fallback)); Object.assign(ctx,win.ctx); S._planCost=win.total; }
+
+/* ---------------- Footage that lasts the whole shot ----------------
+   A shot must never ask for more footage than its clip has: past the clip's end the picture would stop dead while the
+   camera kept panning and zooming over it. Each video shot is checked last thing: it slides back so it ends inside the
+   clip (without landing on footage used elsewhere in this video or shown in an earlier one); a clip that's simply too
+   short for the shot is slowed a little to fill it (not below 0.7×), or the shot goes to a clip that is long enough. */
+function fitFootage(plan){ if(!plan) return 0; let fixed=0; const spanOf=x=>(x.end-x.start)*(x._ramp?RAMP_SPAN:(x._rate||1));
+  for(let i=0;i<plan.length;i++){ const s=plan[i], c=S.clips[s.clip]; if(!c||c.kind==="image"||s._manual&&s._lock) continue; const room=c.dur-0.06, sp=spanOf(s);
+    if((s.src||0)+sp<=room+0.01) continue;
+    const others=plan.filter((x,j)=>j!==i&&x.clip===s.clip).map(x=>[x.src||0,(x.src||0)+spanOf(x)]).concat(shownSpans(s.clip)||[]), free=a=>!others.some(([x,y])=>Math.min(y,a+sp)-Math.max(x,a)>0.04);
+    let done=false; if(sp<=room){ for(let a=room-sp; a>=0; a-=0.25){ if(free(a)){ s.src=+Math.max(0,a).toFixed(3); s._act=null; done=true; break; } } } if(done){ fixed++; continue; }
+    const D=s.end-s.start, need=D*(s._ramp?RAMP_SPAN:1); if(!s._ramp&&!s._rev&&room>=D*0.7&&free(0.02)){ s.src=0.02; s._rate=+Math.min(1,room/D).toFixed(3); fixed++; continue; }
+    let alt=null; try{ alt=chooseClip(s,{recent:[s.clip],usage:new Map(),rand:rng(Math.round(s.start*100)+11)},s.clip); }catch(e){}
+    const ac=alt&&S.clips[alt.clip]; if(ac&&(ac.kind==="image"||alt.src+need<=ac.dur-0.06)){ s.clip=alt.clip; s.src=alt.src; s._act=null; s._rate=1; fixed++; continue; }
+    // no clip is long enough for this shot: cut it in two, on a beat if one is near, so each part has real footage
+    const r=s._rate||1, at=s.start+Math.max(0,room-(s.src||0))/r, B=S.an?S.an.beats:[]; let tc=at; for(const bt of B){ if(bt>s.start+0.5&&bt<=at+0.01) tc=bt; }
+    if(!s._ramp&&!s._rev&&tc-s.start>=0.5&&s.end-tc>=0.5){ const n={...s,start:tc,drop:false,build:false,_split:true,tr:{type:"cut",dur:0},_holdFrom:null,_act:null,_actBase:null,_motifSlot:0,_mcut:false,why:null,_W:null};
+      s.end=tc; let p2=null; try{ p2=chooseClip(n,{recent:[s.clip],usage:new Map(),rand:rng(Math.round(tc*100)+13)},s.clip); }catch(e){} if(p2){ n.clip=p2.clip; n.src=p2.src; } else n.src=0;
+      plan.splice(i+1,0,n); fixed++; continue; } // the new shot is checked on the next turn of the loop
+    s._holdFrom=s.start+Math.max(0,room-(s.src||0))/r; fixed++; } // last resort: the camera stops with the picture
+  return fixed; }

@@ -126,6 +126,7 @@ function makeExportPlan(ep,win){
     if(i>0 && s.e<0.55 && s.tr && s.tr.type==="cut" && !s.drop && Math.abs(s._bN-segs[i-1]._bN)>0.55) s.tr={type:"crossfade",dur:Math.min(0.18,(s.end-s.start)*0.3)};
   });
   advanceClips(segs); // a last check once every shot is final: no stretch of footage is shown twice
+  fitFootage(segs); // and no shot runs past the end of its clip
   return segs;
 }
 

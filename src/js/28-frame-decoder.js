@@ -92,7 +92,7 @@ class ElemSlot{
     if(!this.v){ this.v=document.createElement("video"); this.v.muted=true; this.v.playsInline=true; this.v.preload="auto"; this.v.style.cssText="position:absolute;right:4px;bottom:4px;width:64px;height:36px;pointer-events:none;z-index:0"; $("stageBox").appendChild(this.v); }
     this.v.src=clip.url; this.clip=clip;
     try{ await waitEvent(this.v,"loadeddata",15000); }catch(e){ this.v.removeAttribute("src"); this.v.load(); this.clip=null; throw e; } }
-  async frameAt(t){ const v=this.v; if(Math.abs(v.currentTime-t)>0.01) await seekTo(v,t+0.008,800); return v; }
+  async frameAt(t){ const v=this.v; if(Math.abs(v.currentTime-t)>0.01){ await seekTo(v,t+0.008,2500); if(Math.abs(v.currentTime-t)>0.1) await seekTo(v,t+0.008,2500); } return v; } // phones can take a while to seek: wait, and try once more, rather than repeat the last frame
   close(){ if(this.v){ this.v.pause(); this.v.removeAttribute("src"); this.v.load(); this.v.remove(); this.v=null; } this.clip=null; }
 }
 let _wake=null;
@@ -101,7 +101,7 @@ document.addEventListener("visibilitychange",()=>{ if(!document.hidden && S.runn
 function exportLog(x){ try{ localStorage.setItem("beatsplicerExportLog",JSON.stringify({...x,at:Date.now(),song:S.audioName,clips:S.clips.length,mem:performance.memory?Math.round(performance.memory.usedJSHeapSize/1e6):null,ua:navigator.userAgent.slice(0,120)})); }catch(e){} }
 function lastExportNotice(){ try{ const l=JSON.parse(localStorage.getItem("beatsplicerExportLog")||"null"); if(!l||l.stage==="done") return;
     const ago=Math.round((Date.now()-l.at)/60000);
-    S.lastError=`Last export stopped during ${l.stage} at ${l.pct??"?"}% (${ago} min ago). Build ${BUILD}. Formats: ${(l.formats||[]).join(", ")}. Decoder stalls: ${l.stalls||0}, clips on fallback: ${l.fallback||0}, software decoding: ${l.sw?"yes":"no"}${l.safe?" (safe mode)":""}. Memory: ${l.mem??"?"} MB, peak ${l.peak??"?"} MB. Shot ${l.shot!=null?l.shot+1:"?"} of ${l.of??"?"}${l.clip?` (${l.clip}, ${l.res})`:""}. Tab hidden at last check: ${l.hidden?"yes":"no"}. Song: ${l.song}, ${l.clips} clips. Browser: ${l.ua}`;
+    S.lastError=`Last export stopped during ${l.stage} at ${l.pct??"?"}% (${ago} min ago). Build ${BUILD}. Formats: ${(l.formats||[]).join(", ")}. Decoder stalls: ${l.stalls||0}, footage stopped in ${l.frozen||0} shots, clips on fallback: ${l.fallback||0}, software decoding: ${l.sw?"yes":"no"}${l.safe?" (safe mode)":""}. Memory: ${l.mem??"?"} MB, peak ${l.peak??"?"} MB. Shot ${l.shot!=null?l.shot+1:"?"} of ${l.of??"?"}${l.clip?` (${l.clip}, ${l.res})`:""}. Tab hidden at last check: ${l.hidden?"yes":"no"}. Song: ${l.song}, ${l.clips} clips. Browser: ${l.ua}`;
     S._retrySafe=!l.safe;
     status(`Your last export didn’t finish: it stopped at ${l.pct??"?"}%${l.hidden?" while the tab was in the background":""}. ${l.safe?"It was already in safe mode, so":"Next time, Make video runs in safe mode (slower, easier on the phone). If it still stops,"} tap “Copy error details” and send them to me.`,true); $("errBtn").hidden=false; }catch(e){} }
 async function runPassDecode(outs,win,plan,eng){
@@ -133,7 +133,11 @@ async function runPassDecode(outs,win,plan,eng){
           catch(e){ if(String(e&&e.message).includes("stalled") && !(S._noDecode&&S._noDecode.has(S.clips[plan[j].clip]))){ S._noDecode=S._noDecode||new Set(); S._noDecode.add(S.clips[plan[j].clip]); slots[j%2][0].close(); continue; }
             if(!swapClip(j)) throw e; } } // this clip won't play on this device: its shots switch to another clip and the export carries on
         return null; };
-      if(!isImgSeg(i)){ const f=await grab(i); if(f) elFor[i]=f; }
+      if(!isImgSeg(i)){ const f=await grab(i); if(f){ elFor[i]=f; // footage that stops advancing (a stuck decoder or seek): the camera holds with it, and it's counted
+          const want=srcT(i,tk), got=f.timestamp!=null?f.timestamp/1e6:(f.currentTime!=null?f.currentTime:want);
+          if(s._mtW!=null&&want-s._mtW>0.1&&Math.abs(got-s._mtG)<0.001){ s._stuckN=(s._stuckN||0)+1; if(s._stuckN>=3&&s._holdFrom==null){ s._holdFrom=tk; S._exact.frozen=(S._exact.frozen||0)+1; crumb(`footage stopped in shot ${i+1} (${S.clips[s.clip].name})`); } }
+          else if(Math.abs(got-(s._mtG??-1))>=0.001) s._stuckN=0;
+          s._mtW=want; s._mtG=got; } }
       if(i>0 && s.tr && s.tr.dur>0 && tk<s.start+s.tr.dur && !isImgSeg(i-1)){ const f=await grab(i-1); if(f) elFor[i-1]=f; }
       const Fs=fxFor(F,s,i);
       for(const o of outs){ const bi=drawPicture(o,plan,i,tk,[],Fs); if(bi!==false) postFx(o,tk,win,Fs,bi,{}); }
@@ -142,7 +146,7 @@ async function runPassDecode(outs,win,plan,eng){
       if(n%6===0){ if(outs[0].canvas!==stage && !document.hidden) sg.drawImage(outs[0].canvas,0,0,stage.width,stage.height); $("prog").value=Math.min(1,(S.passBase+(tk-ws))/Math.max(0.01,S.passCount));
         const el=(performance.now()-t0)/1000, done=(tk-ws)/len; if(done>0.05) status(`Making the video: ${Math.round(done*100)}%, about ${Math.max(1,Math.round(el/done*(1-done)))} s left.`);
         if(n%30===0){ const mm=performance.memory?Math.round(performance.memory.usedJSHeapSize/1e6):0; if(mm>memPeak) memPeak=mm;
-          exportLog({stage:"video",pct:Math.round(done*100),formats:outs.map(o=>o.ep.id),stalls:S._exact.stalls||0,fallback:(S._noDecode&&S._noDecode.size)||0,hidden:document.hidden,sw:!!S._exact.sw,safe:!!S._safeExport,peak:memPeak,shot:i,of:plan.length,clip:S.clips[s.clip]?S.clips[s.clip].name:"",res:S.clips[s.clip]?`${S.clips[s.clip].w}x${S.clips[s.clip].h}`:""}); }
+          exportLog({stage:"video",pct:Math.round(done*100),formats:outs.map(o=>o.ep.id),stalls:S._exact.stalls||0,frozen:S._exact.frozen||0,fallback:(S._noDecode&&S._noDecode.size)||0,hidden:document.hidden,sw:!!S._exact.sw,safe:!!S._safeExport,peak:memPeak,shot:i,of:plan.length,clip:S.clips[s.clip]?S.clips[s.clip].name:"",res:S.clips[s.clip]?`${S.clips[s.clip].w}x${S.clips[s.clip].h}`:""}); }
         if(document.hidden) await yieldNow(); else await new Promise(r=>setTimeout(r,0)); }
     }
   } finally { slots.flat().forEach(s=>s.close()); S.elFor=null; }
@@ -291,7 +295,7 @@ const isImgSeg=i=>{ const s=curPlan()[i]; return !!(s && S.clips[s.clip] && S.cl
 const srcOf=(pool,i)=> i<0 ? null : (isImgSeg(i) ? S.clips[curPlan()[i].clip].img : (S.elFor&&S.elFor[i]) || pool[i%pool.length]);
 /* virtual camera moves for still footage; shared by the export and the output check so they always agree */
 function moveOf(seg,t,W,H,bi){
-  if(!seg||!seg._move) return {s:1,dx:0,dy:0};
+  if(!seg||!seg._move) return {s:1,dx:0,dy:0}; if(seg._holdFrom!=null&&t>seg._holdFrom) t=seg._holdFrom;
   const p=Math.min(1,Math.max(0,(t-seg.start)/Math.max(0.3,seg.end-seg.start))), d=(seg._dir||1)*(seg._amp||1), bb=(bi?0.025*Math.exp(-bi.ph*9)*(bi.down?1:0.5):0)*(seg._amp||1);
   switch(seg._move){
     case "pan": return {s:1.1+bb, dx:d*(ease(p)-0.5)*W*0.08, dy:0};

@@ -33,7 +33,7 @@ function assignDirector(segs,short){ const mode=$("camMoves")?$("camMoves").valu
     prevMove=mv; });
 }
 /* the move itself, at time t; offsets are clamped to the slack the scale gives, so no black edges */
-function directorMove(seg,t,W,H,bi){ const m=seg._dmove; if(!m) return null; const D=Math.max(0.3,seg.end-seg.start), tl=Math.max(0,t-seg.start), p=Math.min(1,tl/D), d=seg._ddir||1, en={gentle:0.6,normal:1,bold:1.35}[$("camEnergy")?$("camEnergy").value:"normal"]||1, amp=(seg._amp?Math.min(1.4,seg._amp/2):1)*en;
+function directorMove(seg,t,W,H,bi){ const m=seg._dmove; if(!m) return null; if(seg._holdFrom!=null&&t>seg._holdFrom) t=seg._holdFrom; /* the camera stops when the footage does */ const D=Math.max(0.3,seg.end-seg.start), tl=Math.max(0,t-seg.start), p=Math.min(1,tl/D), d=seg._ddir||1, en={gentle:0.6,normal:1,bold:1.35}[$("camEnergy")?$("camEnergy").value:"normal"]||1, amp=(seg._amp?Math.min(1.4,seg._amp/2):1)*en;
   const beat=bi?Math.exp(-bi.ph*9)*(bi.down?1:0.45):0; let s=1, dx=0, dy=0, rot=0;
   switch(m){
     case "settle": s=1.07; dx=d*(p-0.5)*W*0.045*amp; break;
