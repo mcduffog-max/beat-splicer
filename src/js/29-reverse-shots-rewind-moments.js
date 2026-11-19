@@ -40,7 +40,7 @@ function drawPicture(o,plan,cur,t,pool,F){
   const inTr=cur>0 && tr && tr.dur>0 && local<tr.dur;
   const prev=cur>0?plan[cur-1]:null, oel=cur>0?srcOf(pool,cur-1):null, oclip=prev?S.clips[prev.clip]:null;
   const thumbOf=c=>{ if(!c._ti){ c._ti=new Image(); c._ti.src=c.thumb; } return c._ti; };
-  if(!ready(el) && clip.kind!=="image" && clip.thumb && ready(thumbOf(clip))) el=thumbOf(clip);
+  if(!ready(el) && clip.kind!=="image" && clip.thumb && ready(thumbOf(clip))){ el=thumbOf(clip); if(seg._holdFrom==null) seg._holdFrom=t; } // only a still of this clip is available: the camera holds too, rather than drifting over a frozen picture
   if(!ready(el) && !(inTr && ready(oel))) return false;
   const bi=beatInfo(t);
   let ps=1, sx=0, sy=0;

@@ -11,7 +11,12 @@ async function webgpuReady(){ if(_btGPU!==null) return _btGPU; try{ _btGPU=!!(na
 /* "capable" means WebGPU and room to spare: the model and its working memory need several hundred MB, which takes a
    phone's page down (a 4 GB Android phone did exactly that). So: 8 GB or more and not a phone, and never again on a
    device where it once stopped the page. */
-function btRoomy(){ const mem=navigator.deviceMemory||4, phone=/Android|iPhone|iPad|Mobile/i.test(navigator.userAgent); let crashed=false; try{ crashed=!!localStorage.getItem("beatsplicerBTcrash"); }catch(e){} return !!window.BS_BT_MOCK||(mem>=8&&!phone&&!crashed); }
+function btRoomy(){ const mem=navigator.deviceMemory||4, phone=/Android|iPhone|iPad|Mobile/i.test(navigator.userAgent); let crashed=false, phoneOn=false; try{ crashed=!!localStorage.getItem("beatsplicerBTcrash"); phoneOn=localStorage.getItem("beatsplicerBTphone")==="1"; }catch(e){} return !!window.BS_BT_MOCK||(mem>=8&&!phone&&!crashed)||(phone&&phoneOn); } // phones: only when you switch it on for this phone
+/* each song is checked once and the answer kept, so the model never has to run twice for the same song */
+function btCacheKey(){ return S.audioFile?`bt:${S.audioFile.name}:${S.audioFile.size}`:null; }
+function btCached(){ try{ const k=btCacheKey(); const v=k&&localStorage.getItem(k); return v?JSON.parse(v):null; }catch(e){ return null; } }
+function btStore(r){ try{ const k=btCacheKey(); if(k) localStorage.setItem(k,JSON.stringify({beats:r.beats.map(x=>+x.toFixed(3)),downs:r.downs.map(x=>+x.toFixed(3))})); }catch(e){} }
+function btRelease(){ try{ if(_btSess&&_btSess.s&&_btSess.s.release) _btSess.s.release(); }catch(e){} _btSess=null; } // the model's memory goes back to the phone straight after
 async function btAvailable(){ return !HOSTED&&(!$("beatThis")||$("beatThis").checked)&&btRoomy()&&(!!window.BS_BT_MOCK||await webgpuReady()); }
 async function btSession(){ if(window.BS_BT_MOCK) return {mock:true}; if(_btSess) return _btSess;
   const ort=await import(BT.ort); const [model,fb]=await Promise.all([fetch(BT.base+"beat_this.onnx").then(r=>r.arrayBuffer()), fetch(BT.base+"mel-filterbank.bin").then(r=>r.arrayBuffer())]);
@@ -40,7 +45,7 @@ async function btRun(buf){ const S0=await btSession(); let beatL, downL, T;
   const beats=peaks(beatL), downs=peaks(downL).map(t=>beats.reduce((a,b)=>Math.abs(b-t)<Math.abs(a-t)?b:a,beats[0])); return {beats,downs}; }
 /* the referee: agree, or re-count the song on the neural beats */
 async function btReferee(){ if(!S.an||!S.audioBuf||S.an._bt||(S.an.feel&&S.an.feel.free==="beatless")||!(await btAvailable())) return;
-  const an=S.an; let r; try{ await heavy("Checking the beat with Beat This!",async()=>{ status("Checking the beat with Beat This! (downloads once)…"); r=await btRun(S.audioBuf); }); }catch(e){ status("Beat This! couldn't run here: "+(e&&e.message||e)); return; }
+  const an=S.an; let r=btCached(); if(!r){ try{ await heavy("Checking the beat with Beat This!",async()=>{ status("Checking the beat with Beat This! (downloads once)…"); try{ r=await btRun(S.audioBuf); } finally{ if(/Android|iPhone|iPad|Mobile/i.test(navigator.userAgent)) btRelease(); } }); if(r) btStore(r); }catch(e){ status("Beat This! couldn't run here: "+(e&&e.message||e)); return; } }
   if(!r||r.beats.length<16||S.an!==an) return; const near=(t,L,tol)=>L.some(b=>Math.abs(b-t)<=tol);
   const agree=r.beats.filter(t=>near(t,an.beats,0.07)).length/r.beats.length, extra=an.beats.filter(t=>!near(t,r.beats,0.07)).length/an.beats.length;
   const dn=an.beats.filter((b,i)=>isDownAt(an,i)), dAgree=r.downs.filter(t=>near(t,dn,0.08)).length/Math.max(1,r.downs.length);
@@ -48,3 +53,8 @@ async function btReferee(){ if(!S.an||!S.audioBuf||S.an._bt||(S.an.feel&&S.an.fe
   if(agree>=0.85&&extra<=0.2&&dAgree>=0.7){ status(`Beat This! agrees with the beat (${Math.round(an.bpm)} BPM).`); return; }
   const old=Math.round(an.bpm), n=await analyzeAudio(S.audioBuf,null,{beats:r.beats,downs:r.downs}); n._bt={...an._bt, fixed:true, from:old}; S.an=n; S.an.sections=null; try{ songSections(); }catch(e){}
   try{ renderTempo(); }catch(e){} status(`Beat This! re-counted the song: ${old} → ${Math.round(n.bpm)} BPM${dAgree<0.7?", with the downbeat moved to where the bar really starts":""}.`); if(!S.running) buildPlan(); }
+
+/* the phone switch: shown only on phones that have WebGPU */
+(async()=>{ const phone=/Android|iPhone|iPad|Mobile/i.test(navigator.userAgent); if(!phone||HOSTED||!$("btPhoneRow")) return; if(!(await webgpuReady())) return; $("btPhoneRow").hidden=false;
+  try{ $("btPhone").checked=localStorage.getItem("beatsplicerBTphone")==="1"; }catch(e){}
+  $("btPhone").addEventListener("change",()=>{ try{ if($("btPhone").checked){ localStorage.setItem("beatsplicerBTphone","1"); localStorage.removeItem("beatsplicerBTcrash"); } else localStorage.removeItem("beatsplicerBTphone"); }catch(e){} if($("btPhone").checked&&S.an&&!S.an._bt) btReferee().catch(()=>{}); }); })();

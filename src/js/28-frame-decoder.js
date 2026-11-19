@@ -133,7 +133,7 @@ async function runPassDecode(outs,win,plan,eng){
           catch(e){ if(String(e&&e.message).includes("stalled") && !(S._noDecode&&S._noDecode.has(S.clips[plan[j].clip]))){ S._noDecode=S._noDecode||new Set(); S._noDecode.add(S.clips[plan[j].clip]); slots[j%2][0].close(); continue; }
             if(!swapClip(j)) throw e; } } // this clip won't play on this device: its shots switch to another clip and the export carries on
         return null; };
-      if(!isImgSeg(i)){ const f=await grab(i); if(f){ elFor[i]=f; // footage that stops advancing (a stuck decoder or seek): the camera holds with it, and it's counted
+      if(!isImgSeg(i)){ const f=await grab(i); if(!f&&s._holdFrom==null){ s._holdFrom=tk; S._exact.frozen=(S._exact.frozen||0)+1; crumb(`no footage for shot ${i+1} (${S.clips[s.clip].name})`); } if(f){ elFor[i]=f; // footage that stops advancing (a stuck decoder or seek): the camera holds with it, and it's counted
           const want=srcT(i,tk), got=f.timestamp!=null?f.timestamp/1e6:(f.currentTime!=null?f.currentTime:want);
           if(s._mtW!=null&&want-s._mtW>0.1&&Math.abs(got-s._mtG)<0.001){ s._stuckN=(s._stuckN||0)+1; if(s._stuckN>=3&&s._holdFrom==null){ s._holdFrom=tk; S._exact.frozen=(S._exact.frozen||0)+1; crumb(`footage stopped in shot ${i+1} (${S.clips[s.clip].name})`); } }
           else if(Math.abs(got-(s._mtG??-1))>=0.001) s._stuckN=0;
