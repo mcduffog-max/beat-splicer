@@ -105,7 +105,7 @@ async function freeSpace(){
 function showError(e,where){
   const msg=(e&&(e.message||e.name))||String(e||"unknown error");
   S.lastError=`${where||"Export"} failed: ${msg}\n${(e&&e.stack)||""}\nBrowser: ${navigator.userAgent}\nEngine: ${JSON.stringify(chooseEngine&&chooseEngine())}\nFormats: ${S.eps.join(", ")}\nClips: ${S.clips.length}, song ${S.an?Math.round(S.an.duration)+" s":"none"}`;
-  if(/could not be read|NotReadable|permission problems/i.test(String(msg))) status(`${where||"Export"} stopped: Android took back access to some of your clips or the song (it does that after the app has been closed for a while). Add them again${NATIVE?" and the app will keep its own copy, so it won't happen again":""}.`,true);
+  if(/could not be read|NotReadable|permission problems/i.test(String(msg))||NATIVE&&/can’t be played in this browser/i.test(String(msg))) status(`${where||"Export"} stopped: Android took back access to some of your clips or the song (it does that after the app has been closed for a while). Add them again${NATIVE?" and the app will keep its own copy, so it won't happen again":""}.`,true);
   else status(`${where||"Export"} stopped with an error: ${msg}. Tap “Copy error details” and send them to me.`,true);
   $("errBtn").hidden=false;
 }
@@ -130,6 +130,7 @@ async function makeVideosInner(skipGate){
     status("Getting the AI review first. Check it, then export."); await runReview(true); return;
   }
   stopListen();
+  { const r=await preflightClips(eps); if(r.lost) status(`${r.lost} clip${r.lost===1?"":"s"} could no longer be opened (Android took back access), so ${r.lost===1?"it's":"they're"} left out of this video. Add ${r.lost===1?"it":"them"} again to use ${r.lost===1?"it":"them"}.`); if(r.lost&&!S.plan) return; }
   // group exports that use the same part of the song; at most 3 encoders at once
   const groups=new Map();
   for(const ep of eps){ const w=windowFor(ep), key=w.map(x=>x.toFixed(2)).join("-")+(PRO()&&ep.short?"s":"l"); if(!groups.has(key)) groups.set(key,{win:w,eps:[]}); groups.get(key).eps.push(ep); }
@@ -167,3 +168,17 @@ async function makeVideosInner(skipGate){
   if(S.results.length===eps.length) status(`Done: ${S.results.length} video${S.results.length===1?"":"s"}${S.extras.length?" plus "+S.extras.length+" thumbnail"+(S.extras.length>1?"s":""):""} ready to save.`);
 }
 
+
+/* Before a video is made: every clip it uses must still open. A clip Android has taken back access to is recovered
+   from the app's own copy or the saved project when one exists; otherwise it's left out and the edit is rebuilt
+   without it, instead of the export failing halfway. */
+async function canRead(f){ try{ await f.slice(0,65536).arrayBuffer(); return true; }catch(e){ return false; } }
+async function recoverFile(c){ const f=c.file, key=`${f.size}-${f.lastModified}-${f.name}`.replace(/[\\/:*?"<>|]/g,"_").slice(0,180);
+  try{ const dir=typeof keptDir==="function"?await keptDir():null; if(dir){ const g=await (await dir.getFileHandle(key)).getFile(); if(g.size===f.size){ const k=new File([g],f.name,{type:f.type,lastModified:f.lastModified}); k._kept=key; if(await canRead(k)) return k; } } }catch(e){}
+  try{ const g=await PDB.get("f:"+f.name+":"+f.size+":"+f.lastModified); if(g&&await canRead(g)) return g; }catch(e){}
+  return null; }
+async function preflightClips(eps){ let lost=0, fixed=0; const used=new Set(); eps.forEach(ep=>{ const P=makeExportPlan(ep,windowFor(ep))||S.plan; P.forEach(s=>used.add(s.clip)); });
+  for(const ci of used){ const c=S.clips[ci]; if(!c||!c.file||c.kind==="image") continue; if(await canRead(c.file)) continue;
+    const g=await recoverFile(c); if(g){ try{ URL.revokeObjectURL(c.url); }catch(e){} c.file=g; c.url=URL.createObjectURL(g); if(S.decIdx) S.decIdx.delete(c); fixed++; crumb("recovered "+c.name); }
+    else { c.off=true; lost++; crumb("can't open "+c.name+": left out"); } }
+  if(lost){ refreshExclusion(true); buildPlan(); } return {lost,fixed}; }
