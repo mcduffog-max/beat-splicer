@@ -8,7 +8,11 @@
 const BT={base:"https://huggingface.co/musetric/beat-this-onnx/resolve/main/", ort:"https://cdn.jsdelivr.net/npm/onnxruntime-web@1.22.0/dist/ort.webgpu.min.mjs"};
 let _btSess=null, _btGPU=null;
 async function webgpuReady(){ if(_btGPU!==null) return _btGPU; try{ _btGPU=!!(navigator.gpu&&await navigator.gpu.requestAdapter()); }catch(e){ _btGPU=false; } return _btGPU; }
-async function btAvailable(){ return !HOSTED&&(!$("beatThis")||$("beatThis").checked)&&(!!window.BS_BT_MOCK||await webgpuReady()); }
+/* "capable" means WebGPU and room to spare: the model and its working memory need several hundred MB, which takes a
+   phone's page down (a 4 GB Android phone did exactly that). So: 8 GB or more and not a phone, and never again on a
+   device where it once stopped the page. */
+function btRoomy(){ const mem=navigator.deviceMemory||4, phone=/Android|iPhone|iPad|Mobile/i.test(navigator.userAgent); let crashed=false; try{ crashed=!!localStorage.getItem("beatsplicerBTcrash"); }catch(e){} return !!window.BS_BT_MOCK||(mem>=8&&!phone&&!crashed); }
+async function btAvailable(){ return !HOSTED&&(!$("beatThis")||$("beatThis").checked)&&btRoomy()&&(!!window.BS_BT_MOCK||await webgpuReady()); }
 async function btSession(){ if(window.BS_BT_MOCK) return {mock:true}; if(_btSess) return _btSess;
   const ort=await import(BT.ort); const [model,fb]=await Promise.all([fetch(BT.base+"beat_this.onnx").then(r=>r.arrayBuffer()), fetch(BT.base+"mel-filterbank.bin").then(r=>r.arrayBuffer())]);
   _btSess={ort, s:await ort.InferenceSession.create(model,{executionProviders:["webgpu"]}), fb:new Float32Array(fb)}; return _btSess; }

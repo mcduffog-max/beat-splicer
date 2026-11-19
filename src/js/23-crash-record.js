@@ -3,6 +3,7 @@ const fileKeyOf=f=>f.name+"|"+f.size;
 function crumb(step){ try{ const a=JSON.parse(localStorage.getItem("beatsplicerCrumbs")||"[]"); a.push({step,t:Date.now(),mem:performance.memory?Math.round(performance.memory.usedJSHeapSize/1e6):null}); localStorage.setItem("beatsplicerCrumbs",JSON.stringify(a.slice(-14))); }catch(e){} }
 function crumbsNotice(){ try{ const a=JSON.parse(localStorage.getItem("beatsplicerCrumbs")||"[]"); if(!a.length) return; const last=a[a.length-1];
     if(last.step==="idle"||last.step==="song ready"||Date.now()-last.t>6*3600e3){ return; }
+    if(/beat this/i.test(last.step)){ try{ localStorage.setItem("beatsplicerBTcrash","1"); }catch(e){} localStorage.setItem("beatsplicerCrumbs","[]"); status("Last time the Beat This! check was too much for this phone and stopped the page. It's switched off here now; the app's own beat count is used."); return; } // a known cause: switch it off and say so, no error report needed
     const tail=a.slice(-6).map(x=>`${new Date(x.t).toLocaleTimeString()} ${x.step}${x.mem?` (${x.mem} MB)`:""}`).join("\n");
     S.lastError=(S.lastError?S.lastError+"\n\n":"")+"Last steps before the page stopped:\n"+tail+"\nBrowser: "+navigator.userAgent.slice(0,120);
     if(!$("errBtn").hidden) return;
