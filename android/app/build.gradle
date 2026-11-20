@@ -25,12 +25,26 @@ android {
             keyAlias "beatsplicer"
             keyPassword "beatsplicer"
         }
+        // the Play Store upload key: only on the build server, from GitHub secrets, never in the repository
+        if (System.getenv("UPLOAD_KEYSTORE")) {
+            upload {
+                storeFile file(System.getenv("UPLOAD_KEYSTORE"))
+                storePassword System.getenv("UPLOAD_PASSWORD")
+                keyAlias "upload"
+                keyPassword System.getenv("UPLOAD_PASSWORD")
+            }
+        }
     }
     buildTypes {
         debug {
+            // your own test build sits beside the Play Store app instead of clashing with it
+            applicationIdSuffix ".dev"
+            manifestPlaceholders = [appLabel: "Beat Splicer Dev"]
             signingConfig signingConfigs.fixed
         }
         release {
+            manifestPlaceholders = [appLabel: "Beat Splicer"]
+            if (System.getenv("UPLOAD_KEYSTORE")) signingConfig signingConfigs.upload
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }

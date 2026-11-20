@@ -5,8 +5,8 @@
    updates. Your settings and projects stay, because every build is signed with the same key. */
 const APP_REL="https://api.github.com/repos/mcduffog-max/beat-splicer/releases/tags/android-latest";
 async function appUpdateCheck(quiet){ const U=NP("AppUpdate"); if(!U) return null;
-  try{ const [mine,rel]=await Promise.all([U.info(), fetch(APP_REL,{cache:"no-store"}).then(r=>r.ok?r.json():Promise.reject(new Error("GitHub said "+r.status)))]);
-    const m=String(rel.body||"").match(/Build:\s*(\d+)/)||String(rel.name||"").match(/build\s+(\d+)/i), latest=m?+m[1]:0, asset=(rel.assets||[]).find(a=>/\.apk$/i.test(a.name));
+  try{ const [mine,rel]=await Promise.all([U.info(), fetch(RELAY.url?RELAY.url.replace(/\/$/,"")+"/latest":APP_REL,{cache:"no-store"}).then(r=>r.ok?r.json():Promise.reject(new Error("GitHub said "+r.status)))]); // through the relay once the repository is private
+    const m=String(rel.body||"").match(/Build:\s*(\d+)/)||String(rel.name||"").match(/build\s+(\d+)/i), latest=m?+m[1]:0, asset=rel.apk?{browser_download_url:rel.apk}:(rel.assets||[]).find(a=>/\.apk$/i.test(a.name));
     const info={have:+mine.versionCode||1, latest, url:asset&&asset.browser_download_url, canInstall:mine.canInstall}; S._appUpd=info; renderAppUpdate(); if(!quiet) status(info.latest>info.have?`Build ${info.latest} is ready (you have ${info.have}).`:`The app is up to date (build ${info.have}).`); return info; }
   catch(e){ if(!quiet) status("Couldn't check for an update: "+(e&&e.message||e),true); return null; } }
 function renderAppUpdate(){ const b=$("appUpd"), i=S._appUpd; if(!b) return; const newer=!!(i&&i.url&&i.latest>i.have); b.hidden=!newer; if(newer) $("appUpdMsg").textContent=`A new version of the app is ready (build ${i.latest}; you have ${i.have}).`; }

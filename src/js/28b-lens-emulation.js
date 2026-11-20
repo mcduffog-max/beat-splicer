@@ -10,15 +10,15 @@
    Profiles are "in the style of": they reproduce the character, nothing is licensed from the makers. A kit assigns a
    lens to each section of the song (Do everything picks the kit). Without WebGL the older 2D looks are used. */
 const LENSES={
-  modern:   {name:"Modern prime (Zeiss Master Prime style): clean, crisp", k:0, ca:0.0004, vig:0.12, soft:0, swirl:0, ana:0, hal:0, warm:0, con:1.04, lift:0, grain:0, weave:0},
-  cooke:    {name:"Cooke-style warmth: gentle, flattering", k:0.01, ca:0.0010, vig:0.28, soft:0.35, swirl:0, ana:0, hal:0.10, warm:0.035, con:0.95, lift:0.02, grain:0, weave:0},
-  helios:   {name:"Helios 44-2 style: swirly edges, soft contrast", k:0.02, ca:0.0028, vig:0.38, soft:0.2, swirl:1.0, ana:0, hal:0.16, warm:0.02, con:0.9, lift:0.035, grain:0, weave:0},
-  anamorphic:{name:"Anamorphic (Panavision C-series style): oval falloff, streaks", k:0.045, ca:0.0022, vig:0.4, soft:0.45, swirl:0, ana:1, hal:0.12, warm:-0.015, con:1.02, lift:0.015, grain:0, weave:0},
-  k35:      {name:"70s cine glass (Canon K35 style): warm glow", k:0.015, ca:0.0018, vig:0.3, soft:0.3, swirl:0, ana:0, hal:0.34, warm:0.05, con:0.88, lift:0.045, grain:0.04, weave:0},
-  promist:  {name:"Diffusion filter (Black Pro-Mist style): soft highlights", k:0, ca:0.0005, vig:0.15, soft:0.15, swirl:0, ana:0, hal:0.42, warm:0.01, con:0.93, lift:0.03, grain:0, weave:0},
+  modern:   {name:"Modern prime: clean, crisp", k:0, ca:0.0004, vig:0.12, soft:0, swirl:0, ana:0, hal:0, warm:0, con:1.04, lift:0, grain:0, weave:0},
+  cooke:    {name:"Warm classic prime: gentle, flattering", k:0.01, ca:0.0010, vig:0.28, soft:0.35, swirl:0, ana:0, hal:0.10, warm:0.035, con:0.95, lift:0.02, grain:0, weave:0},
+  helios:   {name:"Swirly vintage prime: swirly edges, soft contrast", k:0.02, ca:0.0028, vig:0.38, soft:0.2, swirl:1.0, ana:0, hal:0.16, warm:0.02, con:0.9, lift:0.035, grain:0, weave:0},
+  anamorphic:{name:"Anamorphic: oval falloff, streaks", k:0.045, ca:0.0022, vig:0.4, soft:0.45, swirl:0, ana:1, hal:0.12, warm:-0.015, con:1.02, lift:0.015, grain:0, weave:0},
+  k35:      {name:"70s cine glass: warm glow", k:0.015, ca:0.0018, vig:0.3, soft:0.3, swirl:0, ana:0, hal:0.34, warm:0.05, con:0.88, lift:0.045, grain:0.04, weave:0},
+  promist:  {name:"Diffusion filter: soft highlights", k:0, ca:0.0005, vig:0.15, soft:0.15, swirl:0, ana:0, hal:0.42, warm:0.01, con:0.93, lift:0.03, grain:0, weave:0},
   film16:   {name:"16 mm film: grain, soft corners", k:0.02, ca:0.0015, vig:0.42, soft:0.45, swirl:0, ana:0, hal:0.14, warm:0.02, con:0.94, lift:0.04, grain:0.13, weave:0.0012},
   super8:   {name:"Super 8: heavy grain, gate weave, warm fade", k:0.03, ca:0.0030, vig:0.6, soft:0.7, swirl:0, ana:0, hal:0.22, warm:0.06, con:0.84, lift:0.07, grain:0.22, weave:0.003},
-  petzval:  {name:"Petzval style: sharp centre, strong swirl", k:0.01, ca:0.0025, vig:0.5, soft:0.5, swirl:1.6, ana:0, hal:0.12, warm:0.02, con:0.92, lift:0.03, grain:0, weave:0},
+  petzval:  {name:"Petzval-type portrait lens: sharp centre, strong swirl", k:0.01, ca:0.0025, vig:0.5, soft:0.5, swirl:1.6, ana:0, hal:0.12, warm:0.02, con:0.92, lift:0.03, grain:0, weave:0},
 };
 /* kits: which lens each part of the song is shot on */
 const LENS_KITS={
