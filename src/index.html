@@ -24,10 +24,13 @@
       <label class="btn quiet" for="openProj" title="Open a saved project file">Open</label>
       <input type="file" id="openProj" accept=".json,application/json" hidden>
       <button class="btn quiet" id="saveProj" title="Save this project as a file">Save</button>
+      <button class="btn quiet" id="tierBadge" type="button" hidden title="Your plan: tap to see what each one includes">Free</button>
       <button class="btn quiet" id="repOpen" type="button" title="Report a problem: it arrives with the details needed to fix it">Report</button>
       <button class="btn quiet icon" id="themeBtn" type="button" aria-label="Theme: matches your device" title="Theme: matches your device"></button>
     </div>
   </header>
+  <div class="cmpbox repbox" id="payBox" hidden><b>Unlock more</b><div class="small" id="payWhy"></div><div id="payList"></div>
+    <div class="row"><button class="btn quiet" id="payRestore" type="button">Restore purchases</button><button class="btn quiet" id="payClose" type="button">Close</button></div><div class="small" id="payMsg"></div></div>
   <div class="cmpbox repbox" id="repBox" hidden><b>Report a problem</b>
         <textarea id="repWhat" rows="4" maxlength="4000" placeholder="What happened, and what were you doing just before? e.g. the export stopped at 60% while making a Short"></textarea>
         <label class="check"><input type="checkbox" id="repDiag" checked> Include the error, recent steps, settings and diagnostics (no clips, song or personal details)</label>

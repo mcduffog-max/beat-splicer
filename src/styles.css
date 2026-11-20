@@ -407,3 +407,7 @@ details.diag>summary{cursor:pointer;color:var(--muted);font-size:14px}
 
 #repBox textarea,#repBox input[type=text]{width:100%;box-sizing:border-box}
 .repbox{margin:8px 12px}
+.payrow{display:flex;gap:10px;align-items:center;justify-content:space-between;padding:8px 0;border-top:1px solid var(--line,#8883)}
+.payrow .btn{flex:none}
+.ep.locked{opacity:.6}
+.ep.locked::after{content:" · Creator";font-size:12px}

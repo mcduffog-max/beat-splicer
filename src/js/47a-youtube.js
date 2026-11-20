@@ -44,7 +44,7 @@ function learnFrom(pairs){ const xs=pairs.map(p=>({...p,s:ytScore(p.v)})).filter
     eff[k]={}; Object.entries(g).forEach(([val,a])=>{ const n=a.length; eff[k][val]={eff:+(a.reduce((x,y)=>x+y,0)/n*(n/(n+3))).toFixed(4),n}; }); });
   return {eff,n:xs.length,mean:+mean.toFixed(3),at:Date.now(),stay:xs.some(p=>p.v.engagedViews!=null)}; }
 function learned(){ try{ return JSON.parse(localStorage.getItem("beatsplicerLearn")||"null"); }catch(e){ return null; } }
-function learnW(k,val){ const L=learned(); if(!L||!$("learnOn")||!$("learnOn").checked) return 1; const e=L.eff&&L.eff[k]&&L.eff[k][val]; if(!e||e.n<2) return 1; return Math.max(0.6,Math.min(1.8,Math.exp(e.eff*8))); }
+function learnW(k,val){ if(!has("youtubeLearn")) return 1; const L=learned(); if(!L||!$("learnOn")||!$("learnOn").checked) return 1; const e=L.eff&&L.eff[k]&&L.eff[k][val]; if(!e||e.n<2) return 1; return Math.max(0.6,Math.min(1.8,Math.exp(e.eff*8))); }
 function learnSummary(L){ if(!L) return []; const all=[]; Object.entries(L.eff).forEach(([k,m])=>Object.entries(m).forEach(([val,e])=>{ if(e.n>=2) all.push({k,val,...e}); }));
   all.sort((a,b)=>b.eff-a.eff); const pct=x=>`${x>0?"+":""}${Math.round(x*100)} points`; const words=x=>`${LEARN_KEYS[x.k]}: ${x.val} (${pct(x.eff)} on ${x.n} Shorts)`;
   return [...all.filter(x=>x.eff>0.005).slice(0,3).map(x=>"Working: "+words(x)), ...all.filter(x=>x.eff<-0.005).slice(-2).reverse().map(x=>"Not working: "+words(x))]; }
@@ -81,5 +81,5 @@ function renderYT(){ const box=$("ytBox"); if(!box) return; box.hidden=!ytAvaila
   const L=learned(); if(L&&!$("ytOut").textContent){ const s=learnSummary(L); $("ytOut").textContent=s.length?`From ${L.n} Shorts: `+s.join(" · "):""; } }
 $("ytSave").onclick=()=>{ const v=$("ytClient").value.trim(); if(!/\.apps\.googleusercontent\.com$/.test(v)){ status("That doesn't look like a Google client ID: it ends in .apps.googleusercontent.com.",true); return; } try{ localStorage.setItem("beatsplicerYTClient",v); }catch(e){} YT.token=null; renderYT(); renderResults(); status("Client ID saved. Tap Read my results to sign in."); };
 $("ytForget").onclick=()=>{ try{ localStorage.removeItem("beatsplicerYTClient"); }catch(e){} YT.token=null; YT.channel=null; renderYT(); renderResults(); };
-$("ytRead").onclick=()=>ytLearn();
+$("ytRead").onclick=()=>{ if(needTier("youtubeLearn")) ytLearn(); };
 renderYT();

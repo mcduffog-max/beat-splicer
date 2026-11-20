@@ -9,7 +9,7 @@ const TASTE_TERMS={q:"picture quality",cn:"movement flowing across cuts",se:"sho
 function tasteLoad(){ try{ const t=JSON.parse(localStorage.getItem("beatsplicerTaste")||"null"); if(t&&t.w) return t; }catch(e){} return {w:{},n:0,log:[]}; }
 function tasteSave(t){ try{ t.log=t.log.slice(-200); localStorage.setItem("beatsplicerTaste",JSON.stringify(t)); }catch(e){} }
 let TASTE=tasteLoad(), TASTE_OVR=null; // TASTE_OVR: weights in force while one side of a comparison is being built
-function tw(k){ const w=TASTE_OVR||TASTE.w; return w[k]!=null?w[k]:1; }
+function tw(k){ if(!has("taste")&&!TASTE_OVR) return 1; const w=TASTE_OVR||TASTE.w; return w[k]!=null?w[k]:1; }
 function tasteSum(W){ let s=0; for(const k in TASTE_TERMS){ const v=W[k]; if(typeof v==="number"&&isFinite(v)) s+=tw(k)*v; } return s; }
 /* what a cut scores for each judgement, per shot */
 function planFeatures(plan,win){ const f={}, segs=plan.filter(s=>s._W&&(!win||s.end>win[0]&&s.start<win[1])); for(const k in TASTE_TERMS){ f[k]=segs.reduce((a,s)=>a+(+s._W[k]||0),0)/Math.max(1,segs.length); } return f; }
@@ -55,7 +55,7 @@ async function compareAI(){ if(!_pair) return; let id=null; for(const k of Objec
     const j=await askAI(id,prompt,[a,b]), o=typeof j==="string"?parseLoose(j):j, pick=/^[AB]$/.test(o.better)?o.better:"same";
     const why=String(o.why||"").slice(0,200); compareDecide(pick,"ai"); $("cmpMsg").textContent=`${PROVIDERS[id].name} picked ${pick==="same"?"neither":pick}: ${why} `+tasteSummary(); }
   catch(e){ $("cmpMsg").textContent="The AI reviewer couldn't judge this pair: "+(aiErrorText?aiErrorText(e):(e&&e.message||e)); } }
-$("cmpOpen").onclick=compareStart; $("cmpAgain").onclick=()=>{ $("cmpAgain").hidden=true; compareStart(); };
+$("cmpOpen").onclick=()=>{ if(needTier("taste")) compareStart(); }; $("cmpAgain").onclick=()=>{ $("cmpAgain").hidden=true; compareStart(); };
 $("cmpA").onclick=()=>comparePlay("A"); $("cmpB").onclick=()=>comparePlay("B");
 $("cmpPickA").onclick=()=>compareDecide("A","you"); $("cmpPickB").onclick=()=>compareDecide("B","you"); $("cmpSame").onclick=()=>compareDecide("same","you"); $("cmpAI").onclick=compareAI;
 $("cmpReset").onclick=()=>{ TASTE={w:{},n:0,log:[]}; tasteSave(TASTE); buildPlan(); $("cmpMsg").textContent="Taste reset: every judgement counts equally again."; };

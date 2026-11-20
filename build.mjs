@@ -3,7 +3,8 @@
 //                           -> dist-claude/ the single file for claude.ai (no app install, no service worker)
 import fs from "node:fs"; import path from "node:path"; import crypto from "node:crypto";
 const src = "src", parts = fs.readdirSync(`${src}/js`).filter(f => f.endsWith(".js")).sort();
-const app = parts.map(f => fs.readFileSync(`${src}/js/${f}`, "utf8")).join("");
+const STORE = process.env.BS_STORE === "1"; // the Play Store build: paid tiers switched on
+const app = parts.map(f => fs.readFileSync(`${src}/js/${f}`, "utf8")).join("").replace("/*@STORE@*/false", STORE ? "true" : "false");
 const css = fs.readFileSync(`${src}/styles.css`, "utf8");
 const shell = fs.readFileSync(`${src}/index.html`, "utf8");
 const fill = (s) => s.replace("/*@STYLE@*/", () => css).replace("/*@APP@*/", () => app);

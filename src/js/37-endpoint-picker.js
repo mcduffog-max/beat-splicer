@@ -4,7 +4,8 @@ function buildEndpointUI(){
   ENDPOINTS.forEach(ep=>{
     const l=document.createElement("label"); l.className="ep";
     const c=document.createElement("input"); c.type="checkbox"; c.checked=S.eps.includes(ep.id);
-    c.onchange=()=>{ S.eps=ENDPOINTS.filter(e=>e.id===ep.id?c.checked:S.eps.includes(e.id)).map(e=>e.id); syncPreviewEps(); updateButtons(); saveSettings(); drawTimeline(); };
+    const locked=!has("platforms")&&!FREE_EPS.includes(ep.id); if(locked){ c.checked=false; l.classList.add("locked"); l.title="Comes with Creator"; }
+    c.onchange=()=>{ if(locked&&c.checked){ c.checked=false; needTier("platforms"); return; } S.eps=ENDPOINTS.filter(e=>e.id===ep.id?c.checked:S.eps.includes(e.id)).map(e=>e.id); syncPreviewEps(); updateButtons(); saveSettings(); drawTimeline(); };
     const d=document.createElement("div");
     const b=document.createElement("b"); b.textContent=ep.name;
     const sm=document.createElement("small"); sm.textContent=`${ep.w} × ${ep.h}, ${ep.max===Infinity?"any length":"up to "+fmtTime(ep.max)}, ${ep.lufs} LUFS`;

@@ -29,7 +29,7 @@ const LENS_KITS={
   dream:   {name:"Dreamy", verse:"helios", chorus:"promist", bridge:"petzval", intro:"promist", outro:"helios"},
   clean:   {name:"Clean and sharp", verse:"modern", chorus:"modern", bridge:"modern", intro:"modern", outro:"modern"},
 };
-function lensProfile(seg){ const v=$("lens")?$("lens").value:"kit:cinema"; if(LENSES[v]) return v; if(v==="natural"||v==="none") return null;
+function lensProfile(seg){ if(!has("lens")) return null; const v=$("lens")?$("lens").value:"kit:cinema"; if(LENSES[v]) return v; if(v==="natural"||v==="none") return null;
   const kit=LENS_KITS[(v.startsWith("kit:")?v.slice(4):null)||"cinema"]||LENS_KITS.cinema; if(!seg) return kit.verse; const sec=camSection(seg.start+0.05)||(seg.e>0.75?"chorus":"verse"); return kit[sec]||kit.verse; }
 const LENS_FS=`precision highp float; varying vec2 v; uniform sampler2D T; uniform vec2 R; uniform float K,CA,VIG,SOFT,SWIRL,ANA,HAL,WARM,CON,LIFT,GRAIN,SEED; uniform vec2 WV;
 float hash(vec2 p){ return fract(sin(dot(p,vec2(12.9898,78.233))+SEED)*43758.5453); }

@@ -43,7 +43,7 @@ function shotSummary(SL){ if(!SL||!SL.nv) return []; const all=[]; Object.entrie
   if(SL.worst&&SL.worst.d>0.01){ const w=SL.worst, f=featsOf(w.sh); out.push(`Biggest drop in your latest: shot ${w.i+1} at ${fmtTime(w.sh.a)} (${[shotLabel("k",f.k),shotLabel("m",f.m),shotLabel("len",f.len)].filter(Boolean).join(", ")}) in “${String(w.title).slice(0,50)}”.`); }
   return out; }
 /* the planning term: in Shorts, footage like what held your viewers is preferred */
-function retentionCost(seg,clip,s,ctx){ if(!ctx.short||!$("learnOn")||!$("learnOn").checked) return 0; const L=learned(), SL=L&&L.shots; if(!SL||!SL.nv) return 0;
+function retentionCost(seg,clip,s,ctx){ if(!has("youtubeLearn")) return 0; if(!ctx.short||!$("learnOn")||!$("learnOn").checked) return 0; const L=learned(), SL=L&&L.shots; if(!SL||!SL.nv) return 0;
   const first=ctx.win&&seg.start-ctx.win[0]<1.5, T=first?SL.open:SL.body; if(!T) return 0; const mo=clip.kind==="image"?0:(s.motion||0), tg=tagAt(clip,s.t);
   const f={m:mo<1.2?0:mo<5?1:2, k:clip.kind==="image"?"i":"v", sz:tg&&tg.scale!=null?(tg.scale<=1.5?"wide":tg.scale<=3.5?"medium":"close"):null};
   let c=0; Object.entries(f).forEach(([k,val])=>{ const e=val!=null&&T[k]&&T[k][val]; if(e&&e.n>=(first?5:8)) c+=Math.max(-0.35,Math.min(0.35,e.eff*(first?40:25))); }); return c; }

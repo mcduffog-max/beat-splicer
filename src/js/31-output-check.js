@@ -122,7 +122,10 @@ async function makeVideos(skipGate){
 }
 async function makeVideosInner(skipGate){
   if(!S.plan) return;
-  const eps=S.eps.map(EP).filter(Boolean);
+  let eps=S.eps.map(EP).filter(Boolean);
+  if(!has("platforms")&&eps.some(e=>!FREE_EPS.includes(e.id))){ const keep=eps.filter(e=>FREE_EPS.includes(e.id)); if(!keep.length){ needTier("platforms"); return; } status(`${eps.length-keep.length} platform${eps.length-keep.length===1?"":"s"} need${eps.length-keep.length===1?"s":""} Creator, so ${keep.map(e=>e.name).join(" and ")} only this time.`); eps=keep; }
+  if(!has("batch")&&eps.length>1){ status(`Making ${eps[0].name}. Several formats in one go comes with Pro; untick the others or make them one at a time.`); eps=[eps[0]]; }
+  eps=eps.map(capEp); // free: 720p
   if(!eps.length){ status("Tick at least one place to publish.",true); return; }
   if(!pickMime()){ status("This browser can’t record video. Use Chrome, Edge or Safari.",true); return; }
   { const g=gateProblems(); if(g.length){ status(g[0]+" Add more in step 2, or untick that platform.",true); renderChecklist(); return; } }

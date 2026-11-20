@@ -201,7 +201,7 @@ function aiErrorText(e){
 }
 
 let reviewCtl=null;
-async function runReview(gate){
+async function runReview(gate){ if(!needTier("aiReview")) return;
   if(!S.plan) return;
   const ids=[]; for(const id of Object.keys(PROVIDERS)) if($(PROVIDERS[id].cb).checked && await providerReady(id)) ids.push(id);
   const out=$("aiOut"); out.hidden=false; out.innerHTML="";

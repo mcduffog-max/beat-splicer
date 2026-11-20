@@ -18,7 +18,7 @@ const NOTE_WORDS=[
 ];
 function noteText(){ return ($("dirNote")&&$("dirNote").value||"").trim(); }
 function noteAttrs(t){ const a={}; NOTE_WORDS.forEach(([re,v])=>{ if(re.test(t.toLowerCase())) Object.entries(v).forEach(([k,x])=>{ if(a[k]==null) a[k]=x; }); }); return a; }
-function notePhases(){ const t=noteText(); if(!t) return []; if(S._notePh&&S._notePh.t===t) return S._notePh.ph;
+function notePhases(){ const t=noteText(); if(!t||!has("note")) return []; if(S._notePh&&S._notePh.t===t) return S._notePh.ph;
   const parts=t.split(/\s*(?:;|→|->|\bthen\b|\bturns?\b|\bbecomes?\b|\buntil\b|\bbut\b)\s*/i).map(x=>x.replace(/^[,.\s]+|[,.\s]+$/g,"")).filter(x=>x.length>1);
   const n=parts.length, ph=parts.map((p,k)=>({text:p, a:noteAttrs(p), r0:k/n, r1:(k+1)/n, chorus:/chorus/i.test(p), last:/\b(last|final|end)\b/i.test(p)}));
   S._notePh={t,ph,vec:null}; noteVectors(); return ph; }

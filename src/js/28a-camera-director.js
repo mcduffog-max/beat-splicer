@@ -48,7 +48,7 @@ function directorMove(seg,t,W,H,bi){ const m=seg._dmove; if(!m) return null; if(
   return {s,dx,dy,rot}; }
 /* lens character */
 const LENS_INFO={natural:"Natural",telephoto:"Long lens: compressed, soft edges",anamorphic:"Anamorphic: streaked highlights, oval vignette",tiltshift:"Tilt-shift: miniature look",vintage:"Vintage glass: warm halation",dreamy:"Diffusion: soft glow"};
-function lensFor(seg){ const v=$("lens")?$("lens").value:"kit:cinema"; if(v==="tiltshift") return "tiltshift"; if(v==="none") return "natural"; const p=lensProfile(seg);
+function lensFor(seg){ if(!has("lens")) return "natural"; const v=$("lens")?$("lens").value:"kit:cinema"; if(v==="tiltshift") return "tiltshift"; if(v==="none") return "natural"; const p=lensProfile(seg);
   return {modern:"natural",cooke:"telephoto",helios:"telephoto",petzval:"telephoto",anamorphic:"anamorphic",k35:"vintage",super8:"vintage",film16:"vintage",promist:"dreamy"}[p]||"natural"; } // the 2D look used when WebGL isn't available
 let _lensC=null, _lensG=null;
 function lensLayer(o,css){ const {W,H}=o, w=Math.max(16,Math.round(W/6)), h=Math.max(16,Math.round(H/6)); if(!_lensC){ _lensC=document.createElement("canvas"); _lensG=_lensC.getContext("2d"); }

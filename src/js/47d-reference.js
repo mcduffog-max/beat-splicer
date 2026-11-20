@@ -10,7 +10,7 @@
    similar liveliness is preferred. Nothing of the reference's pictures or sound is used. */
 function refLoad(){ try{ return JSON.parse(localStorage.getItem("beatsplicerRef")||"null"); }catch(e){ return null; } }
 let REF=refLoad();
-function refOn(){ return !!(REF&&REF.stats&&$("refOn")&&$("refOn").checked); }
+function refOn(){ return has("reference")&&!!(REF&&REF.stats&&$("refOn")&&$("refOn").checked); }
 async function watchCuts(file,limit,onProg){ const v=document.createElement("video"), url=URL.createObjectURL(file); v.muted=true; v.playsInline=true; v.src=url;
   try{ await waitEvent(v,"loadeddata",20000); const end=Math.min(v.duration||0,limit), W=32, H=18, cv=document.createElement("canvas"); cv.width=W; cv.height=H; const g=cv.getContext("2d",{willReadFrequently:true});
     const fr=[]; let prev=null;
@@ -50,5 +50,5 @@ function refPaceK(e,ours){ if(!refOn()) return 1; const s=REF.stats, theirs=e<0.
 function refSyncGap(){ if(!refOn()) return 12; const o=REF.stats.offBeat; return o>0.3?4:o>0.15?7:o<0.05?999:12; }
 function refTakes(dur){ if(!refOn()) return null; return Math.max(0,Math.min(4,Math.round(REF.stats.takes*dur/60))); }
 function refMotionCost(clip,s){ if(!refOn()) return 0; const want=Math.max(0,Math.min(1,REF.stats.motion/12)), have=clip.kind==="image"?0.05:Math.max(0,Math.min(1,(s.motion||0)/12)); return 0.4*Math.abs(want-have); }
-$("refFile").addEventListener("change",e=>{ const f=e.target.files&&e.target.files[0]; if(f) learnReference(f); e.target.value=""; });
+$("refFile").addEventListener("change",e=>{ const f=e.target.files&&e.target.files[0]; if(f&&needTier("reference")) learnReference(f); e.target.value=""; });
 $("refOn").addEventListener("change",()=>{ saveSettings(); if(!S.running) buildPlan(); }); renderRef();

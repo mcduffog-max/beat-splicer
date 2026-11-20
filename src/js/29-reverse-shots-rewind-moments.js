@@ -18,7 +18,7 @@ function beatInfo(t){
   return {i, ph:t-B[i], e:E[i], down:isDownAt(S.an,i), drop:i>=4 && E[i]-E[i-4]>0.3};
 }
 function readFx(){
-  const look=$("look").value==="own"?ownLook():(LOOKS[$("look").value]||LOOKS.none);
+  const look=$("look").value==="own"&&has("ownLook")?ownLook():$("look").value==="own"?LOOKS.none:(LOOKS[$("look").value]||LOOKS.none);
   return { fit:$("fit").value, zoom:+$("zoom").value, kb:$("kb").checked, filter:look.f, look, gpu:gpuOn(),
     pulse:$("fxPulse").checked, shake:$("fxShake").checked, glitch:$("fxGlitch").checked,
     grain:$("fxGrain").checked, vignette:$("fxVignette").checked, bars:$("fxBars").checked,
@@ -203,6 +203,7 @@ function postFx(o,t,win,F,bi,opts={}){
   drawLyric(o,t,F);
   drawBrand(o,t,win,F);
   borderPost(o,t,win,F);
+  drawTierMark(o);
   const len=win[1]-win[0], {fi,fo}=fadeTimes(len,ep), lt=t-win[0];
   let a=0; if(fi && lt<fi) a=1-lt/fi; if(fo && lt>len-fo) a=Math.max(a,(lt-(len-fo))/fo);
   if(a>0 && !opts.still){ g.fillStyle=`rgba(0,0,0,${Math.min(1,a)})`; g.fillRect(0,0,W,H); }
