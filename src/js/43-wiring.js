@@ -47,7 +47,7 @@ $("tagBtn").onclick=readFootage;
 $("faceBtn").onclick=findFaces;
 $("outlineWrite").onclick=writeOutline;
 $("outlineOn").addEventListener("change",()=>{ if(!S.running&&S.an) buildPlan(); });
-$("progScope").addEventListener("change",saveSettings); $("progOpacity").addEventListener("input",saveSettings); ["progDir","progColor","progShadow"].forEach(id=>$(id).addEventListener("change",saveSettings));
+$("progScope").addEventListener("change",saveSettings); $("progOpacity").addEventListener("input",saveSettings); $("progSide").addEventListener("input",saveSettings); ["progDir","progColor","progShadow"].forEach(id=>$(id).addEventListener("change",saveSettings));
 ["storyOn","storyShape","faceFrame"].forEach(id=>$(id).addEventListener("change",()=>{ saveSettings(); if(!S.running) buildPlan(); }));
 offerRestore(); setTimeout(lastExportNotice,0); lastAnalysisNotice(); crumbsNotice(); // after the rest of the script has run (the notice names the build)
 $("errBtn").onclick=async()=>{ try{ await navigator.clipboard.writeText(S.lastError||""); status("Error details copied. Paste them into our chat."); }catch(e){ const ta=document.createElement("textarea"); ta.value=S.lastError||""; ta.style.cssText="width:100%;height:120px"; $("errBtn").after(ta); ta.select(); status("Select all the text below and copy it."); } };

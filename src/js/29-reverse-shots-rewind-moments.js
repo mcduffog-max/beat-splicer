@@ -149,8 +149,8 @@ function borderPost(o,t,win,F){
   const ep=o.ep, mode=$("progBorder")?$("progBorder").value:"off"; if(!ep||mode==="off"||F._thumb) return;
   if(!ep.short&&$("progScope")&&$("progScope").value!=="all") return;
   const {g,W,H}=o, u=Math.min(W,H), tall=H>W;
-  // one inset on every side, so the line sits the same distance from the top as from the sides
-  const m=Math.round(u*0.038), mx=m, my=m, r=u*0.055, lw=Math.max(2,u*0.0055), x=mx, y=my, w=W-2*mx, hh=H-2*my;
+  /* top and bottom: one small inset. Sides of tall videos: further in, because tall phones fill the screen and trim the sides (setting progSide, % of the width) */
+  const m=Math.round(u*0.038), side=H/W>1.7?Math.max(3.8,Math.min(12,+($("progSide")?$("progSide").value:7.5)||7.5))/100:0.038, mx=Math.max(m,Math.round(W*side)), my=m, r=u*0.055, lw=Math.max(2,u*0.0055), x=mx, y=my, w=W-2*mx, hh=H-2*my;
   const p=Math.max(0,Math.min(1,(t-win[0])/Math.max(0.1,win[1]-win[0]-1/30)));
   const rr=()=>{ g.moveTo(x+w/2,y); g.lineTo(x+w-r,y); g.arcTo(x+w,y,x+w,y+r,r); g.lineTo(x+w,y+hh-r); g.arcTo(x+w,y+hh,x+w-r,y+hh,r); g.lineTo(x+r,y+hh); g.arcTo(x,y+hh,x,y+hh-r,r); g.lineTo(x,y+r); g.arcTo(x,y,x+r,y,r); g.closePath(); };
   g.save();

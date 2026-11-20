@@ -408,6 +408,9 @@
             <label class="row">Direction <select id="progDir"><option value="fill" selected>Fills up as the video plays</option><option value="drain">Empties as the video plays (countdown)</option></select></label>
             <label class="row">Line colour <select id="progColor"><option value="white" selected>White</option><option value="black">Black</option></select></label>
             <label class="check"><input type="checkbox" id="progShadow" checked> Drop shadow</label>
+            <label class="row">Sides on tall videos <input type="range" id="progSide" min="3.8" max="12" step="0.1" value="7.5"></label>
+            <div class="ends"><span>At the edge</span><span>Further in</span></div>
+            <div class="small">Phones taller than the video (most phones now) fill the screen and trim a little off both sides in YouTube Shorts, TikTok and Reels. The default puts the line just outside YouTube’s like and share buttons on a typical phone; move it in if your phone still hides it.</div>
             <label class="row">Line opacity <input type="range" id="progOpacity" min="0.3" max="1" step="0.05" value="0.8"></label>
             <div class="ends"><span>Subtle</span><span>Solid</span></div>
             <div class="small">A fine line with curved corners runs around the picture and completes as the video finishes. On vertical videos it sits in from the sides, so phones that trim the edges of a Short still show all of it.</div>
