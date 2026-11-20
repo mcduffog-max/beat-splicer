@@ -1,5 +1,5 @@
 /* ---------------- Diagnostics: what this device can do, how fast, and a real test export ---------------- */
-const BUILD="2026-11-16";
+const BUILD="/*@BUILD@*/dev";
 async function runDiagnostics(){
   const L=[], add=(k,v)=>L.push(v===undefined?k:`${k}: ${v}`), ms=t=>Math.round(t)+" ms", t0=performance.now();
   const box=$("diagOut"), txt=$("diagText"); box.hidden=false; const show=()=>{ txt.textContent=L.join("\n"); };
