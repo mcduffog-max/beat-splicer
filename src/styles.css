@@ -404,3 +404,6 @@ details.diag>summary{cursor:pointer;color:var(--muted);font-size:14px}
 
 .appupd{display:flex;flex-wrap:wrap;align-items:center;gap:8px;margin:6px 0;padding:8px 10px;border-radius:10px;background:var(--accent-soft,#2d6cdf22);font-size:14px}
 .appupd[hidden]{display:none}
+
+#repBox textarea,#repBox input[type=text]{width:100%;box-sizing:border-box}
+.repbox{margin:8px 12px}

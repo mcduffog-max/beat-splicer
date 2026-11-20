@@ -7,7 +7,7 @@ function crumbsNotice(){ try{ const a=JSON.parse(localStorage.getItem("beatsplic
     const tail=a.slice(-6).map(x=>`${new Date(x.t).toLocaleTimeString()} ${x.step}${x.mem?` (${x.mem} MB)`:""}`).join("\n");
     S.lastError=(S.lastError?S.lastError+"\n\n":"")+"Last steps before the page stopped:\n"+tail+"\nBrowser: "+navigator.userAgent.slice(0,120);
     if(!$("errBtn").hidden) return;
-    status(`The page stopped last time just after: “${last.step}”. Tap “Copy error details” and send them to me.`,true); $("errBtn").hidden=false;
+    status(`The page stopped last time just after: “${last.step}”. Tap “Report this problem” to send it in.`,true); $("errBtn").hidden=false;
     localStorage.setItem("beatsplicerCrumbs","[]"); }catch(e){} }
 function anaMark(kind,f,i,n){ try{ if(f) localStorage.setItem("beatsplicerAnalysing",JSON.stringify({kind,name:f.name,size:f.size,type:f.type||"",i,n,at:Date.now()})); else localStorage.removeItem("beatsplicerAnalysing"); }catch(e){} }
 function skipList(){ try{ return JSON.parse(localStorage.getItem("beatsplicerSkip")||"[]"); }catch(e){ return []; } }
@@ -17,7 +17,7 @@ function lastAnalysisNotice(){
     const sk=skipList(); if(!sk.includes(a.name+"|"+a.size)){ sk.push(a.name+"|"+a.size); localStorage.setItem("beatsplicerSkip",JSON.stringify(sk.slice(-50))); }
     localStorage.removeItem("beatsplicerAnalysing");
     S.lastError=`The page stopped while analysing ${a.kind==="song"?"a song":"a clip"}: “${a.name}” (${(a.size/1e6).toFixed(1)} MB, ${a.type||a.name.split(".").pop()}), item ${a.i} of ${a.n}. Browser: ${navigator.userAgent.slice(0,120)}`;
-    status(`Last time the page stopped while analysing “${a.name}” (${(a.size/1e6).toFixed(0)} MB). It’s been set aside: link the folder again and the rest will be analysed. Tap “Copy error details” to send me what happened.`,true); $("errBtn").hidden=false;
+    status(`Last time the page stopped while analysing “${a.name}” (${(a.size/1e6).toFixed(0)} MB). It’s been set aside: link the folder again and the rest will be analysed. Tap “Report this problem” to send me what happened.`,true); $("errBtn").hidden=false;
   }catch(e){} }
 
 /* Large WAV files are read in pieces and reduced to analysis quality (22 kHz mono) as they're read, never decoded whole:

@@ -106,7 +106,7 @@ function showError(e,where){
   const msg=(e&&(e.message||e.name))||String(e||"unknown error");
   S.lastError=`${where||"Export"} failed: ${msg}\n${(e&&e.stack)||""}\nBrowser: ${navigator.userAgent}\nEngine: ${JSON.stringify(chooseEngine&&chooseEngine())}\nFormats: ${S.eps.join(", ")}\nClips: ${S.clips.length}, song ${S.an?Math.round(S.an.duration)+" s":"none"}`;
   if(/could not be read|NotReadable|permission problems/i.test(String(msg))||NATIVE&&/can’t be played in this browser/i.test(String(msg))) status(`${where||"Export"} stopped: Android took back access to some of your clips or the song (it does that after the app has been closed for a while). Add them again${NATIVE?" and the app will keep its own copy, so it won't happen again":""}.`,true);
-  else status(`${where||"Export"} stopped with an error: ${msg}. Tap “Copy error details” and send them to me.`,true);
+  else status(`${where||"Export"} stopped with an error: ${msg}. Tap “Report this problem” to send it in.`,true);
   $("errBtn").hidden=false;
 }
 window.addEventListener("error",ev=>{ if(S.running||S._exporting) showError(ev.error||ev.message,"Export"); });
