@@ -120,7 +120,12 @@ function drawLyric(o,t,F){ if(!S.lyrics||!$("lyricShow").checked||F._thumb) retu
   g.shadowColor="rgba(0,0,0,.75)"; g.shadowBlur=fs*0.35; g.lineJoin="round"; g.lineWidth=fs*0.14; g.strokeStyle="rgba(0,0,0,.55)"; g.fillStyle="#fff";
   lines.forEach((ln,i)=>{ g.strokeText(ln,x,y0+i*lh); g.fillText(ln,x,y0+i*lh); }); g.restore(); }
 $("lyricsFile").onchange=async e=>{ const f=e.target.files[0]; e.target.value=""; if(!f) return; try{ setLyrics(await f.text(),"file"); }catch(err){ status("Couldn’t read that lyrics file.",true); } };
-$("lyricsPasteBtn").onclick=()=>{ $("lyricsPasteBox").hidden=!$("lyricsPasteBox").hidden; if(!$("lyricsPasteBox").hidden) $("lyricsPaste").focus(); };
+async function lyricsFromClipboard(quiet){ const m=$("lyricsClipMsg"), t=await readClipboard();
+  if(t&&t.trim()){ $("lyricsPaste").value=t.replace(/\r\n?/g,"\n").trim(); m.textContent=`Pasted ${t.trim().split("\n").length} lines from your clipboard. Check them, then tap Use these lyrics.`; return true; }
+  if(!quiet) m.textContent=t==null?"Couldn't read the clipboard here. Long-press in the box and choose Paste.":"The clipboard is empty: copy the lyrics first, then tap Paste from clipboard."; return false; }
+$("lyricsPasteBtn").onclick=async()=>{ const box=$("lyricsPasteBox"); box.hidden=!box.hidden; if(box.hidden) return; $("lyricsClipMsg").textContent="";
+  if(!$("lyricsPaste").value.trim()) await lyricsFromClipboard(true); $("lyricsPaste").focus(); };
+$("lyricsClip").onclick=()=>lyricsFromClipboard(false);
 $("lyricsUse").onclick=()=>{ const v=$("lyricsPaste").value; if(!v.trim()) return; setLyrics(v,"paste"); $("lyricsPasteBox").hidden=true; };
 $("lyricsClear").onclick=()=>{ S.lyrics=null; renderLyrics(); saveProjectSoon(); if(!S.running) buildPlan(); };
 $("lyricsAI").onclick=()=>aiLyrics().catch(e=>{ $("lyricsInfo").textContent=aiErrorText(e); });

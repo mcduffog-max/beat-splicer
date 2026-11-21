@@ -39,3 +39,7 @@ async function keepFiles(files){ files=[...files]; if(!NATIVE||!files.length) re
       const g=await h.getFile(), k=new File([g],f.name,{type:f.type,lastModified:f.lastModified}); k._kept=n; out.push(k); }
     catch(e){ crumb("couldn't keep a copy of "+f.name+": "+(e&&e.message||e)); out.push(f); } }
   return out; }
+
+/* the clipboard: the app's web view can't always offer Paste on a long press, so buttons read it directly */
+async function readClipboard(){ const C=NP("Clipboard"); if(C){ try{ const r=await C.read(); if(r&&typeof r.value==="string") return r.value; }catch(e){} }
+  try{ if(navigator.clipboard&&navigator.clipboard.readText) return await navigator.clipboard.readText(); }catch(e){} return null; }
