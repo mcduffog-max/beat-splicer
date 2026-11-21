@@ -105,7 +105,7 @@ function lastExportNotice(){ try{ const l=JSON.parse(localStorage.getItem("beats
     S._retrySafe=!l.safe;
     status(`Your last export didn’t finish: it stopped at ${l.pct??"?"}%${l.hidden?" while the tab was in the background":""}. ${l.safe?"It was already in safe mode, so":"Next time, Make video runs in safe mode (slower, easier on the phone). If it still stops,"} tap “Copy error details” and send them to me.`,true); $("errBtn").hidden=false; }catch(e){} }
 async function runPassDecode(outs,win,plan,eng){
-  await ensureFonts(); await stayAwake(true); exportLog({stage:"start",pct:0,formats:outs.map(o=>o.ep.id)});
+  crumb("export: getting ready"); await ensureFonts(); await stayAwake(true); exportLog({stage:"start",pct:0,formats:outs.map(o=>o.ep.id)});
   const [ws,we]=win, len=we-ws, F=readFx(); S.activePlan=plan;
   const state={record:true,stopped:false,stop:()=>{ state.stopped=true; }}; S.running=state; updateButtons();
   const elFor=[]; S.elFor=elFor; const stage=$("stage"), sg=stage.getContext("2d");
@@ -166,7 +166,16 @@ async function runPassDecode(outs,win,plan,eng){
   return state.stopped?null:results;
 }
 const MUXERS={mp4:"https://cdn.jsdelivr.net/npm/mp4-muxer@5.2.1/build/mp4-muxer.js", webm:"https://cdn.jsdelivr.net/npm/webm-muxer@5.1.4/build/webm-muxer.js"};
-function loadScript(src){ return new Promise((res,rej)=>{ if(document.querySelector(`script[src="${src}"]`)) return res(); const s=document.createElement("script"); s.src=src; s.onload=res; s.onerror=()=>rej(new Error("load")); document.head.appendChild(s); }); }
+/* the video libraries ship with the app (vendor/), so an export never waits on the network; the CDN is the backup, and on claude.ai the only source */
+const VENDOR={[MP4BOX_URL]:"vendor/mp4box.all.min.js",[MUXERS.mp4]:"vendor/mp4-muxer.js",[MUXERS.webm]:"vendor/webm-muxer.js"};
+const _scripts=new Map();
+function loadOne(src,ms){ return new Promise((res,rej)=>{ const s=document.createElement("script"); let t=setTimeout(()=>{ t=null; s.remove(); rej(new Error("timed out")); },ms);
+  s.src=src; s.onload=()=>{ if(t){ clearTimeout(t); res(); } }; s.onerror=()=>{ if(t){ clearTimeout(t); s.remove(); rej(new Error("load")); } }; document.head.appendChild(s); }); }
+function loadScript(src){ if(_scripts.has(src)) return _scripts.get(src);
+  const local=!HOSTED&&/^https?:$/.test(location.protocol)&&VENDOR[src], tries=local?[[local,15000],[src,25000]]:[[src,25000]];
+  const p=(async()=>{ let last; for(const [u,ms] of tries){ try{ await loadOne(u,ms); return; }catch(e){ last=e; crumb(`couldn't load ${u.split("/").pop()}: ${e.message}`); } }
+    _scripts.delete(src); throw new Error("Couldn't load the video tools ("+src.split("/").pop()+"). Check the connection and try again."); })();
+  _scripts.set(src,p); return p; }
 S.wc=null;
 async function detectEngine(){
   if(typeof VideoEncoder==="undefined"||typeof AudioEncoder==="undefined"||typeof VideoFrame==="undefined"||typeof AudioData==="undefined") return null;
