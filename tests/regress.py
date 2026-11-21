@@ -25,9 +25,10 @@ async def main():
         bad=[x for x in st if not x[1]]; ok(f"Self-tests ({len(st)})", not bad, "; ".join(f"{x[0]}: {x[2]}" for x in bad))
         w1=await pg.evaluate("document.documentElement.scrollWidth"); await pg.click("#viewAll"); await pg.evaluate("document.querySelectorAll('details').forEach(d=>d.open=true); 0")
         w2=await pg.evaluate("document.documentElement.scrollWidth"); ok("Phone layout fits the screen (both views, all open)", w1<=412 and w2<=412, f"{w1}px / {w2}px"); await pg.click("#viewSimple")
-        modes=[]; 
-        for _ in range(3): await pg.click("#themeBtn"); modes.append(await pg.evaluate("$('themeBtn').dataset.mode"))
-        ok("Theme switch cycles", modes==["dark","light","system"], str(modes))
+        modes=[]; await pg.click("#meBtn")  # on a phone the theme lives in your profile panel
+        for m in ["dark","light","system"]: await pg.click(f"[data-theme-set={m}]"); modes.append(await pg.evaluate("$('themeBtn').dataset.mode"))
+        await pg.click("#meClose"); hid=await pg.evaluate("getComputedStyle($('themeBtn')).display==='none' && !!$('meBtn').offsetWidth")
+        ok("Theme set from the profile panel on phones", modes==["dark","light","system"] and hid, str(modes))
         # B. export
         await pg.evaluate("S.eps=['shorts']; buildEndpointUI(); $('engine').value='exact'; 0")
         await pg.click("#render"); await pg.wait_for_function("$('status').textContent.startsWith('Done') || $('status').classList.contains('err')", timeout=900000)
@@ -77,7 +78,7 @@ async def main():
         pg2=await setup(ctx,errs); await pg2.goto(URL); await pg2.wait_for_function("!$('restoreBox').hidden", timeout=20000)
         await pg2.click("#restoreBtn"); await pg2.wait_for_function("/restored|Couldn/.test($('status').textContent)", timeout=300000)
         rs=await pg2.evaluate("[S.plan&&S.plan.length, S.trims.length, S.locks.size, !!S.lyrics]")
-        ok("Restore brings back the edit, trims, locks and lyrics", rs[0]==n and rs[1]==tr and rs[2]>=1 and rs[3], str(rs))
+        ok("Restore brings back the edit, trims, locks and lyrics", rs[0]==n and rs[1]==tr and rs[2]>=1 and rs[3], str(rs)+f" before: {n} shots, {tr} trims")
         await ctx.close()
         ok("No page errors", not errs, "; ".join(errs[:3]))
         await b.close()
