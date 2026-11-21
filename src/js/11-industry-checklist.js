@@ -30,7 +30,7 @@ function evalExport(ep){
       ok(sim<0.5, sim<0.5?"Opening text is new: nothing close to it in your earlier titles.":"Opening text is close to one you’ve used before. Press Write new titles.");
       if(!TT.manual && $("payoffOn").checked && TT.payoff) info(dropTime(win)>0?`“${TT.payoff}” lands on the biggest hit at ${lenTag(dropTime(win)-win[0])}.`:"No clear drop in this section, so the payoff word is skipped.");
     } else if(!TT.manual && S.titles[ep.id] && S.titles[ep.id].hook==="") info("No opening text, by choice. The first shot has to do all the work: open on movement and a face.");
-    else ok(false,"Add opening text in step 4. Many people scroll with the sound off, so text carries the hook.");
+    else ok(false,"Add opening text under Look. Many people scroll with the sound off, so text carries the hook.");
     ok(longest<=3.1, `Longest shot ${longest.toFixed(1)} s (fresh image at least every 3 s keeps attention).`);
     if(PRO()){ ok(true,"Ends on a bar line and runs straight back into the opening shot, so replays feel seamless. Every replay counts as a view on Shorts, Reels and TikTok.");
       ok(true,"No fade from black, no logo intro and no end card, which would break the loop. Put calls to action in the caption."); }
@@ -60,7 +60,7 @@ function evalExport(ep){
       ok(pr.deadRun<=4, pr.deadRun<=4?"No static stretches in the energetic parts: still shots there get a slow push-in.":`${pr.deadRun.toFixed(1)} s of static footage in an energetic part. Add livelier clips.`);
     } }
   if(storyOn()){
-    if(!hasTags()) info("Press “Read my footage with AI” in step 3 so the story can follow shot sizes and faces. Until then it follows energy and filming order.");
+    if(!hasTags()) info("Press “Read my footage with AI” under Story and pace so the story can follow shot sizes and faces. Until then it follows energy and filming order.");
     else {
       const sc=s=>{ const tg=tagAt(S.clips[s.clip],s.src); return tg?tg.scale+(s._focus?Math.log2(s._focus.z1)*2:0):null; };
       const first=plan.find(s=>s.end>win[0]), last=plan[plan.length-1], f0=first&&sc(first), fl=sc(last);
@@ -75,7 +75,7 @@ function evalExport(ep){
       if(!ep.short && fl!=null) ok(fl<=2.5 || last._bookend, last._bookend?"Ends where it began: the opening scene returns to close the story.":fl<=2.5?"Ends by pulling back wide to resolve.":"Ends tight. Pulling back wide would resolve the story.");
       const framed=plan.filter(s=>s._focus).length; if(framed) info(`${framed} shots are framed on a face${ep.h>ep.w?", keeping faces in the vertical crop":""}.`);
     } }
-  if(!ep.short && !TT.manual) ok(!!TT.card, TT.card?`Title card “${TT.card}${TT.sub?" / "+TT.sub:""}” in the lower third from 1 s to 6 s.`:"Add a title card in step 4.");
+  if(!ep.short && !TT.manual) ok(!!TT.card, TT.card?`Title card “${TT.card}${TT.sub?" / "+TT.sub:""}” in the lower third from 1 s to 6 s.`:"Add a title card under Look.");
   if(TT.title) ok(TT.title.length<=TITLE_LIMIT(ep), `Upload title, ${TT.title.length} characters${TT.title.length>TITLE_LIMIT(ep)?`; trim to under ${TITLE_LIMIT(ep)} so it isn’t cut off`:""}: “${TT.title}”`);
   { const nC=S.clips.filter((c,ci)=>c.samples&&!c.off&&!isExcluded(ci)).length, dur=new Map(); plan.forEach(s=>{ const d=Math.min(s.end,win[1])-Math.max(s.start,win[0]); if(d>0) dur.set(s.clip,(dur.get(s.clip)||0)+d); });
     const top=[...dur.entries()].sort((a,b)=>b[1]-a[1])[0], share=top?top[1]/len:0, fair=1/Math.max(1,Math.min(nC,plan.length));

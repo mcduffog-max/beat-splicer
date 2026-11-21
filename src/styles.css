@@ -462,3 +462,72 @@ details.diag>summary{cursor:pointer;color:var(--muted);font-size:14px}
 #pgVids{display:flex;flex-direction:column;gap:4px}
 .pgv{display:flex;gap:8px;align-items:center;font-size:13.5px}.pgv span{min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
 a.who{color:inherit;text-decoration:none}a.who[href]:hover{text-decoration:underline}
+/* ---------- the beginner's path: two tiles, then a cut that plays, then one button ---------- */
+.start{background:var(--panel);border:.5px solid var(--line);border-radius:22px;box-shadow:var(--shadow);padding:20px 20px 14px;margin-bottom:16px;-webkit-backdrop-filter:saturate(180%) blur(24px);backdrop-filter:saturate(180%) blur(24px)}
+.start-lead{font-size:22px;font-weight:650;letter-spacing:-.022em;line-height:1.2;margin:0 0 14px}
+.tiles{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.tile{display:flex;flex-direction:column;gap:12px;padding:16px;border-radius:16px;background:var(--panel2);position:relative;min-width:0}
+.tile .tn{width:26px;height:26px;border-radius:50%;display:grid;place-items:center;font-size:13px;font-weight:700;background:var(--ink);color:var(--bg)}
+.tile .tt b{display:block;font-size:17px;font-weight:650;letter-spacing:-.01em}
+.tile .tt small{display:block;color:var(--muted);font-size:13.5px;margin-top:2px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.tile-btns{display:flex;gap:6px;flex-wrap:wrap;margin-top:auto}
+.tile-btns .btn{flex:1 1 auto}
+.tile.done .tn{background:var(--cobalt);color:#fff;font-size:0}.tile.done .tn::after{content:"✓";font-size:14px}
+.tile.done .tile-btns .btn.primary{background:var(--btn);color:var(--btn-ink);box-shadow:var(--btn-sh),inset 0 0 0 .5px var(--btn-edge)}
+.tile.busy .tt small{color:var(--ink)}
+.start .sample{display:block;margin:12px auto 0;font-size:14px}
+@media (max-width:560px){.tiles{grid-template-columns:1fr}.tile{flex-direction:row;align-items:center;flex-wrap:wrap}.tile .tt{flex:1;min-width:0}.tile-btns{margin-top:0;flex:0 0 100%}}
+/* once both are in, the tiles shrink to a reminder you can still tap */
+body.s-ready .start{padding:10px 12px}
+body.s-ready .start-lead,body.s-ready .start .sample{display:none}
+body.s-ready .tile{flex-direction:row;align-items:center;padding:8px 10px;gap:10px;flex-wrap:nowrap}
+body.s-ready .tile .tt b{font-size:13px;color:var(--muted);font-weight:500}
+body.s-ready .tile .tt small{font-size:14px;color:var(--ink);margin:0}
+body.s-ready .tile-btns{margin:0;flex:0 0 auto}
+body.s-ready .tile-btns .btn{min-height:30px;padding:5px 12px;font-size:13px}
+body.s-ready #tilePick{display:none}
+body.s-ready .tile .tn{width:22px;height:22px}
+/* the play button on the picture */
+.playov{position:absolute;inset:0;margin:auto;z-index:3;width:84px;height:84px;border-radius:50%;border:0;cursor:pointer;background:rgba(255,255,255,.92);box-shadow:0 8px 30px rgba(0,0,0,.35);display:grid;place-items:center;transition:transform .15s}
+.playov svg{width:38px;height:38px;fill:#111;margin-left:5px}
+.playov:active{transform:scale(.94)}
+.playov.pulse{animation:playpulse 1.6s ease-out 2}
+@keyframes playpulse{0%{box-shadow:0 0 0 0 rgba(255,255,255,.55),0 8px 30px rgba(0,0,0,.35)}100%{box-shadow:0 0 0 26px rgba(255,255,255,0),0 8px 30px rgba(0,0,0,.35)}}
+@media (prefers-reduced-motion:reduce){.playov.pulse{animation:none}}
+/* one big button, then small ideas */
+.mainact{display:flex;flex-direction:column;gap:10px;margin:12px 0 4px}
+.mainact .big{width:100%;min-height:52px;font-size:17px;font-weight:650}
+.chips{display:flex;gap:8px;flex-wrap:wrap;justify-content:center}
+.chips .chip{padding:7px 13px;border-radius:999px;border:0;background:var(--panel2);color:var(--ink);font-size:14px;font-weight:500}
+#autoOut:empty{display:none}
+body.flow #stageBar>#makeNow,body.flow #stageBar>#preview,body.flow #stageBar>#remix2,body.flow #stageBar>#cmpOpen,body.flow #stageBar>#foldAll{display:none}
+body.flow #stageBar:not(:has(> :not([hidden]):not(#makeNow):not(#preview):not(#remix2):not(#cmpOpen):not(#foldAll))){display:none}
+/* the next step, always within reach of a thumb (phones) */
+.nextbar{display:none}
+@media (max-width:900px){
+  .nextbar{display:flex;position:fixed;left:0;right:0;bottom:0;z-index:40;gap:12px;align-items:center;padding:10px 14px calc(10px + env(safe-area-inset-bottom,0));background:var(--material,var(--panel));-webkit-backdrop-filter:saturate(180%) blur(20px);backdrop-filter:saturate(180%) blur(20px);border-top:.5px solid var(--line)}
+  body.flow{padding-bottom:84px}
+  .nb-txt{flex:1;min-width:0;display:flex;flex-direction:column;line-height:1.25}
+  .nb-txt b{font-size:15px;font-weight:650;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+  .nb-txt span{font-size:12.5px;color:var(--muted);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+  .nextbar .btn{flex:none;min-height:44px;padding:10px 18px;font-size:15.5px;font-weight:650}
+  .nextbar .btn[hidden]{display:none}
+  .nextbar .nb-bar{position:absolute;left:0;top:-1px;height:2px;background:var(--cobalt);transition:width .4s}
+}
+/* the finish: your video, playing, and where it can go */
+.sheet{position:fixed;inset:0;z-index:60;background:rgba(0,0,0,.55);display:flex;align-items:center;justify-content:center;padding:16px}
+.sheet[hidden]{display:none}
+.sheet-card{background:var(--panel-solid,var(--panel));border-radius:24px;max-width:760px;width:100%;max-height:calc(100vh - 32px);overflow:auto;display:grid;grid-template-columns:minmax(0,300px) minmax(0,1fr);gap:22px;padding:20px;box-shadow:0 20px 60px rgba(0,0,0,.4)}
+.fin-vid video{width:100%;max-height:70vh;border-radius:16px;background:#000;display:block}
+.fin-body{display:flex;flex-direction:column;gap:10px;justify-content:center;min-width:0}
+.fin-body h2{margin:0;font-size:24px;letter-spacing:-.02em}
+.fin-body .big{min-height:52px;font-size:17px;font-weight:650}
+.fin-body .btns{display:flex;gap:8px;flex-wrap:wrap;margin:0}
+.fin-to{margin:0}
+#finSaved:empty{display:none}
+.fin-next{margin-top:6px!important}
+#finPick:empty{display:none}#finPick{justify-content:flex-start}#finPick .chip[aria-pressed=true]{background:var(--ink);color:var(--bg)}
+@media (max-width:640px){.sheet{padding:0;align-items:flex-end}.sheet-card{grid-template-columns:1fr;border-radius:24px 24px 0 0;max-height:100vh;padding:16px 16px calc(16px + env(safe-area-inset-bottom,0))}.fin-vid video{max-height:52vh;margin:0 auto;width:auto;max-width:100%}}
+.why{clear:both;margin:6px 0;font-size:14px}.why summary{cursor:pointer;color:var(--muted)}
+.work.portrait .mainact{margin-top:0}
+.work.portrait .mainact .chips{flex-direction:column;align-items:stretch}

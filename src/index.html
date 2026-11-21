@@ -61,16 +61,13 @@
         <input type="text" id="repContact" maxlength="200" placeholder="Email for a reply (optional)">
         <div class="row"><button class="btn primary" id="repSend" type="button">Send report</button><button class="btn quiet" id="repCancel" type="button">Cancel</button></div><div class="small" id="repMsg"></div></div>
   <div class="relink"><label class="btn primary" for="relinkInput" id="relinkLbl" hidden>Choose the media folder</label><input type="file" id="relinkInput" webkitdirectory multiple hidden><p class="small" id="projInfo"></p></div>
-  <section class="hero" id="autoBox">
-    <div class="hero-text">
-      <p class="lead">Add a song and your clips, then let it cut.</p>
-      <p>Do everything reads your footage, chooses the story, pace, transitions, sound and titles, tries several cuts and keeps the best.</p>
+  <section class="start" id="startBox" aria-label="Start here">
+    <p class="start-lead" id="startLead">Make a video that cuts to your song.</p>
+    <div class="tiles">
+      <div class="tile" id="tileSong"><span class="tn" aria-hidden="true">1</span><div class="tt"><b>Your song</b><small id="tileSongSub">MP3, M4A or WAV</small></div><div class="tile-btns"><label class="btn primary" for="audioInput" id="tileSongBtn">Choose a song</label></div></div>
+      <div class="tile" id="tileClips"><span class="tn" aria-hidden="true">2</span><div class="tt"><b>Your clips</b><small id="tileClipsSub">Videos and photos</small></div><div class="tile-btns"><button class="btn primary" type="button" id="tileFolder">Choose a folder</button><label class="btn quiet" for="videoInput" id="tilePick">Pick clips</label></div></div>
     </div>
-    <div class="hero-actions">
-      <button class="btn primary big" id="autoBtn" disabled>Do everything</button>
-      <button class="btn" id="newDir" disabled>Try another direction</button>
-    </div>
-    <div id="autoOut" class="small"></div>
+    <button class="btn quiet sample" type="button" id="trySample">No clips handy? Try it with sample clips</button>
   </section>
   <div class="grid">
     <div class="panel">
@@ -373,6 +370,7 @@
             <label class="check"><input type="checkbox" id="fxPulse"> Zoom pulse on every beat</label>
             <label class="check"><input type="checkbox" id="fxShake"> Camera shake on big hits</label>
             <label class="row">Restraint <select id="restraint"><option value="one" selected>One bold moment: effects only where it counts</option><option value="few">A few bold moments</option><option value="any">Anything goes</option></select></label>
+            <label class="check"><input type="checkbox" id="autoCut" checked> Make the cut by itself as soon as the song and clips are in, then play it</label>
             <label class="check"><input type="checkbox" id="planWhole" checked> Plan the whole video at once (keeps the best footage for where it matters)</label>
             <label class="check"><input type="checkbox" id="phrasing" checked> Phrase the cuts: follow the singer, hold where the song breathes, an off-beat cut now and then</label>
             <label class="check"><input type="checkbox" id="cutAction" checked> Cut on the action: movement in each shot lands on the beat</label>
@@ -608,8 +606,11 @@
     <div class="work">
       <div class="stage" id="stageBox">
         <canvas id="stage" width="960" height="540" hidden></canvas>
-        <div class="empty" id="stageEmpty">Your edit plays here once you’ve added audio and clips.</div>
+        <div class="empty" id="stageEmpty">Your video plays here once your song and clips are in.</div>
+        <button class="playov" id="playOv" type="button" aria-label="Play your cut" hidden><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M8 5.5v13l10.5-6.5z"/></svg></button>
       </div>
+      <div class="mainact" id="mainAct" hidden><button class="btn primary big" id="makeMain" type="button">Make my Short</button>
+        <div class="chips" id="cutChips"><button class="chip" id="newDir" type="button" disabled title="A different idea: new style, pace and story">New idea</button><button class="chip" id="remixChip" type="button" title="Same idea, different shots">Shuffle shots</button><button class="chip" id="cmpChip" type="button" title="Two cuts, blind: pick the better one and the app learns your taste">Which is better?</button><button class="chip" id="autoBtn" type="button" disabled title="Choose everything again: story, pace, look, sound and titles">Start over</button></div></div>
       <div class="appupd" id="appUpd" hidden><span id="appUpdMsg"></span> <button class="btn primary" id="appUpdBtn" type="button">Update app</button></div>
       <div class="stagebar" id="stageBar"><button class="btn primary" id="makeNow" disabled title="Make the videos ticked in Publish (YouTube Shorts unless you pick others)">Make video</button><button class="btn" id="preview" disabled>Preview</button><button class="btn" id="remix2" disabled>Remix</button><button class="btn" id="cmpOpen" type="button" title="Two cuts, blind: pick the better one and the app learns your taste">Which is better?</button><button class="btn" id="zipNow" hidden title="Download every video you've made, with publishing notes, as one ZIP">Download ZIP</button><button class="btn quiet" id="foldAll" type="button" title="Close every section">Collapse all</button><button class="btn quiet" id="appUpdCheck" type="button" hidden title="See whether a newer version of the Android app is ready">Check for app update</button></div>
       
@@ -618,6 +619,7 @@
         <div class="row"><button class="btn quiet" id="cmpAI" type="button">Let the AI reviewer pick</button><button class="btn" id="cmpAgain" type="button" hidden>Another pair</button><button class="btn quiet" id="cmpReset" type="button">Forget what it learned</button><button class="btn quiet" id="cmpClose" type="button">Close</button></div></div>
       <div class="titlebar" id="titleBar"><input type="text" id="quickTitle" maxlength="60" placeholder="Add a title (optional)" aria-label="Title shown at the start of the video (optional)"></div>
       <div class="statusrow"><div class="wheel" id="wheel" hidden aria-hidden="true"><svg viewBox="0 0 44 44"><circle class="trk" cx="22" cy="22" r="18"/><circle class="arc" id="wheelArc" cx="22" cy="22" r="18"/></svg><span id="wheelPct"></span></div><div class="status" id="status" role="status"></div></div>
+      <details class="why" id="autoWhy" hidden><summary>What it chose, and why</summary><div id="autoOut" class="small"></div></details>
       <div class="stats" id="stats"></div>
       <div class="tlbar"><button class="btn" id="undoBtn" type="button" disabled title="Undo (Ctrl/⌘ Z)">Undo</button><button class="btn" id="redoBtn" type="button" disabled title="Redo (Shift Ctrl/⌘ Z)">Redo</button>
         <span class="tlzoom"><button class="btn icon" id="zoomOut" type="button" aria-label="Zoom out" title="Zoom out">−</button><button class="btn icon" id="zoomIn" type="button" aria-label="Zoom in" title="Zoom in">+</button></span>
@@ -649,6 +651,14 @@
     </div>
   </div>
 </div>
+<div class="sheet" id="finSheet" hidden role="dialog" aria-modal="true" aria-labelledby="finHead"><div class="sheet-card">
+  <div class="fin-vid"><video id="finVideo" playsinline loop controls></video></div>
+  <div class="fin-body"><h2 id="finHead">Your video is ready</h2><div class="chips" id="finPick"></div><p class="small" id="finSaved"></p>
+    <button class="btn primary big" id="finShare" type="button">Share</button><p class="small fin-to" id="finTo">YouTube, TikTok, Instagram, WhatsApp: your phone shows where it can go.</p>
+    <div class="btns"><button class="btn" id="finSave" type="button">Save to phone</button><button class="btn" id="finCaption" type="button" hidden>Copy caption</button></div>
+    <div class="btns fin-next"><button class="btn quiet" id="finAgain" type="button">Make another version</button><button class="btn quiet" id="finClose" type="button">Back to editing</button></div></div>
+</div></div>
+<nav class="nextbar" id="nextBar" aria-label="Next step"><div class="nb-txt"><b id="nbHead"></b><span id="nbSub"></span></div><button class="btn primary" id="nbBtn" type="button"></button></nav>
 <div id="offscreen" aria-hidden="true" style="position:fixed;left:-10000px;top:0;width:1px;height:1px;overflow:hidden"></div>
 
 <script id="app">

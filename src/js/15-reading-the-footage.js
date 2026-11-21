@@ -46,7 +46,7 @@ Describe only what is visible. Do not identify real people by name.`;
         c.tags.sort((a,b)=>a.t-b.t); done++; }
     }
     refreshChars(); renderScenes();
-    $("tagInfo").textContent=`Read ${done} frames from ${S.clips.filter(c=>c.tags&&c.tags.length).length} clips and found ${S.cast.filter(x=>x.n).length} character${S.cast.filter(x=>x.n).length===1?"":"s"}. The story now follows shot sizes and faces; pick characters in step 2 to sort by them.`;
+    $("tagInfo").textContent=`Read ${done} frames from ${S.clips.filter(c=>c.tags&&c.tags.length).length} clips and found ${S.cast.filter(x=>x.n).length} character${S.cast.filter(x=>x.n).length===1?"":"s"}. The story now follows shot sizes and faces; pick characters in Video clips to sort by them.`;
     S.protagonist=null; buildPlan(); saveProjectSoon();
   }catch(e){ $("tagInfo").textContent=aiErrorText(e); }
   finally{ $("tagBtn").disabled=!S.plan; }

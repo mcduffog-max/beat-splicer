@@ -19,6 +19,6 @@ async function takeFiles(files,{preferAudio}={}){
   if(audio.length && (preferAudio || !S.audioBuf)) await loadAudio(audio[0]);
   if(video.length) await addClips(video);
   if(!audio.length && !video.length) status("No audio or video files found there.",true);
-  else if(audio.length>1 && !preferAudio) status(`Found ${audio.length} audio files. Using ${audio[0].name}; choose another in step 1 if you prefer.`);
+  else if(audio.length>1 && !preferAudio) status(`Found ${audio.length} audio files. Using ${audio[0].name}; choose another under Your song if you prefer.`);
 }
 

@@ -128,7 +128,7 @@ async function makeVideosInner(skipGate){
   eps=eps.map(capEp); // free: 720p
   if(!eps.length){ status("Tick at least one place to publish.",true); return; }
   if(!pickMime()){ status("This browser can’t record video. Use Chrome, Edge or Safari.",true); return; }
-  { const g=gateProblems(); if(g.length){ status(g[0]+" Add more in step 2, or untick that platform.",true); renderChecklist(); return; } }
+  { const g=gateProblems(); if(g.length){ status(g[0]+" Add more clips, or untick that platform under Publish.",true); renderChecklist(); return; } }
   if(!skipGate && $("aiGate").checked && await sampleP && S.reviewedSig!==projectSig()){
     status("Getting the AI review first. Check it, then export."); await runReview(true); return;
   }
@@ -169,6 +169,7 @@ async function makeVideosInner(skipGate){
   storageReport();
   if(S._swapped&&S._swapped.length){ const sw=S._swapped.slice(), n=sw.length; S._swapped=[]; setTimeout(()=>status(`Done, but ${n} clip${n===1?"":"s"} wouldn’t play on this device, so ${n===1?"its":"their"} shots used other clips: ${sw.slice(0,4).join(", ")}${n>4?"…":""}.`),50); }
   if(S.results.length===eps.length) status(`Done: ${S.results.length} video${S.results.length===1?"":"s"}${S.extras.length?" plus "+S.extras.length+" thumbnail"+(S.extras.length>1?"s":""):""} ready to save.`);
+  if(S.results.length&&typeof onVideosMade==="function") onVideosMade();
 }
 
 

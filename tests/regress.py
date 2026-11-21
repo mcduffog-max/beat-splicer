@@ -15,6 +15,7 @@ async def load(pg,clips="lib40",n=40,song="tracks/rocket110.wav"):
     await pg.goto(URL)
     await pg.set_input_files("#folderInput",clips); await pg.wait_for_function(f"S.clips.length>={n} && S.clips.every(c=>c.samples||c.error)", timeout=300000)
     await pg.set_input_files("#audioInput",song); await pg.wait_for_function("S.an && S.plan", timeout=120000)
+    await pg.wait_for_timeout(700)  # the start tiles shrink once the song and clips are in
 async def main():
     t0=time.time()
     async with async_playwright() as p:
@@ -35,6 +36,7 @@ async def main():
         chk=await pg.evaluate("S.results[0]&&S.results[0].check&&[S.results[0].check.ok,(S.results[0].check.shots||[]).join('/')]")
         ok("Export a Short and pass the frame check", chk and chk[0], str(chk))
         # C. Do everything
+        await pg.evaluate("closeFinish()")  # the finish screen opens after an export
         t=time.time(); await pg.click("#autoBtn"); await pg.wait_for_function("/Movement:|couldn|error/i.test($('autoOut').textContent)", timeout=600000)
         ok("Do everything completes", "Movement:" in await pg.inner_text("#autoOut"), f"{time.time()-t:.1f}s, style {await pg.evaluate('S.style.name')}")
         ok("Style card shows Do everything's choice", await pg.evaluate("S.style.by==='auto'&&S.style.name===S.direct"))
@@ -65,7 +67,7 @@ async def main():
         await pg.evaluate("$('lyricsBox').open=true; 0"); await pg.click("#lyTapStart"); await pg.wait_for_timeout(900); n1=await pg.evaluate("tapNow()"); await pg.click("#lyTapBtn"); await pg.wait_for_timeout(700); n2=await pg.evaluate("tapNow()"); await pg.click("#lyTapBtn"); await pg.click("#lyTapStop")
         tl=await pg.evaluate("S.lyrics.lines.slice(0,2).map(l=>l.t)")
         ok("Tap-to-time records each line", abs(tl[0]-(n1-0.12))<0.1 and abs(tl[1]-(n2-0.12))<0.1 and await pg.evaluate("S.lyrics.src==='tap'"), f"{tl} vs {[round(n1-0.12,2),round(n2-0.12,2)]}")
-        await pg.click("#foldAll"); await pg.click("summary:has-text('Video clips')"); await pg.wait_for_timeout(200); await pg.click("summary:has-text('Publish')"); await pg.wait_for_timeout(200)
+        await pg.evaluate("$('foldAll').click()"); await pg.click("summary:has-text('Video clips')"); await pg.wait_for_timeout(200); await pg.click("summary:has-text('Publish')"); await pg.wait_for_timeout(200)
         lay=await pg.evaluate("[STEPS().filter(d=>d.open).map(d=>d.querySelector('h2').textContent).join(), $('preview').parentElement.id, $('remix2').parentElement.id, $('clipList').children.length<=9||S.clipsAll]")
         ok("Compact layout: one step open, Preview and Remix by the screen", lay==["Publish","stageBar","stageBar",True], str(lay))
         wy=await pg.evaluate("(()=>{ showShot(5); const r=$('shotPanel').getBoundingClientRect(), w=document.querySelector('.work').getBoundingClientRect(); return [S.plan.every(s=>s._manual||(s.why&&s.why.length)), $('shotWhy').textContent.startsWith('Why this shot'), r.bottom<=w.bottom+1||getComputedStyle(document.querySelector('.work')).overflowY==='auto']; })()")

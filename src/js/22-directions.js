@@ -253,7 +253,7 @@ async function autopilot(){
     { const L=learned(); if(L&&$("learnOn")&&$("learnOn").checked&&L.n>=2){ const s=learnSummary(L).filter(x=>x.startsWith("Working")); if(s.length) say(`Leaning towards what has kept your viewers (${L.n} Shorts): ${s.map(x=>x.replace("Working: ","").replace(/ \(.*$/,"")).join(", ")}.`); } }
     { const se=S.eps.map(EP).find(e=>e&&e.short); if(se){ windowFor(se); say(S._hookWhy?`The ${se.name} opens on ${S._hookWhy}, so viewers recognise the song in the first second.`:`The ${se.name} opens on the strongest beat it could find. Add the song’s lyrics for an opening on the chorus.`); } }
     await breathe(); renderChecklist();
-    status(best.sc.fail?"Settings chosen, but something is blocking export. See the checklist in step 6.":"All set. Press Preview to watch it, or Make videos.");
+    status(best.sc.fail?"Settings chosen, but something is blocking export. See the checklist under Publish.":`Your cut is ready. Press play to watch it, or ${$("makeNow").textContent}.`);
   }catch(e){ showError(e,"Do everything"); }
   finally{ const wasBig=true; S._auto=false; S._quiet=false; S._hold=false; if(wasBig&&S.plan&&!S.running) try{ buildPlan(); }catch(e){} btn.disabled=!S.plan; try{ drawTimeline(); renderStats(); updateButtons(); }catch(e){} }
 }
