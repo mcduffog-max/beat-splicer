@@ -397,7 +397,9 @@ function drawText(o,t,win,F,bi){
     let lines=wrapLines(g,txt,aw*0.9,9);
     for(let k=0;k<6 && lines.length>2;k++){ const cur=parseFloat(g.font.match(/(\d+(?:\.\d+)?)px/)[1]), nf=Math.round(cur*0.88); g.font=g.font.replace(/\d+(?:\.\d+)?px/,nf+"px"); lines=wrapLines(g,txt,aw*0.9,9); } // shrink, never drop words
     const inRamp=(it.kind==="hook"&&PRO()&&ep.short)?0.0001:it.kind==="payoff"?0.08:0.35, el=it.k*it.dur;
-    const appear=Math.min(1,el/inRamp), out=it.kind==="end"?1:Math.min(1,Math.max(0,(it.dur-el)/0.3));
+    /* the hook's exit: letters fold flat one by one, from the last letter back to the first (setting textFold) */
+    const foldOn=it.kind==="hook"&&TS!=="box"&&(!$("textFold")||$("textFold").checked), nCh=foldOn?lines.join("").replace(/\s/g,"").length:0, FOLD=0.22, E=foldOn?Math.min(it.dur*0.45,Math.max(0.55,0.055*nCh+FOLD)):0, folding=foldOn&&el>it.dur-E;
+    const appear=Math.min(1,el/inRamp), out=it.kind==="end"||foldOn?1:Math.min(1,Math.max(0,(it.dur-el)/0.3));
     const pop=1+(it.kind==="payoff"?0.35:0.25)*(1-ease(appear))+(bi&&F.pulse?0.04*Math.exp(-bi.ph*10):0);
     // hooks sit in the top third of the safe zone on tall formats, where eyes land first
     const tall=H>=W, cx=x0+aw/2, cy=it.kind==="hook" ? y0+(y1-y0)*(tall?0.2:0.3) : (y0+y1)/2;
@@ -410,13 +412,25 @@ function drawText(o,t,win,F,bi){
         g.fillStyle="#fff"; g.fillText(l,0,y+fs*0.03); }); }
     else {
       g.shadowColor="rgba(0,0,0,0.55)"; g.shadowBlur=fs*0.28; g.shadowOffsetY=fs*0.05;
-      if(TS==="impact"){ g.lineWidth=fs*0.07; g.strokeStyle="rgba(0,0,0,0.85)"; lines.forEach((l,i)=>g.strokeText(l,0,top+i*lh)); g.shadowColor="transparent"; }
-      if(TS==="clean"){ g.lineWidth=fs*0.045; g.strokeStyle="rgba(0,0,0,0.3)"; lines.forEach((l,i)=>g.strokeText(l,0,top+i*lh)); }
       if(TS==="hand") g.rotate(-0.03);
-      lines.forEach((l,i)=>g.fillText(l,0,top+i*lh)); }
+      if(folding) foldGlyphs(g,lines,top,lh,fs,TS,el-(it.dur-E),E,FOLD);
+      else {
+        if(TS==="impact"){ g.lineWidth=fs*0.07; g.strokeStyle="rgba(0,0,0,0.85)"; lines.forEach((l,i)=>g.strokeText(l,0,top+i*lh)); g.shadowColor="transparent"; }
+        if(TS==="clean"){ g.lineWidth=fs*0.045; g.strokeStyle="rgba(0,0,0,0.3)"; lines.forEach((l,i)=>g.strokeText(l,0,top+i*lh)); }
+        lines.forEach((l,i)=>g.fillText(l,0,top+i*lh)); } }
     g.restore();
   }
 }
+/* each letter turns away on its own centre line like a card folding flat: it narrows, loses its light and is gone.
+   The last letter goes first; the next one starts before the previous has finished, so the word unravels back to its start. */
+function foldGlyphs(g,lines,top,lh,fs,TS,te,E,F){ const G=[];
+  lines.forEach((l,i)=>{ const lw=g.measureText(l).width; for(let c=0;c<l.length;c++){ const ch=l[c]; if(/\s/.test(ch)) continue; const pre=g.measureText(l.slice(0,c)).width, cw=g.measureText(ch).width; G.push({ch,x:-lw/2+pre+cw/2,y:top+i*lh}); } });
+  const N=G.length, step=N>1?(E-F)/(N-1):0; g.textAlign="center";
+  G.forEach((q,j)=>{ const r=N-1-j, p=Math.max(0,Math.min(1,(te-r*step)/F)); if(p>=1) return; const e=p<0.5?2*p*p:1-Math.pow(-2*p+2,2)/2, sy=Math.cos(e*Math.PI/2), sx=1-0.3*e;
+    if(sy<0.02) return; g.save(); g.translate(q.x,q.y); g.scale(sx,sy); if(e>0){ const v=Math.round(255-120*e); g.fillStyle=`rgb(${v},${v},${v})`; g.globalAlpha*=1-Math.max(0,(e-0.7)/0.3); }
+    if(TS==="impact"){ g.lineWidth=fs*0.07; g.strokeStyle="rgba(0,0,0,0.85)"; g.strokeText(q.ch,0,0); }
+    if(TS==="clean"){ g.lineWidth=fs*0.045; g.strokeStyle="rgba(0,0,0,0.3)"; g.strokeText(q.ch,0,0); }
+    g.fillText(q.ch,0,0); g.restore(); }); }
 function drawTitleCard(o,T,k){
   const {g,W,H,ep}=o, s=ep.safe, m=Math.min(W,H), fs=Math.round(m*0.05), fs2=Math.round(fs*0.62);
   const a=Math.min(1,k*5/0.5,(1-k)*5/0.5), sl=ease(Math.min(1,k*5/0.6));

@@ -147,8 +147,10 @@
           </label>
           <label class="drop" id="folderDrop" style="margin-top:8px">
             <input type="file" id="folderInput" webkitdirectory multiple>
-            <strong>Choose a whole folder</strong> (on a computer)
+            <strong id="folderWord">Choose a whole folder</strong> <span id="folderWhere">(on a computer)</span>
           </label>
+          <div class="btns" id="folderAgainRow" hidden style="margin-top:8px"><button class="btn" id="folderAgain" type="button">Load my folder again</button></div>
+          <p class="small" id="folderMsg" hidden></p>
           <details class="adv">
             <summary>Using Google Drive, OneDrive or iCloud</summary>
             <p class="small"><b>On a phone:</b> tap Choose video clips, then pick Google Drive, OneDrive or iCloud Drive in the file browser that opens (Browse on iPhone, the menu on Android).</p>
@@ -392,6 +394,7 @@
                 <option value="hand">Marker (Permanent Marker)</option>
               </select>
             </label>
+            <label class="check"><input type="checkbox" id="textFold" checked> Opening title leaves letter by letter, each folding flat, from the last letter back to the first</label>
             <label class="check"><input type="checkbox" id="autoTitles"> Title every platform automatically</label>
             <label class="check"><input type="checkbox" id="payoffOn"> Short payoff word at the drop (short-form)</label>
             <div class="btns"><button class="btn" id="titleBtn" disabled>Write new titles</button></div>

@@ -7,6 +7,7 @@ public class MainActivity extends BridgeActivity {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         registerPlugin(AppUpdatePlugin.class); // the in-app "Update app" button
+        registerPlugin(FolderPlugin.class); // whole folders on the phone, remembered
         super.onCreate(savedInstanceState);
     }
 }

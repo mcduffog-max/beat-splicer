@@ -75,7 +75,7 @@ $("videoInput").addEventListener("change",e=>{ addClips(e.target.files); e.targe
 ["mode","pace","variety"].forEach(id=>$(id).addEventListener("change",()=>{ saveSettings(); if(!S.running) buildPlan(); }));
 ["trans","trLen"].forEach(id=>$(id).addEventListener("change",()=>{ saveSettings(); assignTransitions(); drawTimeline(); }));
 ["fit","zoom","kb","fadeIn","fadeOut","look","fxPulse","fxShake","fxGlitch","fxGrain","fxVignette","fxBars","space","spaceAmt","showSafe","aiGate",
- "fxFisheye","fxSplit","fxMultiply","fxMirror","fxStrobe","fxHandheld","fxWash","fxDoodles","slowmo","stillMotion","textStyle","ovLeaks","ovBokeh","ovDust"].forEach(id=>$(id).addEventListener("change",()=>{ saveSettings(); document.querySelectorAll("#styles .chip").forEach(c=>c.setAttribute("aria-pressed","false")); }));
+ "fxFisheye","fxSplit","fxMultiply","fxMirror","fxStrobe","fxHandheld","fxWash","fxDoodles","slowmo","stillMotion","textStyle","textFold","ovLeaks","ovBokeh","ovDust"].forEach(id=>$(id).addEventListener("change",()=>{ saveSettings(); document.querySelectorAll("#styles .chip").forEach(c=>c.setAttribute("aria-pressed","false")); }));
 ["hookText","endText","ovLower"].forEach(id=>$(id).addEventListener("change",saveSettings));
 $("shortLen").addEventListener("change",()=>{ saveSettings(); drawTimeline(); renderStats(); });
 $("previewEp").addEventListener("change",()=>{ sizeStage(); saveSettings(); drawTimeline(); });

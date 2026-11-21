@@ -28,8 +28,9 @@ if(NATIVE) document.documentElement.classList.add("native");
    copied once into the app's own private storage, and the app works from that copy from then on. Copies of files no
    longer in your project are cleared when space runs short. */
 async function keptDir(){ if(!navigator.storage||!navigator.storage.getDirectory) return null; try{ return await (await navigator.storage.getDirectory()).getDirectoryHandle("kept",{create:true}); }catch(e){ return null; } }
+function keptName(f){ return `${f.size}-${f.lastModified}-${f.name}`.replace(/[\\/:*?"<>|]/g,"_").slice(0,180); }
 async function keepFiles(files){ files=[...files]; if(!NATIVE||!files.length) return files; const dir=await keptDir(); if(!dir) return files;
-  const name=f=>`${f.size}-${f.lastModified}-${f.name}`.replace(/[\\/:*?"<>|]/g,"_").slice(0,180), out=[];
+  const name=keptName, out=[];
   try{ const live=new Set([...(S.clips||[]).map(c=>c.file&&c.file._kept).filter(Boolean), S.audioFile&&S.audioFile._kept, ...files.map(name)].filter(Boolean)); let total=0, entries=[];
     for await (const [n,h] of dir.entries()){ try{ const f=await h.getFile(); total+=f.size; entries.push([n,f.size]); }catch(e){} }
     if(total>2.5e9) for(const [n] of entries) if(!live.has(n)) try{ await dir.removeEntry(n); }catch(e){} }catch(e){}

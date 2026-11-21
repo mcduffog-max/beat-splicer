@@ -4,6 +4,10 @@ function windowFor(ep){
   const sl=$("shortLen").value;
   if(ep.short){ if(sl==="rec" && ep.rec) L=Math.min(L,ep.rec); else if(+sl>0) L=Math.min(L,+sl); }
   if(L>=D-0.05){ if(!ep.short&&$("endStyle")&&$("endStyle").checked&&S.audioBuf){ const e=songEndPoint(); if(e>D*0.5) return [0,Math.min(D,e)]; } return [0,D]; }
+  if(ep.short&&S.an._shortAt!=null){ /* you picked the section a Short starts with: from its bar line, at the Short's length */
+    const B=S.an.beats; let st=S.an._shortAt, bd=null, bb=null; for(let i=0;i<B.length;i++){ const d=Math.abs(B[i]-st); if(isDownAt(S.an,i)&&d<0.6&&(!bd||d<bd.d)) bd={d,t:B[i]}; if(!bb||d<bb.d) bb={d,t:B[i]}; } st=bd&&bd.d<0.12?bd.t:bb&&bb.d<0.25?bb.t:st; /* the section starts where it was heard to start: on its beat (a bar line if one is right there) */
+    st=Math.max(0,Math.min(st,D-L)); S._hookWhy="the section you chose"; let end=Math.min(D,st+L);
+    for(let i=B.length-1;i>=0;i--){ if(B[i]<=st+L+0.01&&isDownAt(S.an,i)){ if(B[i]-st>=L*0.6) end=B[i]; break; } } return [st,end]; }
   const B=S.an.beats, E=S.an.E; let best=0, bs=-1; const cands=[];
   // hooks: where a scrolling viewer recognises the song in the first second
   const hooks=[]; if(ep.short){ try{ const L0=S.lyrics; if(L0&&L0.exact!==false){ lyricSections().forEach(sec=>{ const ln=L0.lines.find(l=>l.t>=sec.t0-0.05); if(ln) hooks.push({t:ln.t,k:sec.chorus?1:0.2,why:sec.chorus?`the chorus: “${ln.text}”`:`a new section: “${ln.text}”`}); }); }
