@@ -18,6 +18,7 @@ Beat Splicer edits your video clips to your music on your own device. This page 
 - **YouTube** (optional, in the web version): with your Google sign-in, the app reads your channel's statistics and uploads videos you choose. Google's privacy policy applies.
 - **Problem reports** (only when you press Send report): your description, the app version, device model, the last error, recent steps and settings go to the developer as an issue in a private GitHub repository. Your clips and songs are not included. An email address is included only if you type one.
 - **Purchases**: handled by Google Play. The app learns only which upgrades you own.
+- **Your page on the Beat Splicer site** (optional, only when you press Publish my page): your name, photo, the line about you, your links and the YouTube videos you pick are published on a public page, and you appear under "Made with Beat Splicer". Take my page down removes it; reported pages can be removed by the developer. Your name and photo otherwise stay on your device.
 
 ## What the app does not do
 

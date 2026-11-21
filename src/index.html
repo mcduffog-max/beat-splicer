@@ -19,7 +19,7 @@
     <div class="btns"><button class="btn primary" id="restoreBtn">Restore my project</button><button class="btn" id="freshBtn">Start fresh</button></div>
   </div>
   <header class="appbar">
-    <div class="brand"><span class="mark" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i></span><div class="brand-txt"><h1>Beat Splicer</h1><span class="who" id="whoName" hidden></span></div></div>
+    <div class="brand"><span class="mark" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i></span><div class="brand-txt"><h1>Beat Splicer</h1><a class="who" id="whoName" hidden target="_blank" rel="noopener"></a></div></div>
     <div class="bar-actions">
       <label class="btn quiet" for="openProj" title="Open a saved project file">Open</label>
       <input type="file" id="openProj" accept=".json,application/json" hidden>
@@ -35,7 +35,23 @@
       <div class="btns"><label class="btn" for="meFile">Choose a photo</label><input type="file" id="meFile" accept="image/*" hidden><button class="btn quiet" id="meNoImg" type="button" hidden>Remove photo</button></div></div>
     <label class="row">Your name <input type="text" id="meName" maxlength="30" placeholder="Shown at the top" autocomplete="nickname"></label>
     <div class="row me-theme">Theme <span class="btns"><button class="chip" type="button" data-theme-set="system">Match phone</button><button class="chip" type="button" data-theme-set="light">Light</button><button class="chip" type="button" data-theme-set="dark">Dark</button></span></div>
-    <div class="small">Kept on this device only.</div>
+    <div class="small" id="meKept">Kept on this device unless you publish your page.</div>
+    <details id="pgBox"><summary>Your page on the Beat Splicer site</summary>
+      <p class="small" id="pgIntro">A public page with your photo, name, links and the videos you choose, at the Beat Splicer site. People who find your videos can see the rest of your work there.</p>
+      <div id="pgForm">
+        <label class="row">Page name <span class="pg-addr"><span id="pgBase"></span><input type="text" id="pgHandle" maxlength="24" autocapitalize="off" autocomplete="off" spellcheck="false" placeholder="your-name"></span></label>
+        <label class="row">A line about you <input type="text" id="pgBio" maxlength="160" placeholder="e.g. Music videos from the north shore"></label>
+        <label class="row">YouTube <input type="text" id="pgYT" inputmode="url" placeholder="youtube.com/@yourchannel"></label>
+        <label class="row">Instagram <input type="text" id="pgIG" inputmode="url" placeholder="instagram.com/you"></label>
+        <label class="row">TikTok <input type="text" id="pgTT" inputmode="url" placeholder="tiktok.com/@you"></label>
+        <label class="row">Website <input type="text" id="pgWeb" inputmode="url" placeholder="your site"></label>
+        <div class="small"><b>Videos on your page</b> (YouTube, up to 12)</div>
+        <div id="pgVids"></div>
+        <div class="row"><input type="text" id="pgAddVid" inputmode="url" placeholder="Paste a YouTube or Shorts link"><button class="btn quiet" id="pgAddBtn" type="button">Add</button></div>
+        <div class="btns"><button class="btn primary" id="pgPublish" type="button">Publish my page</button><button class="btn quiet" id="pgCopy" type="button" hidden>Copy link</button><a class="btn quiet" id="pgOpen" target="_blank" rel="noopener" hidden>Open</a><button class="btn quiet" id="pgDown" type="button" hidden>Take my page down</button></div>
+        <div class="small" id="pgMsg"></div>
+      </div>
+    </details>
     <div class="row"><button class="btn quiet" id="meClose" type="button">Done</button></div></div>
   <div class="cmpbox repbox" id="payBox" hidden><b>Unlock more</b><div class="small" id="payWhy"></div><div id="payList"></div>
     <div class="row"><button class="btn quiet" id="payRestore" type="button">Restore purchases</button><button class="btn quiet" id="payClose" type="button">Close</button></div><div class="small" id="payMsg"></div></div>
