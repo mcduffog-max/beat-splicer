@@ -45,7 +45,7 @@ function detectWatermarks(fr,w,h,times,dur){
    of what that format shows. A corner logo on landscape footage is already outside a 9:16 crop, so it costs nothing there. */
 const ZCROP={t:0,b:0,l:0,r:0};
 function viewCrop(clip,W,H,F,st){
-  const base=clip.crop||ZCROP; if(!clip.wm||!clip.wm.length||clip.kind==="image"||!$("wmAvoid").checked) return base;
+  const base=clip.crop||ZCROP; if(!clip.wm||!clip.wm.length||clip.kind==="image"||!optV("wmAvoid")) return base;
   const on=clip.wm.filter(b=>st==null||b.a==null||(st>=b.a-0.05&&st<=b.b+0.05)); if(!on.length) return base;
   const key=(W/H).toFixed(3)+F.fit+base.t+","+base.b+","+base.l+","+base.r+"|"+on.map(b=>clip.wm.indexOf(b)).join(","); clip._wmcs=clip._wmcs||new Map(); const hit=clip._wmcs.get(key); if(hit){ clip._wmc=hit; return hit.cr; }
   const vw=clip.w||16, vh=clip.h||9, A=W/H, fill=F.fit==="fill";
@@ -62,8 +62,8 @@ function viewCrop(clip,W,H,F,st){
   clip._wmc={key,cr,blur:[],left}; if(clip._wmcs.size>24) clip._wmcs.clear(); clip._wmcs.set(key,clip._wmc); return cr;
 }
 /* does a watermark stay in view anywhere in [start, start+D] for this format? Then that moment of the clip isn't used. */
-function wmBlocked(clip,start,D,ep){ if(!clip.wm||!clip.wm.length||clip.kind==="image"||!$("wmAvoid").checked) return false; ep=ep||EP(S.eps[0])||EP("shorts"); if(!ep) return false;
-  const F={fit:$("fit")?$("fit").value:"fill"}, ts=[start,start+D/2,Math.max(start,start+D-0.05)];
+function wmBlocked(clip,start,D,ep){ if(!clip.wm||!clip.wm.length||clip.kind==="image"||!optV("wmAvoid")) return false; ep=ep||EP(S.eps[0])||EP("shorts"); if(!ep) return false;
+  const F={fit:optV("fit")||"fill"}, ts=[start,start+D/2,Math.max(start,start+D-0.05)];
   for(const t of ts){ if(!clip.wm.some(b=>b.a==null||(t>=b.a-0.05&&t<=b.b+0.05))) continue; viewCrop(clip,ep.w,ep.h,F,t); if(clip._wmc&&clip._wmc.left&&clip._wmc.left.length) return true; } return false; }
 async function wmScan(c){ const v=document.createElement("video"); v.muted=true; v.playsInline=true; v.preload="auto"; v.src=c.url; try{ await waitEvent(v,"loadeddata",20000); const dur=v.duration, m=wmCanvas(v), fr=[], n=Math.max(3,Math.min(12,Math.ceil(dur/1.5)));
     const ts=[]; for(let i=0;i<n;i++){ const t=Math.max(0,(dur-0.3)*(i+0.5)/n); ts.push(t); await seekTo(v,t); fr.push(wmGrab(m,v)); } c.wm=detectWatermarks(fr,m.w,m.h,ts,dur); c._wmc=null; c._wmcs=null; }

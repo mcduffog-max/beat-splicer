@@ -8,7 +8,10 @@ const APP_SRC = (()=>{ try{
   const head=d.querySelector("head"); head.insertBefore(csp,head.firstChild);
   d.querySelectorAll('input[type="password"]').forEach(i=>i.removeAttribute("value"));
   return "<!doctype html>\n"+d.outerHTML; }catch(e){ return ""; } })();
-const $ = id => document.getElementById(id);
+const _$c=new Map(); const $ = id => { const e=_$c.get(id); if(e&&e.isConnected) return e; const f=document.getElementById(id); if(f) _$c.set(id,f); return f; }; /* remembered: the planner reads settings thousands of times a build */
+/* settings read in the planner's inner loops: remembered until the next build or the next change on the page */
+const _ov=new Map(); let _ovGen=-1; ["change","input"].forEach(ev=>document.addEventListener(ev,()=>_ov.clear(),true));
+function optV(id){ if(_ovGen!==S._planGen){ _ov.clear(); _ovGen=S._planGen; } let v=_ov.get(id); if(v===undefined){ const e=$(id); v=e?(e.type==="checkbox"?e.checked:e.value):null; _ov.set(id,v); } return v; }
 const S = { audioBuf:null, audioName:"", an:null, clips:[], plan:null, seed:1, running:null, peaks:null, results:[], review:null, reviewedSig:null, cropIdx:-1 };
 const capP = name => (window.claude && window.claude.use) ? window.claude.use(name).catch(()=>null) : Promise.resolve(null);
 const downloadsP = capP("downloads"), sampleP = capP("sample");

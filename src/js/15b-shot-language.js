@@ -39,7 +39,7 @@ function fpAt(c,t){ const F=c.fp; if(!F||!F.length) return null; if(F.length<3||
   let k=0; for(let i=1;i<3;i++) if(Math.abs(T[i]-t)<Math.abs(T[k]-t)) k=i; return Math.abs(T[k]-t)<2.5?F[k]:null; }
 function hashSim(a,b){ if(!a||!b||a.length!==b.length) return 0; let s=0; for(let i=0;i<a.length;i++) if(a[i]===b[i]) s++; return s/a.length; }
 /* a different shot whose shapes line up with where the last one ended */
-function matchCutCost(seg,clip,ci,start,ctx){ if(!ctx.prevFp||seg.drop||seg.build||!$("matchCuts")||!$("matchCuts").checked) return 0; if(ctx.lastMatch!=null&&seg.start-ctx.lastMatch<8) return 0;
+function matchCutCost(seg,clip,ci,start,ctx){ if(!ctx.prevFp||seg.drop||seg.build||!optV("matchCuts")) return 0; if(ctx.lastMatch!=null&&seg.start-ctx.lastMatch<8) return 0;
   if(famOf(ci)===ctx.prevFam) return 0; const fp=fpAt(clip,start); if(!fp) return 0; const sim=hashSim(fp.hash,ctx.prevFp.hash); if(sim<0.8) return 0;
   return -0.15-0.4*(sim-0.8)/0.2; }
 function shotLangNote(ctx,seg,clip,src){ const c=S.clips[clip]; if(!c) return; const sec=secIdx(seg.start);

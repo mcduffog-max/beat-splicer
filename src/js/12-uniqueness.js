@@ -2,7 +2,7 @@
    Platforms penalise videos that look templated, with little variation between uploads (YouTube "inauthentic content"),
    and reposts without meaningful creative change (Instagram, TikTok). So each version is fingerprinted by what is on screen
    moment to moment (which footage, which part of it) and by its look, and compared with earlier versions and exports. */
-function clipKey(ci){ const c=S.clips[ci]; return c? c.name+"|"+(c.file?c.file.size:0) : "?"; }
+function clipKey(ci){ const c=S.clips[ci]; if(!c) return "?"; if(c._keyF!==c.file||c._keyN!==c.name){ c._keyF=c.file; c._keyN=c.name; c._key=c.name+"|"+(c.file?c.file.size:0); } return c._key; }
 function planPrint(plan,win,step=0.5){ const out=[]; let k=0;
   for(let t=win[0]+0.01;t<win[1];t+=step){ while(k<plan.length-1 && t>=plan[k].end) k++; const s=plan[k]; out.push(clipKey(s.clip)+"@"+Math.floor((s.src+Math.max(0,t-s.start))/1.5)); }
   return out; }

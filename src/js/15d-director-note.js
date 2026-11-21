@@ -16,7 +16,7 @@ const NOTE_WORDS=[
   [/tense|anx|uneasy|dread|claustro/,{b:0.3,m:0.55,w:-0.2,pace:"tight"}],
   [/love|tender|intimate|close/,{w:0.4,b:0.5,m:0.35}],
 ];
-function noteText(){ return ($("dirNote")&&$("dirNote").value||"").trim(); }
+function noteText(){ return (optV("dirNote")||"").trim(); }
 function noteAttrs(t){ const a={}; NOTE_WORDS.forEach(([re,v])=>{ if(re.test(t.toLowerCase())) Object.entries(v).forEach(([k,x])=>{ if(a[k]==null) a[k]=x; }); }); return a; }
 function notePhases(){ const t=noteText(); if(!t||!has("note")) return []; if(S._notePh&&S._notePh.t===t) return S._notePh.ph;
   const parts=t.split(/\s*(?:;|→|->|\bthen\b|\bturns?\b|\bbecomes?\b|\buntil\b|\bbut\b)\s*/i).map(x=>x.replace(/^[,.\s]+|[,.\s]+$/g,"")).filter(x=>x.length>1);

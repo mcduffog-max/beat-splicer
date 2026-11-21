@@ -118,7 +118,7 @@ function renderOutline(){ const box=$("outlineActs"); if(!box) return; box.inner
     box.appendChild(d); }); }
 function storyCost(seg,clip,ci,sample,ctx){
   if(!storyOn()) return 0;
-  let cost=0; const shape=$("storyShape").value;
+  let cost=0; const shape=optV("storyShape");
   if(shape==="journey" && ctx.order){ const rank=ctx.order.get(ci); if(rank!=null){ const rel=seg.start/(S.an?S.an.duration:1); cost+=0.7*Math.max(0,Math.abs(rank-rel)-0.12); } } // the story moves through the day, not through the folder one file at a time
   const tg=tagAt(clip,sample.t); if(!tg) return cost;
   const beat=seg._beat||"introduce", want=wantScale(seg,beat);

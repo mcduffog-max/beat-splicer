@@ -136,7 +136,7 @@ Reply with ONLY JSON: {"style":"exact option name","reason":"one plain sentence"
   }catch(e){ $("directWhy").textContent=aiErrorText(e); }
   finally{ $("aiDirect").disabled=false; }
 }
-function setControl(id,v){ const el=$(id); if(!el) return; if(el.type==="checkbox") el.checked=!!v; else el.value=v; }
+function setControl(id,v){ const el=$(id); if(!el) return; _ov.clear(); if(el.type==="checkbox") el.checked=!!v; else el.value=v; }
 function applyStyle(name,tied){
   const st=STYLES[name]||DSTYLES[name]; if(!st) return;
   if(!tied && S.direct){ S.direct=null; $("direct").value="off"; $("directWhy").textContent=""; }

@@ -13,4 +13,4 @@ function storyBeat(s,i,plan){
 }
 const BEAT_SCALE={establish:0.8,introduce:2.2,develop:2.9,build:3,peak:4.2,climax:4.6,reflect:3.2,resolve:1};
 function wantScale(s,beat){ if(beat==="build"){ const k=s.buildK||4; return 2+2.6*(1-Math.min(8,k)/8); } return BEAT_SCALE[beat]; }
-function storyOn(){ return $("storyOn").checked; }
+function storyOn(){ return !!optV("storyOn"); }

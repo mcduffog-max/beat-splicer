@@ -21,5 +21,5 @@ function gridDist(a,b){ if(!a||!b||a.length!==b.length) return 1; let d=0; for(l
 function markMotifSlots(segs,short){ segs.forEach(s=>{ s._motifSlot=0; }); if(!has("motif")) return; if(!$("ownMotif")||!$("ownMotif").checked||segs.length<8) return; const M=motifMoments(); if(!M.ok) return;
   const T=segs[segs.length-1].end, near=rel=>{ let k=-1,bd=1e9; segs.forEach((s,i)=>{ if(s.drop||s.build||s._take) return; const d=Math.abs((s.start+s.end)/2-rel*T); if(d<bd){ bd=d; k=i; } }); return k; };
   const a=near(0.1), b=near(0.62), c=segs.length-1; [[a,1],[b,2],[c,3]].forEach(([i,n])=>{ if(i>=0&&!segs[i]._motifSlot) segs[i]._motifSlot=n; }); }
-function ownMotifCost(seg,ci,s){ const M=S._ownMotif; if(!has("motif")) return 0; if(!M||!M.ok||!$("ownMotif")||!$("ownMotif").checked) return 0; const ts=M.set.get(ci); const hit=ts&&ts.some(t=>Math.abs(t-s.t)<1.6);
+function ownMotifCost(seg,ci,s){ const M=S._ownMotif; if(!has("motif")) return 0; if(!M||!M.ok||!optV("ownMotif")) return 0; const ts=M.set.get(ci); const hit=ts&&ts.some(t=>Math.abs(t-s.t)<1.6);
   if(seg._motifSlot) return hit?-2.4:0; return hit?0.7:0; }

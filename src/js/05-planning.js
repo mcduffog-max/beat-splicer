@@ -137,12 +137,14 @@ function chooseClip(seg, ctx, exclude){
   const nC=nFamilies(), fair=((ctx.total||0)+1)/nC; // variety counts look-alike families, not files
   const minGap=Math.min(20,Math.max(3,(S.an?S.an.duration:60)/nC*0.5)), jit=new Map();
   let best=null, bestCost=Infinity; const topM=ctx._topM||0, perClip=topM?new Map():null; // the beam asks for the best few clips, not just the best
+  const FZ=fatigue(), shareK=(storyOn()&&hasTags()?0.3:0.55), momOn=FZ.mom.size>0; /* the same for every clip: read once */
   S.clips.forEach((clip,ci)=>{
     if(!clip.samples || clip.off || ci===exclude || isExcluded(ci)) return;
+    const ck=clipKey(ci), shown=clip.kind!=="image"?shownSpans(ci):null, used=ctx.usage.get(ci)||[];
     jit.set(ci,ctx.rand()); // one random draw per clip, so long clips with many start points don't win more often
     const fm=famOf(ci), cnt=Math.max((ctx.count&&ctx.count.get(ci))||0,(ctx.famCount&&ctx.famCount.get(fm))||0), la=Math.max((ctx.lastAt&&ctx.lastAt.get(ci))??-1e9,(ctx.famLast&&ctx.famLast.get(fm))??-1e9);
-    let share=ctx.short ? 0.9*cnt : (storyOn()&&hasTags()?0.3:0.55)*Math.max(0,cnt+1-fair); // short-form: a fresh clip for every shot while there are fresh ones to use
-    { const fz=fatigue(), fc=Math.max(fz.clip.get(clipKey(ci))||0,fz.fam.get(fm)||0); share+=0.55*Math.min(2,fc); }  // favour footage (and look-alikes) recent versions and exports didn't use                                  // keep every clip near its fair share
+    let share=ctx.short ? 0.9*cnt : shareK*Math.max(0,cnt+1-fair); // short-form: a fresh clip for every shot while there are fresh ones to use
+    { const fz=FZ, fc=Math.max(fz.clip.get(ck)||0,fz.fam.get(fm)||0); share+=0.55*Math.min(2,fc); }  // favour footage (and look-alikes) recent versions and exports didn't use                                  // keep every clip near its fair share
     if(la>-1e8){ const gap=seg.start-la; if(gap<minGap) share+=1.4*(1-Math.max(0,gap)/minGap); } // and spread its uses through the song
     const fits=clip.dur>=D+0.05;
     const nS=clip.samples.length, smp=S.clips.length>250&&nS>3?[clip.samples[0],clip.samples[nS>>1],clip.samples[nS-1]]:nS>6&&S.clips.length>120?clip.samples.filter((_,k)=>k%2===0||k===nS-1):clip.samples; // big libraries: a few well-spread moments per clip are plenty
@@ -153,7 +155,7 @@ function chooseClip(seg, ctx, exclude){
       if(s.sharp!=null && S._sharpP20 && s.sharp<S._sharpP20*0.8) cost+=0.5;          // soft or blurred moments lose
       if(s.bright>235) cost+=0.3;                                                         // blown-out frames lose
       let dcol=null; if(s.col && ctx.prevCol && !seg.drop && !seg._newSection){ const dc=(Math.abs(s.col[0]-ctx.prevCol[0])+Math.abs(s.col[1]-ctx.prevCol[1])+Math.abs(s.col[2]-ctx.prevCol[2]))/765; dcol=dc; cost+=0.6*dc; } // neighbouring shots sit together in colour
-      { const fz=fatigue(), mk=clipKey(ci)+"@"+Math.round(start); const fm=(fz.mom.get(mk)||0)+0.5*((fz.mom.get(clipKey(ci)+"@"+(Math.round(start)-1))||0)+(fz.mom.get(clipKey(ci)+"@"+(Math.round(start)+1))||0)); cost+=0.7*Math.min(2,fm); } // and a different moment of any clip that did feature
+      if(momOn){ const fz=FZ, rs=Math.round(start), fm=(fz.mom.get(ck+"@"+rs)||0)+0.5*((fz.mom.get(ck+"@"+(rs-1))||0)+(fz.mom.get(ck+"@"+(rs+1))||0)); cost+=0.7*Math.min(2,fm); } // and a different moment of any clip that did feature
       if(clip.kind!=="image" && ctx.lastSrc && ctx.lastSrc.has(ci)){ // the next use of a clip carries on from where the last one ended
         const ls=ctx.lastSrc.get(ci), room=clip.dur-ls-0.3>=D;
         if(room){ if(start<ls-0.05) cost+=2.2; else if(start-ls<1.5) cost-=0.35; } else if(start<ls-0.05) cost+=0.6; }                                   // don't start on a source cut, flash or black frame
@@ -170,9 +172,8 @@ function chooseClip(seg, ctx, exclude){
       if(mode==="mood") cost+=0.7*Math.abs(s.bN-seg.c);
       if(!fits) cost+=2;
       const ri=Math.max(ctx.recent.lastIndexOf(ci),(ctx.recentF||[]).lastIndexOf(fm)); if(ri>=0){ const ago=ctx.recent.length-ri; cost+= ago<=1?3:1.8/ago; } // a look-alike of a recent shot counts as a repeat
-      const used=ctx.usage.get(ci)||[];
       for(const [a,b] of used) if(start<b && start+D>a) cost+=0.8;
-      { const sh=clip.kind!=="image"&&shownSpans(ci); if(sh&&sh.some(([a,b])=>start<b-0.05&&start+D>a+0.05)) cost+=1.2; } // footage an earlier video already showed
+      { const sh=shown; if(sh&&sh.some(([a,b])=>start<b-0.05&&start+D>a+0.05)) cost+=1.2; } // footage an earlier video already showed
       cost+=jit.get(ci)*(mode==="beat"?1:Math.max(0.15,variety));
       if(!Number.isFinite(cost)) cost=50; // a broken score must never decide a shot (or knock every clip out)
       if(cost<bestCost){ bestCost=cost; best={clip:ci, src:start, why:W, sm:s}; }

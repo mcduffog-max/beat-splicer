@@ -95,7 +95,7 @@ async function saveProject(){ try{ if(navigator.storage&&navigator.storage.persi
   if(!S.audioFile||S._restoring) return;
   try{
     S.savedKeys=S.savedKeys||new Set();
-    const fkey=f=>"f:"+f.name+":"+f.size+":"+f.lastModified, putFile=async f=>{ const k=fkey(f); if(!S.savedKeys.has(k)){ await PDB.put(k,f); S.savedKeys.add(k); } return k; };
+    const fkey=f=>"f:"+f.name+":"+f.size+":"+f.lastModified, putFile=async f=>{ if(NATIVE&&f._kept) return "k:"+(f.type||"")+"\n"+f._kept; /* the app already keeps its own copy: don't store the file twice */ const k=fkey(f); if(!S.savedKeys.has(k)){ await PDB.put(k,f); S.savedKeys.add(k); } return k; };
     let budget=3e9; budget-=S.audioFile.size; const audioKey=await putFile(S.audioFile);
     const clips=[]; for(const c of S.clips){ if(!c.samples||!c.file) continue; if(c.file.size>budget) continue; budget-=c.file.size;
       clips.push({name:c.name,fileKey:await putFile(c.file),kind:c.kind||"video",dur:c.dur,samples:c.samples,thumb:c.thumb,w:c.w,h:c.h,crop:c.crop,mute:!!c.mute,tags:c.tags||null,mv:c.mv||1,off:!!c.off,wm:c.wm,faces:faceSave(c)}); }
@@ -113,10 +113,11 @@ async function offerRestore(){
 async function restoreProject(p){
   $("restoreBox").hidden=true; S._restoring=true; status("Restoring your project…"); S.vetoes=new Set(p.vetoes||[]);
   try{
-    if(p.audioKey) p.audio=await PDB.get(p.audioKey);
-    for(const c of p.clips){ if(c.fileKey&&!c.file) c.file=await PDB.get(c.fileKey); }
+    const getF=async(k,name)=>{ if(!/^k:/.test(k)) return PDB.get(k); try{ const [type,kept]=k.slice(2).split("\n"), dir=await keptDir(), g=await (await dir.getFileHandle(kept)).getFile(), f=new File([g],name,{type,lastModified:g.lastModified}); f._kept=kept; return f; }catch(e){ return null; } };
+    if(p.audioKey) p.audio=await getF(p.audioKey,p.audioName||"song");
+    for(const c of p.clips){ if(c.fileKey&&!c.file) c.file=await getF(c.fileKey,c.name); }
     p.clips=p.clips.filter(c=>c.file);
-    S.savedKeys=new Set([p.audioKey,...p.clips.map(c=>c.fileKey)].filter(Boolean));
+    S.savedKeys=new Set([p.audioKey,...p.clips.map(c=>c.fileKey)].filter(k=>k&&!/^k:/.test(k)));
     S.clips=p.clips.map(c=>({...c,url:URL.createObjectURL(c.file)}));
     for(const c of S.clips){ if(c.kind==="image"){ c.img=new Image(); c.img.src=c.url; try{ await c.img.decode(); }catch(e){} } }
     { const old=S.clips.filter(c=>c.kind!=="image" && c.mv!==2); // measured with the older motion method: measure again so movement is judged correctly
