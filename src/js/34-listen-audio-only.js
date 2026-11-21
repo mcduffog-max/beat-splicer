@@ -1,6 +1,6 @@
 /* ---------------- Listen (audio only) ---------------- */
 let LISTEN=null;
-function stopListen(){ if(!LISTEN) return; try{ LISTEN.src.stop(); }catch(e){} LISTEN.actx.close(); LISTEN=null; LIVE=null; $("listen").textContent="Listen with EQ"; }
+function stopListen(){ if(!LISTEN) return; try{ LISTEN.src.stop(); }catch(e){} LISTEN.actx.close(); LISTEN=null; LIVE=null; $("listen").textContent="Listen"; }
 $("listen").onclick=async()=>{
   if(LISTEN){ stopListen(); return; }
   if(!S.audioBuf || S.running) return;

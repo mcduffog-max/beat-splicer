@@ -68,7 +68,7 @@ async function bestCombo(){
   b.onclick=async()=>{ if(S.audioFile!==best.file) await loadAudio(best.file,best.an);
     const keep=new Set(best.picks); S.clips.forEach((c,i)=>{ if(c.samples) c.off=!keep.has(i); });
     S.eps=best.longOK?["youtube","shorts","reels","tiktok"]:["shorts","reels","tiktok"]; buildEndpointUI(); renderClips(); renderSongs(); buildPlan(); saveProjectSoon();
-    const msg=best.longOK?"Song and clips chosen. Both long and short versions are ticked under Publish.":"Song and clips chosen for short-form. You can still tick YouTube under Publish, but there isn’t enough well-matched footage for a full-length video yet.";
+    const msg=best.longOK?"Song and clips chosen. Both long and short versions are ticked under Where it’s going.":"Song and clips chosen for short-form. You can still tick YouTube under Where it’s going, but there isn’t enough well-matched footage for a full-length video yet.";
     status(msg); b.remove(); const ok=document.createElement("p"); ok.style.cssText="margin:4px 0;font-weight:600"; ok.textContent="✓ "+msg; out.appendChild(ok); };
 }
 

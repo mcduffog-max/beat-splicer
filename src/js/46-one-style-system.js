@@ -14,7 +14,7 @@ function setStyleState(name,by,auto){ S.style={name:name||"",by:by||"",auto:!!au
 { const _as=applyStyle; applyStyle=function(name,tied){ const r=_as.apply(this,arguments); if(!tied) setStyleState(name,"you",false); return r; }; }
 { const _sd=setDirect; setDirect=function(name,why){ const r=_sd.apply(this,arguments); if(!S._autoRun&&!S._styleAI) setStyleState(name||"",name?"you":"",false); return r; }; }
 $("styleAutoChip").onclick=()=>{ S.style.auto=true; if(S.an&&S.clips.some(c=>c.samples)){ const p=pickDirector(); S._autoRun=true; try{ $("direct").value="auto"; setDirect(p.name,p.why); }finally{ S._autoRun=false; } setStyleState(p.name,"pick",true); status(`Automatic style: ${p.name} for now (${p.why}). Do everything may pick another for each new cut.`); } else setStyleState("","",true); };
-$("styleAiChip").onclick=async()=>{ if(!aiProvider()){ status("Ask AI to choose needs Claude or an AI key: tap All settings, then Publish › Connect ChatGPT, Gemini or Grok.",true); return; } if(!S.plan){ status("Add a song and clips first.",true); return; }
+$("styleAiChip").onclick=async()=>{ if(!aiProvider()){ status("Ask AI to choose needs Claude or an AI key: tap All settings, then Where it’s going › Connect ChatGPT, Gemini or Grok.",true); return; } if(!S.plan){ status("Add a song and clips first.",true); return; }
   const b=$("styleAiChip"); b.disabled=true; S._styleAI=true; try{ await aiChooseDirector(); if(S.direct) setStyleState(S.direct,"ai",false); }finally{ S._styleAI=false; b.disabled=false; } };
 // adjusting any detail after choosing marks the style as custom (the change itself is still undoable)
 setTimeout(renderStyleState,0);

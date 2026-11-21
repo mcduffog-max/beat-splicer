@@ -128,7 +128,7 @@ async function makeVideosInner(skipGate){
   eps=eps.map(capEp); // free: 720p
   if(!eps.length){ status("Tick at least one place to publish.",true); return; }
   if(!pickMime()){ status("This browser can’t record video. Use Chrome, Edge or Safari.",true); return; }
-  { const g=gateProblems(); if(g.length){ status(g[0]+" Add more clips, or untick that platform under Publish.",true); renderChecklist(); return; } }
+  { const g=gateProblems(); if(g.length){ status(g[0]+" Add more clips, or untick that platform under Where it’s going.",true); renderChecklist(); return; } }
   if(!skipGate && $("aiGate").checked && await sampleP && S.reviewedSig!==projectSig()){
     status("Getting the AI review first. Check it, then export."); await runReview(true); return;
   }

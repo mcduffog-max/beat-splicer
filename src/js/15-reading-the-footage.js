@@ -12,7 +12,7 @@ async function frameAt(c,t,size){
 }
 function readFootage(){ return heavy("Reading your footage",readFootageNow); }
 async function readFootageNow(){
-  const id=[...$("capWith").options].map(o=>o.value).find(v=>PROVIDERS[v]); if(!id){ $("tagInfo").textContent=HOSTED?"Footage reading needs Claude, which isn’t available here.":"Add an AI key first: tap All settings, then Publish › Connect ChatGPT, Gemini or Grok."; return; }
+  const id=[...$("capWith").options].map(o=>o.value).find(v=>PROVIDERS[v]); if(!id){ $("tagInfo").textContent=HOSTED?"Footage reading needs Claude, which isn’t available here.":"Add an AI key first: tap All settings, then Where it’s going › Connect ChatGPT, Gemini or Grok."; return; }
   const items=[]; S.clips.forEach((c,ci)=>{ if(c.samples) tagPoints(c).forEach(t=>items.push({ci,t})); });
   if(!items.length) return;
   $("tagBtn").disabled=true; let done=0;

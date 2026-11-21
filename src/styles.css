@@ -551,3 +551,16 @@ body.flow .work.portrait .statusrow{flex-direction:row;align-items:center}
 .scrub{display:flex;align-items:center;gap:10px;margin:2px auto 4px;max-width:520px;font-size:12.5px;color:var(--muted);font-variant-numeric:tabular-nums}
 .scrub input{flex:1;accent-color:var(--cobalt);min-width:0}
 body.flow .work.portrait .scrub{clear:both}
+/* Projects menu */
+.projmenu{position:relative;display:inline-flex}
+.projpop{position:absolute;right:0;top:calc(100% + 6px);z-index:50;display:flex;flex-direction:column;align-items:stretch;gap:2px;min-width:230px;padding:8px;border-radius:14px;background:var(--panel-solid,var(--panel));box-shadow:0 12px 32px rgba(0,0,0,.22),inset 0 0 0 .5px var(--line)}
+.projpop[hidden]{display:none}
+.projpop .btn{justify-content:flex-start;width:100%}
+.projpop .small{padding:6px 10px 2px;color:var(--muted)}
+/* song and cut numbers, behind a tap */
+.statsbox{margin:4px 0}.statsbox summary{cursor:pointer;color:var(--muted);font-size:14px}
+/* finding a setting */
+.setsearch{width:100%;margin:10px 0 2px}
+body:not(.simple) .setsearch[hidden]{display:block}
+.srch-hide{display:none!important}
+.srch-hit{background:color-mix(in srgb,var(--cobalt) 12%,transparent);border-radius:8px}

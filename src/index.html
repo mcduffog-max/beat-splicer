@@ -21,9 +21,9 @@
   <header class="appbar">
     <div class="brand"><span class="mark" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i></span><div class="brand-txt"><h1>Beat Splicer</h1><a class="who" id="whoName" hidden target="_blank" rel="noopener"></a></div></div>
     <div class="bar-actions">
-      <label class="btn quiet" for="openProj" title="Open a saved project file">Open</label>
+      <span class="projmenu"><button class="btn quiet" id="projBtn" type="button" aria-haspopup="true" aria-expanded="false" title="Save this project as a file, or open one">Projects</button>
+        <span class="projpop" id="projPop" hidden><label class="btn quiet" for="openProj">Open a saved project</label><button class="btn quiet" id="saveProj" type="button">Save this project as a file</button><span class="small">Your current project is also kept on this device by itself.</span></span></span>
       <input type="file" id="openProj" accept=".json,application/json" hidden>
-      <button class="btn quiet" id="saveProj" title="Save this project as a file">Save</button>
       <button class="btn quiet" id="tierBadge" type="button" hidden title="Your plan: tap to see what each one includes">Free</button>
       <button class="btn quiet" id="repOpen" type="button" aria-label="Report a problem" title="Report a problem: it arrives with the details needed to fix it"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 21V4"/><path d="M5 4h11l-2 4 2 4H5"/></svg><span class="lbl">Report</span></button>
       <button class="btn quiet icon" id="themeBtn" type="button" aria-label="Theme: matches your device" title="Theme: matches your device"></button>
@@ -72,6 +72,7 @@
   <div class="grid">
     <div class="panel">
       <div class="viewbar" role="group" aria-label="How many settings to show"><button type="button" class="seg" id="viewSimple">Essentials</button><button type="button" class="seg" id="viewAll">All settings</button></div>
+      <input type="search" id="setSearch" class="setsearch" placeholder="Find a setting, e.g. border, lyrics, slow motion" aria-label="Find a setting" hidden>
       <details class="step" open>
         <summary><span class="num">1</span><span class="st"><h2>Your song</h2><small>The song, its sound and effects</small></span></summary>
         <div class="step-body">
@@ -79,7 +80,7 @@
             <input type="file" id="audioInput" accept="audio/*,.wav,.mp3,.m4a,.aac,.ogg,.flac">
             <strong>Choose an audio file</strong> or drop it here
           </label>
-          <div class="small" id="audioInfo" style="margin-top:6px">WAV files from Web Audio Recorder work, as do MP3 and M4A.</div>
+          <div class="small" id="audioInfo" style="margin-top:6px">MP3, M4A or WAV.</div>
           <div id="songSecs" class="small" hidden style="margin-top:6px"></div>
           <div id="tempoRow" class="small" hidden style="display:flex;align-items:center;gap:6px;flex-wrap:wrap;margin-top:6px">Beat <button class="chip" type="button" data-x="0.5">Half speed</button><button class="chip" type="button" data-x="1">As found</button><button class="chip" type="button" data-x="2">Double speed</button><span id="tempoNote"></span></div>
           <div id="longAudio" hidden style="margin-top:8px;padding:10px;border:1px solid var(--cobalt);border-radius:9px">
@@ -98,7 +99,7 @@
           </div>
           <div id="songList" class="small" style="margin-top:6px"></div>
           <div id="comboOut" class="small" style="margin-top:6px"></div>
-          <div class="btns"><button class="btn" id="listen" disabled>Listen with EQ</button></div>
+          <div class="btns"><button class="btn" id="listen" disabled>Listen</button></div>
           <details id="lyricsBox">
             <summary>Lyrics</summary>
             <p class="small" id="lyricsInfo" style="margin:6px 0">Add the lyrics and shots follow the words: what’s sung about shows up as it’s sung. A .lrc file is timed to the line; plain lyrics are spread across the sung parts of the song.</p>
@@ -496,7 +497,7 @@
       </details>
 
       <details class="step">
-        <summary><span class="num">6</span><span class="st"><h2>Publish</h2><small>Formats, titles and making the videos</small></span></summary>
+        <summary><span class="num">6</span><span class="st"><h2>Where it’s going</h2><small>Platforms, titles and making the videos</small></span></summary>
         <div class="step-body">
           <div class="small">Tick everywhere you’ll post. Each gets its own size, length and loudness.</div>
           <div class="eps" id="eps"></div>
@@ -621,7 +622,7 @@
       <div class="titlebar" id="titleBar"><input type="text" id="quickTitle" maxlength="60" placeholder="Add a title (optional)" aria-label="Title shown at the start of the video (optional)"></div>
       <div class="statusrow"><div class="wheel" id="wheel" hidden aria-hidden="true"><svg viewBox="0 0 44 44"><circle class="trk" cx="22" cy="22" r="18"/><circle class="arc" id="wheelArc" cx="22" cy="22" r="18"/></svg><span id="wheelPct"></span></div><div class="status" id="status" role="status"></div></div>
       <details class="why" id="autoWhy" hidden><summary>What it chose, and why</summary><div id="autoOut" class="small"></div></details>
-      <div class="stats" id="stats"></div>
+      <details class="statsbox" id="statsBox"><summary>Song and cut details</summary><div class="stats" id="stats"></div></details>
       <div class="tlbar"><button class="btn" id="undoBtn" type="button" disabled title="Undo (Ctrl/⌘ Z)">Undo</button><button class="btn" id="redoBtn" type="button" disabled title="Redo (Shift Ctrl/⌘ Z)">Redo</button>
         <span class="tlzoom"><button class="btn icon" id="zoomOut" type="button" aria-label="Zoom out" title="Zoom out">−</button><button class="btn icon" id="zoomIn" type="button" aria-label="Zoom in" title="Zoom in">+</button></span>
         <span class="small tlhint" id="tlHint">Tap a shot to change it. Hold and drag a cut to move it, or a shot onto another to swap them.</span></div>

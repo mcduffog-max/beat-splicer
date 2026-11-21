@@ -63,7 +63,7 @@ function stepStatus(){ try{
   set("Video clips",S.clips.length?(ready<S.clips.length?`Reading clips: ${ready} of ${S.clips.length}`:`${ready} clips · ${inE} in the edit${nc?` · ${nc} characters`:""}`):"");
   set("Story and pace",S.plan&&S.plan.length?`${S.plan.length} cuts · about ${((S.plan[S.plan.length-1].end-S.plan[0].start)/S.plan.length).toFixed(1)} s each${S.outline?" · story outline":""}`:"");
   set("Look",S.style&&S.style.name?`Style: ${S.style.name}${S.style.custom?" (changed)":""}`:"");
-  set("Publish",S.eps.length?S.eps.map(e=>(EP(e)||{}).name||e).join(", "):"");
+  set("Where it’s going",S.eps.length?S.eps.map(e=>(EP(e)||{}).name||e).join(", "):"");
 }catch(e){} }
 var _posterPlan=null, _posterT=0;
 function posterSoon(){ if(!S.plan||S.running||S._auto||S.plan===_posterPlan) return; clearTimeout(_posterT); _posterT=setTimeout(async()=>{ if(!S.plan||S.running||S.plan===_posterPlan) return; _posterPlan=S.plan;

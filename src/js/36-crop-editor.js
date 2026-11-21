@@ -45,7 +45,7 @@ function updateButtons(){
   $("preview").textContent= busy && !S.running.record ? "Stop preview" : "Preview";
   $("render").textContent= busy && S.running.record ? "Stop" : (S.eps.length>1?`Make ${S.eps.length} videos`:"Make video");
   { const mk=$("makeNow"); if(mk){ const one=S.eps.length===1&&EP(S.eps[0]); mk.disabled=!ready||(busy&&!S.running.record); mk.textContent=busy&&S.running.record?"Stop":S.eps.length>1?`Make ${S.eps.length} videos`:one&&one.short?"Make Short":"Make video";
-    mk.title=S.eps.length?`Makes: ${S.eps.map(e=>(EP(e)||{}).name||e).join(", ")}. Change formats in Publish.`:"Makes a YouTube Short. Pick other formats in Publish."; } }
+    mk.title=S.eps.length?`Makes: ${S.eps.map(e=>(EP(e)||{}).name||e).join(", ")}. Change them under Where it’s going.`:"Makes a YouTube Short. Pick others under Where it’s going."; } }
   $("shuffle").disabled=!ready||busy;
   $("aiBtn").disabled=!ready||busy;
   $("aiDirect").disabled=!ready||busy||!$("capWith").options.length||!PROVIDERS[$("capWith").value];
