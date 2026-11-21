@@ -9,7 +9,11 @@ function lySong(){ const m=S.meta||{}; let title=(m.title?cleanTagTitle(m.title)
     if(parts.length>=2&&!artist){ artist=parts[0]; title=parts.slice(1).join(" "); } else title=parts.join(" ")||cleanSongName(S.audioName||""); }
   return {title:title.trim(), artist:artist.trim()}; }
 const LRCLIB="https://lrclib.net/api/";
-async function lrclib(path){ const r=await Promise.race([fetch(LRCLIB+path),new Promise((_,j)=>setTimeout(()=>j(new Error("timeout")),7000))]); if(!r.ok) throw new Error("http "+r.status); return r.json(); }
+const withTimeout=(p,ms)=>Promise.race([p,new Promise((_,j)=>setTimeout(()=>j(new Error("timeout")),ms))]);
+/* in the app, Android's own connection is the backup (no browser rules about which sites a page may ask) */
+async function lrclib(path){ const url=LRCLIB+path;
+  try{ const r=await withTimeout(fetch(url),12000); if(!r.ok) throw new Error("http "+r.status); return await r.json(); }
+  catch(e){ const H=NP("CapacitorHttp"); if(!H) throw e; const r=await withTimeout(H.get({url,headers:{accept:"application/json"},responseType:"json"}),15000); if(r.status<200||r.status>=300) throw new Error("http "+r.status); return typeof r.data==="string"?JSON.parse(r.data):r.data; } }
 /* the recording on LRCLIB may be a different cut (a video intro, a remaster): line the lyrics up with the song's own sections */
 function lyricOffsetFromSections(){ const L=S.lyrics, AS=songSections(); if(!L||!L.lines||L.lines.length<6||AS.length<3) return 0;
   const LS=lyricSections(); if(LS.length<2) return 0; const at=AS.map(s=>s.t0).filter(t=>t>1), lt=LS.map(s=>s.t0);
@@ -25,14 +29,35 @@ async function findLyrics(auto){ const {title,artist}=lySong(); if(!title){ if(!
         const syn=list.filter(x=>x.syncedLyrics&&!x.instrumental); const pool=syn.length?syn:list.filter(x=>x.plainLyrics);
         pool.sort((a,b)=>Math.abs((a.duration||0)-dur)-Math.abs((b.duration||0)-dur)); if(pool[0]&&(!pick||pool[0].syncedLyrics)){ pick=pool[0]; how="search"; break; } } }
     if(!pick) throw new Error("not found");
-    setLyrics(pick.syncedLyrics||pick.plainLyrics,"lrclib");
-    let note=""; if(pick.syncedLyrics){ const d=lyricOffsetFromSections(), off=dur&&pick.duration?Math.abs(pick.duration-dur):0;
-      if(d&&(off>1.5||Math.abs(d)>=1)){ S.lyrics.shift=d; S.lyrics.lines.forEach(l=>{ l.t+=d; if(l.end!=null) l.end+=d; }); S.lyrics._secFor=null; renderLyrics(); buildPlan(); note=` Shifted ${d>0?"later":"earlier"} by ${Math.abs(d).toFixed(1)} s to match this recording.`; } }
-    status(`${pick.syncedLyrics?"Synced":"Unsynced"} lyrics found for “${pick.trackName||title}”${pick.artistName||artist?` by ${pick.artistName||artist}`:""}.${note}${pick.syncedLyrics?"":" Use Time by tapping for exact timing."}`); crumb("lyrics found ("+how+")"); return true; }
-  catch(e){ if(auto) return false;
-    const url="https://lrclib.net/search/"+encodeURIComponent([artist,title].filter(Boolean).join(" "));
-    const a=document.createElement("a"); a.href=url; a.target="_blank"; a.rel="noopener"; document.body.appendChild(a); a.click(); a.remove();
-    $("lyricsInfo").textContent=`LRCLIB opened in a new tab, searched for “${[artist,title].filter(Boolean).join(" – ")}”. Pick the right version, download its .lrc file, then come back and press Add a lyrics file.`; return false; } }
+    useLyricsPick(pick,title,artist); crumb("lyrics found ("+how+")"); return true; }
+  catch(e){ crumb("lyrics: none found automatically ("+(e&&e.message||e)+")"); if(auto){ S._lyMissed=true; return false; }
+    await openLyricsSearch(artist,title,/timeout|fetch|network|http/i.test(String(e&&e.message))?"LRCLIB didn't answer. Check the connection, then search again.":"No exact match. Check the artist and title, or pick the right version below."); return false; } }
+function useLyricsPick(pick,title,artist){ const dur=S.an?S.an.duration:0;
+  setLyrics(pick.syncedLyrics||pick.plainLyrics,"lrclib");
+  let note=""; if(pick.syncedLyrics){ const d=lyricOffsetFromSections(), off=dur&&pick.duration?Math.abs(pick.duration-dur):0;
+    if(d&&(off>1.5||Math.abs(d)>=1)){ S.lyrics.shift=d; S.lyrics.lines.forEach(l=>{ l.t+=d; if(l.end!=null) l.end+=d; }); S.lyrics._secFor=null; renderLyrics(); buildPlan(); note=` Shifted ${d>0?"later":"earlier"} by ${Math.abs(d).toFixed(1)} s to match this recording.`; } }
+  S._lyMissed=false; if($("lySearch")) $("lySearch").hidden=true;
+  status(`${pick.syncedLyrics?"Synced":"Unsynced"} lyrics found for “${pick.trackName||title}”${pick.artistName||artist?` by ${pick.artistName||artist}`:""}.${note}${pick.syncedLyrics?"":" Use Time by tapping for exact timing."}`); }
+/* searching inside the app: results from LRCLIB, closest to this song's length first, timed lyrics before plain ones */
+async function openLyricsSearch(artist,title,msg){ const box=$("lySearch"); if(!box) return; box.hidden=false; $("lyricsBox").open=true;
+  if(artist!=null) $("lyQArtist").value=artist||""; if(title!=null) $("lyQTitle").value=title||""; $("lySearchMsg").textContent=msg||""; await runLyricsSearch(); }
+async function runLyricsSearch(){ const a=$("lyQArtist").value.trim(), t=$("lyQTitle").value.trim(), out=$("lyResults"), dur=S.an?S.an.duration:0; out.innerHTML=""; if(!t&&!a) return;
+  const go=$("lyQGo"); go.disabled=true; go.textContent="Searching…"; const seen=new Map();
+  try{ const qs=[a&&t?new URLSearchParams({track_name:t,artist_name:a}):null,new URLSearchParams({q:[a,t].filter(Boolean).join(" ")}),t?new URLSearchParams({q:t.replace(/\s*[\[(].*$/,"").replace(/\b(feat|ft)\.?\b.*$/i,"").trim()}):null].filter(Boolean);
+    let err=null; for(const q of qs){ try{ const list=await lrclib("search?"+q); (Array.isArray(list)?list:[]).forEach(x=>{ if(!x.instrumental&&(x.syncedLyrics||x.plainLyrics)&&!seen.has(x.id)) seen.set(x.id,x); }); }catch(e){ err=e; } if(seen.size>=12) break; }
+    const L=[...seen.values()].sort((x,y)=>(y.syncedLyrics?1:0)-(x.syncedLyrics?1:0)||Math.abs((x.duration||0)-dur)-Math.abs((y.duration||0)-dur)).slice(0,10);
+    if(!L.length){ $("lySearchMsg").textContent=err?"LRCLIB didn't answer. Check the connection, then search again.":"Nothing found. Try fewer words, or just the song title."; return; }
+    if(!$("lySearchMsg").textContent) $("lySearchMsg").textContent="Pick the version that matches your song.";
+    L.forEach(x=>{ const row=document.createElement("div"); row.className="lyres"; const tx=document.createElement("div"); tx.className="t";
+      const near=dur&&x.duration&&Math.abs(x.duration-dur)<=2.5, first=String(x.syncedLyrics||x.plainLyrics||"").split("\n").map(l=>l.replace(/^\[[^\]]*\]\s*/,"").trim()).filter(Boolean)[0]||"";
+      const b=document.createElement("b"); b.textContent=`${x.trackName||"?"} – ${x.artistName||"?"}`; const sp=document.createElement("span"); sp.textContent=[x.albumName,x.duration?fmtTime(x.duration):"",x.syncedLyrics?"timed":"words only",near?"same length as your song":""].filter(Boolean).join(" · ");
+      const i=document.createElement("i"); i.textContent=first?`“${first}”`:""; tx.append(b,sp,i);
+      const u=document.createElement("button"); u.type="button"; u.className="btn"+(near&&x.syncedLyrics?" primary":""); u.textContent="Use"; u.onclick=()=>{ useLyricsPick(x,x.trackName,x.artistName); crumb("lyrics picked from search"); };
+      row.append(tx,u); out.appendChild(row); }); }
+  finally{ go.disabled=false; go.textContent="Search"; } }
+$("lyQGo").onclick=runLyricsSearch; ["lyQArtist","lyQTitle"].forEach(id=>$(id).addEventListener("keydown",e=>{ if(e.key==="Enter"){ e.preventDefault(); runLyricsSearch(); } }));
+/* opening Lyrics after the automatic look-up missed shows the search straight away */
+$("lyricsBox").addEventListener("toggle",()=>{ if($("lyricsBox").open&&S._lyMissed&&!S.lyrics&&$("lySearch").hidden){ const {title,artist}=lySong(); openLyricsSearch(artist,title,"No exact match was found automatically. Check the artist and title, or pick the right version below."); } });
 $("lyFind").onclick=async()=>{ const b=$("lyFind"); b.disabled=true; b.textContent="Looking…"; try{ await findLyrics(false); }finally{ b.disabled=false; b.textContent="Find synced lyrics"; } };
 /* away from claude.ai the app can reach LRCLIB itself: every new song without lyrics gets them looked up */
 function autoLyrics(){ if(HOSTED||S.lyrics||!S.an||S._autoLyFor===S.audioName) return; S._autoLyFor=S.audioName; findLyrics(true).catch(()=>{}); }

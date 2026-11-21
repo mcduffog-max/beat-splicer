@@ -426,3 +426,14 @@ details.diag>summary{cursor:pointer;color:var(--muted);font-size:14px}
 .appbar .brand h1{font-size:17px}
 .appbar .bar-actions .btn{padding:8px 7px}}
 @media (max-width:340px){.appbar .brand h1{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0)}}
+
+/* lyrics search in the app */
+.lyq{display:flex;gap:6px;flex-wrap:wrap;margin:6px 0}
+.lyq input{flex:1 1 120px;min-width:0}
+#lyResults{display:flex;flex-direction:column;gap:6px}
+.lyres{display:flex;gap:8px;align-items:center;justify-content:space-between;padding:8px 10px;border-radius:10px;background:var(--panel2)}
+.lyres .t{min-width:0;font-size:13.5px;line-height:1.35}
+.lyres .t b{display:block;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.lyres .t span{opacity:.75}
+.lyres .t i{display:block;opacity:.6;font-size:12.5px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.lyres .btn{flex:none}
