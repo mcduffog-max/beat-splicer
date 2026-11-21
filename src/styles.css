@@ -548,3 +548,6 @@ body.flow #stageBar:not(:has(> :not([hidden]):not(#makeNow):not(#preview):not(#r
 body.flow .work.portrait .stage{float:none;margin:0 auto 6px;width:min(100%,calc(54vh*var(--ar)))}
 body.flow .work.portrait .mainact .chips{flex-direction:row;align-items:center}
 body.flow .work.portrait .statusrow{flex-direction:row;align-items:center}
+.scrub{display:flex;align-items:center;gap:10px;margin:2px auto 4px;max-width:520px;font-size:12.5px;color:var(--muted);font-variant-numeric:tabular-nums}
+.scrub input{flex:1;accent-color:var(--cobalt);min-width:0}
+body.flow .work.portrait .scrub{clear:both}
