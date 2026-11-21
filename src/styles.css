@@ -531,3 +531,20 @@ body.flow #stageBar:not(:has(> :not([hidden]):not(#makeNow):not(#preview):not(#r
 .why{clear:both;margin:6px 0;font-size:14px}.why summary{cursor:pointer;color:var(--muted)}
 .work.portrait .mainact{margin-top:0}
 .work.portrait .mainact .chips{flex-direction:column;align-items:stretch}
+/* mood cards: your own footage, in each mood's colour and at its pace */
+.moods{display:flex;gap:8px;overflow-x:auto;scroll-snap-type:x mandatory;padding:2px 2px 6px;margin:0 -2px;scrollbar-width:none}
+.moods::-webkit-scrollbar{display:none}
+.mood{flex:0 0 92px;scroll-snap-align:start;border:0;padding:0;background:none;cursor:pointer;text-align:left;color:var(--ink);font:inherit}
+.mood .mv{display:block;width:92px;height:116px;border-radius:14px;background:#111 center/cover no-repeat;position:relative;overflow:hidden;box-shadow:inset 0 0 0 1px var(--line);transition:transform .15s}
+.mood .mv::after{content:"";position:absolute;inset:0;border-radius:14px;box-shadow:inset 0 0 0 3px transparent;transition:box-shadow .15s}
+.mood[aria-pressed=true] .mv::after{box-shadow:inset 0 0 0 3px var(--cobalt)}
+.mood:active .mv{transform:scale(.96)}
+.mood b{display:block;font-size:13.5px;font-weight:600;margin-top:5px}
+.mood small{display:block;font-size:11.5px;color:var(--muted);line-height:1.25}
+.mood .bars{position:absolute;left:0;right:0;height:11%;background:#000}.mood .bars.t{top:0}.mood .bars.b{bottom:0}
+.mood .grain{position:absolute;inset:0;opacity:.18;background-image:radial-gradient(rgba(255,255,255,.5) 1px,transparent 1px);background-size:3px 3px;mix-blend-mode:overlay}
+.work.portrait .moods{flex-wrap:nowrap}
+/* in the beginner path the picture sits on its own, centred, with the actions full width underneath */
+body.flow .work.portrait .stage{float:none;margin:0 auto 6px;width:min(100%,calc(54vh*var(--ar)))}
+body.flow .work.portrait .mainact .chips{flex-direction:row;align-items:center}
+body.flow .work.portrait .statusrow{flex-direction:row;align-items:center}
