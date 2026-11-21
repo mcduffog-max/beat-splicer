@@ -17,7 +17,7 @@ function setText(el,t){ if(el&&el.textContent!==t) el.textContent=t; }
 function canFolder(){ return (NATIVE&&!!NP("Folder"))||(typeof CAN_KEEP_DIR!=="undefined"&&CAN_KEEP_DIR)||(!matchMedia("(pointer:coarse)").matches&&"webkitdirectory" in document.createElement("input")); }
 function renderFlow(){ const st=flowState(), B=document.body, ready=st.song&&st.clips&&!!S.plan;
   B.classList.toggle("s-song",st.song); B.classList.toggle("s-clips",st.clips); B.classList.toggle("s-ready",ready);
-  $("tileSong").classList.toggle("done",st.song); $("tileClips").classList.toggle("done",st.clips);
+  $("tileSong").classList.toggle("done",st.song&&!S._songLoading); $("tileClips").classList.toggle("done",st.clips&&!(st.k==="study"&&/clip/i.test(st.label)));
   const studyingSong=st.k==="study"&&/song/i.test(st.label), studyingClips=st.k==="study"&&/clip|footage/i.test(st.label);
   $("tileSong").classList.toggle("busy",studyingSong); $("tileClips").classList.toggle("busy",studyingClips);
   setText($("tileSongSub"),studyingSong?"Listening to it…":st.song?songLabel():"MP3, M4A or WAV"); setText($("tileSongBtn"),st.song?"Change":"Choose a song");

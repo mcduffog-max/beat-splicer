@@ -608,6 +608,7 @@
       <div class="stage" id="stageBox">
         <canvas id="stage" width="960" height="540" hidden></canvas>
         <div class="empty" id="stageEmpty">Your video plays here once your song and clips are in.</div>
+        <canvas class="buildviz" id="buildViz" hidden aria-hidden="true"></canvas>
         <button class="playov" id="playOv" type="button" aria-label="Play your cut" hidden><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M8 5.5v13l10.5-6.5z"/></svg></button>
       </div>
       <div class="scrub" id="scrub" hidden><span id="scrT">0:00</span><input type="range" id="scrR" min="0" max="1000" value="0" aria-label="Where to play from"><span id="scrL">0:00</span></div>
@@ -653,6 +654,16 @@
     </div>
   </div>
 </div>
+<div class="sheet intro" id="introSheet" hidden role="dialog" aria-modal="true" aria-label="Welcome to Beat Splicer"><div class="sheet-card intro-card">
+  <div class="intro-track" id="introTrack">
+    <section class="intro-slide"><svg viewBox="0 0 240 120" aria-hidden="true"><g class="iw"></g></svg><h2>Pick a song</h2><p>Any MP3, M4A or WAV. Beat Splicer listens for the beat, the chorus and the drop.</p></section>
+    <section class="intro-slide"><svg viewBox="0 0 240 120" aria-hidden="true"><g class="it"></g></svg><h2>Add your clips</h2><p>A whole folder or a handful of videos and photos. Nothing leaves your phone.</p></section>
+    <section class="intro-slide"><svg viewBox="0 0 240 120" aria-hidden="true"><g class="ic"></g></svg><h2>It cuts to the beat</h2><p>Watch the cut play, pick a mood if you like, then make your Short and share it.</p></section>
+  </div>
+  <div class="intro-dots" id="introDots"><i></i><i></i><i></i></div>
+  <div class="intro-btns"><button class="btn quiet" id="introSkip" type="button">Skip</button><button class="btn primary" id="introNext" type="button">Next</button></div>
+  <div class="intro-btns" id="introEnd" hidden><button class="btn" id="introSample" type="button">Try with sample clips</button><button class="btn primary" id="introOwn" type="button">Use my own</button></div>
+</div></div>
 <div class="sheet" id="finSheet" hidden role="dialog" aria-modal="true" aria-labelledby="finHead"><div class="sheet-card">
   <div class="fin-vid"><video id="finVideo" playsinline loop controls></video></div>
   <div class="fin-body"><h2 id="finHead">Your video is ready</h2><div class="chips" id="finPick"></div><p class="small" id="finSaved"></p>

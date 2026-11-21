@@ -564,3 +564,17 @@ body.flow .work.portrait .scrub{clear:both}
 body:not(.simple) .setsearch[hidden]{display:block}
 .srch-hide{display:none!important}
 .srch-hit{background:color-mix(in srgb,var(--cobalt) 12%,transparent);border-radius:8px}
+/* watching the cut being built */
+.stage canvas.buildviz{position:absolute;inset:0;width:100%;height:100%;z-index:2;display:block;background:var(--stage)}
+.buildviz[hidden]{display:none}
+body.s-building .work .stage{display:block!important;aspect-ratio:var(--ar);height:auto;min-height:180px}
+/* first run: three cards */
+.intro .intro-card{display:flex;flex-direction:column;max-width:420px;gap:14px;grid-template-columns:none}
+.intro-track{display:flex;overflow-x:auto;scroll-snap-type:x mandatory;scrollbar-width:none}.intro-track::-webkit-scrollbar{display:none}
+.intro-slide{flex:0 0 100%;scroll-snap-align:center;text-align:center;padding:6px 8px}
+.intro-slide svg{width:100%;max-width:300px;height:auto;display:block;margin:0 auto 10px}
+.intro-slide h2{margin:0 0 6px;font-size:24px;letter-spacing:-.02em}
+.intro-slide p{margin:0 auto;color:var(--muted);max-width:30ch;line-height:1.45}
+.intro-dots{display:flex;justify-content:center;gap:6px}.intro-dots i{width:7px;height:7px;border-radius:50%;background:var(--line)}.intro-dots i.on{background:var(--ink)}
+.intro-btns{display:flex;gap:8px}.intro-btns .btn{flex:1;min-height:46px}
+.intro-btns[hidden]{display:none}
