@@ -13,7 +13,7 @@ async def main():
     await pg.goto(URL); await pg.set_input_files("#folderInput","lib40"); await pg.wait_for_function("S.clips.length>=40 && S.clips.every(c=>c.samples||c.error)", timeout=300000)
     await pg.set_input_files("#audioInput","tracks/rocket110.wav"); await pg.wait_for_function("S.an && S.plan", timeout=120000)
     await pg.evaluate("$('storyOn').checked=true; S.clips.forEach((c,i)=>{ c.tags=[0.3,0.7].map(f=>({t:c.dur*f,scale:i%6,faces:i%3?0:1,inten:0.5})); }); buildPlan(); 0")
-    await pg.click("#cmpOpen"); await pg.wait_for_function("!$('cmpPickA').disabled", timeout=60000)
+    await pg.click("#cmpChip"); await pg.wait_for_function("!$('cmpPickA').disabled", timeout=60000)
     await pg.click("#cmpA"); await pg.wait_for_timeout(1500); await pg.click("#cmpA")   # starts playback, then stops it
     # hidden taste: lower story cost is better, match cuts are bad
     judge="""(()=>{ const s=P=>{ const f=planFeatures(P,_pair.win); return -f.st*2 + f.mc*2 - f.q*0.3; }; const a=s(_pair.A.plan), b=s(_pair.B.plan); return Math.abs(a-b)<0.01?'same':a>b?'A':'B'; })()"""

@@ -578,3 +578,4 @@ body.s-building .work .stage{display:block!important;aspect-ratio:var(--ar);heig
 .intro-dots{display:flex;justify-content:center;gap:6px}.intro-dots i{width:7px;height:7px;border-radius:50%;background:var(--line)}.intro-dots i.on{background:var(--ink)}
 .intro-btns{display:flex;gap:8px}.intro-btns .btn{flex:1;min-height:46px}
 .intro-btns[hidden]{display:none}
+@media (min-width:901px){ body.flow .work .stage,body.flow .work.portrait .stage{width:min(100%,calc(44vh*var(--ar)))} body.flow .mainact .big{max-width:520px;margin:0 auto;width:100%} body.flow .moods{justify-content:center} }

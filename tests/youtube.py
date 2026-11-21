@@ -65,7 +65,7 @@ async def main():
         await pg.set_input_files("#audioInput","tracks/rocket110.wav"); await pg.wait_for_function("S.an && S.plan", timeout=120000)
         await pg.evaluate("$('engine').value='exact'; $('render').click()"); await pg.wait_for_function("S.results.length>0 && !S.running && !S._exporting", timeout=600000); await pg.wait_for_timeout(800)
         print("recipe logged:", await pg.evaluate("(()=>{ const r=recipes().at(-1); return [r.ep, r.opening, r.style, r.pace, r.dur]; })()"))
-        await pg.evaluate("document.querySelector('#results select').value='19'"); await pg.click("#results button:has-text('Upload to YouTube')")
+        await pg.evaluate("closeFinish(); document.querySelector('#results select').value='19'"); await pg.click("#results button:has-text('Upload to YouTube')")
         await pg.wait_for_function("/Scheduled on YouTube|Uploaded/.test($('status').textContent) || $('status').classList.contains('err')", timeout=30000)
         print("upload:", await pg.inner_text("#status"), "| recipe linked:", await pg.evaluate("recipes().at(-1).ytId"))
         await pg.locator("#results").screenshot(path="/home/claude/yt81.png")

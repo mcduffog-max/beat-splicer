@@ -26,7 +26,7 @@ function renderFlow(){ const st=flowState(), B=document.body, ready=st.song&&st.
   setText($("tileFolder"),st.clips?"Add more":"Choose a folder");
   setText($("startLead"),!st.song&&!st.clips?"Make a video that cuts to your song.":!st.song?"Now choose your song.":!st.clips?"Now add your clips.":"Make a video that cuts to your song.");
   $("mainAct").hidden=!ready&&st.k!=="cutting"; const mk=$("makeNow"), mm=$("makeMain");
-  setText(mm,st.k==="cutting"?"Making your cut…":st.k==="making"?"Stop":(mk.textContent||"Make video").replace(/^Make (?!my )/,"Make my ")); mm.disabled=st.k==="cutting"||mk.disabled;
+  setText(mm,st.k==="cutting"?"Making your cut…":st.k==="making"?"Stop":(mk.textContent||"Make video").replace(/^Make (?!my )/,"Make my ")); mm.disabled=st.k==="cutting"||(mk.disabled&&st.k!=="playing");
   mm.classList.toggle("primary",st.k!=="making");
   $("remixChip").disabled=$("remix2").disabled; $("cmpChip").disabled=!!$("cmpOpen").disabled;
   $("playOv").hidden=!(ready&&!S.running&&!S._auto);
@@ -35,7 +35,7 @@ function renderFlow(){ const st=flowState(), B=document.body, ready=st.song&&st.
 /* the clips tile: a whole folder where this device allows it, otherwise picked clips */
 $("tileFolder").onclick=()=>{ if(NATIVE&&NP("Folder")) return pickClipFolder(); if(typeof CAN_KEEP_DIR!=="undefined"&&CAN_KEEP_DIR) return $("folderDrop").click(); if(canFolder()) return $("folderInput").click(); $("videoInput").click(); };
 if(!canFolder()){ $("tileFolder").hidden=true; $("tilePick").classList.remove("quiet"); $("tilePick").classList.add("primary"); $("tilePick").textContent="Choose clips"; }
-$("makeMain").onclick=()=>$("makeNow").click();
+$("makeMain").onclick=()=>{ if(S.running&&!S.running.record){ stopRun(); setTimeout(()=>$("makeNow").click(),120); } else $("makeNow").click(); };
 $("remixChip").onclick=()=>$("remix2").click(); $("cmpChip").onclick=()=>$("cmpOpen").click();
 $("playOv").onclick=e=>{ e.stopPropagation(); $("playOv").classList.remove("pulse"); if(!S.running) $("preview").click(); };
 $("stageBox").addEventListener("click",()=>{ if(S.running&&!S.running.record) $("preview").click(); }); /* tap the picture to stop */
