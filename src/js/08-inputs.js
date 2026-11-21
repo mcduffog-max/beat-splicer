@@ -106,7 +106,7 @@ async function addClipsNow(files){
     if(isSkipped(entry.file)){ entry.error="set aside (it stopped the page last time)"; }
     else { anaMark("clip",entry.file,k+1,vids.length); if(k<3||k%10===0) crumb(`clip ${k+1} of ${vids.length}: ${entry.file.name} (${(entry.file.size/1e6).toFixed(0)} MB)`);
       try{ Object.assign(entry, isImage(entry.file) ? await analyzeImage(entry.file) : await analyzeClip(entry.file)); }
-      catch(err){ entry.error=err.message; }
+      catch(err){ entry.error=err.message; S._clipErrN=(S._clipErrN||0)+1; if(S._clipErrN<=5) crumb(`couldn’t read ${entry.file.name} (${(entry.file.size/1e6).toFixed(0)} MB${entry.file._kept?", app copy":""}): ${err.message}`); }
       anaMark(null); }
     doneN++; status(`Studying your clips: ${doneN} of ${vids.length}`); if(doneN%4===0||doneN===vids.length) renderClips(); };
   for(let k=0;k<vids.length;k++) await work(k); // one at a time, on the one shared player
@@ -116,8 +116,15 @@ async function addClipsNow(files){
   S.clips=S.clips.filter(c=>!c.error);
   renderClips();
   if(S.an) foldAfter("Video clips");
-  status(bad.length ? `${bad.length} clip${bad.length===1?"":"s"} couldn’t be played in this browser and were skipped (often iPhone HEVC video on Windows). Convert them to MP4 (H.264) and add them again.` : "Clips ready.", bad.length>0);
+  S._badClips=bad.map(c=>({name:c.name,size:c.file&&c.file.size,kept:!!(c.file&&c.file._kept),why:c.error}));
+  status(bad.length ? `${bad.length} clip${bad.length===1?"":"s"} couldn’t be used and ${bad.length===1?"was":"were"} skipped. ${badClipAdvice(bad)}` : "Clips ready.", bad.length>0);
   buildPlan();
 }
 
 
+
+function badClipAdvice(bad){ const w=bad.map(c=>c.error||""), n=re=>w.filter(x=>re.test(x)).length;
+  const read=n(/couldn’t be read|NotReadable|permission/i), fmt=n(/format|decoded/i);
+  if(read>=fmt&&read) return NATIVE?"Android didn’t let the app open them. If they’re in Google Photos but not on the phone, download them first (open each and choose Download), or pick them from the Files app.":"The browser couldn’t open the files. Add them again from the folder.";
+  if(fmt) return NATIVE?"This phone can’t decode them. Try re-saving them as MP4 (H.264).":"Convert them to MP4 (H.264) and add them again (often iPhone HEVC video on Windows).";
+  return "Tap “Report this problem” to send me the details."; }

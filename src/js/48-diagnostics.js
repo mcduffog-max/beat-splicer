@@ -21,6 +21,8 @@ async function runDiagnostics(){
   show(); add(""); add("YOUR PROJECT");
   const vids=S.clips.filter(c=>c.samples), errs=S.clips.filter(c=>c.error), mb=S.clips.reduce((a,c)=>a+(c.file?c.file.size:0),0)/1e6;
   add("Clips",`${S.clips.length} added, ${vids.length} ready, ${errs.length} couldn’t be read${errs.length?` (e.g. ${errs.slice(0,3).map(c=>c.name).join(", ")})`:""}, ${Math.round(mb)} MB`);
+  { const B=[...errs.map(c=>({why:c.error,kept:!!(c.file&&c.file._kept),size:c.file&&c.file.size})),...(errs.length?[]:(S._badClips||[]))]; if(B.length){ const g={}; B.forEach(b=>{ const k=String(b.why||"unknown").slice(0,90); g[k]=(g[k]||0)+1; });
+    add("Why clips failed",Object.entries(g).sort((a,b)=>b[1]-a[1]).map(([k,v])=>`${v}× ${k}`).join("; ")+(NATIVE?` (app copies: ${B.filter(b=>b.kept).length} of ${B.length})`:"")); } }
   if(vids.length){ const res=new Map(); vids.forEach(c=>{ const k=c.kind==="image"?"photo":`${Math.max(c.w,c.h)>=3000?"4K":Math.max(c.w,c.h)>=1800?"1080p":Math.max(c.w,c.h)>=1200?"720p":"smaller"} ${c.w>=c.h?"landscape":"portrait"}`; res.set(k,(res.get(k)||0)+1); }); add("Clip sizes",[...res].map(([k,n])=>`${n}× ${k}`).join(", ")); }
   add("Song",S.an?`${S.audioName}, ${fmtTime(S.an.duration)}, ${Math.round(S.an.bpm)} BPM${(S.an.tempoX||1)!==1?` (set to ${S.an.tempoX===2?"double":"half"} speed)`:""}, decoded ${S.audioBuf?Math.round(S.audioBuf.length*S.audioBuf.numberOfChannels*4/1e6)+" MB":"?"}`:"none yet");
   add("Characters / backgrounds",`${CAST().filter(x=>x.n>=2).length} characters${faceMode()?" (by face)":""}, ${new Set(S.clips.flatMap(c=>[...clipScenes(c).keys()])).size} background types, AI readings on ${S.clips.filter(c=>c.tags&&c.tags.length).length} clips`);

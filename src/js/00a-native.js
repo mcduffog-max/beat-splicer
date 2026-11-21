@@ -33,12 +33,12 @@ async function keepFiles(files){ files=[...files]; if(!NATIVE||!files.length) re
   try{ const live=new Set([...(S.clips||[]).map(c=>c.file&&c.file._kept).filter(Boolean), S.audioFile&&S.audioFile._kept, ...files.map(name)].filter(Boolean)); let total=0, entries=[];
     for await (const [n,h] of dir.entries()){ try{ const f=await h.getFile(); total+=f.size; entries.push([n,f.size]); }catch(e){} }
     if(total>2.5e9) for(const [n] of entries) if(!live.has(n)) try{ await dir.removeEntry(n); }catch(e){} }catch(e){}
-  for(let i=0;i<files.length;i++){ const f=files[i], n=name(f);
+  let fails=0; for(let i=0;i<files.length;i++){ const f=files[i], n=name(f);
     try{ let h=null; try{ h=await dir.getFileHandle(n); const g=await h.getFile(); if(g.size!==f.size) h=null; }catch(e){ h=null; }
       if(!h){ status(`Keeping a copy of your files in the app (so Android can't take them back): ${i+1} of ${files.length}…`); h=await dir.getFileHandle(n,{create:true}); const w=await h.createWritable(); await f.stream().pipeTo(w); }
       const g=await h.getFile(), k=new File([g],f.name,{type:f.type,lastModified:f.lastModified}); k._kept=n; out.push(k); }
-    catch(e){ crumb("couldn't keep a copy of "+f.name+": "+(e&&e.message||e)); out.push(f); } }
-  return out; }
+    catch(e){ fails++; if(fails<=3) crumb("couldn't keep a copy of "+f.name+": "+(e&&e.message||e)); out.push(f); } }
+  if(fails) crumb(`app copies: ${files.length-fails} of ${files.length} kept`); return out; }
 
 /* the clipboard: the app's web view can't always offer Paste on a long press, so buttons read it directly */
 async function readClipboard(){ const C=NP("Clipboard"); if(C){ try{ const r=await C.read(); if(r&&typeof r.value==="string") return r.value; }catch(e){} }

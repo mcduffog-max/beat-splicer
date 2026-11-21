@@ -1,6 +1,6 @@
 /* ---------------- Clip analysis ---------------- */
 function waitEvent(el, ok, ms){ return new Promise((res,rej)=>{ let t;
-  const done=()=>{ cleanup(); res(); }, fail=()=>{ cleanup(); rej(new Error("This video format can’t be played in this browser")); };
+  const done=()=>{ cleanup(); res(); }, fail=()=>{ cleanup(); const c=el.error&&el.error.code; rej(new Error(c===2?"The file couldn’t be read (Android didn’t let the app open it)":c===3?"The video couldn’t be decoded (damaged, or a format this phone can’t decode)":"This video format can’t be played in this browser")); };
   const cleanup=()=>{ clearTimeout(t); el.removeEventListener(ok,done); el.removeEventListener("error",fail); };
   el.addEventListener(ok,done); el.addEventListener("error",fail); t=setTimeout(()=>{ cleanup(); rej(new Error("Timed out loading video")); }, ms); }); }
 function seekTo(el,t,limit){ return new Promise(res=>{ let done=false;
@@ -32,10 +32,17 @@ async function backfillFlow(){ const todo=S.clips.filter(c=>c.kind!=="image"&&c.
 /* One video player is reused for studying every clip. Creating a new player per clip made the browser hold on to
    several decoders at once (about 0.5 GB before it caught up), enough to tip a busy tab over. */
 function analysisPlayer(){ if(!S._anaV){ const v=document.createElement("video"); v.muted=true; v.playsInline=true; v.preload="auto"; S._anaV=v; } return S._anaV; }
+/* one clip, with a second try on a fresh player: on Android a player that hit an error can stay broken for the next clips */
 async function analyzeClip(file){
+  try{ return await analyzeClipOnce(file); }
+  catch(e1){ if(S._anaV){ try{ S._anaV.removeAttribute("src"); S._anaV.load(); }catch(_){} S._anaV=null; }
+    if(typeof canRead==="function"&&!(await canRead(file))) throw new Error("The file couldn’t be read (Android didn’t let the app open it; it may be in the cloud rather than on the phone)");
+    try{ return await analyzeClipOnce(file); }
+    catch(e2){ if(S._anaV){ try{ S._anaV.removeAttribute("src"); S._anaV.load(); }catch(_){} S._anaV=null; } throw e2; } } }
+async function analyzeClipOnce(file){
   const url=URL.createObjectURL(file);
   const v=analysisPlayer(); v.src=url;
-  await waitEvent(v,"loadeddata",20000);
+  try{ await waitEvent(v,"loadeddata",20000); }catch(e){ URL.revokeObjectURL(url); throw e; }
   const dur=v.duration;
   if(!isFinite(dur)||dur<0.3) throw new Error("Couldn’t read the clip’s length");
   const c=document.createElement("canvas"); c.width=96; c.height=54; const g=c.getContext("2d",{willReadFrequently:true});
