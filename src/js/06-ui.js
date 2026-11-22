@@ -137,7 +137,7 @@ function drawTimeline(playhead){ if(S._dry||S._quiet) return;
       g.strokeStyle=css.getPropertyValue("--cobalt"); g.setLineDash([4,3]); g.beginPath(); pr.rows.forEach((r,k)=>{ const x=X((r.a+r.b)/2); k?g.lineTo(x,yOf(r.dyn)):g.moveTo(x,yOf(r.dyn)); }); g.stroke(); g.setLineDash([]);
       g.font="11px Archivo, system-ui, sans-serif"; g.fillStyle=beatC; g.fillText(t("energy"),6,12); g.fillStyle=css.getPropertyValue("--cobalt"); g.fillText(t("pace"),6+g.measureText(t("energy")).width+12,12); } }
   if(S.plan && storyOn()){ g.font="10px Archivo, system-ui, sans-serif"; g.fillStyle=muted; let lastB="";
-    S.plan.forEach((s,i)=>{ const b=s._beat||storyBeat(s,i,S.plan); if(b!==lastB){ lastB=b; g.fillText(t(b),X(s.start)+2,94); } }); }
+    let freeX=-1; S.plan.forEach((s,i)=>{ const b=s._beat||storyBeat(s,i,S.plan); if(b!==lastB){ lastB=b; const x=X(s.start)+2, w=g.measureText(t(b)).width; if(x>=freeX){ g.fillText(t(b),x,94); freeX=x+w+6; } } }); } /* a label that would run into the one before is left out */
   if(S.plan && S.sel!=null && S.plan[S.sel]){ const s=S.plan[S.sel]; g.strokeStyle=ink; g.lineWidth=2; g.strokeRect(X(s.start)+1,95,Math.max(3,X(s.end)-X(s.start)-2),32); }
   if(S.plan){ g.fillStyle=ink; S.plan.forEach(s=>{ if(s._lock){ g.beginPath(); g.arc(X(s.start)+5,101,2.5,0,Math.PI*2); g.fill(); } }); }
   if(S.plan&&S.drag&&S.drag.active){ const d=S.drag;
