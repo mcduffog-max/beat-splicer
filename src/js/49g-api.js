@@ -8,7 +8,7 @@ async function apiIdle(ms=600000){ const t0=Date.now(); await sleep(50); while(D
 function apiSummary(){ const ep=previewEp(), w=S.an&&S.plan?windowFor(ep):null, P=w?(makeExportPlan(ep,w)||S.plan):null, shots=P?P.filter(s=>s.end>w[0]&&s.start<w[1]):[];
   return { song:S.audioName||null, length:S.an?+S.an.duration.toFixed(1):null, bpm:S.an?Math.round(S.an.bpm):null, clips:S.clips.filter(c=>c.samples&&!c.off).length,
     ready:!!S.plan, mood:S._mood||null, style:S.style&&S.style.name||null, look:$("look").value, platforms:S.eps.slice(), cut:w?{from:+w[0].toFixed(2),to:+w[1].toFixed(2),shots:shots.length}:null,
-    title:$("quickTitle").value||null, chose:($("autoOut").textContent||"").replace(/\s*•\s*/g,"\n• ").trim().slice(0,1500)||null, status:$("status").textContent||"" }; }
+    title:$("quickTitle").value||null, chose:($("autoOut").textContent||"").replace(/\s*•\s*/g,"\n• ").trim().slice(0,1500)||null, status:(S._statusEn||"")||"" }; }
 async function apiSheet(){ if(!S.plan) throw new Error("no cut yet: add a song and clips first"); const ep=previewEp(), w=windowFor(ep), P=makeExportPlan(ep,w)||S.plan; const b=await sheetOf(P,w);
   return await new Promise(r=>{ const fr=new FileReader(); fr.onload=()=>r(fr.result); fr.readAsDataURL(b); }); }
 const BeatSplicer={ version:API_VERSION,
@@ -25,7 +25,7 @@ const BeatSplicer={ version:API_VERSION,
   setTitle(t){ const q=$("quickTitle"); q.value=String(t||"").slice(0,60); q.dispatchEvent(new Event("input")); q.dispatchEvent(new Event("change")); return apiSummary(); },
   setPlatforms(ids){ const ok=(ids||[]).filter(id=>EP(id)); if(!ok.length) throw new Error("no known platform in "+JSON.stringify(ids)); S.eps=ok; buildEndpointUI(); saveSettings(); updateButtons(); return apiSummary(); },
   sheet:()=>apiSheet(),
-  async makeVideos(){ await apiIdle(); if(!S.plan) throw new Error("add a song and clips first"); if(S.running) stopRun(); await sleep(150); if(S.wc&&(S.wc.mp4||S.wc.webm)&&$("engine").value==="auto") $("engine").value="exact"; /* frame-exact when this browser can */ await makeVideos(true); await apiIdle(); if(!S.results.length) throw new Error(($("status").textContent||"the video wasn't made").slice(0,300)); try{ closeFinish(); }catch(e){}
+  async makeVideos(){ await apiIdle(); if(!S.plan) throw new Error("add a song and clips first"); if(S.running) stopRun(); await sleep(150); if(S.wc&&(S.wc.mp4||S.wc.webm)&&$("engine").value==="auto") $("engine").value="exact"; /* frame-exact when this browser can */ await makeVideos(true); await apiIdle(); if(!S.results.length) throw new Error(((S._statusEn||"")||"the video wasn't made").slice(0,300)); try{ closeFinish(); }catch(e){}
     return S.results.map((r,i)=>({i,name:resultName(r),platform:r.ep.id,size:`${r.ep.w}x${r.ep.h}`,seconds:+(r.win[1]-r.win[0]).toFixed(1),bytes:r.blob.size,check:r.check?{ok:r.check.ok,notes:r.check.notes}:null})); },
   resultBlob:i=>S.results[i]&&S.results[i].blob,
   /* hands a made video to the browser's download (the MCP server catches it and saves it where you asked) */

@@ -66,7 +66,7 @@ async function frames() { const d = await call(() => BeatSplicer.sheet()); retur
 /* long jobs report progress, so the assistant (and its timeout) knows it's still going */
 function progressFrom(extra) { const tok = extra && extra._meta && extra._meta.progressToken; if (tok == null || !extra.sendNotification) return () => {}; let n = 0;
   return (msg, pct) => { extra.sendNotification({ method: "notifications/progress", params: { progressToken: tok, progress: pct != null ? pct : ++n, ...(pct != null ? { total: 100 } : {}), message: msg } }).catch(() => {}); }; }
-async function whileBusy(promise, report) { let done = false; const tick = async () => { while (!done) { try { const st = await page.evaluate(() => document.getElementById("status").textContent); const pc = (st.match(/(\d+)%/) || [])[1]; report(st.slice(0, 120), pc != null ? +pc : null); } catch (e) {} await new Promise(r => setTimeout(r, 2000)); } };
+async function whileBusy(promise, report) { let done = false; const tick = async () => { while (!done) { try { const st = await page.evaluate(() => S._statusEn || document.getElementById("status").textContent); const pc = (st.match(/(\d+)%/) || [])[1]; report(st.slice(0, 120), pc != null ? +pc : null); } catch (e) {} await new Promise(r => setTimeout(r, 2000)); } };
   tick(); try { return await promise; } finally { done = true; } }
 async function makeAndSave(dir, report = () => {}) {
   const made = await whileBusy(call(() => BeatSplicer.makeVideos()), report); const to = outDir(dir); await fsp.mkdir(to, { recursive: true }); const saved = [];

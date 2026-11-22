@@ -34,6 +34,7 @@
     <div class="me-row"><span class="me big" id="meBig"><img id="meBigImg" alt="" hidden><span id="meBigInit" aria-hidden="true"></span></span>
       <div class="btns"><label class="btn" for="meFile">Choose a photo</label><input type="file" id="meFile" accept="image/*" hidden><button class="btn quiet" id="meNoImg" type="button" hidden>Remove photo</button></div></div>
     <label class="row">Your name <input type="text" id="meName" maxlength="30" placeholder="Shown at the top" autocomplete="nickname"></label>
+    <label class="row me-lang">Language <select id="langSel" data-noi18n aria-label="Language"></select></label>
     <div class="row me-theme">Theme <span class="btns"><button class="chip" type="button" data-theme-set="system">Match phone</button><button class="chip" type="button" data-theme-set="light">Light</button><button class="chip" type="button" data-theme-set="dark">Dark</button></span></div>
     <div class="row me-plan">Your plan <b id="mePlan">Free</b><button class="btn" id="mePlanBtn" type="button">Upgrade</button></div>
     <div class="small" id="meKept">Kept on this device unless you publish your page.</div>
@@ -598,7 +599,7 @@
             <summary>Diagnostics</summary>
             <div class="btns" style="margin-top:10px"><button class="btn" id="diagBtn" type="button">Run diagnostics</button></div>
             <p class="small" style="margin:6px 0 0">Checks what this device can do and, with a song and clips added, makes a 6-second test video with your footage. Copy the report and send it to whoever is helping you.</p>
-            <div id="diagOut" hidden><pre id="diagText"></pre><div class="btns"><button class="btn primary" id="diagCopy" type="button">Copy report</button><button class="btn" id="diagSave" type="button">Save report</button></div></div>
+            <div id="diagOut" hidden data-noi18n><pre id="diagText"></pre><div class="btns"><button class="btn primary" id="diagCopy" type="button">Copy report</button><button class="btn" id="diagSave" type="button">Save report</button></div></div>
           </details>
           <div class="small" style="margin-top:6px">Videos are made in real time, up to three formats at once. Keep this tab open and visible while it runs.</div>
         </div>

@@ -582,3 +582,5 @@ body.s-building .work .stage{display:block!important;aspect-ratio:var(--ar);heig
 
 .me-plan{display:flex;align-items:center;gap:8px;flex-wrap:wrap}.me-plan b{font-weight:650}.me-plan .btn{margin-left:auto}
 #finUnmark{align-self:flex-start}
+
+body:not(.s-song) #statsBox{display:none}

@@ -13,7 +13,7 @@ function flowState(){ const song=!!(S.an&&S.audioBuf), clips=S.clips.some(c=>c.s
   if(S._auto) return {k:"cutting",song,clips}; if(busy&&S.running.record) return {k:"making",song,clips}; if(busy) return {k:"playing",song,clips};
   if(!S.plan) return {k:"clips",song,clips}; return {k:"ready",song,clips,made:!!(S.results&&S.results.length)}; }
 const songLabel=()=>{ const n=(typeof lySong==="function"?lySong():null), t=n&&n.title?(n.artist?`${n.title} · ${n.artist}`:n.title):String(S.audioName||"").replace(/\.[^.]+$/,""); return t+(S.an?` · ${fmtTime(S.an.duration)}`:""); };
-function setText(el,t){ if(el&&el.textContent!==t) el.textContent=t; }
+function setText(el,s){ if(el&&enOf(el)!==s&&el.textContent!==s) el.textContent=s; }
 function canFolder(){ return (NATIVE&&!!NP("Folder"))||(typeof CAN_KEEP_DIR!=="undefined"&&CAN_KEEP_DIR)||(!matchMedia("(pointer:coarse)").matches&&"webkitdirectory" in document.createElement("input")); }
 function renderFlow(){ const st=flowState(), B=document.body, ready=st.song&&st.clips&&!!S.plan;
   B.classList.toggle("s-song",st.song); B.classList.toggle("s-clips",st.clips); B.classList.toggle("s-ready",ready);
@@ -21,12 +21,12 @@ function renderFlow(){ const st=flowState(), B=document.body, ready=st.song&&st.
   const studyingSong=st.k==="study"&&/song/i.test(st.label), studyingClips=st.k==="study"&&/clip|footage/i.test(st.label);
   $("tileSong").classList.toggle("busy",studyingSong); $("tileClips").classList.toggle("busy",studyingClips);
   setText($("tileSongSub"),studyingSong?"Listening to it…":st.song?songLabel():"MP3, M4A or WAV"); setText($("tileSongBtn"),st.song?"Change":"Choose a song");
-  const nC=S.clips.filter(c=>c.samples&&!c.off).length, m=studyingClips&&($("status").textContent||"").match(/(\d+) of (\d+)/);
+  const nC=S.clips.filter(c=>c.samples&&!c.off).length, m=studyingClips&&(S._statusEn||"").match(/(\d+) of (\d+)/);
   setText($("tileClipsSub"),studyingClips?(m?`Looking at clip ${m[1]} of ${m[2]}…`:"Looking at your clips…"):st.clips?`${nC} clip${nC===1?"":"s"}`:"Videos and photos");
   setText($("tileFolder"),st.clips?"Add more":"Choose a folder");
   setText($("startLead"),!st.song&&!st.clips?"Make a video that cuts to your song.":!st.song?"Now choose your song.":!st.clips?"Now add your clips.":"Make a video that cuts to your song.");
   $("mainAct").hidden=!ready&&st.k!=="cutting"; const mk=$("makeNow"), mm=$("makeMain");
-  setText(mm,st.k==="cutting"?"Making your cut…":st.k==="making"?"Stop":(mk.textContent||"Make video").replace(/^Make (?!my )/,"Make my ")); mm.disabled=st.k==="cutting"||(mk.disabled&&st.k!=="playing");
+  setText(mm,st.k==="cutting"?"Making your cut…":st.k==="making"?"Stop":(enOf(mk)||"Make video").replace(/^Make (?!my )/,"Make my ")); mm.disabled=st.k==="cutting"||(mk.disabled&&st.k!=="playing");
   mm.classList.toggle("primary",st.k!=="making");
   $("remixChip").disabled=$("remix2").disabled; $("cmpChip").disabled=!!$("cmpOpen").disabled;
   $("playOv").hidden=!(ready&&!S.running&&!S._auto);
@@ -60,7 +60,7 @@ setInterval(()=>{ renderFlow(); maybeAutoCut(); },400);
 /* the bar along the bottom: only ever the next step */
 { const bar=$("nextBar"), pb=document.createElement("i"); pb.className="nb-bar"; bar.appendChild(pb); }
 let _sawLive=false;
-function renderBar(st){ if(st.k!=="making") _sawLive=false; const H=$("nbHead"), Sb=$("nbSub"), B=$("nbBtn"), pb=$("nextBar").querySelector(".nb-bar"), stat=($("status").textContent||"").trim(), pct=(stat.match(/(\d+)%/)||[])[1];
+function renderBar(st){ if(st.k!=="making") _sawLive=false; const H=$("nbHead"), Sb=$("nbSub"), B=$("nbBtn"), pb=$("nextBar").querySelector(".nb-bar"), stat=(S._statusEn||"").trim(), pct=(stat.match(/(\d+)%/)||[])[1];
   let h="",sub="",btn=null,act=null,prog=null;
   switch(st.k){
     case "song": h=st.clips?"Now your song":"Start with your song"; sub=st.clips?"Step 2 of 2":"Step 1 of 2: then your clips"; btn="Choose a song"; act=()=>$("audioInput").click(); break;
@@ -69,7 +69,7 @@ function renderBar(st){ if(st.k!=="making") _sawLive=false; const H=$("nbHead"),
     case "cutting": h="Making your cut"; sub="Choosing shots, pace and look…"; break;
     case "playing": h="Playing your cut"; sub="Tap the picture to stop"; btn="Stop"; act=()=>$("preview").click(); break;
     case "making": { const live=/^Making the video/.test(stat), p2=live?pct:null; if(live) _sawLive=true; h=p2?`Making your video: ${p2}%`:_sawLive?"Finishing your video":"Getting ready"; sub=_sawLive&&!live?"Checking it against the plan":"Keep the app open"; btn=S.running&&S.running.record?"Stop":null; act=()=>$("makeNow").click(); prog=p2?+p2/100:null; break; }
-    case "ready": if(st.made&&S._madePlan===S.plan){ h="Your video is ready"; sub="Share it or save it"; btn="Share"; act=()=>openFinish(); } else { h="Like it?"; sub="Make it into a video"; btn=$("makeMain").textContent; act=()=>$("makeMain").click(); } break; }
+    case "ready": if(st.made&&S._madePlan===S.plan){ h="Your video is ready"; sub="Share it or save it"; btn="Share"; act=()=>openFinish(); } else { h="Like it?"; sub="Make it into a video"; btn=enOf($("makeMain")); act=()=>$("makeMain").click(); } break; }
   setText(H,h); setText(Sb,sub); B.hidden=!btn; if(btn) setText(B,btn); B.onclick=act; B.classList.toggle("primary",btn!=="Stop");
   pb.style.width=prog!=null?(prog*100).toFixed(1)+"%":"0"; }
 /* when the video is made: it's saved on the phone straight away, then shown playing with Share front and centre */

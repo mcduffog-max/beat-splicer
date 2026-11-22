@@ -117,7 +117,7 @@ function drawTimeline(playhead){ if(S._dry||S._quiet) return;
   const css=getComputedStyle(document.documentElement);
   const muted=css.getPropertyValue("--muted"), waveC=css.getPropertyValue("--wave"), beatC=css.getPropertyValue("--beat"), ink=css.getPropertyValue("--ink");
   g.font="12px -apple-system, BlinkMacSystemFont, Inter, system-ui, sans-serif";
-  if(!S.an){ g.fillStyle=muted; g.fillText("Add audio to see its beats here.",14,70); return; }
+  if(!S.an){ g.fillStyle=muted; g.fillText(t("Add audio to see its beats here."),14,70); return; }
   const dur=S.an.duration, X=t=>t/dur*cssW;
   // waveform
   const pk=S.an.peaks, mid=46, amp=34; g.fillStyle=waveC;
@@ -129,15 +129,15 @@ function drawTimeline(playhead){ if(S._dry||S._quiet) return;
   if(S.plan){
     S.plan.forEach(s=>{ const x0=X(s.start), x1=X(s.end); g.fillStyle=hue(s.clip); g.fillRect(x0,96,Math.max(1,x1-x0-1),30);
       if(s.tr && s.tr.dur>0){ const tw=Math.max(2,X(s.start+s.tr.dur)-x0); g.fillStyle="rgba(255,255,255,0.55)"; g.beginPath(); g.moveTo(x0,96); g.lineTo(x0+tw,96); g.lineTo(x0,126); g.fill(); } });
-  } else { g.fillStyle=muted; g.fillText("Add video clips to build the edit.",14,116); }
+  } else { g.fillStyle=muted; g.fillText(t("Add video clips to build the edit."),14,116); }
   if(S.plan){ const w=windowFor(previewEp()); if(w[0]>0.05||w[1]<dur-0.05){ g.fillStyle="rgba(0,0,0,0.45)"; g.fillRect(0,0,X(w[0]),cssH); g.fillRect(X(w[1]),0,cssW-X(w[1]),cssH); } }
   if(S.plan && S.an.E){ const pw=previewEp?windowFor(previewEp()):[0,dur], pl=(typeof makeExportPlan==="function"?makeExportPlan(previewEp(),pw):null)||S.plan, pr=paceReport(pl,pw);
     if(pr){ const yOf=v=>88-v*76; g.lineWidth=1.5;
       g.strokeStyle="rgba(201,138,7,0.9)"; g.beginPath(); pr.rows.forEach((r,k)=>{ const x=X((r.a+r.b)/2); k?g.lineTo(x,yOf(r.e)):g.moveTo(x,yOf(r.e)); }); g.stroke();
       g.strokeStyle=css.getPropertyValue("--cobalt"); g.setLineDash([4,3]); g.beginPath(); pr.rows.forEach((r,k)=>{ const x=X((r.a+r.b)/2); k?g.lineTo(x,yOf(r.dyn)):g.moveTo(x,yOf(r.dyn)); }); g.stroke(); g.setLineDash([]);
-      g.font="11px Archivo, system-ui, sans-serif"; g.fillStyle=beatC; g.fillText("energy",6,12); g.fillStyle=css.getPropertyValue("--cobalt"); g.fillText("pace",52,12); } }
+      g.font="11px Archivo, system-ui, sans-serif"; g.fillStyle=beatC; g.fillText(t("energy"),6,12); g.fillStyle=css.getPropertyValue("--cobalt"); g.fillText(t("pace"),6+g.measureText(t("energy")).width+12,12); } }
   if(S.plan && storyOn()){ g.font="10px Archivo, system-ui, sans-serif"; g.fillStyle=muted; let lastB="";
-    S.plan.forEach((s,i)=>{ const b=s._beat||storyBeat(s,i,S.plan); if(b!==lastB){ lastB=b; g.fillText(b,X(s.start)+2,94); } }); }
+    S.plan.forEach((s,i)=>{ const b=s._beat||storyBeat(s,i,S.plan); if(b!==lastB){ lastB=b; g.fillText(t(b),X(s.start)+2,94); } }); }
   if(S.plan && S.sel!=null && S.plan[S.sel]){ const s=S.plan[S.sel]; g.strokeStyle=ink; g.lineWidth=2; g.strokeRect(X(s.start)+1,95,Math.max(3,X(s.end)-X(s.start)-2),32); }
   if(S.plan){ g.fillStyle=ink; S.plan.forEach(s=>{ if(s._lock){ g.beginPath(); g.arc(X(s.start)+5,101,2.5,0,Math.PI*2); g.fill(); } }); }
   if(S.plan&&S.drag&&S.drag.active){ const d=S.drag;

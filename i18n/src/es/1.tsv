@@ -1,0 +1,410 @@
+420	No se pudo crear el ZIP. Guarda los vídeos uno a uno con sus botones Guardar.
+421	No se pudo abrir esa carpeta:
+422	No se pudo abrir esa parte.
+423	No se pudo publicar:
+424	No se pudo volver a contar el pulso.
+425	No se pudo conectar con el inicio de sesión de Google
+426	No se pudo conectar con el servicio. Solo funciona en la copia guardada de la app, abierta en Chrome o Edge.
+427	No se pudo leer
+428	No se pudo leer ese archivo de audio. Prueba con WAV, MP3 o M4A.
+429	No se pudo leer ese logo.
+430	No se pudo leer ese archivo de letra.
+431	No se pudo leer esa foto. Prueba con JPEG o PNG.
+432	No se pudo leer la duración del clip
+433	No se pudo leer el portapapeles aquí. Mantén pulsado en el cuadro y elige Pegar.
+434	No se pudo leer tu canal:
+435	No se pudo restaurar ese proyecto ({}). Vuelve a añadir tu audio y tus clips.
+436	No se pudo guardar en esa carpeta. Usa el paquete ZIP.
+437	No se pudieron guardar las claves en este ordenador.
+438	No se pudo guardar en el móvil:
+439	No se pudo compartir:
+440	No se pudo retirar:
+441	No se pudo escribir el guion.
+442	Imagen de portada
+444	Recortar
+445	Recortado
+446	Fundido cruzado
+447	Personalizado, basado en
+448	Se reprodujo el corte {}. Elige el que prefieras.
+449	Corte movido a {} ({}{} s), en el pulso{}.
+450	Cortar en la acción
+451	Cortar en la acción: el movimiento de cada plano cae en el pulso
+452	Cortar a contratiempo, donde golpea la música
+453	Ritmo de corte
+454	Cortar cuando entra la voz
+455	Ping-pong sincronizado con los cortes
+456	Cortes
+457	El corte sigue {}: {}, unos {} s por plano (objetivo {} s).
+458	El corte sigue {}: {}. Aquí las reglas de la plataforma limitan los planos a 3 s, así que las tomas largas se acortan.
+459	Oscuro
+460	Oscuro y desaturado
+461	Precisión oscura
+462	Etalonaje oscuro y desaturado verde-amarillo, acercamientos controlados y cortes limpios.
+463	Fecha primero, para archivar
+464	Flotar en profundidad (fondo desenfocado)
+465	Descripción
+466	La descripción empieza con una frase sencilla sobre lo que muestra el vídeo (se usa para búsquedas y sugerencias).
+467	Descripción:
+468	Desierto
+470	Diagnóstico
+471	Filtro de difusión
+472	Filtro de difusión: luces suaves
+473	Difusión: brillo suave
+474	Fundido a negro
+475	Dirigir como:
+476	Dirigiendo como “{}”. {}
+477	Dirigiendo como “{}”{}. {}
+478	Dirección
+479	Dirección: {}. {}.
+480	Técnicas de director
+481	Director: se mueve con las partes de la canción
+482	Nota del director
+483	Directores
+484	Desconectar
+485	Hacerlo todo
+486	Hacerlo todo se inclina por lo que retiene a tus espectadores
+487	Hacerlo todo elige un estilo para cada corte nuevo, según la música y tus imágenes
+488	No parpadees: {}
+489	Hecho
+490	Hecho, pero {0} clip(s) no se reprodujeron en este dispositivo, así que sus planos usaron otros clips: {3}{4}.
+491	Hecho: {0} vídeo(s){2} listo(s) para guardar.
+492	Hecho: la app sabe lo que hay en tus clips. Ahora la letra encuentra planos que muestran lo que se canta.
+493	Pop de garabatos
+494	Doble ({})
+495	Doble velocidad
+496	Descargar
+497	Descarga todos los vídeos que has hecho, con notas de publicación, en un solo ZIP
+498	Descargar ZIP
+499	Descargar ZIP ({})
+500	Descargas/Beat Splicer
+501	Descargando
+502	Descargando el modelo de imagen y palabra (unos 150 MB, una vez)…
+503	Descargando el modelo de imagen y palabra: {}%…
+504	Descargando la actualización…
+505	Descargando la actualización… {}%
+506	Calma de sueño
+507	Soñador
+508	Deriva e inclinación
+509	drop
+510	Drop {}
+511	Sombra
+512	Los drops, las subidas y los finales de parte se detectan solos en la canción. Escuchar y Vista previa también los reproducen.
+513	Polvo y arañazos de película
+514	p. ej. Sígueme para la parte 2
+515	p. ej. solitario al principio, esperanzador en el último estribillo
+516	p. ej. Videoclips desde la costa norte
+517	p. ej. Paul, Sídney
+518	p. ej. Espera al drop
+519	Cada plataforma tiene su propia frase de apertura, encuadre y duración, a partir de tus propias imágenes. Las plataformas de la misma duración comparten corte, y no pasa nada: publicar tu propia edición en varias plataformas cuenta como original.
+520	Cada plataforma tiene su propia frase de apertura: de 2 a 6 palabras, en pantalla desde el primer fotograma, en el tercio superior de la zona segura y el tiempo suficiente para leerla dos veces. Las exportaciones tipo videoclip llevan en cambio un cartel en el tercio inferior. Los títulos se comparan con los que ya has usado.
+521	0,25 s antes
+522	Al principio: la app solo se apoya un poco en esto hasta que lleguen más Shorts.
+523	Eco al final de cada parte fuerte
+524	Ecos
+525	Ecos: estelas de movimiento en los picos
+526	Editar como mi vídeo de referencia
+527	Editar así
+528	Efecto
+529	Ocho fotogramas del corte actual, en orden, en una sola imagen.
+530	Serif elegante (Playfair)
+531	Correo para responderte (opcional)
+532	Se vacía mientras se reproduce el vídeo (cuenta atrás)
+533	Texto del cartel final (vídeos cortos)
+534	Cartel final con la canción y el artista (arriba a la izquierda, dejando sitio a los botones de pantalla final de YouTube)
+535	Terminar este plano un pulso después
+536	Terminar este plano un pulso antes
+537	Final (vídeos largos)
+538	Final (largo)
+539	Termina alejándose para cerrar.
+540	Termina en una barra de compás y vuelve directo al plano inicial, para que las repeticiones se sientan continuas. Cada repetición cuenta como visualización en Shorts, Reels y TikTok.
+541	Termina cerrado. Alejarse cerraría la historia.
+542	Termina donde empezó: la escena inicial vuelve para cerrar la historia.
+543	Termina donde empieza
+544	energía
+545	Inglés
+546	Intro
+547	Detalles del error copiados. Pégalos en nuestro chat.
+548	Esc
+549	Lo esencial
+550	presentar
+551	Cada pulso de {}
+552	Todos los personajes de este tipo
+553	Todos los clips son imágenes fijas o vídeo estático. Cada plano recibe movimientos de cámara y un golpe en el pulso, pero el movimiento real retiene mucho mejor: convierte tus mejores imágenes en clips cortos de vídeo con IA (imagen a vídeo) o mezcla imágenes grabadas.
+554	Cada corte cae en un pulso
+555	Todas las plataformas
+556	Cada plataforma empieza con su propia frase.
+557	Todo (versión de prueba)
+558	Todo menos estos
+559	Todo lo de “{}” ya está en el proyecto.
+560	Todo lo de Creator, más aprender de tus resultados de YouTube, Editar así, ¿Cuál es mejor?, el revisor de IA y varios formatos a la vez.
+561	Exportar
+562	Exportar ahora
+563	Exportar sin revisión
+564	Planteamiento: la situación inicial
+565	El reconocimiento facial no pudo iniciarse aquí ({}).
+566	El reconocimiento facial no pudo iniciarse.
+567	El reconocimiento facial funciona en este dispositivo (no se sube nada). Quien aparezca en al menos dos clips se convierte en un personaje que puedes elegir para ordenar.
+568	Encuadre que sigue las caras (recortes y primeros planos siguen a las caras)
+569	Aparecer y desaparecer
+570	Aparecer al principio
+571	Desaparecer al final
+572	Desenlace: las consecuencias
+573	Edición fan
+574	Fantasía
+575	Cortes rápidos, zooms con fuerza y fallos en el drop: el estilo actual de los vídeos cortos.
+576	Rápido y con fuerza
+577	Nombres de archivo
+578	Sistema de archivos
+579	Llenar el encuadre (recorta los bordes)
+580	Se rellena desde el archivo de la canción cuando tiene etiquetas
+581	Se llena mientras se reproduce el vídeo
+582	Grano de película
+583	Filtrado
+584	Buscar un ajuste
+585	Buscar un ajuste, p. ej. borde, letra, cámara lenta
+586	Encontrar personajes por la cara
+587	Encuentra personajes por la cara o lee tus imágenes con IA primero para un guion más rico. Edita lo que quieras abajo.
+588	Encontrar clips por lo que muestran
+589	Buscar clips que muestren… p. ej. ciudad de noche, fuego, una multitud
+590	Buscar letra sincronizada
+591	Encontrar la mejor canción y clips
+592	Encontrando personajes por la cara
+593	Encontrando personajes por la cara ({} de {})…
+594	Buscando el pulso… {}%
+595	Acabar los fotogramas en el chip gráfico (objetivo, color y grano de una vez)
+596	Terminar de aprender lo que hay en tus clips (quedan {} momentos)
+597	Terminar con la canción: quitar el silencio final; el último plano se aleja y la imagen se congela o se funde como termina la música
+598	Terminando tu vídeo
+599	Primera exportación desde este dispositivo, así que aún no hay nada que repetir.
+600	Primera línea de {0} caracteres{1}, {2} hashtag(s){4}
+601	Primeros segundos
+602	Glamour ojo de pez
+603	Abombado de ojo de pez
+604	Objetivo ojo de pez, luz roja y azul saturada, cámara lenta y bandas partidas con copias del plano.
+605	Encajar el plano entero (bandas negras)
+606	Encajar el plano entero (bandas desenfocadas)
+607	Encaja con la historia{}
+608	Encaja con tu nota: “{}”
+609	Destello
+610	Destellos en el pulso
+611	Plano
+612	Carpeta
+613	Carpeta: {} • Archivo: {}
+614	Imágenes
+615	Imágenes de vídeos anteriores
+616	Imágenes leídas: {} clips entendidos (tamaños de plano, caras, tema).
+617	Leer las imágenes necesita Claude, que no está disponible aquí.
+618	Imágenes que aún no has visto mucho
+619	Imágenes, personajes y fondos
+620	Para {} de historia, {}: se repetirán o las cubrirán otras imágenes.
+621	para la marca de agua
+622	Bosque
+623	Olvidar las claves guardadas
+624	Olvidar lo aprendido
+625	Hacia delante
+626	Se encontraron {} archivos de audio. Se usa {}; elige otro en Tu canción si prefieres.
+627	Se encontraron {0} personaje(s) que aparecen en dos o más clips (de {2} caras){3}. Elígelos encima de tus clips para ordenar por ellos.
+628	Se encontraron {0} cara(s), pero nadie aparece en más de un clip.
+629	Marcas de agua encontradas en {0} clip(s); se dejarán fuera del encuadre.
+630	Exacto al fotograma
+631	MP4 exacto al fotograma: cada corte cae justo en su pulso, desde el primer fotograma.
+632	La grabación exacta al fotograma no está disponible ahora, así que se usa la grabación estándar.
+633	WebM exacto al fotograma: tiempo exacto. YouTube acepta WebM; conviértelo a MP4 para Instagram y TikTok, o elige Más compatible.
+634	Fotogramas que parecen cuadros, tonos verde azulado y beige, zooms atrevidos y barridos.
+635	Encuadre
+636	Frenético
+637	Edición frenética, estroboscopios, destellos y golpes con temblor a toda intensidad.
+638	Estroboscopio frenético
+639	Gratis
+640	tiempo libre
+641	Liberar espacio
+642	De {} Shorts:
+643	Volumen completo
+644	Más hacia dentro
+645	Futurista / ciencia ficción
+647	Gemini (Google)
+648	Modelo de Gemini
+649	Suave
+650	Flotación suave
+651	Suave: igualar color y brillo
+652	Pedir revisión con IA
+653	Preparando
+654	Primero se pide la revisión con IA. Compruébala y luego exporta.
+655	Obteniendo los clips de ejemplo…
+656	GitHub respondió
+657	Pesadilla de fallos
+658	Fallos en los drops
+659	Campo de color brillante
+660	Pop brillante
+661	Fotogramas brillantes y gráficos donde el color marca el ambiente, cambiando con cada parte en lugar de contar una historia.
+662	Buena variedad: {} de tus {} clips usados, ninguno en pantalla más del {}% del vídeo.
+663	ID de cliente OAuth de Google
+664	Blanco y negro con grano, composiciones austeras y planos largos y quietos.
+665	Ecualizador gráfico (10 bandas)
+667	Grok (xAI)
+668	Modelo de Grok
+669	Mitad ({})
+670	Media velocidad
+671	Garabatos dibujados a mano en el pulso
+672	Balanceo de cámara en mano
+673	Usuario o copyright, p. ej. @paulmakes o © Paul 2026
+674	Cortes secos
+675	Cortes secos en el pulso y color natural. Nada añadido.
+676	Cortes secos, color real
+677	Hashtags: #Shorts más {0} etiqueta(s) de tema en la descripción, no en el título.
+678	Aliento contenido
+679	Aliento contenido: una pausa congelada antes de cada drop
+680	Aquí está
+681	Historial borrado: todos los clips vuelven a contar como nuevos.
+682	Se queda quieto un instante antes del drop
+683	Vídeo casero
+684	Estilo propio mantenido: rótulos {} y {}. Hacerlo todo los mantiene y varía el resto.
+685	Cómo suena {} en voz alta
+686	Cuántos ajustes mostrar
+688	Edición hype
+689	Si los cortes parecen demasiado lentos o recargados, prueba otra velocidad.
+690	La imagen 1 es una hoja de contactos con 8 fotogramas de la versión {}, en orden, a {} segundos de la canción. La imagen 2 muestra un fotograma de cada exportación ({}, de izquierda a derecha) en el momento en que aparece el texto de apertura. La línea amarilla discontinua marca la zona segura de la plataforma y NO forma parte de la exportación.
+691	Imágenes que se multiplican al ritmo, trucos de cámara y una calidez artesanal.
+692	Imágenes:
+693	Golpe de impacto en los drops
+694	En un vehículo
+695	En la edición
+696	En la edición: toca para dejarlo fuera
+697	En la app de Google Play
+698	En uso
+699	Incluir el sonido de los clips de vídeo
+700	Incluir el error, los últimos pasos, los ajustes y el diagnóstico (sin clips, canción ni datos personales)
+701	Indie 16 mm
+702	Interior
+703	Industrial
+704	Lista del sector
+705	Bucle infinito
+707	Feed de Instagram y Facebook
+708	Reels de Instagram y Facebook
+709	instagram.com/tu
+710	instala Google Drive para ordenador u OneDrive, luego usa Elegir una carpeta entera y elige la carpeta sincronizada. También puedes arrastrar carpetas directamente a esta página.
+711	Instrumental {}
+712	Interludio {}
+713	intro
+714	Intro {}
+715	introducir
+716	Presenta el mundo y al personaje principal antes de que nada lo altere.
+717	Corta al ritmo
+718	Se repite en bucle. Míralo dos veces
+719	Ya estaba en modo seguro, así que
+720	Es una frase muy gastada; escribe algo concreto.
+722	Viaje (mantiene el orden de grabación)
+723	Mantener mi estilo propio (rótulos y final) en cada vídeo
+724	Mantén la app abierta
+725	Mantener marcas de agua y logos fuera de la edición (recorta o reencuadra alrededor, en cada formato)
+726	Guardando una copia de tus archivos en la app (para que Android no los recupere): {} de {}…
+727	Mantiene la edición variada: estas imágenes no se usan cerca
+728	Se queda en este dispositivo salvo que publiques tu página.
+729	Mantenido: rótulos {}, {}.
+730	Las claves van directamente de tu navegador a esa empresa por una conexión cifrada, y a ningún otro sitio. Las claves guardadas se cifran (AES-256) con tu frase de acceso, que nunca se guarda. Para más seguridad, crea una clave solo para esta app con un límite de gasto mensual y bórrala si dejas de usar la app.
+731	Claves guardadas, protegidas con tu frase de acceso.
+732	Claves desbloqueadas para esta sesión.
+733	Cae en el drop
+734	Horizontal 16:9. Las ediciones largas van bien. YouTube reproduce a unos −14 LUFS.
+735	Idioma
+736	Los últimos 20 s se mantienen tranquilos, con planos más largos y un fondo más oscuro para los botones de pantalla final de YouTube.
+738	Últimos segundos
+739	Últimos pasos antes de que la página se detuviera:
+740	La última vez, la comprobación de Beat This! se quedó sin memoria y detuvo la página. Está desactivada en este móvil; puedes volver a activarla en Cámara y objetivos, mejor con menos apps abiertas.
+741	La última vez la página se detuvo al analizar “{}” ({} MB). Se ha apartado: vuelve a vincular la carpeta y se analizará el resto. Toca “Informar de este problema” para contarme qué pasó.
+742	0,25 s después
+743	Después en el clip ▶
+744	Inclinándose por lo que ha retenido a tus espectadores ({} Shorts): {}.
+745	Aprender lo que hay en mis clips
+746	Aprendiendo de tus resultados de YouTube
+747	Aprendiendo lo que hay en tus clips
+748	Aprendiendo lo que hay en tus clips: {} de {}. Puedes seguir trabajando.
+749	Aprendiendo lo que hay en tus clips…
+750	Menos usados últimamente
+751	Dejar fuera
+752	Dejar fuera todos los mostrados
+753	Dejar fuera los clips de mi último vídeo
+754	Sin marca de agua en las exportaciones para TV
+755	Izquierda
+756	Fuera
+757	Fuera de la edición: toca para usarlo
+758	Duración
+759	La duración es {} s; se esperaban {} s.
+760	Objetivo
+761	Kits de objetivos
+762	Objetivos
+763	Que elija el revisor de IA
+764	Permite que la letra y las búsquedas encuentren planos por lo que muestran. Descarga un modelo de 150 MB una vez; luego funciona sin conexión.
+765	Rótulos
+766	Claro
+767	Fugas de luz
+768	De luz a oscuridad
+769	De luz a oscuridad: primero imágenes luminosas, al final las oscuras
+770	¿Te gusta?
+771	Como los planos que retienen a tus espectadores en YouTube
+772	Color de la línea
+773	Línea flotando sobre la imagen
+774	Opacidad de la línea
+775	Enlace copiado.
+776	Feed de LinkedIn y X
+777	Escuchar
+778	Escuchar el {}
+779	Escuchándola…
+780	Escuchando más canciones
+781	Escuchando la canción de la referencia…
+782	Escuchando la canción de la referencia… {}%
+783	Escuchando tu canción
+784	Escuchando tus canciones
+785	Escuchando tus canciones: {} de {} ({})…
+786	Vinilo lo-fi
+787	Volver a cargar “{}”
+789	Volver a cargar mi carpeta
+790	Cargando el reconocimiento facial (unos 12 MB, una vez)…
+791	Lugar
+792	Fijar
+793	Logo establecido como tu marca de agua.
+794	Tomas largas cámara en mano, luz natural y muy pocos cortes, dejando que el momento fluya.
+795	Teleobjetivo: comprimido, bordes suaves
+796	Más largo
+797	El más largo
+798	Plano más largo {} s (una imagen nueva al menos cada 3 s mantiene la atención).
+799	Plano más largo antes del final: {} s.
+800	Estética
+801	Parecido ×{}
+802	Parecidos
+803	Mirando el clip {} de {}…
+804	Mirando tus clips
+805	Mirando tus clips…
+806	Buscando caras… clip {} de {}
+807	Buscando en “{}”…
+808	Buscando…
+809	Estéticas
+810	Mucho movimiento para un pasaje fuerte
+811	Sonoridad
+812	La sonoridad se estima y se limita para quedar por debajo de 0 dB. Revisa la ayuda de cada plataforma antes de una gran campaña, porque los límites cambian.
+813	Sonoridad ajustada a {} LUFS a partir de la mezcla final.
+814	Tercio inferior, de 1 s a 6 s
+815	Título en el tercio inferior
+816	LRCLIB no respondió. Comprueba la conexión y vuelve a buscar.
+817	LUFS (aprox.)
+818	letra
+819	Letra
+820	Hacer {} vídeos
+821	Haz un vídeo que corte al ritmo de tu canción.
+822	Hacer otra versión
+823	Convertirlo en vídeo
+824	Hacer mi
+825	Hacer mi Short
+826	Hacer Short
+827	Hacer el corte solo en cuanto estén la canción y los clips, y luego reproducirlo
+829	Hacer los vídeos marcados en Publicar (YouTube Shorts salvo que elijas otros)
+830	Hacer de esto el personaje principal de la historia
+831	Hacer vídeo
+832	Hacer vídeos
+833	Hace un YouTube Short. Elige otros en Adónde va.
+834	Hace: {}. Cámbialos en Adónde va.
+835	Haciendo {} (pasada {} de {}, faltan unos {}). Mantén esta pestaña visible.
+836	Haciendo {}. Varios formatos a la vez viene con Pro; desmarca los demás o hazlos de uno en uno.
+837	Haciendo el
+838	Haciendo la versión {}…
+839	Haciendo el vídeo: {}%, faltan unos {} s.

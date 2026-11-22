@@ -196,7 +196,7 @@ function measureLufs(x,sr,ch){
   const g2=g1.filter(m=>L(m)>rel); return L(g2.reduce((a,b)=>a+b,0)/(g2.length||1));
 }
 
-function status(msg, err){ const s=$("status"); s.textContent=msg||""; s.classList.toggle("err",!!err); }
+function status(msg, err){ const s=$("status"); S._statusEn=msg||""; s.textContent=msg||""; s.classList.toggle("err",!!err); }
 const tick = () => new Promise(r=>setTimeout(r,0));
 function fmtTime(s){ s=Math.max(0,Math.round(s)); return Math.floor(s/60)+":"+String(s%60).padStart(2,"0"); }
 function hue(i){ return `hsl(${(i*137.5+205)%360} 68% 56%)`; }
