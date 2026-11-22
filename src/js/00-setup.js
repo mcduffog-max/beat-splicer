@@ -48,10 +48,11 @@ const LOOK_IDS=["mode","pace","variety","trans","trLen","fit","zoom","kb","fadeI
   "rvClaude","rvOpenai","rvGemini","rvGrok","modelOpenai","modelGemini","modelGrok","keepKeys","capTopic",
   "stillMotion","lens","camEnergy","textStyle","ovLeaks","ovBokeh","ovDust","ovLower","clipSound","clipVol","projName","nameScheme","proRules","autoTitles","payoffOn","artistName","engine","storyOn","storyShape","faceFrame","aiImagery","exclN","fxRamp","motif","sigTrans","fxReverse","camMoves","ownMusic","songVer","audTexture","audRadio","audFilterDrop","audStutter","audEcho","songEnd","sfxWhoosh","sfxImpact","sfxRiser","endStyle","endCard","wmAvoid","progBorder","progScope","progOpacity","progDir","progColor","progShadow","progSide","textFold","lyricMatch","lyricShow","colMatch","cutAction","matchCuts","phrasing","restraint","ownMotif","dirNote","houseOn","planWhole","autoCut","refOn","gpuFinish","motionBlur","beatThis"];
 function saveSettings(){ try{ const look={}; LOOK_IDS.forEach(id=>{ const el=$(id); if(el) look[id]=el.type==="checkbox"?el.checked:el.value; });
-  localStorage.setItem("beatsplicer2",JSON.stringify({EQ,look,eps:S.eps,t2:1,t3:1})); }catch(e){} }
+  localStorage.setItem("beatsplicer2",JSON.stringify({EQ,look,eps:S.eps,t2:1,t3:1,t4:1})); }catch(e){} }
 function loadSettings(){ try{ const s=JSON.parse(localStorage.getItem("beatsplicer2")||"null"); if(!s) return;
   if(!s.t2&&s.look){ s.look.autoTitles=false; s.look.payoffOn=false; } // Nov 2026: no titles unless the person adds one
-  if(!s.t3&&s.look){ s.look.camMoves="director"; } // Nov 2026: the camera director becomes the default
+  if(!s.t3&&s.look){ s.look.camMoves="director"; }
+  if(!s.t4&&s.look){ s.look.autoTitles=true; } // 22 Nov 2026: every video opens with a written title again (it folds away at the end of its time) // Nov 2026: the camera director becomes the default
   if(s.look&&s.look.lens&&!/^kit:/.test(s.look.lens)&&!LENSES[s.look.lens]&&!["tiltshift","none"].includes(s.look.lens)) s.look.lens={telephoto:"cooke",dreamy:"promist",vintage:"k35",natural:"none"}[s.look.lens]||"kit:cinema"; // earlier lens names
   if(s.EQ) Object.assign(EQ,s.EQ);
   if(Array.isArray(s.eps)) S.eps=s.eps.filter(id=>EP(id));

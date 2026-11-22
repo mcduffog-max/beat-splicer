@@ -13,7 +13,7 @@ function isCliche(s){ const n=" "+normT(s)+" "; return CLICHES.some(c=>n.include
 function wordCount(s){ return String(s||"").trim().split(/\s+/).filter(Boolean).length; }
 function titleHistory(){ try{ return JSON.parse(localStorage.getItem("beatsplicerTitles")||"[]"); }catch(e){ return []; } }
 function saveTitleHistory(list){ try{ localStorage.setItem("beatsplicerTitles",JSON.stringify(titleHistory().concat(list).slice(-200))); }catch(e){} }
-function hookDur(text){ return Math.max(2,Math.min(4,1+0.5*wordCount(text))); } // long enough to read twice, short enough to keep moving
+function hookDur(text){ return Math.max(3,Math.min(6,1.5+0.75*wordCount(text))); } // long enough to read twice, short enough to keep moving
 function trimWords(s,maxChars){ s=String(s||"").replace(/\s+/g," ").trim(); if(s.length<=maxChars) return s; const cut=s.slice(0,maxChars+1); const i=cut.lastIndexOf(" "); return (i>maxChars*0.5?cut.slice(0,i):cut.slice(0,maxChars)).replace(/[\s,;:–-]+$/,""); }
 const TITLE_LIMIT=ep=> ep.id==="youtube"?60 : ep.id==="shorts"?50 : ep.id==="tv"||ep.id==="mobile"?60 : 80;
 const DIR_WORDS={"Fisheye glam":["neon","glossy","wide-eyed"],"Glossy colour field":["glossy","colour-soaked","bold"],"Painterly surreal":["painted","dreamlike","surreal"],

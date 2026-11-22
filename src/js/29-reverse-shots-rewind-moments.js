@@ -399,7 +399,7 @@ function drawText(o,t,win,F,bi){
     for(let k=0;k<6 && lines.length>2;k++){ const cur=parseFloat(g.font.match(/(\d+(?:\.\d+)?)px/)[1]), nf=Math.round(cur*0.88); g.font=g.font.replace(/\d+(?:\.\d+)?px/,nf+"px"); lines=wrapLines(g,txt,aw*0.9,9); } // shrink, never drop words
     const inRamp=(it.kind==="hook"&&PRO()&&ep.short)?0.0001:it.kind==="payoff"?0.08:0.35, el=it.k*it.dur;
     /* the hook's exit: letters fold flat one by one, from the last letter back to the first (setting textFold) */
-    const foldOn=it.kind==="hook"&&TS!=="box"&&(!$("textFold")||$("textFold").checked), nCh=foldOn?lines.join("").replace(/\s/g,"").length:0, FOLD=0.22, E=foldOn?Math.min(it.dur*0.45,Math.max(0.55,0.055*nCh+FOLD)):0, folding=foldOn&&el>it.dur-E;
+    const foldOn=it.kind==="hook"&&TS!=="box"&&(!$("textFold")||$("textFold").checked), nCh=foldOn?lines.join("").replace(/\s/g,"").length:0, FOLD=0.33, E=foldOn?Math.min(it.dur*0.45,Math.max(0.8,0.083*nCh+FOLD)):0, folding=foldOn&&el>it.dur-E;
     const appear=Math.min(1,el/inRamp), out=it.kind==="end"||foldOn?1:Math.min(1,Math.max(0,(it.dur-el)/0.3));
     const pop=1+(it.kind==="payoff"?0.35:0.25)*(1-ease(appear))+(bi&&F.pulse?0.04*Math.exp(-bi.ph*10):0);
     // hooks sit in the top third of the safe zone on tall formats, where eyes land first
