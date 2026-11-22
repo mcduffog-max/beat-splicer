@@ -216,7 +216,7 @@ async function autopilot(){
     const recent=k=>hist.slice(-2).map(hh=>hh[k]), nb=noteBias(), paceName=weightedPick([["tight",1],["classic",1.2],["spacious",1]].filter(p=>!recent("pace").slice(-1).includes(p[0])||nb.pace===p[0]).map(p=>[p[0],p[1]*learnW("pace",p[0])*(nb.pace===p[0]?4:1)])); S._paceName=paceName;
     S._paceK={tight:0.85,classic:1,spacious:1.22}[paceName];
     const LOOKPOOL={awakening:["own","vivid","glossy"],temperature:["own","none","moody"],twoworlds:["own","none","vivid"]}[dirId]||["own","none","warmfilm","moody","painterly","fincher","cold","bw","tealorange","vivid","glossy"], LOOKW={own:5,none:1.5,tealorange:0.3,glossy:0.4,vivid:0.5,neon:0.2,vhs:0.2}; // its own grade first; trend looks rarely
-    let textPick=weightedPick(["clean","box","cinema","impact","serif"].filter(t=>!recent("text").includes(t)).map(t=>[t,learnW("text",t)]));
+    let textPick=weightedPick(["clean","box","cinema","impact","serif"].filter(t=>!(t==="box"&&$("textFold").checked)).filter(t=>!recent("text").includes(t)).map(t=>[t,learnW("text",t)]));
     const calm=!!(S.an.feel&&S.an.feel.free), sigPick=calm?"mixed":weightedPick(["whip","zoomthru","spin","mask","flash","zoom","zoomout","dip","mixed"].filter(t=>!recent("sig").includes(t)).map(t=>[t,(t==="mixed"?0.6:1)*learnW("sig",t)]));
     // the camera: a lens kit and an energy that suit the style, the song and the footage (and what has kept viewers)
     const lensKit=(()=>{ const sty=(top[0]&&top[0].name)||"", w={cinema:1.2,epic:0.8,vintage:0.8,indie:0.7,dream:0.6,clean:0.7};

@@ -27,7 +27,7 @@ const DSTYLES={
   "Dark precision":{d:"Dark, desaturated green-yellow grade, controlled push-ins and clean cuts.",
     pace:0.75,trans:"cut",trLen:0.3,look:"fincher",kb:true,fxVignette:true,fxGrain:true,space:"hall",spaceAmt:0.25},
   "Stark monochrome":{d:"Grainy black and white, stark compositions and long, still holds.",
-    pace:0.5,trans:"dip",trLen:0.6,look:"bw",fxGrain:true,fxVignette:true,slowmo:"quiet",space:"hall",spaceAmt:0.35},
+    pace:0.5,trans:"crossfade",trLen:0.5,look:"bw",fxGrain:true,fxVignette:false,slowmo:"quiet",space:"hall",spaceAmt:0.35},
   "Frantic strobe":{d:"Frantic editing, strobes, flashes and shaking hits at full intensity.",
     pace:2,trans:"flash",trLen:0.2,look:"vivid",fxStrobe:true,fxShake:true,fxGlitch:true,space:"pingpong",spaceAmt:0.7},
   "Dreamlike calm":{d:"Unhurried long takes, slow motion, moody night tones and wide framing.",

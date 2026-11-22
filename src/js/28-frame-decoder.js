@@ -290,7 +290,7 @@ const LOOKS={
   warmfilm:{f:"sepia(0.28) saturate(1.1) contrast(1.06) brightness(1.03)", over:[["soft-light","rgba(255,170,90,0.18)"]]},
   vivid:{f:"saturate(1.55) contrast(1.15)"},
   moody:{f:"contrast(1.22) saturate(0.78) brightness(0.9)", over:[["multiply","rgba(40,50,80,0.18)"]]},
-  bw:{f:"grayscale(1) contrast(1.25)"},
+  bw:{f:"grayscale(1) brightness(1.22) contrast(1.06)",mono:true},
   vhs:{f:"saturate(1.35) contrast(1.08) hue-rotate(8deg)", scan:true, over:[["screen","rgba(255,0,120,0.05)"]]},
   neon:{f:"saturate(1.6) contrast(1.18)", grad:[["soft-light","rgba(255,30,60,0.55)",0.15,0.2],["soft-light","rgba(40,80,255,0.55)",0.85,0.8]]},
   glossy:{f:"saturate(1.4) contrast(1.08) brightness(1.06)", over:[["screen","rgba(255,255,255,0.04)"]]},

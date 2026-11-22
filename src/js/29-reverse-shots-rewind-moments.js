@@ -192,6 +192,7 @@ function postFx(o,t,win,F,bi,opts={}){
     g.save(); g.globalCompositeOperation="overlay"; g.globalAlpha=0.12; g.translate(-rx,-ry); g.fillStyle=pat; g.fillRect(rx,ry,W,H); g.restore(); }
   if(F.vignette){ if(!o.vig){ const gr=g.createRadialGradient(W/2,H/2,Math.min(W,H)*0.42,W/2,H/2,Math.hypot(W,H)*0.55); gr.addColorStop(0,"rgba(0,0,0,0)"); gr.addColorStop(1,"rgba(0,0,0,0.55)"); o.vig=gr; }
     g.fillStyle=o.vig; g.fillRect(0,0,W,H); }
+  if(F.look.mono){ g.save(); g.filter="grayscale(1)"; g.globalCompositeOperation="copy"; g.drawImage(g.canvas,0,0); g.restore(); } /* black and white stays black and white: lens warmth, light leaks and colour layers lose their colour too */
   if(F.strobe && !opts.still) strobeFx(o,bi);
   if(F.split) splitFx(o,t);
   else if(F.bars && W>=H){ const bh=Math.max(0,(H-W/2.39)/2); g.fillStyle="#000"; g.fillRect(0,0,W,bh); g.fillRect(0,H-bh,W,bh); }
