@@ -1,0 +1,398 @@
+0	… de mes 2 dernières vidéos
+1	… de mes 3 dernières vidéos
+2	… de mes 5 dernières vidéos
+4	« {} » dure {}, trop long pour être monté d’un seul tenant{}. Choisissez la partie à utiliser :
+5	« {} » est à l’écran pendant {} % de la vidéo. Appuyez sur Remixer ou ajoutez d’autres clips du même genre.
+6	« {} » tombe sur le temps fort principal à {}.
+7	« {} », pendant {} s
+8	« {} » : « {} » avec {} clips. Choisissez maintenant le dossier qui les contient (les sous-dossiers sont aussi parcourus).
+9	« {0} » : {1} fichier(s) ajouté(s).
+10	« {0} » : {1} fichier(s) ajouté(s){3}{4}.
+11	« {} » : plan moyen de {} s (calme {}, médian {}, fort {}) ; {} % des coupes sur le temps, {} % sur le premier temps, {} % à contretemps ; {} plans longs par minute ; images {}.
+12	(images plus calmes pour un morceau doux)
+13	(proche : « Essayer une autre direction » pour quelque chose de plus éloigné)
+14	(corrigé par vous)
+15	(images vives pour un morceau entraînant)
+16	(sur ordinateur)
+17	(un PNG à fond transparent donne le meilleur résultat)
+20	(mode sans échec)
+21	(Slowed + Reverb)
+22	(Accéléré)
+23	(appuyez pour modifier)
+24	(l’appli s’en souvient)
+25	(le navigateur s’en souvient)
+26	(l’aperçu de recherche en affiche environ 150)
+27	(YouTube, jusqu’à 12)
+28	{} - notes de publication.txt
+29	{} - couverture Shorts Reels TikTok 1080x1920
+30	{} - miniature YouTube 1280x720
+31	{} (automatique)
+32	{} (appuyez pour modifier)
+33	{} et {}
+34	{} et {} s’affrontent : le moment où tout se joue.
+35	{} arrive et la pression monte sur {}.
+36	{} avant le drop
+37	{} moments forts
+38	{} caractères (restez sous {} pour ne pas être coupé){}
+39	{0} clip(s)
+40	{0} clip(s) ne s’ouvre(nt) plus (Android a retiré l’accès) et ont été laissés de côté. Ajoutez-les à nouveau pour les utiliser.
+41	{0} clip(s) inutilisable(s), ignoré(s). {3}
+42	{0} clip(s) trouvé(s) dans ce dossier.
+43	{0} clip(s) prêt(s). Ajoutez-en pour plus de variété.
+44	{} clips · {} dans le montage{}
+45	{} clips · {} dans le montage{}{}{}{}{}{}{}{}{}
+46	{} clips et photos (minimum {}, idéalement {}).
+47	{} est inclus avec {}{}.
+48	{0} coupe(s) dans les 5 premières secondes.
+49	{} coupes · environ {} s chacune{}
+50	{} clips différents, environ {} par minute.
+51	{0} drop(s) trouvé(s) ; {2}.
+52	Montage {}
+53	{} l’affronte de face.
+54	{} a échoué : {} {} Navigateur : {} Moteur : {} Formats : {} Clips : {}, chanson {}
+55	{0} fichier(s) trop volumineux pour être analysé(s) (plus de 300 Mo).
+56	{} avait un poids {} sur {}
+57	{} en noir et blanc
+58	{} au ralenti
+59	{} ne recule pas
+60	{} lignes de {}, {}{}.
+61	{} lignes tapées, les autres réparties entre elles
+62	Durée {} (recommandé pour {} : environ {} s).
+63	{} paroles trouvées pour « {} »{}.{}{}
+64	{} rencontre {}
+65	{0} moment(s) où les mêmes images reviennent en moins de 20 s. Plus de clips les éviteraient.
+66	{} autres pas encore analysées (utilisez « Analyser plus de chansons »).
+67	{} demande au moins {} clips ou photos pour {} (vous en avez {}).
+68	{} demande au moins {} s d’images au total (vous avez {} s ; une photo compte 3 s).
+69	{} ne l’a pas vu venir
+70	{} montées sur {} accélèrent vers le drop avec une coupe pile dessus
+71	{} moments forts sur {} tombent sur un gros plan ou sur les yeux.
+72	{} plans échantillonnés sur {} n’affichaient pas les images prévues (vers {}). Cela arrive quand un clip ne se charge pas à temps sur un ordinateur occupé. Fermez les autres onglets et recommencez.
+73	{} ou {} : qui l’emporte ?
+74	{} a choisi {} : {}
+75	{} choix pour l’instant ; pas encore de tendance claire.
+76	{} choix. Appris jusqu’ici : {}.
+77	{0} plateforme(s) nécessite(nt) Creator, donc seulement {3} cette fois.
+78	{} s d’images statiques dans une partie énergique. Ajoutez des clips plus vivants.
+79	{} tags de recherche prêts à coller.
+80	ombres {}, hautes lumières {}, contraste {}
+81	{} plans sont cadrés sur un visage{}.
+82	{} chansons prêtes.{}{}{}
+83	{} s’est arrêté sur une erreur : {}. Appuyez sur « Signaler ce problème » pour l’envoyer.
+84	{} s’est arrêté : Android a retiré l’accès à certains clips ou à la chanson (cela arrive quand l’appli est fermée depuis un moment). Ajoutez-les à nouveau{}.
+85	Style {} appliqué.
+86	{} tags, {} caractères sur 500. Collez-les dans le champ Tags de YouTube Studio.
+87	Transitions {}
+88	{0} clip(s) très volumineux à ajouter à nouveau.
+89	poids {} sur {}
+90	{} démarrera à la fin de l’analyse en cours…
+91	{0} mot(s), environ 1,5 s sur le temps fort principal
+92	{0} mot(s), affiché(s) de 0,1 à {2} s, tiers supérieur{3}
+93	{} x {} à {} i/s, durée {} (chanson de {} à {}), volume cible {} LUFS
+94	{}, {} à environ {} BPM. Ambiance : {}
+95	{}, la nuit
+96	{}, monté sur le rythme
+97	{}, image par image
+98	{}, sans filtre
+99	{}, un temps après l’autre
+100	{}, puis le drop
+101	{} : enregistrement de {} (appuyez sur Utiliser pour choisir un passage)
+102	{} : {} Shorts lus, {} reliés aux réglages qui les ont créés.
+103	{} : {}, {}, {} clips, en {}
+104	{} : {}. Lecture en cours.
+105	{} : l’un des {}
+106	{} : photo, nom et thème
+107	{} : mis de côté (il a bloqué la page la dernière fois)
+110	{} : trop volumineux pour être analysé
+112	{}{} points
+113	{}{}, monté sur le rythme de « {} »{}.
+114	{} % {} partent à chaque seconde
+115	{} % différent de votre export le plus proche (« {} », {}).
+116	◀ Plus tôt dans le clip
+117	✓ Vérifié : taille, durée{}{}{}
+119	10 min
+120	1080p à 25 i/s (régions PAL), volume broadcast −23 LUFS, texte gardé dans la zone sûre des titres.
+121	Vidéos 1080p
+122	1080p, toutes les plateformes, kits d’objectifs, votre propre rendu, la note du réalisateur et l’image récurrente. Sans filigrane.
+125	Film 16 mm
+126	Film 16 mm : grain, coins doux
+129	3 min
+131	Son 3D
+132	Les réglages du son 3D s’appliquent la prochaine fois que vous appuyez sur Écouter ou Aperçu.
+134	4 min
+136	6 min
+138	Optique ciné années 70
+139	Optique ciné années 70 : halo chaud
+141	8 min
+142	Rêve 8D
+143	Orbite 8D (tourne autour de votre tête)
+144	Un montage {} : {}.
+145	Une miniature 1280×720 est incluse dans l’export.
+146	Un montage calé sur le rythme de « {} »{}.
+147	Une autre idée de montage : nouvelle histoire, nouveau rythme, nouveau rendu.
+148	Une autre idée : nouveau style, rythme et histoire
+149	Quelques moments forts
+150	Un fin trait aux coins arrondis fait le tour de l’image et se complète à la fin de la vidéo. Sur les vidéos verticales il est en retrait des bords, pour que les téléphones qui rognent les côtés d’un Short l’affichent en entier.
+151	Une vidéo longue demande environ {} clips bien assortis ; vous en avez {}.
+152	A est mieux
+153	Une phrase sur vous
+154	Un logo ou un filigrane a été trouvé dans ce clip ; chaque format est cadré pour l’éviter
+155	Un plan long : la chanson respire ici
+156	Une nouvelle version de l’appli est prête (build {} ; vous avez {}).
+157	Une page publique avec votre photo, votre nom, vos liens et les vidéos de votre choix, sur le site Beat Splicer. Ceux qui découvrent vos vidéos peuvent y voir le reste de votre travail.
+158	Une question à épingler en premier commentaire pour lancer les réponses.
+159	Une image récurrente tirée de mes images : posée tôt, de retour au milieu, elle clôt la vidéo
+160	Un dossier entier ou quelques vidéos et photos. Rien ne quitte votre téléphone.
+161	À peu près pareil
+162	Abstrait ou graphique
+163	Les actes suivent {} : la mise en place va jusqu’au premier refrain et le climax tombe sur le dernier grand refrain.
+164	Ajouter
+165	Ajoutez une description : Écrire de nouveaux titres la remplit.
+166	Ajouter un logo, un sticker ou un graphisme
+167	Ajouter un fichier de paroles
+168	Ajoutez d’abord une chanson et des clips.
+169	Ajoutez d’abord une chanson.
+170	Ajouter un titre (facultatif)
+171	Ajoutez un carton de titre dans Rendu.
+172	Ajoutez d’abord une clé d’IA : appuyez sur Tous les réglages, puis Destination › Connecter ChatGPT, Gemini ou Grok.
+173	Ajoutez d’abord une clé API
+174	Ajouter un autre format ({} de plus)
+175	Ajoutez-en autant que vous voulez. Plus de variété donne de meilleures correspondances.
+176	Ajoutez d’abord l’audio et les clips, puis choisissez.
+177	Ajoutez l’audio et les clips pour voir comment chaque export se situe.
+178	Ajoutez l’audio pour voir ses temps ici.
+179	Ajouter plus
+180	Ajoutez plus de clips, ou décochez cette plateforme dans Destination.
+181	Ajoutez un texte d’ouverture dans Rendu. Beaucoup de gens défilent sans le son, alors le texte porte l’accroche.
+182	Ajoutez des tags de recherche (Écrire de nouveaux titres les remplit).
+183	Ajoutez d’abord des chansons et des clips.
+184	Ajoutez à nouveau les {0} clip(s) très volumineux si vous les voulez.
+185	Ajoutez les paroles et les plans suivent les mots : ce qui est chanté apparaît au moment où on le chante. Un fichier .lrc est calé à la ligne près ; des paroles simples sont réparties sur les parties chantées.
+186	Ajoutez des clips vidéo pour construire le montage.
+187	Ajoutez vos clips
+188	Ajoutez vos clips, puis appuyez sur « Trouver la meilleure chanson et les meilleurs clips ».
+189	Ajoutez d’abord votre ID client Google
+190	Ajoutez d’abord votre nom (ci-dessus).
+191	Ajoutez votre chanson et vos clips, puis appuyez sur Tout faire.
+192	Ajouté par lien
+193	En ajouter {} de plus donnerait des images neuves à chaque plan.
+194	L’IA regarde des images de chaque clip et note la valeur de plan, les visages, l’expression et le sujet, pour que l’histoire s’ouvre en large, se resserre sur les visages et les yeux quand la musique monte, puis recule à la fin.
+195	Avis de l’IA
+196	Tout est appliqué
+197	Tous les clips
+198	Tous les réglages
+199	Toutes les vidéos
+200	Intensité
+201	Analyser plus de chansons
+202	Anamorphique
+203	Épique anamorphique
+204	Anamorphique : vignettage ovale, traînées
+205	Anamorphique : hautes lumières étirées, vignette ovale
+206	Et maintenant
+207	Appli Android
+208	Appli Android build {}
+209	Android n’a pas laissé l’appli les ouvrir. S’ils sont dans Google Photos mais pas sur le téléphone, téléchargez-les d’abord (ouvrez chacun et choisissez Télécharger), ou choisissez-les depuis l’appli Fichiers.
+210	Android a besoin de votre accord une fois : activez « Autoriser cette source » pour Beat Splicer, revenez, puis appuyez à nouveau sur Mettre à jour l’appli.
+211	Une autre paire
+212	Répondez OUI à « Contenu modifié ou synthétique » lors de la mise en ligne. La description le précise déjà.
+214	N’importe quel MP3, M4A ou WAV. Beat Splicer repère le rythme, le refrain et le drop.
+215	Tout est permis
+216	Clé API sur aistudio.google.com
+217	Clé API sur console.x.ai
+218	Clé API sur platform.openai.com
+219	Appliqué
+220	Recadrage appliqué à tous les clips.
+221	Appliquer toutes les suggestions
+222	Appliquer automatiquement les règles du secteur (recommandé)
+223	Appliquer : {} → {}
+224	Artiste
+225	Ordre d’ajout
+226	Tel quel
+227	Tel quel ({})
+228	Aussi long que permis
+229	Laisser l’IA choisir
+230	Laisser l’IA choisir nécessite Claude ou une clé d’IA : appuyez sur Tous les réglages, puis Destination › Connecter ChatGPT, Gemini ou Grok.
+231	Demander l’avis de l’IA avant l’export
+232	Question à {}… cela prend en général moins d’une minute.
+233	L’IA choisit un réalisateur…
+234	Question au relecteur IA…
+235	L’IA nomme et vérifie chaque personnage…
+236	Au drop
+237	Au bord
+238	Effets audio
+239	Audio prêt.
+240	Autorisation
+241	Réalisation auto
+242	Automatique
+243	Automatique (suit la musique)
+244	Style automatique : {} pour l’instant ({}). Tout faire peut en choisir un autre pour chaque nouveau montage.
+245	Les titres automatiques sont désactivés. L’accroche ci-dessous est utilisée sur toutes les plateformes.
+246	Automatique : Tout faire choisit un style pour chaque nouveau montage.
+247	Moyenne sur {} relecteurs. Les points soulevés par plusieurs d’entre eux sont à traiter en premier.
+248	Plan moyen de {} s (les clips musicaux tournent autour de 2 s, plus dans les styles calmes).
+249	B est mieux
+250	Ligne précédente
+251	Revenir en automatique
+252	Retour au montage
+253	Retour à la chanson d’origine…
+254	Retour au point de départ, mais changé : la nouvelle normalité.
+255	Arrière-plans :
+256	Retour arrière
+258	Basses
+259	Renfort de basses
+261	Rythme
+262	Rythme et énergie
+263	Montage rythmique
+264	Effets sur le rythme
+265	Rythme seul
+266	Tempo réglé sur {} BPM. Le montage a été reconstruit.
+270	Beat This! confirme le tempo ({} BPM).
+271	Beat This! n’a pas pu fonctionner ici :
+272	Beat This! a recompté la chanson : {} → {} BPM{}.
+273	Rythme, énergie et ambiance
+274	Les 15 meilleures secondes
+275	Les 30 meilleures secondes
+276	Les 60 meilleures secondes
+277	Le plus adapté à cette chanson
+278	Meilleure correspondance
+279	Meilleure correspondance : « {} » (adéquation {} %). Elle utilise {} de vos {} clips : ceux dont le mouvement et les couleurs vont avec cette chanson{}. Vos images conviennent à {}.{}
+280	Idéal au casque. Le ping-pong fait passer le son de gauche à droite à chaque coupe.
+281	Grand logo sur les dernières secondes
+282	Plus gros drop de votre dernière vidéo : plan {} à {} ({}) dans « {} ».
+283	Noir
+284	Noir et blanc
+285	Fusion
+286	Scintillement bokeh (pulse avec le rythme)
+287	Audacieux
+288	Gras condensé (Anton)
+289	Bordure
+290	Bas
+291	En bas au centre
+292	En bas à gauche
+293	En bas à droite
+294	Rebond sur le temps
+295	Filigrane de marque
+296	pont instrumental
+297	Pont instrumental {}
+298	Cadre qui respire
+299	Cadre qui respire : les bandes noires s’ouvrent avec la musique
+300	pont
+301	Pont {}
+302	Couleurs vives, zooms rapides et gribouillis dessinés à la main qui éclatent sur le temps.
+303	Le plus lumineux
+304	Import de « {} » : {} sur {} ({} Mo)…
+305	Navigateur :
+306	montée
+307	Le build {} est prêt (vous avez {}).
+308	Monter vers le sommet (se rapprocher pendant la montée)
+309	Création de deux montages des mêmes 20 secondes…
+310	Superpositions intégrées
+311	Occupé pendant ce test : {}.
+312	Acheter
+313	Acheter {}
+314	Énergie de la caméra
+315	Mouvement de caméra
+316	Mouvements de caméra
+317	Tremblement de caméra sur les temps forts
+318	Caméra : objectifs {} ({}), mouvements de caméra {} qui suivent les parties de la chanson.
+319	Inutilisable :
+320	Annuler
+321	Champ de légende
+322	Légende copiée ✓
+323	Légende :
+324	Légendes et hashtags
+325	Chaleur cassette
+326	Centre
+327	Modifier
+328	Portrait de personnage (reste sur le sujet principal)
+329	Personnages :
+332	Rechercher une mise à jour de l’appli
+333	Vérifier le rythme avec le réseau neuronal Beat This! quand l’appareil le permet (WebGPU ; 190 Mo une fois)
+334	Recherche de filigranes dans les clips
+335	Recherche de filigranes dans les clips ({} sur {})…
+336	Vérification de chaque fichier par rapport à son plan…
+337	Vérification par rapport au plan
+338	Vérification du rythme avec Beat This!
+339	Vérification du rythme avec Beat This! (téléchargé une fois)…
+340	Vérification de vos achats auprès de Google Play…
+341	Vérifie ce que cet appareil sait faire et, avec une chanson et des clips, crée une vidéo test de 6 secondes avec vos images. Copiez le rapport et envoyez-le à la personne qui vous aide.
+342	Choisir un réalisateur pour moi
+343	Choisir un dossier
+344	Choisir un dossier de chansons
+345	Choisir un dossier sur ce téléphone
+346	Choisissez un nom de page d’au moins 3 lettres ou chiffres.
+347	Choisir une photo
+348	Choisir une chanson
+349	Choisissez une chanson, ou un passage d’un long enregistrement.
+350	Choisissez une vidéo que vous admirez
+351	Choisir un dossier entier
+352	Choisir un fichier audio
+353	Choisir des clips
+354	Choisir les clips selon le plan
+355	Tout rechoisir : histoire, rythme, rendu, son et titres
+356	Choisir le dossier de médias
+357	Choisir des clips vidéo et des photos
+358	Choisir votre logo
+359	Choix des plans, du rythme et du rendu…
+360	refrain
+361	Refrain {}
+362	Refrain {} {}
+363	Choisi par Tout faire
+364	Choisi pour cette chanson
+365	Cinématographique
+366	Cinématographique (Bebas Neue)
+367	Bandes cinéma (paysage uniquement)
+368	Ville
+370	Claude (ouvrir dans Claude)
+371	Claude regarde vos images et les données musicales et choisit un réalisateur
+372	Épuré
+373	Épuré (Montserrat)
+374	Net et précis
+375	Effacer
+376	Effacer l’historique
+377	ID client enregistré. Appuyez sur Lire mes résultats pour vous connecter.
+378	Climax : le tournant
+379	Volume du clip
+380	Presse-papiers
+381	Clips prêts.
+382	Fermer
+383	Fermer toutes les sections
+384	Gros plan
+385	Se termine sur l’image récurrente
+386	Acier froid
+387	Froid, inquiétant, avec saccades, stroboscopes et glitchs violents sur les temps forts.
+388	Tout replier
+389	Couleur
+390	Éveil de la couleur
+391	Éveil de la couleur : noir et blanc jusqu’à ce que la chanson s’ouvre
+392	Rendu des couleurs
+393	Voile de couleur qui change à chaque mesure
+394	Couleur : un étalonnage propre, construit à partir de ces images et de cette chanson ({}).
+395	Les couleurs s’accordent au plan précédent
+396	Inclus avec Creator
+397	Salle de concert
+398	Connecter ChatGPT, Gemini ou Grok
+399	Connectez votre chaîne pour que l’appli voie quels Shorts retiennent les spectateurs et privilégie ce qui marche, et pour mettre en ligne ou programmer des Shorts d’ici. Il faut un ID client Google de votre propre projet Google Cloud gratuit.
+400	Convertissez-les en MP4 (H.264) et ajoutez-les à nouveau (souvent de la vidéo HEVC d’iPhone sous Windows).
+401	Copié
+402	Copier
+403	Copier la légende
+404	Copier les détails de l’erreur
+405	Copier le lien
+406	Copier le rapport
+407	Marque dans un coin
+408	Marque dans un coin et mosaïque discrète
+409	Impossible de rechercher une mise à jour :
+410	Impossible de vérifier ce fichier.
+411	Copie automatique impossible : le rapport est sélectionné, copiez-le depuis le menu.
+412	« {} » introuvable dans ce dossier. Choisissez le dossier qui le contient.
+413	Impossible d’obtenir les clips d’exemple :
+414	Impossible de garder votre photo sur cet appareil (stockage plein).
+415	Impossible d’apprendre de cette vidéo :
+416	Impossible de charger le dossier :
+417	Impossible de charger le modèle image-texte :
+418	Impossible de charger les outils vidéo (
+419	Impossible de créer cette version de la chanson.
+1672	Montage {}
+1673	Créer mes vidéos {}
+1674	Créer ma vidéo
