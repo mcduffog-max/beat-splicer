@@ -1,0 +1,410 @@
+420	Tidak bisa membuat ZIP. Simpan video satu per satu dengan tombol Simpan masing-masing.
+421	Tidak bisa membuka folder itu:
+422	Tidak bisa membuka bagian itu.
+423	Tidak bisa memublikasikan:
+424	Tidak bisa menghitung ulang ketukan.
+425	Tidak bisa terhubung ke login Google
+426	Tidak bisa terhubung ke layanan. Ini hanya berfungsi di salinan aplikasi yang disimpan, dibuka di Chrome atau Edge.
+427	Tidak bisa dibaca
+428	Tidak bisa membaca file audio itu. Coba WAV, MP3, atau M4A.
+429	Tidak bisa membaca logo itu.
+430	Tidak bisa membaca file lirik itu.
+431	Tidak bisa membaca foto itu. Coba JPEG atau PNG.
+432	Tidak bisa membaca durasi klip
+433	Papan klip tidak bisa dibaca di sini. Tekan lama di kotak lalu pilih Tempel.
+434	Tidak bisa membaca channel-mu:
+435	Tidak bisa memulihkan proyek itu ({}). Tambahkan audio dan klipmu lagi.
+436	Tidak bisa menyimpan ke folder itu. Pakai paket ZIP saja.
+437	Tidak bisa menyimpan kunci di komputer ini.
+438	Tidak bisa menyimpan ke ponsel:
+439	Tidak bisa membagikan:
+440	Tidak bisa menurunkannya:
+441	Tidak bisa menulis kerangka.
+442	Gambar sampul
+444	Pangkas
+445	Dipangkas
+446	Crossfade
+447	Kustom, berdasarkan
+448	Potongan {} sudah diputar. Pilih yang kamu suka.
+449	Potongan dipindah ke {} ({}{} dtk), di ketukan{}.
+450	Potong di aksi
+451	Potong di aksi: gerakan tiap shot jatuh di ketukan
+452	Potong di luar ketukan, saat musiknya menghentak
+453	Tempo potongan
+454	Potong saat penyanyi masuk
+455	Ping-pong sinkron potongan
+456	Potongan
+457	Potongan mengikuti {}: {}, sekitar {} dtk per shot (target {} dtk).
+458	Potongan mengikuti {}: {}. Aturan platform di sini membatasi shot maksimal 3 dtk, jadi shot panjang dipersingkat.
+459	Gelap
+460	Gelap dan pudar
+461	Presisi gelap
+462	Grading hijau-kuning yang gelap dan pudar, dorongan kamera terkendali, dan potongan bersih.
+463	Tanggal dulu, untuk arsip
+464	Kedalaman melayang (latar buram)
+465	Deskripsi
+466	Deskripsi dimulai dengan kalimat sederhana tentang isi video (diindeks untuk pencarian dan saran).
+467	Deskripsi:
+468	Gurun
+470	Diagnostik
+471	Filter difusi
+472	Filter difusi: highlight lembut
+473	Difusi: pendar lembut
+474	Memudar ke hitam
+475	Sutradarai sebagai:
+476	Disutradarai ala “{}”. {}
+477	Disutradarai ala “{}”{}. {}
+478	Arah
+479	Arah: {}. {}.
+480	Teknik sutradara
+481	Sutradara: bergerak mengikuti bagian lagu
+482	Catatan sutradara
+483	Sutradara
+484	Putuskan
+485	Kerjakan semua
+486	Kerjakan semua condong ke hal yang membuat penontonmu bertahan
+487	Kerjakan semua memilih gaya untuk tiap potongan baru, dari musik dan rekamanmu
+488	Jangan berkedip: {}
+489	Selesai
+490	Selesai, tapi {0} klip tidak bisa diputar di perangkat ini, jadi {2} shot memakai klip lain: {3}{4}.
+491	Selesai: {0} video{2} siap disimpan.
+492	Selesai: aplikasi tahu isi klipmu. Sekarang lirik bisa menemukan shot yang menampilkan apa yang dinyanyikan.
+493	Doodle pop
+494	Ganda ({})
+495	Kecepatan ganda
+496	Unduh
+497	Unduh semua video yang sudah kamu buat, dengan catatan publikasi, dalam satu ZIP
+498	Unduh ZIP
+499	Unduh ZIP ({})
+500	Download/Beat Splicer
+501	Mengunduh
+502	Mengunduh model gambar-dan-kata (sekitar 150 MB, sekali)…
+503	Mengunduh model gambar-dan-kata: {}%…
+504	Mengunduh pembaruan…
+505	Mengunduh pembaruan… {}%
+506	Tenang seperti mimpi
+507	Seperti mimpi
+508	Melayang dan miring
+509	drop
+510	Drop {}
+511	Bayangan jatuh
+512	Drop, build-up, dan akhir bagian ditemukan otomatis di lagu. Dengarkan dan Pratinjau juga memutarnya.
+513	Debu dan goresan film
+514	mis. Ikuti untuk bagian 2
+515	mis. awalnya kesepian, berubah penuh harapan di reff terakhir
+516	mis. Video musik dari pesisir utara
+517	mis. Paul, Sydney
+518	mis. Tunggu drop-nya
+519	Tiap platform mendapat kalimat pembuka, bingkai, dan durasinya sendiri, dipotong dari rekamanmu sendiri. Platform dengan durasi sama berbagi satu potongan, dan itu tidak masalah: memposting editanmu sendiri di beberapa platform tetap dihitung orisinal.
+520	Tiap platform mendapat kalimat pembukanya sendiri: 2 sampai 6 kata, tampil sejak frame pertama, di sepertiga atas area aman, dan ditahan cukup lama untuk dibaca dua kali. Ekspor video musik mendapat kartu judul di sepertiga bawah. Judul dibandingkan dengan yang pernah kamu pakai.
+521	0,25 dtk lebih awal
+522	Masih awal: aplikasi hanya sedikit bergantung pada ini sampai lebih banyak Shorts masuk.
+523	Lemparan gema saat tiap bagian keras berakhir
+524	Gema
+525	Gema: jejak gerak di puncak
+526	Edit seperti video referensiku
+527	Edit seperti ini
+528	Efek
+529	Delapan frame dari potongan saat ini, berurutan, dalam satu gambar.
+530	Serif elegan (Playfair)
+531	Email untuk balasan (opsional)
+532	Berkurang selama video diputar (hitung mundur)
+533	Teks penutup (video pendek)
+534	Kartu penutup dengan lagu dan artis (kiri atas, menyisakan ruang untuk tombol layar akhir YouTube)
+535	Akhiri shot ini satu ketukan lebih lambat
+536	Akhiri shot ini satu ketukan lebih cepat
+537	Penutup (video panjang)
+538	Penutup (panjang)
+539	Berakhir dengan menjauh ke shot lebar sebagai penyelesaian.
+540	Berakhir di garis bar dan langsung kembali ke shot pembuka, jadi pemutaran ulang terasa mulus. Tiap pemutaran ulang dihitung sebagai penayangan di Shorts, Reels, dan TikTok.
+541	Berakhir rapat. Menjauh ke shot lebar akan menuntaskan ceritanya.
+542	Berakhir di tempat awal: adegan pembuka kembali untuk menutup cerita.
+543	Berakhir di tempat awal
+544	energi
+545	Inggris
+546	Enter
+547	Detail error disalin. Tempel di obrolan kita.
+548	Escape
+549	Dasar
+550	membangun
+551	Setiap ketukan {}
+552	Semua tokoh jenis ini
+553	Setiap klip adalah gambar diam atau video statis. Tiap shot mendapat gerakan kamera dan hentakan di ketukan, tapi gerakan asli jauh lebih membuat penonton bertahan: ubah gambar terbaikmu jadi klip video AI pendek (image-to-video), atau campur dengan rekaman asli.
+554	Setiap potongan jatuh di ketukan
+555	Semua platform
+556	Setiap platform dibuka dengan kalimatnya sendiri.
+557	Semuanya (versi uji)
+558	Semua kecuali ini
+559	Semua yang ada di “{}” sudah ada di proyek.
+560	Semua isi Creator, plus belajar dari hasil YouTube-mu, Edit seperti ini, Mana yang lebih baik, pengulas AI, dan beberapa format sekaligus.
+561	Ekspor
+562	Ekspor sekarang
+563	Ekspor tanpa ulasan
+564	Eksposisi: pengenalan
+565	Pengenalan wajah tidak bisa dimulai di sini ({}).
+566	Pengenalan wajah tidak bisa dimulai.
+567	Pengenalan wajah berjalan di perangkat ini (tidak ada yang diunggah). Siapa pun yang muncul di minimal dua klip menjadi tokoh yang bisa kamu pilih untuk mengurutkan.
+568	Pembingkaian peka wajah (potongan dan close-up mengikuti wajah)
+569	Fade masuk dan keluar
+570	Fade masuk di awal
+571	Fade keluar di akhir
+572	Aksi menurun: dampaknya
+573	Fan Edit
+574	Fantasi
+575	Potongan cepat, zoom menghentak, dan glitch di drop, gaya video pendek masa kini.
+576	Cepat, menghentak
+577	Nama file
+578	Sistem file
+579	Penuhi bingkai (memotong tepi)
+580	Diisi dari file lagu jika ada tag-nya
+581	Terisi selama video diputar
+582	Grain film
+583	Tersaring
+584	Cari pengaturan
+585	Cari pengaturan, mis. bingkai, lirik, gerak lambat
+586	Cari tokoh dari wajah
+587	Cari tokoh dari wajah atau minta AI membaca rekamanmu dulu untuk kerangka yang lebih kaya. Ubah apa saja di bawah.
+588	Cari klip berdasarkan isinya
+589	Cari klip yang menampilkan… mis. kota malam, api, kerumunan
+590	Cari lirik tersinkron
+591	Cari lagu dan klip terbaik
+592	Mencari tokoh dari wajah
+593	Mencari tokoh dari wajah ({} dari {})…
+594	Mencari ketukan… {}%
+595	Selesaikan frame di chip grafis (lensa, tampilan warna, grain sekaligus)
+596	Selesaikan mempelajari isi klipmu (sisa {} momen)
+597	Selesai bersama lagu: pangkas sunyi di akhir; shot terakhir menjauh dan gambar membeku atau memudar sesuai akhir musiknya
+598	Menyelesaikan videomu
+599	Ekspor pertama dari perangkat ini, jadi belum ada yang terulang.
+600	Baris pertama {0} karakter{1}, {2} hashtag{4}
+601	Detik pertama
+602	Glam fisheye
+603	Cembung lensa fisheye
+604	Lensa fisheye, cahaya merah dan biru pekat, gerak lambat, dan letterbox terbelah dengan salinan shot di bar.
+605	Muat seluruh shot (bar hitam)
+606	Muat seluruh shot (bar buram)
+607	Cocok dengan cerita{}
+608	Cocok dengan catatanmu: “{}”
+609	Kilat
+610	Kilat di ketukan
+611	Datar
+612	Folder
+613	Folder: {} • File: {}
+614	Rekaman
+615	Rekaman dari video sebelumnya
+616	Rekaman dibaca: {} klip dipahami (ukuran shot, wajah, subjek).
+617	Membaca rekaman butuh Claude, yang tidak tersedia di sini.
+618	Rekaman yang belum sering kamu lihat
+619	Rekaman, tokoh, dan latar
+620	Untuk {} cerita, {}: akan berulang, atau rekaman lain mengisi.
+621	untuk watermark
+622	Hutan
+623	Lupakan kunci tersimpan
+624	Lupakan yang sudah dipelajari
+625	Maju
+626	Ditemukan {} file audio. Memakai {}; pilih yang lain di Lagumu kalau mau.
+627	Ditemukan {0} tokoh yang muncul di dua klip atau lebih (dari {2} wajah){3}. Pilih mereka di atas klipmu untuk mengurutkan.
+628	Ditemukan {0} wajah, tapi tidak ada yang muncul di lebih dari satu klip.
+629	Watermark ditemukan di {0} klip; akan dijaga di luar bingkai.
+630	Akurat per frame
+631	MP4 akurat per frame: setiap potongan jatuh tepat di ketukannya, mulai dari frame pertama.
+632	Perekaman akurat per frame tidak tersedia sekarang, jadi perekaman standar dipakai.
+633	WebM akurat per frame: waktu tepat. YouTube menerima WebM; ubah ke MP4 untuk Instagram dan TikTok, atau pilih Paling kompatibel.
+634	Frame yang tampak seperti lukisan, nuansa biru-hijau dan krem, zoom berani, dan sapuan cepat.
+635	Pembingkaian
+636	Panik
+637	Editan panik, strobo, kilat, dan guncangan dengan intensitas penuh.
+638	Strobo panik
+639	Gratis
+640	waktu luang
+641	Kosongkan ruang
+642	Dari {} Shorts:
+643	Volume penuh
+644	Lebih dalam
+645	Futuristik / fiksi ilmiah
+647	Gemini (Google)
+648	Model Gemini
+649	Lembut
+650	Melayang lembut
+651	Lembut: ratakan warna dan kecerahan
+652	Dapatkan ulasan AI
+653	Bersiap
+654	Mengambil ulasan AI dulu. Periksa, lalu ekspor.
+655	Mengambil klip contoh…
+656	GitHub menjawab
+657	Mimpi buruk glitch
+658	Glitch di drop
+659	Bidang warna mengilap
+660	Pop mengilap
+661	Frame grafis yang mengilap di mana warna membangun suasana, berganti tiap bagian alih-alih bercerita.
+662	Variasi bagus: {} dari {} klipmu dipakai, tidak ada yang tampil lebih dari {}% video.
+663	ID klien OAuth Google
+664	Hitam putih berbutir, komposisi tegas, dan shot diam yang panjang.
+665	EQ grafis (10 band)
+667	Grok (xAI)
+668	Model Grok
+669	Setengah ({})
+670	Setengah kecepatan
+671	Coretan tangan di ketukan
+672	Goyang genggam
+673	Akun atau hak cipta, mis. @paulmakes atau © Paul 2026
+674	Potongan tegas
+675	Potongan tegas di ketukan dan warna alami. Tanpa tambahan.
+676	Potongan tegas, warna asli
+677	Hashtag: #Shorts plus {0} tag topik di deskripsi, bukan di judul.
+678	Menahan napas
+679	Menahan napas: freeze sebelum tiap drop
+680	Ini dia
+681	Riwayat dihapus: setiap klip dianggap segar lagi.
+682	Diam sejenak sebelum drop
+683	Video rumahan
+684	Gaya khas dipertahankan: huruf {} dan {}. Kerjakan semua mempertahankannya dan memvariasikan sisanya.
+685	Bagaimana {} terlihat dibaca keras
+686	Berapa banyak pengaturan yang ditampilkan
+688	Editan hype
+689	Jika potongan terasa terlalu lambat atau terlalu ramai, coba kecepatan lain.
+690	Gambar 1 adalah lembar kontak 8 frame dari versi {}, berurutan waktu, pada detik {} lagu. Gambar 2 menampilkan satu frame dari tiap ekspor ({}, kiri ke kanan) saat teks pembuka muncul. Garis kuning putus-putus menandai area aman platform dan BUKAN bagian dari ekspor.
+691	Gambar yang berlipat mengikuti ketukan, trik kamera, dan kehangatan buatan tangan.
+692	Gambar:
+693	Hentakan di drop
+694	Di kendaraan
+695	Di editan
+696	Di editan: ketuk untuk mengeluarkannya
+697	Di aplikasi Google Play
+698	Dipakai
+699	Sertakan suara dari klip video
+700	Sertakan error, langkah terakhir, pengaturan, dan diagnostik (tanpa klip, lagu, atau data pribadi)
+701	Indie 16 mm
+702	Dalam ruangan
+703	Industrial
+704	Daftar periksa industri
+705	Loop tanpa akhir
+707	Feed Instagram dan Facebook
+708	Reels Instagram dan Facebook
+709	instagram.com/kamu
+710	pasang Google Drive untuk desktop atau OneDrive, lalu pakai Pilih satu folder penuh dan pilih folder yang disinkronkan. Kamu juga bisa menyeret folder langsung ke halaman ini.
+711	Instrumental {}
+712	Interlude {}
+713	intro
+714	Intro {}
+715	memperkenalkan
+716	Perkenalkan dunia dan tokoh utama sebelum ada yang mengusiknya.
+717	Dipotong mengikuti ketukan
+718	Berulang terus. Tonton dua kali
+719	Sudah dalam mode aman, jadi
+720	Itu frasa yang terlalu sering dipakai; tulis sesuatu yang spesifik.
+722	Perjalanan (mempertahankan urutan rekaman)
+723	Pertahankan gaya khasku (huruf dan penutup) di setiap video
+724	Biarkan aplikasi tetap terbuka
+725	Jauhkan watermark dan logo dari editan (dipangkas atau dibingkai ulang per format)
+726	Menyimpan salinan file di aplikasi (agar Android tidak bisa mengambilnya kembali): {} dari {}…
+727	Menjaga editan tetap beragam: rekaman ini tidak dipakai di dekatnya
+728	Disimpan di perangkat ini kecuali kamu memublikasikan halamanmu.
+729	Dipertahankan: huruf {}, {}.
+730	Kunci dikirim langsung dari browsermu ke perusahaan itu lewat koneksi terenkripsi, dan tidak ke mana pun. Kunci tersimpan dienkripsi (AES-256) dengan frasa sandimu, yang tidak pernah disimpan. Untuk keamanan ekstra, buat kunci terpisah untuk aplikasi ini dengan batas pengeluaran bulanan, dan hapus jika berhenti memakai aplikasi.
+731	Kunci disimpan, dikunci dengan frasa sandimu.
+732	Kunci dibuka untuk sesi ini.
+733	Jatuh di drop
+734	Lanskap 16:9. Editan lebih panjang tidak masalah. YouTube memutar di sekitar −14 LUFS.
+735	Bahasa
+736	20 dtk terakhir dibuat tenang dengan shot lebih panjang dan latar lebih gelap untuk tombol layar akhir YouTube.
+738	Detik terakhir
+739	Langkah terakhir sebelum halaman berhenti:
+740	Terakhir kali pengecekan Beat This! kehabisan memori dan membuat halaman berhenti. Fitur itu dimatikan di ponsel ini; kamu bisa menyalakannya lagi di Kamera dan lensa, sebaiknya dengan lebih sedikit aplikasi terbuka.
+741	Terakhir kali halaman berhenti saat menganalisis “{}” ({} MB). File itu disisihkan: tautkan folder lagi dan sisanya akan dianalisis. Ketuk “Laporkan masalah ini” untuk mengirim apa yang terjadi.
+742	0,25 dtk lebih lambat
+743	Lebih lanjut di klip ▶
+744	Condong ke hal yang membuat penontonmu bertahan ({} Shorts): {}.
+745	Pelajari isi klipku
+746	Belajar dari hasil YouTube-mu
+747	Mempelajari isi klipmu
+748	Mempelajari isi klipmu: {} dari {}. Kamu bisa terus bekerja.
+749	Mempelajari isi klipmu…
+750	Paling jarang dipakai belakangan ini
+751	Keluarkan
+752	Keluarkan semua yang tampil
+753	Keluarkan klip dari video terakhirku
+754	Tanpa watermark di ekspor TV
+755	Kiri
+756	Dikeluarkan
+757	Dikeluarkan dari editan: ketuk untuk memakainya
+758	Durasi
+759	Durasinya {} dtk, seharusnya {} dtk.
+760	Lensa
+761	Kit lensa
+762	Lensa
+763	Biarkan pengulas AI memilih
+764	Membuat lirik dan pencarian bisa menemukan shot berdasarkan isinya. Mengunduh model 150 MB sekali; setelah itu berjalan offline.
+765	Huruf
+766	Terang
+767	Kebocoran cahaya
+768	Terang ke gelap
+769	Terang ke gelap: rekaman terang dulu, gelap di akhir
+770	Suka?
+771	Seperti shot yang membuat penontonmu bertahan di YouTube
+772	Warna garis
+773	Garis melayang di atas gambar
+774	Opasitas garis
+775	Tautan disalin.
+776	Feed LinkedIn dan X
+777	Dengarkan
+778	Dengarkan {}
+779	Mendengarkan…
+780	Mendengarkan lagu lainnya
+781	Mendengarkan lagu referensi…
+782	Mendengarkan lagu referensi… {}%
+783	Mendengarkan lagumu
+784	Mendengarkan lagu-lagumu
+785	Mendengarkan lagu-lagumu: {} dari {} ({})…
+786	Vinyl lo-fi
+787	Muat “{}” lagi
+789	Muat folderku lagi
+790	Memuat pengenalan wajah (sekitar 12 MB, sekali)…
+791	Lokasi
+792	Kunci
+793	Logo dijadikan watermark-mu.
+794	Shot genggam panjang, cahaya alami, dan sangat sedikit potongan, membiarkan momennya berjalan.
+795	Lensa tele: terkompresi, tepi lembut
+796	Lebih panjang
+797	Terpanjang
+798	Shot terpanjang {} dtk (gambar baru minimal tiap 3 dtk menjaga perhatian).
+799	Shot terpanjang sebelum penutup {} dtk.
+800	Tampilan
+801	Mirip ×{}
+802	Yang mirip
+803	Melihat klip {} dari {}…
+804	Melihat klipmu
+805	Melihat klipmu…
+806	Mencari wajah… klip {} dari {}
+807	Mencari di “{}”…
+808	Mencari…
+809	Tampilan
+810	Banyak gerakan untuk bagian yang keras
+811	Kenyaringan
+812	Kenyaringan diperkirakan dan dibatasi agar tetap di bawah 0 dB. Cek halaman bantuan tiap platform sebelum kampanye besar, karena batasnya bisa berubah.
+813	Kenyaringan diatur ke {} LUFS dari mix akhir.
+814	Sepertiga bawah, dari 1 dtk sampai 6 dtk
+815	Judul sepertiga bawah
+816	LRCLIB tidak menjawab. Cek koneksi, lalu cari lagi.
+817	LUFS (perkiraan)
+818	lirik
+819	Lirik
+820	Buat {} video
+821	Buat video yang dipotong mengikuti lagumu.
+822	Buat versi lain
+823	Jadikan video
+824	Buat
+825	Buat Short-ku
+826	Buat Short
+827	Buat potongan sendiri begitu lagu dan klip masuk, lalu putar
+829	Buat video yang dicentang di Publikasi (YouTube Shorts kecuali kamu memilih yang lain)
+830	Jadikan tokoh utama cerita
+831	Buat video
+832	Buat video
+833	Membuat YouTube Short. Pilih yang lain di Tujuan.
+834	Membuat: {}. Ubah di Tujuan.
+835	Membuat {} (tahap {} dari {}, sisa sekitar {}). Biarkan tab ini terlihat.
+836	Membuat {}. Beberapa format sekaligus tersedia di Pro; hapus centang yang lain atau buat satu per satu.
+837	Membuat
+838	Membuat versi {}…
+839	Membuat video: {}%, sisa sekitar {} dtk.

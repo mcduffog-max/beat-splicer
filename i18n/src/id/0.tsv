@@ -1,0 +1,398 @@
+0	… dari 2 video terakhirku
+1	… dari 3 video terakhirku
+2	… dari 5 video terakhirku
+4	“{}” berdurasi {}, terlalu panjang untuk diedit sekaligus{}. Pilih bagian yang mau dipakai:
+5	“{}” tampil di layar selama {}% video. Ketuk Remix, atau tambahkan klip serupa.
+6	“{}” jatuh tepat di hentakan terbesar pada {}.
+7	“{}”, selama {} dtk
+8	“{}”: “{}” dengan {} klip. Sekarang pilih folder yang berisi klip itu (subfolder juga ikut dicari).
+9	“{0}”: {1} file ditambahkan.
+10	“{0}”: {1} file ditambahkan{3}{4}.
+11	“{}”: rata-rata shot {} dtk (pelan {}, sedang {}, keras {}); {}% potongan tepat di ketukan, {}% di ketukan pertama, {}% di luar ketukan; {} shot panjang per menit; rekaman {}.
+12	(rekaman lebih tenang untuk lagu yang lembut)
+13	(dekat: “Coba arah lain” untuk hasil yang lebih berbeda)
+14	(dikoreksi olehmu)
+15	(rekaman lincah untuk lagu yang menghentak)
+16	(di komputer)
+17	(PNG dengan latar transparan paling bagus)
+20	(mode aman)
+21	(Slowed + Reverb)
+22	(Sped Up)
+23	(ketuk untuk mengubah)
+24	(aplikasi mengingatnya)
+25	(browser mengingatnya)
+26	(pratinjau pencarian menampilkan sekitar 150)
+27	(YouTube, sampai 12)
+28	{} - catatan publikasi.txt
+29	{} - sampul Shorts Reels TikTok 1080x1920
+30	{} - thumbnail YouTube 1280x720
+31	{} (otomatis)
+32	{} (ketuk untuk mengubah)
+33	{} dan {}
+34	{} dan {} berhadapan: momen paling menentukan.
+35	{} datang dan tekanan pada {} makin besar.
+36	{} sebelum drop
+37	{} momen tegas
+38	{} karakter (jaga di bawah {} agar tidak terpotong){}
+39	{0} klip
+40	{0} klip tidak bisa dibuka lagi (Android mencabut aksesnya), jadi tidak dipakai di video ini. Tambahkan lagi untuk memakainya.
+41	{0} klip tidak bisa dipakai dan dilewati. {3}
+42	{0} klip ditemukan di folder itu.
+43	{0} klip siap. Tambahkan lagi untuk variasi lebih banyak.
+44	{} klip · {} di editan{}
+45	{} klip · {} di editan{}{}{}{}{}{}{}{}{}
+46	{} klip dan foto (minimal {}, idealnya {}).
+47	{} termasuk dalam {}{}.
+48	{0} potongan dalam 5 dtk pertama.
+49	{} potongan · masing-masing sekitar {} dtk{}
+50	{} klip berbeda, sekitar {} per menit.
+51	{0} drop ditemukan; {2}.
+52	Editan {}
+53	{} menghadapinya langsung.
+54	{} gagal: {} {} Browser: {} Mesin: {} Format: {} Klip: {}, lagu {}
+55	{0} file terlalu besar untuk dianalisis (lebih dari 300 MB).
+56	{} punya bobot {} pada {}
+57	{} hitam putih
+58	{} gerak lambat
+59	{} tidak mundur
+60	{} baris dari {}, {}{}.
+61	{} baris diketuk, sisanya disebar di antaranya
+62	Durasi {} (disarankan untuk {}: sekitar {} dtk).
+63	{} lirik ditemukan untuk “{}”{}.{}{}
+64	{} bertemu {}
+65	{0} momen rekaman yang sama muncul dua kali dalam 20 dtk. Klip tambahan akan menghilangkannya.
+66	{} lagi belum dianalisis (pakai “Analisis lagu lain”).
+67	{} butuh minimal {} klip atau foto untuk {} (kamu punya {}).
+68	{} butuh total minimal {} dtk rekaman (kamu punya {} dtk; foto dihitung 3 dtk).
+69	{} tidak menyangkanya
+70	{} dari {} build-up makin cepat menuju drop dengan potongan tepat di sana
+71	{} dari {} momen puncak jatuh pada close-up atau mata.
+72	{} dari {} shot sampel tidak menampilkan rekaman yang direncanakan (sekitar {}). Ini terjadi kalau klip tidak sempat dimuat di komputer yang sibuk. Tutup tab lain lalu buat lagi.
+73	{} atau {}: siapa yang menang?
+74	{} memilih {}: {}
+75	Sudah {} pilihan; belum ada kecenderungan jelas.
+76	{} pilihan. Yang sudah dipelajari: {}.
+77	{0} platform butuh Creator, jadi kali ini hanya {3}.
+78	{} dtk rekaman diam di bagian yang bertenaga. Tambahkan klip yang lebih hidup.
+79	{} tag pencarian siap ditempel.
+80	bayangan {}, highlight {}, kontras {}
+81	{} shot dibingkai pada wajah{}.
+82	{} lagu siap.{}{}{}
+83	{} berhenti karena error: {}. Ketuk “Laporkan masalah ini” untuk mengirimnya.
+84	{} berhenti: Android mencabut akses ke sebagian klip atau lagumu (ini terjadi setelah aplikasi lama ditutup). Tambahkan lagi{}.
+85	Gaya {} diterapkan.
+86	{} tag, {} dari 500 karakter. Tempel ke kolom Tag di YouTube Studio.
+87	Transisi {}
+88	{0} klip sangat besar perlu ditambahkan lagi.
+89	bobot {} pada {}
+90	{} akan dimulai setelah analisis saat ini selesai…
+91	{0} kata, sekitar 1,5 dtk di hentakan terbesar
+92	{0} kata, tampil 0,1–{2} dtk, sepertiga atas{3}
+93	{} x {} pada {} fps, durasi {} (lagu {} sampai {}), target kenyaringan {} LUFS
+94	{}, {} sekitar {} BPM. Nuansa: {}
+95	{}, setelah gelap
+96	{}, dipotong mengikuti ketukan
+97	{}, frame demi frame
+98	{}, tanpa filter
+99	{}, satu ketukan demi satu ketukan
+100	{}, lalu drop
+101	{}: rekaman {} (ketuk Pakai untuk memilih bagian)
+102	{}: {} Shorts dibaca, {} terhubung ke pengaturan yang membuatnya.
+103	{}: {}, {}, {} klip, dalam {}
+104	{}: {}. Sedang diputar.
+105	{}: salah satu dari {}
+106	{}: foto, nama, dan tema
+107	{}: disisihkan (terakhir kali membuat halaman berhenti)
+110	{}: terlalu besar untuk dianalisis
+112	{}{} poin
+113	{}{}, dipotong mengikuti ketukan “{}”{}.
+114	{}% {} pergi setiap detik
+115	{}% berbeda dari ekspor terdekatmu sebelumnya (“{}”, {}).
+116	◀ Lebih awal di klip
+117	✓ Dicek: ukuran, durasi{}{}{}
+119	10 mnt
+120	1080p pada 25 fps (wilayah PAL), kenyaringan siaran −23 LUFS, teks tetap di area aman judul.
+121	Video 1080p
+122	1080p, semua platform, kit lensa, tampilanmu sendiri, catatan sutradara, dan gambar yang kembali. Tanpa watermark.
+125	Film 16 mm
+126	Film 16 mm: grain, sudut lembut
+129	3 mnt
+131	Suara 3D
+132	Perubahan suara 3D berlaku saat kamu mengetuk Dengarkan atau Pratinjau berikutnya.
+134	4 mnt
+136	6 mnt
+138	Lensa sinema 70-an
+139	Lensa sinema 70-an: pendar hangat
+141	8 mnt
+142	Mimpi 8D
+143	Orbit 8D (berputar di sekitar kepala)
+144	Editan {}: {}.
+145	Thumbnail 1280×720 ikut disertakan dalam ekspor.
+146	Editan “{}” yang pas dengan ketukan{}.
+147	Ide lain untuk potongannya: cerita, tempo, dan tampilan baru.
+148	Ide lain: gaya, tempo, dan cerita baru
+149	Beberapa momen tegas
+150	Garis tipis bersudut melengkung mengelilingi gambar dan tersambung penuh saat video selesai. Di video vertikal garisnya agak masuk dari sisi, jadi ponsel yang memotong tepi Short tetap menampilkannya utuh.
+151	Video panjang butuh sekitar {} klip yang cocok; kamu punya {}.
+152	A lebih baik
+153	Satu kalimat tentang kamu
+154	Ada logo atau watermark di klip ini; setiap format dibingkai agar tidak terlihat
+155	Shot panjang: lagunya bernapas di sini
+156	Versi baru aplikasi sudah siap (build {}; kamu punya {}).
+157	Halaman publik dengan foto, nama, tautan, dan video pilihanmu di situs Beat Splicer. Orang yang menemukan videomu bisa melihat karyamu yang lain di sana.
+158	Pertanyaan untuk disematkan sebagai komentar pertama, agar orang mulai membalas.
+159	Gambar yang kembali dari rekamanku: muncul di awal, kembali di tengah, menutup video
+160	Satu folder penuh atau beberapa video dan foto. Tidak ada yang keluar dari ponselmu.
+161	Kurang lebih sama
+162	Abstrak atau grafis
+163	Babak mengikuti {}: pengenalan berjalan sampai reff pertama dan klimaks jatuh di reff besar terakhir.
+164	Tambah
+165	Tambahkan deskripsi: Tulis judul baru akan mengisinya.
+166	Tambahkan logo, stiker, atau grafis
+167	Tambahkan file lirik
+168	Tambahkan lagu dan klip dulu.
+169	Tambahkan lagu dulu.
+170	Tambahkan judul (opsional)
+171	Tambahkan kartu judul di Tampilan.
+172	Tambahkan kunci AI dulu: ketuk Semua pengaturan, lalu Tujuan › Hubungkan ChatGPT, Gemini, atau Grok.
+173	Tambahkan kunci API dulu
+174	Tambah format lain ({} lagi)
+175	Tambahkan sebanyak yang kamu mau. Makin beragam, makin cocok hasilnya.
+176	Tambahkan audio dan klip dulu, lalu pilih.
+177	Tambahkan audio dan klip untuk melihat bagaimana tiap ekspor dinilai.
+178	Tambahkan audio untuk melihat ketukannya di sini.
+179	Tambah lagi
+180	Tambahkan klip lagi, atau hapus centang platform itu di Tujuan.
+181	Tambahkan teks pembuka di Tampilan. Banyak orang menggulir tanpa suara, jadi teks yang membawa daya tariknya.
+182	Tambahkan tag pencarian (Tulis judul baru akan mengisinya).
+183	Tambahkan lagu dan klip dulu.
+184	Tambahkan lagi {0} klip sangat besar itu kalau kamu mau.
+185	Tambahkan lirik dan shot akan mengikuti kata-katanya: apa yang dinyanyikan muncul saat dinyanyikan. File .lrc diatur per baris; lirik biasa disebar ke bagian yang dinyanyikan.
+186	Tambahkan klip video untuk menyusun editan.
+187	Tambahkan klipmu
+188	Tambahkan klipmu, lalu ketuk “Cari lagu dan klip terbaik”.
+189	Tambahkan ID klien Google-mu dulu
+190	Tambahkan namamu dulu (di atas).
+191	Tambahkan lagu dan klipmu, lalu ketuk Kerjakan semua.
+192	Ditambahkan lewat tautan
+193	Menambah {} lagi akan memberi rekaman segar di setiap shot.
+194	AI melihat frame dari tiap klip dan mencatat ukuran shot, wajah, ekspresi, dan subjek, agar cerita bisa dibuka lebar, mendekat ke wajah dan mata saat musik naik, lalu menjauh di akhir.
+195	Ulasan AI
+196	Semua diterapkan
+197	Semua klip
+198	Semua pengaturan
+199	Semua video
+200	Jumlah
+201	Analisis lagu lain
+202	Anamorfik
+203	Epik anamorfik
+204	Anamorfik: tepi oval, garis cahaya
+205	Anamorfik: highlight bergaris, vinyet oval
+206	Dan sekarang
+207	Aplikasi Android
+208	Aplikasi Android build {}
+209	Android tidak mengizinkan aplikasi membukanya. Kalau ada di Google Foto tapi tidak di ponsel, unduh dulu (buka satu per satu lalu pilih Unduh), atau pilih dari aplikasi File.
+210	Android perlu izinmu sekali: aktifkan “Izinkan dari sumber ini” untuk Beat Splicer, kembali, lalu ketuk Perbarui aplikasi lagi.
+211	Pasangan lain
+212	Jawab YA untuk “Konten yang diubah atau sintetis” saat mengunggah. Deskripsinya sudah menyebutkannya.
+214	MP3, M4A, atau WAV apa saja. Beat Splicer mendengarkan ketukan, reff, dan drop.
+215	Bebas
+216	Kunci API dari aistudio.google.com
+217	Kunci API dari console.x.ai
+218	Kunci API dari platform.openai.com
+219	Diterapkan
+220	Potongan ini diterapkan ke semua klip.
+221	Terapkan semua saran
+222	Terapkan aturan industri secara otomatis (disarankan)
+223	Terapkan: {} → {}
+224	Artis
+225	Sesuai urutan ditambahkan
+226	Apa adanya
+227	Apa adanya ({})
+228	Sepanjang yang diizinkan
+229	Minta AI memilih
+230	Minta AI memilih butuh Claude atau kunci AI: ketuk Semua pengaturan, lalu Tujuan › Hubungkan ChatGPT, Gemini, atau Grok.
+231	Minta ulasan AI sebelum ekspor
+232	Bertanya ke {}… biasanya kurang dari semenit.
+233	Meminta AI memilih sutradara…
+234	Bertanya ke pengulas AI…
+235	Meminta AI memberi nama dan memeriksa tiap tokoh…
+236	Saat drop
+237	Di tepi
+238	Efek audio
+239	Audio siap.
+240	Otorisasi
+241	Penyutradaraan otomatis
+242	Otomatis
+243	Otomatis (mengikuti musik)
+244	Gaya otomatis: {} untuk saat ini ({}). Kerjakan semua bisa memilih gaya lain untuk tiap potongan baru.
+245	Judul otomatis nonaktif. Hook pembuka di bawah dipakai di semua platform.
+246	Otomatis: Kerjakan semua memilih gaya untuk tiap potongan baru.
+247	Rata-rata dari {} pengulas. Poin yang disebut lebih dari satu pengulas layak ditangani dulu.
+248	Rata-rata shot {} dtk (video musik biasanya sekitar 2 dtk, lebih lama di gaya yang tenang).
+249	B lebih baik
+250	Mundur satu baris
+251	Kembali ke otomatis
+252	Kembali mengedit
+253	Kembali ke lagu asli…
+254	Kembali ke awal, tapi sudah berubah: normal yang baru.
+255	Latar:
+256	Backspace
+258	Bass
+259	Penguat bass
+261	Ketukan
+262	Ketukan dan energi
+263	Beat Edit
+264	Efek ketukan
+265	Hanya ketukan
+266	Ketukan diatur ke {} BPM. Editan sudah disusun ulang.
+270	Beat This! setuju dengan ketukannya ({} BPM).
+271	Beat This! tidak bisa berjalan di sini:
+272	Beat This! menghitung ulang lagunya: {} → {} BPM{}.
+273	Ketukan, energi, dan suasana
+274	15 detik terbaik
+275	30 detik terbaik
+276	60 detik terbaik
+277	Paling cocok untuk lagu ini
+278	Paling cocok
+279	Paling cocok: “{}” (kecocokan {}%). Memakai {} dari {} klipmu: yang gerak dan warnanya cocok dengan lagu ini{}. Rekamanmu cocok untuk {}.{}
+280	Paling bagus pakai headphone. Ping-pong mengayunkan suara ke kiri dan kanan di setiap potongan.
+281	Logo besar di detik-detik penutup
+282	Drop terbesar di video terbarumu: shot {} pada {} ({}) di “{}”.
+283	Hitam
+284	Hitam putih
+285	Campur
+286	Kilau bokeh (berdenyut mengikuti ketukan)
+287	Tegas
+288	Tebal ramping (Anton)
+289	Bingkai
+290	Bawah
+291	Bawah tengah
+292	Kiri bawah
+293	Kanan bawah
+294	Memantul di ketukan
+295	Watermark merek
+296	breakdown
+297	Breakdown {}
+298	Bingkai bernapas
+299	Bingkai bernapas: letterbox terbuka mengikuti musik
+300	bridge
+301	Bridge {}
+302	Warna cerah, zoom cepat, dan coretan tangan yang meletup di ketukan.
+303	Paling terang
+304	Memasukkan “{}”: {} dari {} ({} MB)…
+305	Browser:
+306	build
+307	Build {} sudah siap (kamu punya {}).
+308	Naik ke puncak (mendekat saat musik naik)
+309	Membuat dua potongan dari 20 detik yang sama…
+310	Overlay bawaan
+311	Sibuk saat ini berjalan: {}.
+312	Beli
+313	Beli {}
+314	Energi kamera
+315	Gerakan kamera
+316	Gerakan kamera
+317	Guncangan kamera di hentakan besar
+318	Kamera: lensa {} ({}), gerakan kamera {} yang mengikuti bagian lagu.
+319	Tidak bisa dipakai:
+320	Batal
+321	Kotak caption
+322	Caption disalin ✓
+323	Caption:
+324	Caption dan hashtag
+325	Hangat kaset
+326	Tengah
+327	Ubah
+328	Potret tokoh (tetap pada subjek utama)
+329	Tokoh:
+332	Cek pembaruan aplikasi
+333	Cek ketukan dengan pelacak neural Beat This! jika perangkat ini mampu (WebGPU; 190 MB sekali)
+334	Memeriksa watermark di klip
+335	Memeriksa watermark di klip ({} dari {})…
+336	Mencocokkan tiap file dengan rencananya…
+337	Mencocokkan dengan rencana
+338	Mengecek ketukan dengan Beat This!
+339	Mengecek ketukan dengan Beat This! (diunduh sekali)…
+340	Memeriksa pembelianmu di Google Play…
+341	Mengecek kemampuan perangkat ini dan, jika lagu dan klip sudah ditambahkan, membuat video uji 6 detik dari rekamanmu. Salin laporannya dan kirim ke orang yang membantumu.
+342	Pilihkan sutradara untukku
+343	Pilih folder
+344	Pilih folder lagu
+345	Pilih folder di ponsel ini
+346	Pilih nama halaman minimal 3 huruf atau angka.
+347	Pilih foto
+348	Pilih lagu
+349	Pilih lagu, atau bagian dari rekaman panjang.
+350	Pilih video yang kamu kagumi
+351	Pilih satu folder penuh
+352	Pilih file audio
+353	Pilih klip
+354	Pilih klip berdasarkan kerangka
+355	Pilih ulang semuanya: cerita, tempo, tampilan, suara, dan judul
+356	Pilih folder media
+357	Pilih klip video dan foto
+358	Pilih logomu
+359	Memilih shot, tempo, dan tampilan…
+360	reff
+361	Reff {}
+362	Reff {} {}
+363	Dipilih oleh Kerjakan semua
+364	Dipilih untuk lagu ini
+365	Sinematik
+366	Sinematik (Bebas Neue)
+367	Bar sinema (hanya lanskap)
+368	Kota
+370	Claude (buka di Claude)
+371	Claude melihat rekamanmu dan data musiknya lalu memilih sutradara
+372	Bersih
+373	Bersih (Montserrat)
+374	Bersih dan tajam
+375	Hapus
+376	Hapus riwayat
+377	ID klien disimpan. Ketuk Baca hasilku untuk masuk.
+378	Klimaks: titik balik
+379	Volume klip
+380	Papan klip
+381	Klip siap.
+382	Tutup
+383	Tutup semua bagian
+384	Close-up
+385	Ditutup dengan gambar yang kembali
+386	Baja dingin
+387	Dingin, meresahkan, dengan stutter, strobo, dan glitch keras di hentakan.
+388	Ciutkan semua
+389	Warna
+390	Warna yang bangkit
+391	Warna yang bangkit: hitam putih sampai lagunya terbuka
+392	Tampilan warna
+393	Sapuan warna yang berubah tiap bar
+394	Warna: grading tersendiri, dibangun dari rekaman dan lagu ini ({}).
+395	Warna menyatu dengan shot sebelumnya
+396	Termasuk di Creator
+397	Gedung konser
+398	Hubungkan ChatGPT, Gemini, atau Grok
+399	Hubungkan channel-mu agar aplikasi bisa melihat Shorts mana yang membuat penonton bertahan dan condong ke yang berhasil, serta untuk mengunggah atau menjadwalkan Shorts dari sini. Perlu ID klien Google dari proyek Google Cloud gratismu sendiri.
+400	Ubah ke MP4 (H.264) lalu tambahkan lagi (sering terjadi pada video HEVC iPhone di Windows).
+401	Disalin
+402	Salin
+403	Salin caption
+404	Salin detail error
+405	Salin tautan
+406	Salin laporan
+407	Tanda sudut
+408	Tanda sudut dan ubin samar
+409	Tidak bisa cek pembaruan:
+410	Tidak bisa memeriksa file ini.
+411	Tidak bisa menyalin otomatis: laporannya sudah dipilih, jadi salin dari menu.
+412	“{}” tidak ditemukan di folder itu. Pilih folder yang berisi file tersebut.
+413	Tidak bisa mengambil klip contoh:
+414	Fotomu tidak bisa disimpan di perangkat ini (penyimpanan penuh).
+415	Tidak bisa belajar dari video itu:
+416	Tidak bisa memuat folder:
+417	Tidak bisa memuat model gambar-dan-kata:
+418	Tidak bisa memuat alat video (
+419	Tidak bisa membuat versi lagu itu.
+1672	Potongan {}
+1673	Buat video {}-ku
+1674	Buat videoku
