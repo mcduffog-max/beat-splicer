@@ -6,7 +6,7 @@ const src = "src", parts = fs.readdirSync(`${src}/js`).filter(f => f.endsWith(".
 const STORE = process.env.BS_STORE === "1";
 let rev = "local"; try { rev = (await import("node:child_process")).execSync("git rev-parse --short HEAD", { stdio: ["ignore", "pipe", "ignore"] }).toString().trim(); } catch (e) {}
 const BUILD_ID = `${new Date().toISOString().slice(0, 10)} (${rev})`; // shown in diagnostics and bug reports // the Play Store build: paid tiers switched on
-const app = parts.map(f => fs.readFileSync(`${src}/js/${f}`, "utf8")).join("").replace("/*@STORE@*/false", STORE ? "true" : "false").replace("/*@BUILD@*/dev", BUILD_ID);
+const app = parts.map(f => fs.readFileSync(`${src}/js/${f}`, "utf8")).join("").replace("/*@STORE@*/false", STORE ? "true" : "false").replace("/*@BUILD@*/dev", BUILD_ID).replace("/*@LANGS@*/null", JSON.stringify(["en", ...fs.readdirSync("public/i18n").filter(f => f.endsWith(".json")).map(f => f.slice(0, -5))]));
 const css = fs.readFileSync(`${src}/styles.css`, "utf8");
 const shell = fs.readFileSync(`${src}/index.html`, "utf8");
 const fill = (s) => s.replace("/*@STYLE@*/", () => css).replace("/*@APP@*/", () => app);

@@ -4,7 +4,9 @@
    parts ("Studying your clips: 3 of 8") matches a pattern ("Studying your clips: {} of {}"), and the changing parts are
    translated too when they're known words. The code keeps working in English underneath (enOf, S._statusEn), and
    anything marked data-noi18n (diagnostics, your own words) is left alone. */
-const LANGS=[["en","English"],["es","Español"],["pt","Português (Brasil)"],["fr","Français"],["de","Deutsch"],["it","Italiano"],["hi","हिन्दी"],["id","Bahasa Indonesia"],["ja","日本語"],["ko","한국어"],["zh","中文（简体）"],["ar","العربية"],["tr","Türkçe"],["vi","Tiếng Việt"]];
+const LANGS_ALL=[["en","English"],["es","Español"],["pt","Português (Brasil)"],["fr","Français"],["de","Deutsch"],["it","Italiano"],["hi","हिन्दी"],["id","Bahasa Indonesia"],["ja","日本語"],["ko","한국어"],["zh","中文（简体）"],["ar","العربية"],["tr","Türkçe"],["vi","Tiếng Việt"]];
+const LANGS_READY=/*@LANGS@*/null; /* stamped at build time: the languages with a translation file */
+const LANGS=LANGS_ALL.filter(x=>!LANGS_READY||LANGS_READY.includes(x[0]));
 const I18N={lang:"en", dict:null, pats:[], cache:new Map(), busy:false};
 function pickLang(){ let l=null; try{ l=localStorage.getItem("beatsplicerLang"); }catch(e){} if(l&&LANGS.some(x=>x[0]===l)) return l;
   for(const n of (navigator.languages||[navigator.language||"en"])){ const c=String(n).toLowerCase().split("-")[0]; if(LANGS.some(x=>x[0]===c)) return c; } return "en"; }
