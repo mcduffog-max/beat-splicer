@@ -35,6 +35,7 @@
       <div class="btns"><label class="btn" for="meFile">Choose a photo</label><input type="file" id="meFile" accept="image/*" hidden><button class="btn quiet" id="meNoImg" type="button" hidden>Remove photo</button></div></div>
     <label class="row">Your name <input type="text" id="meName" maxlength="30" placeholder="Shown at the top" autocomplete="nickname"></label>
     <div class="row me-theme">Theme <span class="btns"><button class="chip" type="button" data-theme-set="system">Match phone</button><button class="chip" type="button" data-theme-set="light">Light</button><button class="chip" type="button" data-theme-set="dark">Dark</button></span></div>
+    <div class="row me-plan">Your plan <b id="mePlan">Free</b><button class="btn" id="mePlanBtn" type="button">Upgrade</button></div>
     <div class="small" id="meKept">Kept on this device unless you publish your page.</div>
     <details id="pgBox"><summary>Your page on the Beat Splicer site</summary>
       <p class="small" id="pgIntro">A public page with your photo, name, links and the videos you choose, at the Beat Splicer site. People who find your videos can see the rest of your work there.</p>
@@ -668,7 +669,7 @@
   <div class="fin-vid"><video id="finVideo" playsinline loop controls></video></div>
   <div class="fin-body"><h2 id="finHead">Your video is ready</h2><div class="chips" id="finPick"></div><p class="small" id="finSaved"></p>
     <button class="btn primary big" id="finShare" type="button">Share</button><p class="small fin-to" id="finTo">YouTube, TikTok, Instagram, WhatsApp: your phone shows where it can go.</p>
-    <div class="btns"><button class="btn" id="finSave" type="button">Save to phone</button><button class="btn" id="finCaption" type="button" hidden>Copy caption</button></div>
+    <div class="btns"><button class="btn" id="finSave" type="button">Save to phone</button><button class="btn" id="finCaption" type="button" hidden>Copy caption</button></div><button class="btn quiet" id="finUnmark" type="button" hidden>Remove the Beat Splicer mark</button>
     <div class="btns fin-next"><button class="btn quiet" id="finAgain" type="button">Make another version</button><button class="btn quiet" id="finClose" type="button">Back to editing</button></div></div>
 </div></div>
 <nav class="nextbar" id="nextBar" aria-label="Next step"><div class="nb-txt"><b id="nbHead"></b><span id="nbSub"></span></div><button class="btn primary" id="nbBtn" type="button"></button></nav>

@@ -27,14 +27,19 @@ async function buyTier(id){ const P=NPur(); if(!P){ status("Purchases work in th
     setTier(Math.max(TIER_LEVEL,TIER_PRODUCTS[id])); $("payMsg").textContent=`Thank you: ${TIER_NAMES[TIER_PRODUCTS[id]]} is unlocked.`; setTimeout(()=>{ $("payBox").hidden=true; },2500); }
   catch(e){ const m=String(e&&e.message||e); $("payMsg").textContent=/cancel/i.test(m)?"No purchase made.":"The purchase didn't go through: "+m; } }
 async function restoreTier(){ const P=NPur(); if(!P) return; $("payMsg").textContent="Checking your purchases with Google Play…"; try{ await P.restorePurchases(); }catch(e){} await readPurchases(); $("payMsg").textContent=`You have: ${TIER_NAMES[TIER_LEVEL]}.`; }
-async function openPaywall(f){ const box=$("payBox"); box.hidden=false; $("payWhy").textContent=f?`${GATE_WORDS[f]||"That"} comes with ${TIER_NAMES[GATES[f]]}${GATES[f]<3?" or above":""}.`:`You have: ${TIER_NAMES[tierLevel()]}.`; $("payMsg").textContent="";
+async function openPaywall(f){ const box=$("payBox"); box.hidden=false; $("payWhy").textContent=!STORE?"This test version has everything unlocked. In the Google Play version, these are one-time purchases:":f?`${GATE_WORDS[f]||"That"} comes with ${TIER_NAMES[GATES[f]]}${GATES[f]<3?" or above":""}.`:`You have: ${TIER_NAMES[tierLevel()]}.`; $("payMsg").textContent="";
   const list=$("payList"); list.innerHTML=""; const prods=_products||await loadProducts()||[];
   [["bs_no_watermark","No watermark","Your videos without the Beat Splicer mark."],["bs_creator","Creator","1080p, every platform, lens kits, your own look, the director's note and the returning image. No watermark."],["bs_pro","Pro","Everything in Creator, plus learning from your YouTube results, edit like this, Which is better, the AI reviewer and several formats at once."]].forEach(([id,name,desc])=>{
     const lv=TIER_PRODUCTS[id], owned=TIER_LEVEL>=lv, p=prods.find(x=>x.identifier===id||x.productIdentifier===id||x.planIdentifier===id), row=document.createElement("div"); row.className="payrow";
     const t=document.createElement("div"); t.innerHTML=`<b></b><div class="small"></div>`; t.querySelector("b").textContent=name; t.querySelector(".small").textContent=desc; row.appendChild(t);
-    const b=document.createElement("button"); b.className="btn"+(owned?"":" primary"); b.disabled=owned||!NPur(); b.textContent=owned?"Unlocked":(p&&p.priceString?`Buy ${p.priceString}`:"Buy"); b.onclick=()=>buyTier(id); row.appendChild(b); list.appendChild(row); }); }
-function renderTierUI(){ const t=$("tierBadge"); if(t){ t.hidden=!STORE; t.textContent=TIER_NAMES[tierLevel()]; } if(typeof buildEndpointUI==="function") try{ buildEndpointUI(); }catch(e){} }
-if(STORE){ $("tierBadge").onclick=()=>openPaywall(null); $("payClose").onclick=()=>{ $("payBox").hidden=true; }; $("payRestore").onclick=restoreTier; renderTierUI(); setTimeout(()=>{ readPurchases(); loadProducts(); },1500); }
+    const b=document.createElement("button"); b.className="btn"+(owned?"":" primary"); b.disabled=owned||!NPur()||!STORE; b.textContent=!STORE?"In the Google Play app":owned?"Unlocked":(p&&p.priceString?`Buy ${p.priceString}`:"Buy"); b.onclick=()=>buyTier(id); row.appendChild(b); list.appendChild(row); }); }
+function renderTierUI(){ const t=$("tierBadge"); if(t){ t.hidden=!STORE; t.textContent=TIER_NAMES[tierLevel()]; } if($("mePlan")){ const lv=tierLevel(); $("mePlan").textContent=STORE?TIER_NAMES[lv]:"Everything (test version)"; $("mePlanBtn").textContent=!STORE?"See plans":lv>=3?"See plans":"Upgrade"; } if(typeof buildEndpointUI==="function") try{ buildEndpointUI(); }catch(e){} }
+$("payClose").onclick=()=>{ $("payBox").hidden=true; }; $("payRestore").onclick=restoreTier; $("payRestore").hidden=!STORE;
+/* the way in: the plan badge (store version), Your plan in your profile, and on the finish screen while videos carry the mark */
+function showPlans(f){ if($("meBox")) $("meBox").hidden=true; if(typeof closeFinish==="function"&&!$("finSheet").hidden) closeFinish(); openPaywall(f||null); try{ window.scrollTo({top:0,behavior:"smooth"}); }catch(e){} }
+$("mePlanBtn").onclick=()=>showPlans(null);
+if(STORE){ $("tierBadge").onclick=()=>showPlans(null); setTimeout(()=>{ readPurchases(); loadProducts(); },1500); }
+renderTierUI();
 
 /* in the store build, reaching for a locked control shows what unlocks it, and puts the control back */
 if(STORE){

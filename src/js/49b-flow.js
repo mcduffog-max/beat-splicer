@@ -84,7 +84,7 @@ function openFinish(){ if(!S.results||!S.results.length) return; const R=S.resul
   setText($("finSaved"),r._saved?"Saved to your phone: Movies › Beat Splicer.":"");
   const share=NATIVE||(typeof canShareFiles==="function"&&canShareFiles()); $("finShare").hidden=!share; $("finTo").hidden=!share;
   setText($("finSave"),r._saved?"Saved ✓":NATIVE?"Save to phone":"Download"); $("finSave").disabled=!!r._saved; $("finSave").classList.toggle("primary",!share);
-  const cap=typeof captionFor==="function"?captionFor(r.ep):""; $("finCaption").hidden=!cap;
+  const cap=typeof captionFor==="function"?captionFor(r.ep):""; $("finCaption").hidden=!cap; $("finUnmark").hidden=!(STORE&&!has("watermark")); $("finUnmark").onclick=()=>showPlans("watermark");
   $("finShare").onclick=async()=>{ if(NATIVE) return nativeShare(resultName(r),r.blob,cap); try{ await navigator.share({files:[new File([r.blob],resultName(r),{type:r.blob.type||"video/mp4"})],text:cap||undefined}); }catch(e){ if(e&&e.name!=="AbortError") status("Sharing isn’t available here. Use Download instead.",true); } };
   $("finSave").onclick=async()=>{ await saveFile(resultName(r),r.blob); if(NATIVE){ r._saved=true; openFinish(); } };
   $("finCaption").onclick=async()=>{ try{ await navigator.clipboard.writeText(cap); setText($("finCaption"),"Caption copied ✓"); }catch(e){ const C=NP("Clipboard"); if(C){ await C.write({string:cap}); setText($("finCaption"),"Caption copied ✓"); } } };

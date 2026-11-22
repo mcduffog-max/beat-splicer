@@ -579,3 +579,6 @@ body.s-building .work .stage{display:block!important;aspect-ratio:var(--ar);heig
 .intro-btns{display:flex;gap:8px}.intro-btns .btn{flex:1;min-height:46px}
 .intro-btns[hidden]{display:none}
 @media (min-width:901px){ body.flow .work .stage,body.flow .work.portrait .stage{width:min(100%,calc(44vh*var(--ar)))} body.flow .mainact .big{max-width:520px;margin:0 auto;width:100%} body.flow .moods{justify-content:center} }
+
+.me-plan{display:flex;align-items:center;gap:8px;flex-wrap:wrap}.me-plan b{font-weight:650}.me-plan .btn{margin-left:auto}
+#finUnmark{align-self:flex-start}
