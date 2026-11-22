@@ -1,0 +1,410 @@
+420	Không tạo được ZIP. Hãy lưu từng video bằng nút Lưu của chúng.
+421	Không mở được thư mục đó:
+422	Không mở được mục đó.
+423	Không đăng được:
+424	Không đếm lại được nhịp.
+425	Không kết nối được tới đăng nhập Google
+426	Không kết nối được tới dịch vụ. Tính năng này chỉ hoạt động trong bản sao đã lưu của ứng dụng, mở bằng Chrome hoặc Edge.
+427	Không đọc được
+428	Không đọc được tệp âm thanh đó. Hãy thử WAV, MP3 hoặc M4A.
+429	Không đọc được logo đó.
+430	Không đọc được tệp lời bài hát đó.
+431	Không đọc được ảnh đó. Hãy thử JPEG hoặc PNG.
+432	Không đọc được thời lượng clip
+433	Không đọc được bộ nhớ tạm ở đây. Nhấn giữ trong ô rồi chọn Dán.
+434	Không đọc được kênh của bạn:
+435	Không khôi phục được dự án đó ({}). Hãy thêm lại âm thanh và clip.
+436	Không lưu được vào thư mục đó. Hãy dùng gói ZIP.
+437	Không lưu được khóa trên máy tính này.
+438	Không lưu được vào điện thoại:
+439	Không chia sẻ được:
+440	Không gỡ xuống được:
+441	Không viết được dàn ý.
+442	Ảnh bìa
+444	Cắt khung
+445	Đã cắt khung
+446	Chuyển mờ chéo
+447	Tùy chỉnh, dựa trên
+448	Đã phát bản dựng {}. Chọn bản bạn thích hơn.
+449	Đã dời điểm cắt đến {} ({}{} giây), đúng nhịp{}.
+450	Cắt theo hành động
+451	Cắt theo hành động: chuyển động trong mỗi cảnh rơi đúng nhịp
+452	Cắt lệch nhịp, nơi âm nhạc dội mạnh
+453	Nhịp độ cắt
+454	Cắt khi ca sĩ cất giọng
+455	Ping-pong đồng bộ điểm cắt
+456	Điểm cắt
+457	Nhịp cắt theo {}: {}, khoảng {} giây mỗi cảnh (mục tiêu {} giây).
+458	Nhịp cắt theo {}: {}. Quy định nền tảng ở đây giới hạn mỗi cảnh 3 giây, nên các cảnh dài được rút ngắn.
+459	Tối
+460	Tối và nhạt màu
+461	Chính xác u tối
+462	Tông màu xanh lá-vàng tối và nhạt, tiến máy có kiểm soát và điểm cắt gọn.
+463	Ngày trước, để lưu trữ
+464	Trôi theo chiều sâu (nền mờ)
+465	Mô tả
+466	Mô tả bắt đầu bằng một câu đơn giản về nội dung video (được lập chỉ mục cho tìm kiếm và đề xuất).
+467	Mô tả:
+468	Sa mạc
+470	Chẩn đoán
+471	Bộ lọc khuếch tán
+472	Bộ lọc khuếch tán: vùng sáng dịu
+473	Khuếch tán: quầng sáng dịu
+474	Mờ dần về đen
+475	Đạo diễn theo phong cách:
+476	Đạo diễn theo phong cách “{}”. {}
+477	Đạo diễn theo phong cách “{}”{}. {}
+478	Hướng đi
+479	Hướng đi: {}. {}.
+480	Kỹ thuật đạo diễn
+481	Đạo diễn: chuyển theo các đoạn của bài hát
+482	Ghi chú đạo diễn
+483	Đạo diễn
+484	Ngắt kết nối
+485	Làm tất cả
+486	Làm tất cả nghiêng về điều giữ chân người xem của bạn
+487	Làm tất cả chọn phong cách cho mỗi bản dựng mới, dựa trên nhạc và tư liệu của bạn
+488	Đừng chớp mắt: {}
+489	Xong
+490	Xong, nhưng {0} clip không phát được trên thiết bị này, nên {2} cảnh đã dùng clip khác: {3}{4}.
+491	Xong: {0} video{2} sẵn sàng để lưu.
+492	Xong: ứng dụng đã biết nội dung clip của bạn. Lời bài hát giờ tìm được cảnh thể hiện điều đang hát.
+493	Doodle pop
+494	Gấp đôi ({})
+495	Tốc độ gấp đôi
+496	Tải xuống
+497	Tải xuống mọi video bạn đã tạo, kèm ghi chú đăng tải, trong một tệp ZIP
+498	Tải ZIP
+499	Tải ZIP ({})
+500	Download/Beat Splicer
+501	Đang tải xuống
+502	Đang tải mô hình hình-và-chữ (khoảng 150 MB, một lần)…
+503	Đang tải mô hình hình-và-chữ: {}%…
+504	Đang tải bản cập nhật…
+505	Đang tải bản cập nhật… {}%
+506	Tĩnh lặng như mơ
+507	Mơ màng
+508	Trôi và nghiêng
+509	drop
+510	Drop {}
+511	Đổ bóng
+512	Drop, đoạn dâng trào và điểm kết thúc đoạn được tự động tìm trong bài hát. Nghe và Xem trước cũng phát chúng.
+513	Bụi và vết xước phim
+514	vd: Theo dõi để xem phần 2
+515	vd: lúc đầu cô đơn, đến điệp khúc cuối thì tràn hy vọng
+516	vd: Video âm nhạc từ bờ biển phía bắc
+517	vd: Paul, Sydney
+518	vd: Chờ đến drop
+519	Mỗi nền tảng có câu mở đầu, khung hình và thời lượng riêng, dựng từ tư liệu của chính bạn. Các nền tảng cùng thời lượng dùng chung một bản dựng, và điều đó ổn: đăng bản dựng của chính bạn lên nhiều nền tảng vẫn được tính là nguyên bản.
+520	Mỗi nền tảng có câu mở đầu riêng: 2 đến 6 từ, hiện từ khung hình đầu, ở một phần ba trên của vùng an toàn và giữ đủ lâu để đọc hai lần. Bản xuất video âm nhạc thì dùng thẻ tiêu đề ở một phần ba dưới. Tiêu đề được đối chiếu với những tiêu đề bạn từng dùng.
+521	Sớm hơn 0,25 giây
+522	Giai đoạn đầu: ứng dụng chỉ dựa nhẹ vào điều này cho đến khi có thêm Shorts.
+523	Dư âm vang khi mỗi đoạn mạnh kết thúc
+524	Dư ảnh
+525	Dư ảnh: vệt chuyển động ở các đỉnh
+526	Dựng giống video tham khảo của tôi
+527	Dựng giống thế này
+528	Hiệu ứng
+529	Tám khung hình từ bản dựng hiện tại, theo thứ tự, trong một ảnh.
+530	Chữ có chân thanh lịch (Playfair)
+531	Email để phản hồi (không bắt buộc)
+532	Vơi dần khi video phát (đếm ngược)
+533	Chữ thẻ kết (video ngắn)
+534	Thẻ kết với tên bài hát và nghệ sĩ (góc trên trái, chừa chỗ cho nút màn hình kết thúc của YouTube)
+535	Kết thúc cảnh này muộn hơn một nhịp
+536	Kết thúc cảnh này sớm hơn một nhịp
+537	Đoạn kết (video dài)
+538	Đoạn kết (dài)
+539	Kết thúc bằng cách lùi ra toàn cảnh để khép lại.
+540	Kết thúc ở vạch ô nhịp và quay thẳng về cảnh mở đầu, để xem lại liền mạch. Mỗi lần xem lại được tính là một lượt xem trên Shorts, Reels và TikTok.
+541	Kết thúc ở cảnh chặt. Lùi ra toàn cảnh sẽ khép lại câu chuyện.
+542	Kết thúc nơi bắt đầu: cảnh mở đầu trở lại để khép câu chuyện.
+543	Kết thúc nơi bắt đầu
+544	năng lượng
+545	Tiếng Anh
+546	Enter
+547	Đã sao chép chi tiết lỗi. Hãy dán vào cuộc trò chuyện của chúng ta.
+548	Escape
+549	Cơ bản
+550	thiết lập
+551	Mọi nhịp của {}
+552	Mọi nhân vật thuộc loại này
+553	Mọi clip đều là ảnh tĩnh hoặc video tĩnh. Mỗi cảnh có chuyển động máy và cú nhấn theo nhịp, nhưng chuyển động thật giữ người xem tốt hơn nhiều: hãy biến ảnh đẹp nhất thành clip video AI ngắn (ảnh thành video), hoặc trộn thêm cảnh quay thật.
+554	Mỗi điểm cắt đều rơi đúng nhịp
+555	Mọi nền tảng
+556	Mỗi nền tảng mở đầu bằng câu riêng.
+557	Mọi thứ (bản thử nghiệm)
+558	Mọi thứ trừ những cái này
+559	Mọi thứ trong “{}” đã có trong dự án.
+560	Mọi thứ trong Creator, cộng thêm học từ kết quả YouTube, Dựng giống thế này, Cái nào hay hơn, AI đánh giá và nhiều định dạng cùng lúc.
+561	Xuất
+562	Xuất ngay
+563	Xuất không cần đánh giá
+564	Trình bày: phần mở đầu
+565	Không khởi động được nhận diện khuôn mặt ở đây ({}).
+566	Không khởi động được nhận diện khuôn mặt.
+567	Nhận diện khuôn mặt chạy trên thiết bị này (không tải gì lên). Ai xuất hiện trong ít nhất hai clip sẽ thành nhân vật để bạn chọn và sắp xếp.
+568	Khung hình theo khuôn mặt (cắt khung và cận cảnh bám theo khuôn mặt)
+569	Mờ dần vào và ra
+570	Hiện dần ở đầu
+571	Mờ dần ở cuối
+572	Hành động đi xuống: hậu quả
+573	Fan Edit
+574	Kỳ ảo
+575	Cắt nhanh, zoom dứt khoát và glitch ở drop, phong cách video ngắn hiện nay.
+576	Nhanh, dứt khoát
+577	Tên tệp
+578	Hệ thống tệp
+579	Lấp đầy khung (cắt mép)
+580	Lấy từ tệp bài hát nếu có thẻ
+581	Đầy dần khi video phát
+582	Hạt phim
+583	Đã lọc ra
+584	Tìm cài đặt
+585	Tìm cài đặt, vd: viền, lời bài hát, quay chậm
+586	Tìm nhân vật qua khuôn mặt
+587	Tìm nhân vật qua khuôn mặt hoặc để AI đọc tư liệu trước để có dàn ý phong phú hơn. Chỉnh sửa bất cứ gì bên dưới.
+588	Tìm clip theo nội dung
+589	Tìm clip có… vd: thành phố về đêm, lửa, đám đông
+590	Tìm lời bài hát đồng bộ
+591	Tìm bài hát và clip hay nhất
+592	Đang tìm nhân vật qua khuôn mặt
+593	Đang tìm nhân vật qua khuôn mặt ({} trên {})…
+594	Đang tìm nhịp… {}%
+595	Hoàn thiện khung hình trên chip đồ họa (ống kính, tông màu, hạt nhiễu trong một lượt)
+596	Hoàn tất tìm hiểu nội dung clip (còn {} khoảnh khắc)
+597	Kết thúc cùng bài hát: cắt khoảng lặng cuối; cảnh cuối lùi ra và hình dừng lại hoặc mờ dần theo cách nhạc kết thúc
+598	Đang hoàn thiện video của bạn
+599	Lần xuất đầu tiên từ thiết bị này, nên chưa có gì để lặp lại.
+600	Dòng đầu {0} ký tự{1}, {2} hashtag{4}
+601	Những giây đầu
+602	Fisheye lộng lẫy
+603	Ống kính mắt cá phồng
+604	Ống kính mắt cá, ánh sáng đỏ và xanh đậm, quay chậm, và dải đen chia đôi với bản sao của cảnh trong dải.
+605	Vừa trọn cảnh (dải đen)
+606	Vừa trọn cảnh (dải mờ)
+607	Hợp với câu chuyện{}
+608	Hợp với ghi chú của bạn: “{}”
+609	Chớp sáng
+610	Chớp sáng theo nhịp
+611	Phẳng
+612	Thư mục
+613	Thư mục: {} • Tệp: {}
+614	Tư liệu
+615	Tư liệu từ video trước
+616	Đã đọc tư liệu: hiểu {} clip (cỡ cảnh, khuôn mặt, chủ thể).
+617	Đọc tư liệu cần Claude, mà ở đây không có.
+618	Tư liệu bạn chưa xem nhiều
+619	Tư liệu, nhân vật và bối cảnh
+620	Với {} câu chuyện, {}: chúng sẽ lặp lại, hoặc tư liệu khác sẽ thay vào.
+621	cho hình mờ
+622	Rừng
+623	Quên khóa đã lưu
+624	Quên những gì đã học
+625	Phát xuôi
+626	Tìm thấy {} tệp âm thanh. Đang dùng {}; chọn tệp khác trong Bài hát của bạn nếu muốn.
+627	Tìm thấy {0} nhân vật xuất hiện trong từ hai clip trở lên (từ {2} khuôn mặt){3}. Chọn họ phía trên clip để sắp xếp theo họ.
+628	Tìm thấy {0} khuôn mặt, nhưng không ai xuất hiện trong nhiều hơn một clip.
+629	Phát hiện hình mờ trong {0} clip; chúng sẽ được giữ ngoài khung hình.
+630	Chính xác từng khung
+631	MP4 chính xác từng khung: mọi điểm cắt rơi đúng nhịp, bắt đầu từ khung hình đầu tiên.
+632	Hiện không ghi được chính xác từng khung, nên dùng chế độ ghi chuẩn.
+633	WebM chính xác từng khung: canh giờ chuẩn. YouTube nhận WebM; chuyển sang MP4 cho Instagram và TikTok, hoặc chọn Tương thích nhất.
+634	Khung hình như tranh vẽ, tông xanh lam-lục và be, zoom táo bạo và lia nhanh.
+635	Khung hình
+636	Cuồng nhiệt
+637	Dựng cuồng nhiệt, đèn chớp, lóe sáng và rung mạnh hết cỡ.
+638	Đèn chớp cuồng nhiệt
+639	Miễn phí
+640	thời gian rảnh
+641	Giải phóng dung lượng
+642	Từ {} Shorts:
+643	Âm lượng tối đa
+644	Sâu hơn
+645	Tương lai / khoa học viễn tưởng
+647	Gemini (Google)
+648	Mô hình Gemini
+649	Nhẹ nhàng
+650	Trôi nhẹ nhàng
+651	Nhẹ nhàng: cân bằng màu và độ sáng
+652	Nhận đánh giá AI
+653	Đang chuẩn bị
+654	Lấy đánh giá AI trước. Xem qua rồi xuất.
+655	Đang lấy clip mẫu…
+656	GitHub phản hồi
+657	Ác mộng glitch
+658	Glitch ở drop
+659	Mảng màu bóng bẩy
+660	Pop bóng bẩy
+661	Khung hình đồ họa bóng bẩy nơi màu sắc tạo cảm xúc, thay đổi theo từng đoạn thay vì kể chuyện.
+662	Đa dạng tốt: dùng {} trên {} clip của bạn, không clip nào xuất hiện quá {}% video.
+663	Google OAuth client ID
+664	Đen trắng hạt thô, bố cục khắc nghiệt và cảnh tĩnh dài.
+665	EQ đồ họa (10 dải)
+667	Grok (xAI)
+668	Mô hình Grok
+669	Một nửa ({})
+670	Nửa tốc độ
+671	Nét vẽ tay theo nhịp
+672	Lắc cầm tay
+673	Tên tài khoản hoặc bản quyền, vd: @paulmakes hoặc © Paul 2026
+674	Cắt dứt khoát
+675	Cắt dứt khoát theo nhịp và màu tự nhiên. Không thêm gì.
+676	Cắt dứt khoát, màu thật
+677	Hashtag: #Shorts cùng {0} thẻ chủ đề trong phần mô tả, không phải tiêu đề.
+678	Nín thở
+679	Nín thở: dừng hình trước mỗi drop
+680	Đây rồi
+681	Đã xóa lịch sử: mọi clip lại được tính là mới.
+682	Dừng lại một nhịp thở trước drop
+683	Video gia đình
+684	Giữ phong cách riêng: chữ {} và {}. Làm tất cả giữ những thứ này và thay đổi phần còn lại.
+685	{} trông thế nào khi đọc to
+686	Hiển thị bao nhiêu cài đặt
+688	Bản dựng hype
+689	Nếu điểm cắt quá chậm hoặc quá dày, hãy thử tốc độ khác.
+690	Ảnh 1 là tờ in thử 8 khung hình từ phiên bản {}, theo thứ tự thời gian, tại giây thứ {} của bài hát. Ảnh 2 hiện một khung hình từ mỗi bản xuất ({}, từ trái sang phải) vào lúc chữ mở đầu xuất hiện. Đường vàng nét đứt đánh dấu vùng an toàn của nền tảng và KHÔNG thuộc bản xuất.
+691	Hình ảnh nhân lên theo nhịp, kỹ xảo trong máy quay và sự ấm áp thủ công.
+692	Hình ảnh:
+693	Cú nện ở drop
+694	Trong xe
+695	Trong bản dựng
+696	Trong bản dựng: nhấn để bỏ ra
+697	Trong ứng dụng Google Play
+698	Đang dùng
+699	Dùng âm thanh từ clip video
+700	Kèm lỗi, các bước gần đây, cài đặt và chẩn đoán (không có clip, bài hát hay thông tin cá nhân)
+701	Indie 16 mm
+702	Trong nhà
+703	Công nghiệp
+704	Danh sách kiểm tra ngành
+705	Vòng lặp vô tận
+707	Bảng tin Instagram và Facebook
+708	Reels Instagram và Facebook
+709	instagram.com/ban
+710	cài Google Drive cho máy tính hoặc OneDrive, rồi dùng Chọn cả thư mục và chọn thư mục đã đồng bộ. Bạn cũng có thể kéo thư mục thẳng vào trang này.
+711	Không lời {}
+712	Đoạn chuyển {}
+713	intro
+714	Intro {}
+715	giới thiệu
+716	Giới thiệu thế giới và nhân vật chính trước khi có gì xáo trộn.
+717	Cắt theo nhịp
+718	Video lặp lại. Xem hai lần
+719	Đã ở chế độ an toàn rồi, nên
+720	Đó là cụm từ quá quen thuộc; hãy viết điều gì đó cụ thể.
+722	Hành trình (giữ thứ tự quay)
+723	Giữ phong cách riêng của tôi (chữ và đoạn kết) trong mọi video
+724	Giữ ứng dụng mở
+725	Giữ hình mờ và logo ngoài bản dựng (cắt hoặc đóng khung lại quanh chúng, theo từng định dạng)
+726	Đang giữ bản sao tệp trong ứng dụng (để Android không lấy lại được): {} trên {}…
+727	Giữ bản dựng đa dạng: tư liệu này không được dùng ở gần đó
+728	Lưu trên thiết bị này trừ khi bạn đăng trang của mình.
+729	Đã giữ: chữ {}, {}.
+730	Khóa đi thẳng từ trình duyệt của bạn đến công ty đó qua kết nối mã hóa, và không đi đâu khác. Khóa đã lưu được mã hóa (AES-256) bằng cụm mật khẩu của bạn, vốn không bao giờ được lưu. Để an toàn hơn, hãy tạo một khóa riêng cho ứng dụng này với hạn mức chi tiêu hàng tháng, và xóa nó nếu bạn ngừng dùng ứng dụng.
+731	Đã lưu khóa, khóa bằng cụm mật khẩu của bạn.
+732	Đã mở khóa cho phiên này.
+733	Rơi đúng drop
+734	Khung ngang 16:9. Bản dựng dài hơn đều ổn. YouTube phát ở khoảng −14 LUFS.
+735	Ngôn ngữ
+736	20 giây cuối được giữ êm với cảnh dài hơn và nền tối hơn cho nút màn hình kết thúc của YouTube.
+738	Những giây cuối
+739	Các bước cuối trước khi trang dừng:
+740	Lần trước bước kiểm tra Beat This! hết bộ nhớ và làm trang dừng. Tính năng này đã tắt trên điện thoại này; bạn có thể bật lại trong Máy quay và ống kính, tốt nhất khi mở ít ứng dụng hơn.
+741	Lần trước trang dừng khi đang phân tích “{}” ({} MB). Tệp đó đã được tạm gác: liên kết lại thư mục và phần còn lại sẽ được phân tích. Nhấn “Báo cáo sự cố này” để gửi cho tôi những gì đã xảy ra.
+742	Muộn hơn 0,25 giây
+743	Muộn hơn trong clip ▶
+744	Nghiêng về điều đã giữ chân người xem ({} Shorts): {}.
+745	Tìm hiểu nội dung clip của tôi
+746	Học từ kết quả YouTube của bạn
+747	Đang tìm hiểu nội dung clip
+748	Đang tìm hiểu nội dung clip: {} trên {}. Bạn có thể tiếp tục làm việc.
+749	Đang tìm hiểu nội dung clip…
+750	Ít dùng gần đây nhất
+751	Bỏ ra
+752	Bỏ ra tất cả đang hiện
+753	Bỏ các clip từ video gần nhất của tôi
+754	Không gắn hình mờ khi xuất cho TV
+755	Trái
+756	Đã bỏ ra
+757	Đã bỏ khỏi bản dựng: nhấn để dùng
+758	Thời lượng
+759	Thời lượng là {} giây, dự kiến {} giây.
+760	Ống kính
+761	Bộ ống kính
+762	Ống kính
+763	Để AI đánh giá chọn
+764	Giúp lời bài hát và tìm kiếm tìm được cảnh theo nội dung. Tải mô hình 150 MB một lần; sau đó chạy ngoại tuyến.
+765	Kiểu chữ
+766	Sáng
+767	Lóa sáng
+768	Sáng đến tối
+769	Sáng đến tối: tư liệu sáng trước, tối sau cùng
+770	Thích không?
+771	Như những cảnh giữ chân người xem trên YouTube
+772	Màu đường viền
+773	Đường viền nổi trên hình
+774	Độ mờ đường viền
+775	Đã sao chép liên kết.
+776	Bảng tin LinkedIn và X
+777	Nghe
+778	Lắng nghe {}
+779	Đang nghe…
+780	Đang nghe thêm bài hát
+781	Đang nghe bài hát tham khảo…
+782	Đang nghe bài hát tham khảo… {}%
+783	Đang nghe bài hát của bạn
+784	Đang nghe các bài hát của bạn
+785	Đang nghe các bài hát của bạn: {} trên {} ({})…
+786	Đĩa than lo-fi
+787	Tải lại “{}”
+789	Tải lại thư mục của tôi
+790	Đang tải nhận diện khuôn mặt (khoảng 12 MB, một lần)…
+791	Địa điểm
+792	Khóa
+793	Đã đặt logo làm hình mờ.
+794	Cảnh cầm tay dài, ánh sáng tự nhiên và rất ít điểm cắt, để khoảnh khắc tự diễn ra.
+795	Ống kính tele: nén hậu cảnh, mép mềm
+796	Dài hơn
+797	Dài nhất
+798	Cảnh dài nhất {} giây (hình mới ít nhất mỗi 3 giây giúp giữ sự chú ý).
+799	Cảnh dài nhất trước đoạn kết {} giây.
+800	Diện mạo
+801	Giống nhau ×{}
+802	Clip giống nhau
+803	Đang xem clip {} trên {}…
+804	Đang xem clip của bạn
+805	Đang xem clip của bạn…
+806	Đang tìm khuôn mặt… clip {} trên {}
+807	Đang tìm trong “{}”…
+808	Đang tìm…
+809	Diện mạo
+810	Nhiều chuyển động cho đoạn mạnh
+811	Độ lớn âm thanh
+812	Độ lớn âm thanh được ước tính và giới hạn dưới 0 dB. Hãy xem trang trợ giúp của từng nền tảng trước chiến dịch lớn, vì giới hạn có thể thay đổi.
+813	Đặt độ lớn âm thanh {} LUFS từ bản mix hoàn chỉnh.
+814	Một phần ba dưới, từ giây 1 đến giây 6
+815	Tiêu đề một phần ba dưới
+816	LRCLIB không phản hồi. Kiểm tra kết nối, rồi tìm lại.
+817	LUFS (xấp xỉ)
+818	lời bài hát
+819	Lời bài hát
+820	Tạo {} video
+821	Tạo video được cắt theo bài hát của bạn.
+822	Tạo phiên bản khác
+823	Biến thành video
+824	Tạo
+825	Tạo Short của tôi
+826	Tạo Short
+827	Tự dựng ngay khi có bài hát và clip, rồi phát
+829	Tạo các video đã chọn trong Đăng (YouTube Shorts nếu bạn không chọn gì khác)
+830	Đặt làm nhân vật chính của câu chuyện
+831	Tạo video
+832	Tạo video
+833	Tạo một YouTube Short. Chọn thêm trong Nơi đăng.
+834	Sẽ tạo: {}. Đổi trong Nơi đăng.
+835	Đang tạo {} (lượt {} trên {}, còn khoảng {}). Giữ tab này hiển thị.
+836	Đang tạo {}. Nhiều định dạng cùng lúc có trong gói Pro; bỏ chọn các định dạng khác hoặc tạo từng cái.
+837	Đang tạo
+838	Đang tạo phiên bản {}…
+839	Đang tạo video: {}%, còn khoảng {} giây.

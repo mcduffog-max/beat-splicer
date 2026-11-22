@@ -1,0 +1,398 @@
+0	… từ 2 video gần nhất của tôi
+1	… từ 3 video gần nhất của tôi
+2	… từ 5 video gần nhất của tôi
+4	“{}” dài {}, quá dài để dựng một lần{}. Hãy chọn đoạn muốn dùng:
+5	“{}” xuất hiện trên màn hình {}% thời lượng video. Nhấn Phối lại, hoặc thêm các clip tương tự.
+6	“{}” rơi vào nhịp mạnh nhất lúc {}.
+7	“{}”, kéo dài {} giây
+8	“{}”: “{}” với {} clip. Giờ hãy chọn thư mục chứa chúng (thư mục con cũng được tìm).
+9	“{0}”: đã thêm {1} tệp.
+10	“{0}”: đã thêm {1} tệp{3}{4}.
+11	“{}”: cảnh quay trung bình {} giây (êm {}, vừa {}, mạnh {}); {}% điểm cắt đúng nhịp, {}% đúng phách mạnh, {}% lệch nhịp; {} cảnh dài mỗi phút; tư liệu {}.
+12	(tư liệu êm hơn cho bài nhẹ nhàng)
+13	(gần: “Thử hướng khác” để có thứ khác biệt hơn)
+14	(do bạn sửa)
+15	(tư liệu sôi động cho bài dồn dập)
+16	(trên máy tính)
+17	(PNG nền trong suốt cho kết quả đẹp nhất)
+20	(chế độ an toàn)
+21	(Slowed + Reverb)
+22	(Sped Up)
+23	(nhấn để đổi)
+24	(ứng dụng sẽ nhớ)
+25	(trình duyệt sẽ nhớ)
+26	(bản xem trước tìm kiếm hiển thị khoảng 150)
+27	(YouTube, tối đa 12)
+28	{} - ghi chú đăng tải.txt
+29	{} - ảnh bìa Shorts Reels TikTok 1080x1920
+30	{} - ảnh thu nhỏ YouTube 1280x720
+31	{} (tự động)
+32	{} (nhấn để đổi)
+33	{} và {}
+34	{} và {} đối mặt: khoảnh khắc quyết định nhất.
+35	{} xuất hiện và áp lực đè nặng lên {}.
+36	{} trước đoạn drop
+37	{} khoảnh khắc nổi bật
+38	{} ký tự (giữ dưới {} để không bị cắt){}
+39	{0} clip
+40	{0} clip không thể mở được nữa (Android đã thu hồi quyền truy cập), nên không có trong video này. Hãy thêm lại để dùng.
+41	{0} clip không dùng được và đã bị bỏ qua. {3}
+42	Tìm thấy {0} clip trong thư mục đó.
+43	{0} clip đã sẵn sàng. Thêm nữa để đa dạng hơn.
+44	{} clip · {} trong bản dựng{}
+45	{} clip · {} trong bản dựng{}{}{}{}{}{}{}{}{}
+46	{} clip và ảnh (tối thiểu {}, lý tưởng {}).
+47	{} có trong {}{}.
+48	{0} điểm cắt trong 5 giây đầu.
+49	{} điểm cắt · mỗi cảnh khoảng {} giây{}
+50	{} clip khác nhau, khoảng {} mỗi phút.
+51	Tìm thấy {0} đoạn drop; {2}.
+52	Bản dựng {}
+53	{} đối mặt trực diện.
+54	{} thất bại: {} {} Trình duyệt: {} Engine: {} Định dạng: {} Clip: {}, bài hát {}
+55	{0} tệp quá lớn để phân tích (trên 300 MB).
+56	{} đặt trọng số {} vào {}
+57	{} đen trắng
+58	{} quay chậm
+59	{} không lùi bước
+60	{} dòng từ {}, {}{}.
+61	Đã chạm {} dòng, phần còn lại chia đều ở giữa
+62	Dài {} (khuyên dùng cho {}: khoảng {} giây).
+63	Tìm thấy {} lời bài hát cho “{}”{}.{}{}
+64	{} gặp {}
+65	{0} lần cùng một tư liệu xuất hiện hai lần trong 20 giây. Thêm clip sẽ khắc phục điều này.
+66	Còn {} bài chưa phân tích (dùng “Phân tích thêm bài hát”).
+67	{} cần ít nhất {} clip hoặc ảnh cho {} (bạn có {}).
+68	{} cần tổng cộng ít nhất {} giây tư liệu (bạn có {} giây; mỗi ảnh tính 3 giây).
+69	{} không hề lường trước
+70	{} trên {} đoạn dâng trào tăng tốc vào drop với điểm cắt ngay tại đó
+71	{} trên {} khoảnh khắc đỉnh rơi vào cận cảnh hoặc đôi mắt.
+72	{} trên {} cảnh lấy mẫu không hiển thị đúng tư liệu dự kiến (khoảng {}). Điều này xảy ra khi clip không tải kịp trên máy tính đang bận. Đóng các tab khác rồi tạo lại.
+73	{} hay {}: ai thắng?
+74	{} đã chọn {}: {}
+75	Đã có {} lượt chọn; chưa có xu hướng rõ ràng.
+76	{} lượt chọn. Đã học được: {}.
+77	{0} nền tảng cần gói Creator, nên lần này chỉ {3}.
+78	{} giây tư liệu tĩnh trong đoạn sôi động. Hãy thêm clip sống động hơn.
+79	{} thẻ tìm kiếm sẵn sàng để dán.
+80	vùng tối {}, vùng sáng {}, tương phản {}
+81	{} cảnh được bố cục vào khuôn mặt{}.
+82	{} bài hát đã sẵn sàng.{}{}{}
+83	{} dừng do lỗi: {}. Nhấn “Báo cáo sự cố này” để gửi.
+84	{} đã dừng: Android thu hồi quyền truy cập vào một số clip hoặc bài hát (điều này xảy ra khi ứng dụng bị đóng một thời gian). Hãy thêm lại{}.
+85	Đã áp dụng phong cách {}.
+86	{} thẻ, {} trên 500 ký tự. Dán vào ô Thẻ trong YouTube Studio.
+87	Chuyển cảnh {}
+88	Cần thêm lại {0} clip rất lớn.
+89	trọng số {} vào {}
+90	{} sẽ bắt đầu khi lượt phân tích hiện tại xong…
+91	{0} từ, khoảng 1,5 giây ở nhịp mạnh nhất
+92	{0} từ, hiển thị 0,1–{2} giây, một phần ba phía trên{3}
+93	{} x {} ở {} fps, dài {} (bài hát từ {} đến {}), mục tiêu âm lượng {} LUFS
+94	{}, {} khoảng {} BPM. Cảm giác: {}
+95	{}, khi màn đêm buông
+96	{}, cắt theo nhịp
+97	{}, từng khung hình
+98	{}, không bộ lọc
+99	{}, từng nhịp một
+100	{}, rồi đến drop
+101	{}: bản ghi dài {} (nhấn Dùng để chọn một đoạn)
+102	{}: đã đọc {} Shorts, {} được liên kết với cài đặt đã tạo ra chúng.
+103	{}: {}, {}, {} clip, trong {}
+104	{}: {}. Đang phát.
+105	{}: một trong {}
+106	{}: ảnh, tên và giao diện
+107	{}: đã tạm gác (lần trước nó làm trang bị dừng)
+110	{}: quá lớn để phân tích
+112	{}{} điểm
+113	{}{}, cắt theo nhịp “{}”{}.
+114	{}% {} rời đi mỗi giây
+115	Khác {}% so với bản xuất gần giống nhất trước đây (“{}”, {}).
+116	◀ Sớm hơn trong clip
+117	✓ Đã kiểm tra: kích thước, thời lượng{}{}{}
+119	10 phút
+120	1080p ở 25 fps (khu vực PAL), âm lượng phát sóng −23 LUFS, chữ nằm trong vùng an toàn tiêu đề.
+121	Video 1080p
+122	1080p, mọi nền tảng, bộ ống kính, phong cách riêng của bạn, ghi chú đạo diễn và hình ảnh trở lại. Không có hình mờ.
+125	Phim 16 mm
+126	Phim 16 mm: hạt nhiễu, góc mềm
+129	3 phút
+131	Âm thanh 3D
+132	Thay đổi âm thanh 3D có hiệu lực ở lần tới bạn nhấn Nghe hoặc Xem trước.
+134	4 phút
+136	6 phút
+138	Ống kính điện ảnh thập niên 70
+139	Ống kính điện ảnh thập niên 70: quầng sáng ấm
+141	8 phút
+142	Mộng 8D
+143	Quỹ đạo 8D (xoay quanh đầu bạn)
+144	Bản dựng {}: {}.
+145	Ảnh thu nhỏ 1280×720 được kèm theo bản xuất.
+146	Bản dựng khớp nhịp của “{}”{}.
+147	Một ý tưởng khác cho bản dựng: câu chuyện, nhịp độ và diện mạo mới.
+148	Một ý tưởng khác: phong cách, nhịp độ và câu chuyện mới
+149	Vài khoảnh khắc nổi bật
+150	Một đường mảnh bo góc chạy quanh khung hình và khép kín khi video kết thúc. Với video dọc, đường này nằm lùi vào từ hai bên, để điện thoại cắt mép Short vẫn hiển thị trọn vẹn.
+151	Video dài cần khoảng {} clip phù hợp; bạn có {}.
+152	A hay hơn
+153	Một câu về bạn
+154	Phát hiện logo hoặc hình mờ trong clip này; mỗi định dạng đều được đóng khung để loại bỏ nó
+155	Một cảnh dài: bài hát đang lắng lại ở đây
+156	Đã có phiên bản ứng dụng mới (bản dựng {}; bạn đang có {}).
+157	Trang công khai với ảnh, tên, liên kết và các video bạn chọn, trên trang web Beat Splicer. Ai tìm thấy video của bạn có thể xem các tác phẩm khác ở đó.
+158	Một câu hỏi để ghim làm bình luận đầu tiên, khơi gợi phản hồi.
+159	Một hình ảnh trở lại từ tư liệu của tôi: gieo sớm, quay lại ở giữa, khép lại video
+160	Cả một thư mục hoặc vài video và ảnh. Không gì rời khỏi điện thoại của bạn.
+161	Gần như nhau
+162	Trừu tượng hoặc đồ họa
+163	Các hồi theo {}: phần mở đầu kéo đến điệp khúc đầu tiên và cao trào rơi vào điệp khúc lớn cuối cùng.
+164	Thêm
+165	Thêm mô tả: Viết tiêu đề mới sẽ điền giúp bạn.
+166	Thêm logo, nhãn dán hoặc đồ họa
+167	Thêm tệp lời bài hát
+168	Hãy thêm bài hát và clip trước.
+169	Hãy thêm bài hát trước.
+170	Thêm tiêu đề (không bắt buộc)
+171	Thêm thẻ tiêu đề trong Diện mạo.
+172	Hãy thêm khóa AI trước: nhấn Tất cả cài đặt, rồi Nơi đăng › Kết nối ChatGPT, Gemini hoặc Grok.
+173	Hãy thêm khóa API trước
+174	Thêm định dạng khác (thêm {})
+175	Thêm bao nhiêu tùy thích. Càng đa dạng, ghép càng khớp.
+176	Hãy thêm âm thanh và clip trước, rồi chọn.
+177	Thêm âm thanh và clip để xem từng bản xuất được đánh giá ra sao.
+178	Thêm âm thanh để xem nhịp ở đây.
+179	Thêm nữa
+180	Thêm clip, hoặc bỏ chọn nền tảng đó trong Nơi đăng.
+181	Thêm chữ mở đầu trong Diện mạo. Nhiều người lướt khi tắt tiếng, nên chữ sẽ là điểm thu hút.
+182	Thêm thẻ tìm kiếm (Viết tiêu đề mới sẽ điền giúp bạn).
+183	Hãy thêm bài hát và clip trước.
+184	Thêm lại {0} clip rất lớn nếu bạn muốn dùng.
+185	Thêm lời bài hát và cảnh quay sẽ theo lời: điều được hát sẽ hiện lên đúng lúc. Tệp .lrc được canh giờ theo từng dòng; lời thường được chia đều cho các phần có hát.
+186	Thêm clip video để dựng bản dựng.
+187	Thêm clip của bạn
+188	Thêm clip của bạn, rồi nhấn “Tìm bài hát và clip hay nhất”.
+189	Hãy thêm Google client ID của bạn trước
+190	Hãy thêm tên của bạn trước (ở trên).
+191	Thêm bài hát và clip, rồi nhấn Làm tất cả.
+192	Thêm qua liên kết
+193	Thêm {} clip nữa sẽ cho mỗi cảnh tư liệu mới.
+194	AI xem các khung hình của từng clip và ghi lại cỡ cảnh, khuôn mặt, biểu cảm và chủ thể, để câu chuyện mở rộng, tiến vào khuôn mặt và đôi mắt khi nhạc dâng lên, rồi lùi ra ở cuối.
+195	Đánh giá AI
+196	Đã áp dụng tất cả
+197	Tất cả clip
+198	Tất cả cài đặt
+199	Tất cả video
+200	Mức độ
+201	Phân tích thêm bài hát
+202	Anamorphic
+203	Sử thi anamorphic
+204	Anamorphic: tối dần hình bầu dục, vệt sáng
+205	Anamorphic: vệt sáng dài, viền tối bầu dục
+206	Và giờ
+207	Ứng dụng Android
+208	Ứng dụng Android bản dựng {}
+209	Android không cho ứng dụng mở chúng. Nếu chúng ở Google Photos mà không có trên điện thoại, hãy tải xuống trước (mở từng cái và chọn Tải xuống), hoặc chọn từ ứng dụng Files.
+210	Android cần bạn đồng ý một lần: bật “Cho phép từ nguồn này” cho Beat Splicer, quay lại, rồi nhấn Cập nhật ứng dụng lần nữa.
+211	Cặp khác
+212	Trả lời CÓ cho “Nội dung bị thay đổi hoặc tổng hợp” khi tải lên. Phần mô tả đã ghi rõ.
+214	Bất kỳ tệp MP3, M4A hoặc WAV nào. Beat Splicer nghe nhịp, điệp khúc và đoạn drop.
+215	Gì cũng được
+216	Khóa API từ aistudio.google.com
+217	Khóa API từ console.x.ai
+218	Khóa API từ platform.openai.com
+219	Đã áp dụng
+220	Đã áp dụng cách cắt khung này cho mọi clip.
+221	Áp dụng mọi gợi ý
+222	Tự động áp dụng quy tắc ngành (khuyên dùng)
+223	Áp dụng: {} → {}
+224	Nghệ sĩ
+225	Theo thứ tự thêm
+226	Như tìm thấy
+227	Như tìm thấy ({})
+228	Dài nhất cho phép
+229	Để AI chọn
+230	Để AI chọn cần Claude hoặc khóa AI: nhấn Tất cả cài đặt, rồi Nơi đăng › Kết nối ChatGPT, Gemini hoặc Grok.
+231	Yêu cầu AI đánh giá trước khi xuất
+232	Đang hỏi {}… thường mất chưa đến một phút.
+233	Đang nhờ AI chọn đạo diễn…
+234	Đang hỏi AI đánh giá…
+235	Đang nhờ AI đặt tên và kiểm tra từng nhân vật…
+236	Tại drop
+237	Ở mép
+238	Hiệu ứng âm thanh
+239	Âm thanh đã sẵn sàng.
+240	Ủy quyền
+241	Tự đạo diễn
+242	Tự động
+243	Tự động (theo nhạc)
+244	Phong cách tự động: tạm thời là {} ({}). Làm tất cả có thể chọn phong cách khác cho mỗi bản dựng mới.
+245	Tiêu đề tự động đang tắt. Câu mở đầu bên dưới được dùng cho mọi nền tảng.
+246	Tự động: Làm tất cả chọn phong cách cho mỗi bản dựng mới.
+247	Trung bình từ {} người đánh giá. Nên xử lý trước những điểm được nhiều người nêu.
+248	Cảnh quay trung bình {} giây (video âm nhạc thường khoảng 2 giây, lâu hơn ở phong cách êm).
+249	B hay hơn
+250	Lùi một dòng
+251	Quay lại tự động
+252	Quay lại chỉnh sửa
+253	Quay lại bài hát gốc…
+254	Trở lại điểm khởi đầu nhưng đã đổi khác: bình thường mới.
+255	Hình nền:
+256	Backspace
+258	Âm trầm
+259	Tăng âm trầm
+261	Nhịp
+262	Nhịp và năng lượng
+263	Beat Edit
+264	Hiệu ứng theo nhịp
+265	Chỉ nhịp
+266	Đã đặt nhịp {} BPM. Bản dựng đã được dựng lại.
+270	Beat This! xác nhận nhịp ({} BPM).
+271	Beat This! không chạy được ở đây:
+272	Beat This! đã đếm lại bài hát: {} → {} BPM{}.
+273	Nhịp, năng lượng và cảm xúc
+274	15 giây hay nhất
+275	30 giây hay nhất
+276	60 giây hay nhất
+277	Hợp nhất với bài này
+278	Khớp nhất
+279	Khớp nhất: “{}” (độ phù hợp {}%). Dùng {} trên {} clip của bạn: những clip có chuyển động và màu sắc hợp với bài này{}. Tư liệu của bạn hợp với {}.{}
+280	Nghe bằng tai nghe là tuyệt nhất. Ping-pong đẩy âm thanh qua trái phải ở mỗi điểm cắt.
+281	Logo lớn ở những giây cuối
+282	Drop lớn nhất trong video mới nhất: cảnh {} lúc {} ({}) trong “{}”.
+283	Đen
+284	Đen trắng
+285	Hòa trộn
+286	Bokeh lấp lánh (nhịp theo beat)
+287	Đậm
+288	Đậm hẹp (Anton)
+289	Viền
+290	Dưới
+291	Giữa dưới
+292	Trái dưới
+293	Phải dưới
+294	Nảy theo nhịp
+295	Hình mờ thương hiệu
+296	breakdown
+297	Breakdown {}
+298	Khung hình thở
+299	Khung hình thở: dải đen mở ra theo nhạc
+300	bridge
+301	Bridge {}
+302	Màu tươi, zoom nhanh và nét vẽ tay bùng lên theo nhịp.
+303	Sáng nhất
+304	Đang đưa vào “{}”: {} trên {} ({} MB)…
+305	Trình duyệt:
+306	dâng trào
+307	Bản dựng {} đã sẵn sàng (bạn đang có {}).
+308	Dâng đến đỉnh (tiến vào khi nhạc dâng)
+309	Đang dựng hai bản của cùng 20 giây…
+310	Lớp phủ có sẵn
+311	Bận khi chạy: {}.
+312	Mua
+313	Mua {}
+314	Năng lượng máy quay
+315	Chuyển động máy quay
+316	Chuyển động máy quay
+317	Rung máy ở nhịp mạnh
+318	Máy quay: ống kính {} ({}), chuyển động máy {} theo các đoạn của bài hát.
+319	Không dùng được:
+320	Hủy
+321	Ô chú thích
+322	Đã sao chép chú thích ✓
+323	Chú thích:
+324	Chú thích và hashtag
+325	Ấm áp băng cassette
+326	Giữa
+327	Đổi
+328	Chân dung nhân vật (giữ chủ thể chính)
+329	Nhân vật:
+332	Kiểm tra cập nhật ứng dụng
+333	Kiểm tra nhịp bằng bộ dò nơ-ron Beat This! khi thiết bị hỗ trợ (WebGPU; 190 MB một lần)
+334	Đang kiểm tra hình mờ trong clip
+335	Đang kiểm tra hình mờ trong clip ({} trên {})…
+336	Đang đối chiếu từng tệp với kế hoạch…
+337	Đối chiếu với kế hoạch
+338	Đang kiểm tra nhịp bằng Beat This!
+339	Đang kiểm tra nhịp bằng Beat This! (tải một lần)…
+340	Đang kiểm tra giao dịch mua với Google Play…
+341	Kiểm tra khả năng của thiết bị này và, khi đã có bài hát và clip, tạo video thử 6 giây bằng tư liệu của bạn. Sao chép báo cáo và gửi cho người đang hỗ trợ bạn.
+342	Chọn đạo diễn giúp tôi
+343	Chọn thư mục
+344	Chọn thư mục bài hát
+345	Chọn thư mục trên điện thoại này
+346	Chọn tên trang có ít nhất 3 chữ cái hoặc số.
+347	Chọn ảnh
+348	Chọn bài hát
+349	Chọn một bài hát, hoặc một đoạn của bản ghi dài.
+350	Chọn một video bạn ngưỡng mộ
+351	Chọn cả thư mục
+352	Chọn tệp âm thanh
+353	Chọn clip
+354	Chọn clip theo dàn ý
+355	Chọn lại tất cả: câu chuyện, nhịp độ, diện mạo, âm thanh và tiêu đề
+356	Chọn thư mục phương tiện
+357	Chọn clip video và ảnh
+358	Chọn logo của bạn
+359	Đang chọn cảnh quay, nhịp độ và diện mạo…
+360	điệp khúc
+361	Điệp khúc {}
+362	Điệp khúc {} {}
+363	Do Làm tất cả chọn
+364	Được chọn cho bài này
+365	Điện ảnh
+366	Điện ảnh (Bebas Neue)
+367	Dải điện ảnh (chỉ khung ngang)
+368	Thành phố
+370	Claude (mở trong Claude)
+371	Claude xem tư liệu và dữ liệu âm nhạc của bạn rồi chọn đạo diễn
+372	Gọn gàng
+373	Gọn gàng (Montserrat)
+374	Gọn và sắc nét
+375	Xóa
+376	Xóa lịch sử
+377	Đã lưu client ID. Nhấn Đọc kết quả của tôi để đăng nhập.
+378	Cao trào: bước ngoặt
+379	Âm lượng clip
+380	Bộ nhớ tạm
+381	Clip đã sẵn sàng.
+382	Đóng
+383	Đóng mọi mục
+384	Cận cảnh
+385	Kết thúc bằng hình ảnh trở lại
+386	Thép lạnh
+387	Lạnh lẽo, bất an, với giật hình, đèn chớp và glitch dữ dội ở nhịp mạnh.
+388	Thu gọn tất cả
+389	Màu
+390	Màu thức tỉnh
+391	Màu thức tỉnh: đen trắng cho đến khi bài hát bừng lên
+392	Tông màu
+393	Lớp màu đổi theo từng ô nhịp
+394	Màu: một bộ màu riêng, dựng từ tư liệu và bài hát này ({}).
+395	Màu hài hòa với cảnh trước
+396	Có trong gói Creator
+397	Phòng hòa nhạc
+398	Kết nối ChatGPT, Gemini hoặc Grok
+399	Kết nối kênh của bạn để ứng dụng biết Shorts nào giữ chân người xem và nghiêng về điều hiệu quả, đồng thời tải lên hoặc lên lịch Shorts từ đây. Cần Google client ID từ dự án Google Cloud miễn phí của riêng bạn.
+400	Chuyển chúng sang MP4 (H.264) rồi thêm lại (thường là video HEVC của iPhone trên Windows).
+401	Đã sao chép
+402	Sao chép
+403	Sao chép chú thích
+404	Sao chép chi tiết lỗi
+405	Sao chép liên kết
+406	Sao chép báo cáo
+407	Dấu ở góc
+408	Dấu ở góc và lát mờ
+409	Không kiểm tra được bản cập nhật:
+410	Không kiểm tra được tệp này.
+411	Không tự sao chép được: báo cáo đã được chọn, hãy sao chép từ menu.
+412	Không tìm thấy “{}” trong thư mục đó. Hãy chọn thư mục có chứa nó.
+413	Không lấy được clip mẫu:
+414	Không lưu được ảnh của bạn trên thiết bị này (bộ nhớ đầy).
+415	Không học được từ video đó:
+416	Không tải được thư mục:
+417	Không tải được mô hình hình-và-chữ:
+418	Không tải được công cụ video (
+419	Không tạo được phiên bản đó của bài hát.
+1672	Bản dựng {}
+1673	Tạo video {} của tôi
+1674	Tạo video của tôi

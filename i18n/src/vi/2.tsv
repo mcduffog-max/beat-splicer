@@ -1,0 +1,416 @@
+840	Đang dựng bản của bạn
+841	Đang dựng bản của bạn…
+842	Đang tạo video của bạn: {}%
+843	Đã đánh dấu là điệp khúc. Shorts và câu chuyện giờ dùng lựa chọn của bạn.
+844	Bút dạ (Permanent Marker)
+845	Gạt mặt nạ
+846	Cắt nối hình khối
+847	Cắt nối hình khối: hình khối khớp với nơi cảnh trước kết thúc
+848	Thỉnh thoảng cắt nối hình khối: hình khối của cảnh sau khớp với cảnh trước
+849	Theo điện thoại
+850	Ghép cảnh
+851	Ghép cảnh với lời bài hát
+852	Ghép với
+853	Khớp với lời: “{}”
+854	Đang đo hướng chuyển động
+855	Đang đo hướng chuyển động trong clip: {} trên {} (chạy nền).
+856	Vừa
+857	Khoảnh khắc soi gương
+858	Khoảnh khắc soi gương: đối xứng ở điệp khúc
+859	Đối xứng gương
+860	Kết hợp (phong cách quyết định)
+861	Trộn dưới nhạc của bạn. Nhấn biểu tượng loa trên clip bất kỳ để tắt tiếng riêng clip đó.
+862	Di động và nhắn tin
+863	Điện ảnh hiện đại
+864	Ống kính prime hiện đại: trong trẻo, sắc nét
+865	Mono
+867	Cảm xúc
+868	U buồn
+869	Thêm tùy chọn
+870	Tương thích nhất
+871	Nhiều chuyển động nhất
+872	Nhiều thời lượng nhất cho nhân vật đã chọn
+873	Chuyển động
+874	Nhòe chuyển động khi máy di chuyển
+875	Núi non
+876	Chuyển động
+877	Chuyển động tiếp nối từ cảnh trước
+878	Đã đo chuyển động: điểm cắt giờ theo hướng chuyển động.
+879	Chuyển động khớp nhạc: {} cảnh giờ bắt đầu tại nơi hành động rơi đúng nhịp.
+880	Chuyển động: ít nhất {}% mỗi bản dựng là tư liệu thực sự chuyển động. Chưa ưng ý tưởng này? “Thử hướng khác” sẽ chọn hướng mới.
+881	Movies/Beat Splicer
+882	MP3, M4A hoặc WAV
+883	MP3, M4A hoặc WAV.
+884	Làm nghẹt hai nhịp cuối trước mỗi drop, rồi bung mạnh
+885	Nhân (cho kết cấu)
+886	Nhân bản theo nhịp (1, 4, 9 bản)
+887	Nhạc: {} – {}
+888	Tắt tiếng
+889	Tư liệu của tôi có người, địa điểm hoặc cảnh chân thực do AI tạo
+890	Tên
+891	Đặt tên bằng AI
+892	Tên
+893	Tự nhiên
+894	Cần tổng cộng {} giây tư liệu; bạn có {} giây.
+895	Cần ít nhất {} clip hoặc ảnh; bạn có {}. Việc xuất bị chặn cho đến khi bạn thêm.
+896	Neon đỏ và xanh
+897	Ý tưởng mới
+898	Đã viết tiêu đề mới cho từng nền tảng (trình viết tích hợp).
+899	Đã viết tiêu đề mới cho từng nền tảng.
+900	Tiếp
+901	Tốt thứ hai:
+902	Bước tiếp theo
+903	Lần tới, Tạo video sẽ chạy ở chế độ an toàn (chậm hơn, nhẹ hơn cho điện thoại). Nếu vẫn dừng,
+904	Phiên bản tiếp
+905	Tiếp theo:
+906	Night Drive (mẫu).m4a
+907	Nightcore (+30%)
+908	Không có AI để đọc tư liệu, nên lựa chọn dựa vào chuyển động, độ sáng và thứ tự quay.
+909	Chưa thiết lập AI đánh giá (xem Đánh giá AI). Tự chọn, hoặc thêm khóa ở đó.
+910	Không có tệp âm thanh trong thư mục đó.
+911	Không tìm thấy tệp âm thanh hay video ở đó.
+912	Không nhận được chú thích nào. Hãy thử lại.
+913	Đoạn này không có drop rõ ràng, nên bỏ qua từ chốt.
+914	Không có sẵn clip? Thử với clip mẫu
+915	Không có điểm cắt trong 5 giây đầu. Tăng Nhịp độ cắt hoặc bật quy tắc ngành.
+916	Không tự động tìm thấy kết quả khớp chính xác. Kiểm tra nghệ sĩ và tên bài, hoặc chọn đúng phiên bản bên dưới.
+917	Không khớp chính xác. Kiểm tra nghệ sĩ và tên bài, hoặc chọn đúng phiên bản bên dưới.
+918	Cảnh mở đầu không có khuôn mặt. Khuôn mặt trong giây đầu tiên giữ sự chú ý tốt nhất.
+919	Không mờ từ đen, không intro logo và không thẻ kết, vì sẽ phá vòng lặp. Hãy đặt lời kêu gọi hành động trong chú thích.
+920	Không có tư liệu nào lặp lại trong 20 giây.
+921	Không có hình ảnh, nên hãy đánh giá chỉ dựa trên dữ liệu.
+922	Không có đặc tính ống kính
+923	Chưa canh giờ dòng nào.
+924	Không tìm thấy dòng lời nào trong văn bản đó.
+925	Không nhớ video trước
+926	Không có tiêu đề trên màn hình. Nhập bên dưới bản xem trước nếu muốn.
+927	Không có chữ mở đầu, theo lựa chọn. Cảnh đầu phải tự gánh hết: mở bằng chuyển động và khuôn mặt.
+928	Chưa có lượt chọn. Mỗi lần chọn giúp ứng dụng hiểu bạn thích gì.
+929	Chưa có giao dịch mua.
+930	Chưa có tham khảo.
+931	Không có cài đặt nào khớp với “{}”.
+932	Không tìm thấy bài hát trong “{}”.
+933	Không có đoạn tĩnh trong phần sôi động: cảnh tĩnh ở đó được tiến máy chậm.
+934	Không chữ
+935	Không hình mờ
+936	Không tìm thấy hình mờ.
+937	Tài khoản Google này không có kênh YouTube
+938	Không ai rời {} mà không đổi khác
+939	Chưa video nào được tạo bằng phiên bản ứng dụng này, nên chưa có gì để học. Các Shorts bạn tạo từ giờ sẽ được theo dõi.
+940	Bình thường
+941	Không phải điệp khúc
+942	Không phải điệp khúc: đã ghi nhận.
+943	Chưa dùng
+944	Không dùng gần đây
+945	Không hoạt động:
+946	Đã ghi nhận: gần như nhau.
+947	Đã ghi nhận: clip đó sẽ không được ghép với “{}” nữa.
+948	Không tìm thấy gì. Thử ít từ hơn, hoặc chỉ tên bài hát.
+949	Chưa lưu giữ gì.
+950	Không có gì mới trong “{}”.
+951	Chưa có gì để lưu.
+952	Độ mới: khác {}% so với video gần đây giống nhất của bạn{}.
+953	Giờ hãy thêm clip của bạn.
+954	Giờ hãy chọn bài hát của bạn.
+955	Giờ đến clip của bạn
+956	Giờ đến bài hát của bạn
+957	Thỉnh thoảng có cảnh phát ngược (khoảnh khắc tua lại)
+958	Tắt
+959	Tắt (dùng cài đặt của tôi)
+960	Video chính thức
+961	Trên máy tính:
+962	Trên điện thoại:
+963	Trên màn hình
+964	Trên YouTube
+965	Mở đầu trên màn hình: {}
+966	Chữ trên màn hình
+967	Tiêu đề trên màn hình
+968	Một khoảnh khắc nổi bật: hiệu ứng chỉ ở nơi đáng giá
+969	Một lựa chọn quyết định toàn bộ diện mạo và cảm giác. Lựa chọn mới nhất được áp dụng: chọn ở đây, hoặc nhấn Làm tất cả để ứng dụng chọn giúp. Những gì bạn đổi bên dưới sẽ tinh chỉnh nó.
+970	Thêm một bước:
+971	Chỉ có {} clip cho {}. Thêm khoảng {} clip sẽ cho hình ảnh mới xuyên suốt.
+972	Chỉ khác {}% so với “{}” ({}). Các nền tảng hạn chế tiếp cận với nội dung gần như giống hệt hoặc theo khuôn mẫu. Nhấn Phối lại hoặc đổi đạo diễn.
+973	Chỉ {}% video có tư liệu chuyển động (hãy nhắm từ {}% trở lên). Thêm clip có chuyển động: đi bộ, nhảy, lái xe, lia máy.
+974	Chỉ bản ghi MP3 và WAV dài thế này mới mở được theo đoạn. Hãy cắt xuống dưới
+975	Chỉ những cái này
+976	Độ mờ
+977	Mở
+978	Mở dự án đã lưu
+979	Phong cảnh rộng mở
+980	Mô hình OpenAI
+981	Mở đầu
+982	Đang mở {} trên {} từ {}…
+983	Đang mở trình cài đặt Android: nhấn Cập nhật. Ứng dụng sẽ khởi động lại với phiên bản mới.
+984	Đang mở Google Play…
+985	Chữ mở đầu “{}” {}. Nhấn Viết tiêu đề mới, hoặc chỉnh sửa.
+986	Chữ mở đầu “{}”: {} từ, hiện trọn từ khung hình đầu trong {} giây, một phần ba trên của vùng an toàn.{}{}
+987	Chữ mở đầu gần giống một câu bạn từng dùng. Nhấn Viết tiêu đề mới.
+988	Chữ mở đầu là mới: không có gì giống trong các tiêu đề trước của bạn.
+989	Chữ mở đầu đọc tự nhiên và nói về những gì trên màn hình.
+990	Đã đặt chữ mở đầu, điều quan trọng ở đây vì bảng tin này tự phát khi tắt tiếng.
+991	Tiêu đề mở đầu biến mất từng chữ một, mỗi chữ gập phẳng lại, từ chữ cuối về chữ đầu
+992	Mở bằng toàn cảnh để giới thiệu bối cảnh.
+993	Mở bằng khuôn mặt: người ta ngừng lướt vì khuôn mặt.
+994	Mở bằng phần mạnh nhất của bài hát.
+995	Mở bằng cảnh chặt. Một toàn cảnh trước sẽ giới thiệu bối cảnh.
+996	Không bắt buộc, vd: nghệ sĩ
+997	hoặc thả vào đây
+998	hoặc thả vào đây
+999	Bản gốc
+1000	Tính nguyên bản (mọi nền tảng)
+1001	Kiểm tra đầu ra đạt: {}, {} giây{}{}.
+1002	Kiểm tra đầu ra: {}
+1003	outro
+1004	Outro {}
+1005	Lớp phủ
+1006	Lớp phủ
+1007	nhịp độ
+1008	Nhịp độ theo nhạc (khớp {}%): điểm cắt và chuyển động lên xuống theo năng lượng bài hát.{}
+1009	Nhịp độ, dàn ý câu chuyện và hướng đi
+1010	Đang đóng gói ZIP: {}%…
+1011	Đang đóng gói ZIP…
+1012	Tên trang
+1013	Hội họa xanh lam-lục
+1014	Siêu thực hội họa
+1015	Lia ngang
+1016	Cụm mật khẩu
+1017	Cụm mật khẩu (ít nhất 8 ký tự)
+1018	Dán liên kết YouTube hoặc Shorts
+1019	Dán từ bộ nhớ tạm
+1020	Dán lời bài hát
+1021	Dán lời bài hát, mỗi câu hát một dòng. Dòng bắt đầu bằng mốc thời gian như [01:23.40] sẽ được dùng chính xác.
+1022	Đã dán {} dòng từ bộ nhớ tạm. Kiểm tra rồi nhấn Dùng lời này.
+1023	đỉnh
+1024	Chưa được cấp quyền cho lượt đánh giá này.
+1025	Người
+1026	Xoáy Petzval
+1027	Ống kính chân dung kiểu Petzval: tâm sắc nét, xoáy mạnh
+1028	Điện thoại cao hơn video (hầu hết điện thoại hiện nay) lấp đầy màn hình và cắt bớt một chút hai bên trong YouTube Shorts, TikTok và Reels. Mặc định, đường viền nằm ngay bên ngoài nút thích và chia sẻ của YouTube trên điện thoại thông thường; hãy dời vào trong nếu điện thoại của bạn vẫn che mất.
+1029	Chuyển động ảnh
+1030	Phân câu cho điểm cắt: theo ca sĩ, giữ lại nơi bài hát lắng xuống, thỉnh thoảng cắt lệch nhịp
+1031	Chọn bài hát
+1032	Chọn câu mở đầu, hoặc chỉnh sửa bên dưới:
+1033	Chọn clip
+1034	Chọn phiên bản khớp với bài hát của bạn.
+1035	Tiếp tục từ chỗ dở?
+1036	Tiếp tục từ chỗ dở? “{0}” với {1} clip, lưu lúc {3}.{4}
+1037	Chọn khung hình bạn thích
+1038	Do AI chọn
+1039	Được chọn cho bài này
+1040	Pictures/Beat Splicer
+1041	Ghim bình luận
+1042	Bình luận đã ghim: {}
+1043	Pin video Pinterest
+1044	Nền trơn
+1045	Lên kế hoạch cả video một lần (giữ tư liệu đẹp nhất cho nơi quan trọng)
+1046	Gieo hình ảnh trở lại
+1047	Nền tảng trước, để tải lên
+1048	Nền tảng, tiêu đề và tạo video
+1049	Phát A
+1050	Phát B
+1051	Phát đoạn này
+1052	Phát ngược cảnh này
+1053	Phát bản dựng
+1054	One-take vui nhộn
+1055	Đang phát {}.
+1056	Đang phát bản dựng {}…
+1057	Đang phát từ {}…
+1058	Đang phát bản dựng của bạn
+1059	Bật nảy theo nhịp
+1060	Dọc 4:5, khung cao nhất mà bảng tin hiển thị không bị cắt.
+1062	Vị trí
+1063	Đăng điều này làm bình luận đầu tiên và ghim lại. Câu hỏi sẽ nhận được trả lời, và trả lời được tính là tương tác.
+1064	Tiền điệp khúc {} {}
+1065	Bố cục đối xứng chính xác, tông lạnh và chuyển động chậm rãi, có chủ ý.
+1066	Đang chuẩn bị khung hình để đánh giá…
+1067	Đang chuẩn bị nhạc nền: mã hóa {}%…
+1068	Đang chuẩn bị nhạc nền: trộn {}%…
+1069	Đang chuẩn bị nhạc nền: chỉnh độ lớn…
+1070	Đang chuẩn bị nhạc nền…
+1071	Đang chuẩn bị chia sẻ…
+1072	Nhấn “Tìm bài hát và clip hay nhất”.
+1073	Nhấn “Đọc tư liệu bằng AI” trong Câu chuyện và nhịp độ để câu chuyện theo được cỡ cảnh và khuôn mặt. Trước đó, nó theo năng lượng và thứ tự quay.
+1074	Nhấn Xem trước để xem bản dựng tại đây.
+1075	Xem trước
+1076	Xem trước dưới dạng
+1077	Đã xem trước xong.
+1078	Đang xem trước phiên bản {}…
+1079	Phiên bản trước
+1081	Viền tiến trình
+1082	Tên dự án
+1083	Đã mở dự án.{}
+1084	Đã khôi phục dự án.
+1085	Đã lưu dự án. Mở bất cứ lúc nào bằng “Mở dự án…”, rồi chọn thư mục có bài hát và clip của bạn.
+1086	Dự án
+1087	Đăng trang của tôi
+1088	Đăng ngay
+1089	Gói đăng tải, tạo bằng Beat Splicer ngày {}
+1090	Đang đăng…
+1091	Lùi ra
+1092	Mua hàng hoạt động trong ứng dụng tải từ Google Play.
+1093	Tiến vào và lùi ra theo nhạc
+1094	Chỉ tiến vào
+1095	êm
+1096	Đoạn êm
+1097	Đoạn êm thì thở, đoạn mạnh thì dồn: khoảng {} giây mỗi cảnh khi êm và {} giây khi đầy năng lượng.
+1098	Intro kiểu radio: bắt đầu nhỏ, bung ra ở khoảnh khắc lớn đầu tiên
+1099	Thô
+1100	Đang đếm lại nhịp… {}%
+1101	Đang đo lại chuyển động trong clip ({} trên {})…
+1102	Đã đọc {0} khung hình từ {1} clip và tìm thấy {2} nhân vật. Câu chuyện giờ theo cỡ cảnh và khuôn mặt; chọn nhân vật trong Clip video để sắp xếp theo họ.
+1103	Đọc tư liệu bằng AI
+1104	Đọc kết quả của tôi
+1105	Đọc lời bài hát bằng AI
+1106	Đang đọc
+1107	Đang đọc clip: {} trên {}
+1108	Đang đọc lời bài hát để tìm hình ảnh…
+1109	Đang đọc bài hát
+1110	Đang đọc nơi người xem rời đi: {} trên {}…
+1111	Đang đọc kênh của bạn…
+1112	Đang đọc tư liệu của bạn
+1113	Đang đọc tư liệu của bạn…
+1114	Đang đọc tư liệu của bạn… {} trên {} khung hình
+1115	Chuyển động thật: {}% video có tư liệu đang chuyển động{}.
+1116	Khuyên dùng cho từng nền tảng
+1117	Ghi hình
+1118	Làm lại
+1119	Làm lại (Shift Ctrl/⌘ Z)
+1120	Thư thả
+1121	giải tỏa
+1122	Dựng lại theo cảm xúc:
+1123	Ghi nhớ khóa trên máy tính này, khóa bằng cụm mật khẩu
+1124	Ghi nhớ thương hiệu của tôi trên thiết bị này
+1125	Phối lại
+1126	Đã phối lại: bản dựng, mở đầu và thứ tự cảnh mới.
+1127	Xóa
+1128	Xóa logo
+1129	Xóa ảnh
+1130	Xóa dấu Beat Splicer
+1131	Xóa hình mờ
+1132	Đổi tên
+1133	Đổi tên nhân vật này
+1134	Báo cáo
+1135	Báo cáo sự cố
+1136	Báo cáo sự cố: gửi kèm những chi tiết cần để khắc phục
+1137	Báo cáo sự cố này
+1138	Đặt lại
+1139	Giải quyết: bình thường mới
+1140	giải quyết
+1141	Khôi phục dự án của tôi
+1142	Khôi phục giao dịch mua
+1143	Đang khôi phục dự án của bạn…
+1144	Tiết chế
+1145	Tiết chế: {}, {}; mọi thứ khác đều cắt gọn.
+1147	VHS cổ điển
+1148	Dùng lại clip, nhưng chỉ phần tư liệu chưa hiển thị
+1149	Phát ngược
+1150	Đã hủy đánh giá. Không gửi gì cả.
+1151	Đã dừng đánh giá.
+1152	Người đánh giá
+1153	Người đánh giá chỉ thấy một tờ khung hình tĩnh và cài đặt của bạn, không gì khác. Claude xin phép bạn trước khi gửi bất cứ thứ gì. Những người khác dùng khóa API bạn thêm bên dưới.
+1154	Viết lại dàn ý
+1155	Nhịp điệu
+1156	Phải
+1157	Ngay đây
+1158	Đúng loại cảnh cho thời điểm này của bài hát
+1159	Tiếng dâng vào drop
+1160	Hành động đi lên: xung đột
+1161	Khung bo góc (lề đen) có đường viền
+1162	Chạy chẩn đoán
+1163	Chạy lại chẩn đoán
+1164	Đang chạy chẩn đoán
+1165	Đang chạy chẩn đoán…
+1166	Đang chạy…
+1167	Cùng ý tưởng, cảnh khác
+1168	Lưu
+1169	Lưu một bản sao của ứng dụng này
+1170	Lưu tất cả thành gói ZIP
+1171	Lưu tất cả vào một thư mục
+1172	Đã hủy lưu.
+1173	Lưu client ID
+1174	Lưu khóa đã khóa
+1175	Lưu báo cáo
+1176	Lưu dự án này thành tệp
+1177	Lưu dự án này thành tệp, hoặc mở một tệp
+1178	Lưu vào điện thoại
+1179	Đã lưu
+1180	Đã lưu {0} video vào “{2}”.
+1181	Đã lưu ✓
+1182	Khóa đã lưu đang bị khóa
+1183	Đã xóa khóa đã lưu.
+1184	Tệp dự án đã lưu: dùng {} MB{}. Video hoàn chỉnh đang chờ lưu: {} MB.
+1185	Đã lưu vào {} trên điện thoại: {}.
+1186	Đã lưu vào Documents/Beat Splicer: {}.
+1187	Đã lưu vào điện thoại: Movies › Beat Splicer.
+1188	Đang lưu {}… {}%
+1189	Đường quét, màu loang và glitch: cảm giác video gia đình hoài niệm.
+1190	Đã lên lịch
+1191	Đã lên lịch trên YouTube vào {}.
+1192	Điểm {}/10. {}
+1193	Screen (cho hiệu ứng ánh sáng)
+1194	Biển, hồ hoặc sông
+1195	Tìm
+1196	Đang tìm…
+1197	Dòng thứ hai
+1198	Chưa có dữ liệu giữ chân theo từng giây cho những video này: YouTube cần vài ngày lượt xem.
+1199	Các đoạn. Không tìm thấy điệp khúc lặp lại, nên Shorts mở bằng khoảnh khắc mạnh nhất. Nhấn một đoạn để nghe.
+1200	Các đoạn{}. Điệp khúc đầu tiên lúc {}. Nhấn một đoạn để nghe.
+1201	Xem các gói
+1202	Xem có phiên bản ứng dụng Android mới hơn chưa
+1203	Chọn toàn bộ văn bản bên dưới và sao chép.
+1204	Đã chọn, nhấn Ctrl+C
+1205	Gửi 2 ảnh khung hình tĩnh và cài đặt bản dựng đến {}? Chúng sẽ được xử lý theo điều khoản API của từng công ty và tính phí vào khóa của bạn.
+1206	Gửi báo cáo
+1207	Gửi báo cáo
+1208	Đã chọn cài đặt, nhưng có gì đó đang chặn việc xuất. Xem danh sách kiểm tra trong Nơi đăng.
+1209	Nhiều định dạng cùng lúc
+1210	Chia sẻ
+1211	Chia sẻ hoặc lưu
+1212	Chia sẻ video của bạn
+1213	Không chia sẻ được ở đây. Hãy dùng Tải xuống.
+1214	Không chia sẻ được ở đây. Hãy dùng Lưu.
+1215	Tư liệu sắc nét, chất lượng đầy đủ cho khoảnh khắc then chốt
+1216	Đã dịch {} đi {} giây để khớp với bản ghi này.
+1217	Thời lượng ngắn
+1218	Từ chốt ngắn ở drop (video ngắn)
+1219	Bản ngắn dùng phần sôi động nhất của bài hát và mở bằng một nhịp mạnh.
+1220	Chỉ video ngắn
+1221	Thời lượng video ngắn
+1222	Rút ngắn để đọc lướt là hiểu.
+1223	Ngắn hơn
+1224	Shorts giờ bắt đầu ở {}. Video dài không đổi.
+1225	Shorts lại tự chọn điểm bắt đầu.
+1226	Shorts bắt đầu ở {} (lựa chọn của bạn).
+1227	Shorts bắt đầu ở đây ✓ (nhấn để tự động)
+1228	Cảnh {} giờ dài {} giây, kết thúc đúng nhịp.
+1229	Cảnh {} giờ phát ngược (thấy trong bản xuất; bản xem trước nhanh phát xuôi).
+1230	Cảnh {} giờ dùng {}.
+1231	Cảnh {} trên {} · {}–{} ({} giây) · {}{}{}
+1232	Cảnh {} phát xuôi trở lại.
+1233	Thời lượng cảnh
+1234	Cỡ cảnh
+1235	Cảnh chặt dần qua các đoạn dâng trào ({} trên {} bước tiến vào).
+1236	Cảnh:
+1237	Hiện
+1238	Hiện tất cả {} clip
+1239	Hiện ít clip hơn
+1240	Hiện trên
+1241	Chỉ hiện clip có nhân vật này (chọn nhiều để kết hợp)
+1242	Chỉ hiện nơi tôi đăng
+1243	Hiện vùng an toàn khi xem trước
+1244	Hiện lời bài hát trên màn hình
+1245	Hiện ở trên cùng
+1246	Hiện từ giây 1 đến giây 6. Logo và tiêu đề luôn nằm trong vùng an toàn của từng nền tảng.
+1247	Thể hiện điều đang hát: “{}”
+1248	Xáo trộn cảnh quay
+1249	Hai bên video dọc
+1250	Đã hủy đăng nhập
+1251	Chuyển cảnh đặc trưng
+1252	Đã đăng nhập: {}.
+1253	Kích thước
+1254	Kích thước là {}×{}, dự kiến {}×{}.
+1255	Bỏ qua
+1256	Chậm
+1257	Chậm và rộng
+1258	Chuyển mờ chậm, tông xanh mòng két và cam, hạt phim và dải màn ảnh rộng.
+1259	Quay chậm
