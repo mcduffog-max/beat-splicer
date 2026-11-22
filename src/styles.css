@@ -584,3 +584,5 @@ body.s-building .work .stage{display:block!important;aspect-ratio:var(--ar);heig
 #finUnmark{align-self:flex-start}
 
 body:not(.s-song) #statsBox{display:none}
+/* timelines, pictures and scrub bars read left to right in every language */
+.tl-wrap,canvas,input[type=range]{direction:ltr}
