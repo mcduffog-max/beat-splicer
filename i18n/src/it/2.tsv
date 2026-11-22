@@ -1,0 +1,416 @@
+840	Creo il tuo montaggio
+841	Creo il tuo montaggio…
+842	Creo il tuo video: {}%
+843	Segnato come ritornello. Shorts e storia ora usano la tua scelta.
+844	Pennarello (Permanent Marker)
+845	Tendina a maschera
+846	Match cut
+847	Match cut: le forme si allineano con la fine dell’inquadratura precedente
+848	Ogni tanto match cut: le forme dell’inquadratura successiva si allineano con l’ultima
+849	Come il telefono
+850	Abbina le inquadrature
+851	Abbina le inquadrature al testo
+852	Abbina a
+853	Corrisponde alle parole: “{}”
+854	Misuro la direzione del movimento
+855	Misuro in che direzione si muovono le tue clip: {} di {} (in background).
+856	Medio
+857	Momenti a specchio
+858	Momenti a specchio: simmetria nei ritornelli
+859	Simmetria a specchio
+860	Misto (decide lo stile)
+861	Mixato sotto la tua musica. Tocca l’altoparlante di una clip per silenziare solo quella.
+862	Mobile e messaggi
+863	Cinema moderno
+864	Ottica fissa moderna: pulita, nitida
+865	Mono
+867	Atmosfera
+868	Cupo
+869	Altre opzioni
+870	Più compatibile
+871	Più movimento
+872	Più tempo sullo schermo per i personaggi scelti
+873	Movimento
+874	Mosso sui movimenti di camera
+875	Montagne
+876	Movimento
+877	Il movimento prosegue dall’inquadratura precedente
+878	Movimento misurato: ora i tagli seguono la direzione del movimento.
+879	Movimento a tempo con la musica: {} inquadrature ora iniziano dove la loro azione cade sul beat.
+880	Movimento: almeno il {}% di ogni montaggio mostra riprese davvero in movimento. L’idea non ti convince? “Prova un’altra direzione” ne sceglie un’altra.
+881	Film/Beat Splicer
+882	MP3, M4A o WAV
+883	MP3, M4A o WAV.
+884	Attutisci gli ultimi due beat prima di ogni drop, poi apri di colpo
+885	Moltiplica (per le texture)
+886	Moltiplica sul beat (1, 4, 9 copie)
+887	Musica: {} – {}
+888	Silenzia
+889	Le mie riprese includono persone, luoghi o scene realistiche generate dall’IA
+890	Nome
+891	Dai un nome con l’IA
+892	Nomi
+893	Naturale
+894	Servono {} s di riprese in totale; ne hai {} s.
+895	Servono almeno {} clip o foto; ne hai {}. L’esportazione è bloccata finché non ne aggiungi altre.
+896	Neon rosso e blu
+897	Nuova idea
+898	Nuovi titoli scritti per ogni piattaforma (generatore integrato).
+899	Nuovi titoli scritti per ogni piattaforma.
+900	Avanti
+901	Seconda scelta:
+902	Passo successivo
+903	La prossima volta, Crea video funzionerà in modalità sicura (più lenta, più leggera per il telefono). Se si ferma ancora,
+904	Versione successiva
+905	Poi:
+906	Night Drive (esempio).m4a
+907	Nightcore (+30%)
+908	Nessuna IA disponibile per leggere le riprese, quindi le scelte si basano su movimento, luminosità e ordine di ripresa.
+909	Nessun revisore IA configurato (vedi Revisione IA). Scegli tu o aggiungi lì una chiave.
+910	Nessun file audio in quella cartella.
+911	Nessun file audio o video trovato lì.
+912	Non sono arrivate didascalie. Riprova.
+913	Nessun drop netto in questa sezione, quindi la parola finale viene saltata.
+914	Niente clip a portata di mano? Provalo con le clip di esempio
+915	Nessun taglio nei primi 5 s. Aumenta il ritmo dei tagli o attiva le regole del settore.
+916	Nessuna corrispondenza esatta trovata automaticamente. Controlla artista e titolo, o scegli la versione giusta qui sotto.
+917	Nessuna corrispondenza esatta. Controlla artista e titolo, o scegli la versione giusta qui sotto.
+918	Nessun volto nell’inquadratura d’apertura. Un volto nel primo secondo tiene l’attenzione meglio di tutto.
+919	Niente dissolvenza dal nero, niente intro col logo e niente cartello finale, che romperebbero il loop. Metti gli inviti all’azione nella didascalia.
+920	Nessuna ripresa si ripete entro 20 s.
+921	Nessuna immagine disponibile, quindi giudica solo dai dati.
+922	Nessun carattere d’obiettivo
+923	Nessuna riga è stata sincronizzata.
+924	Nessuna riga di testo trovata in quel testo.
+925	Nessuna memoria dei video precedenti
+926	Nessun titolo sullo schermo. Scrivine uno sotto l’anteprima se lo vuoi.
+927	Nessun testo d’apertura, per scelta. La prima inquadratura deve fare tutto: apri con movimento e un volto.
+928	Nessuna scelta ancora. Ogni scelta insegna all’app cosa ti piace.
+929	Nessun acquisto effettuato.
+930	Nessun riferimento ancora.
+931	Nessuna impostazione corrisponde a “{}”.
+932	Nessuna canzone trovata in “{}”.
+933	Nessun tratto statico nelle parti energiche: lì le inquadrature ferme ricevono un lento avvicinamento.
+934	Nessun testo
+935	Nessuna filigrana
+936	Nessuna filigrana trovata.
+937	Nessun canale YouTube su questo account Google
+938	Nessuno esce da {} uguale a prima
+939	Nessuno di questi è stato ancora creato con questa versione dell’app, quindi per ora non c’è nulla da imparare. Gli Shorts che crei da ora in poi vengono tracciati.
+940	Normale
+941	Non è il ritornello
+942	Non è il ritornello: annotato.
+943	Non usata
+944	Non usate di recente
+945	Non funziona:
+946	Annotato: più o meno uguale.
+947	Annotato: quella clip non verrà più abbinata a “{}”.
+948	Nessun risultato. Prova con meno parole o solo il titolo della canzone.
+949	Ancora nulla di conservato.
+950	Niente di nuovo in “{}”.
+951	Ancora nulla da salvare.
+952	Novità: {}% diverso dal più simile dei tuoi video recenti{}.
+953	Ora aggiungi le tue clip.
+954	Ora scegli la tua canzone.
+955	Ora le tue clip
+956	Ora la tua canzone
+957	Inquadrature al contrario ogni tanto (momenti di riavvolgimento)
+958	Disattivato
+959	Disattivato (usa le mie impostazioni)
+960	Video ufficiale
+961	Su un computer:
+962	Su un telefono:
+963	Sullo schermo
+964	Su YouTube
+965	Apertura sullo schermo: {}
+966	Testo sullo schermo
+967	Titolo sullo schermo
+968	Un solo momento forte: effetti solo dove conta
+969	Una sola scelta definisce tutto il look. Vince la scelta più recente: scegline una qui, oppure tocca Fai tutto e sceglie lui per te. Ciò che cambi più sotto la regola.
+970	Un passaggio in più:
+971	Solo {} clip per {}. Circa {} in più darebbero un look fresco dall’inizio alla fine.
+972	Solo {}% diverso da “{}” ({}). Le piattaforme limitano la portata dei caricamenti quasi identici o da modello. Tocca Remix o cambia regista.
+973	Solo il {}% del video mostra riprese in movimento (punta al {}%+). Aggiungi clip con movimento: camminate, balli, guida, panoramiche.
+974	Solo le registrazioni MP3 e WAV così lunghe si possono aprire a sezioni. Accorciala sotto
+975	Solo questi
+976	Opacità
+977	Apri
+978	Apri un progetto salvato
+979	Paesaggio aperto
+980	Modello OpenAI
+981	Apertura
+982	Apro {} di {} da {}…
+983	Apro il programma di installazione Android: tocca Aggiorna. L’app si riavvia con la nuova versione.
+984	Apro Google Play…
+985	Testo d’apertura “{}” {}. Tocca Scrivi nuovi titoli o modificalo.
+986	Testo d’apertura “{}”: {} parole, interamente sullo schermo dal primo fotogramma per {} s, terzo superiore dell’area sicura.{}{}
+987	Il testo d’apertura è simile a uno già usato. Tocca Scrivi nuovi titoli.
+988	Il testo d’apertura è nuovo: niente di simile nei tuoi titoli precedenti.
+989	Il testo d’apertura suona naturale e parla di ciò che è sullo schermo.
+990	Testo d’apertura impostato, importante qui perché questo feed parte senza audio.
+991	Il titolo d’apertura se ne va lettera per lettera, ognuna ripiegandosi, dall’ultima alla prima
+992	Si apre presentando la scena con un campo lungo.
+993	Si apre su un volto: le persone smettono di scorrere per i volti.
+994	Si apre sulla parte più forte della canzone.
+995	Si apre stretto. Un campo più largo prima presenterebbe la scena.
+996	Facoltativo, es. l’artista
+997	o trascinalo qui
+998	o trascinali qui
+999	Originale
+1000	Originalità (tutte le piattaforme)
+1001	Controllo dell’output superato: {}, {} s{}{}.
+1002	Controllo dell’output: {}
+1003	outro
+1004	Outro {}
+1005	Sovrapponi
+1006	Sovrapposizioni
+1007	ritmo
+1008	Il ritmo segue la musica (corrispondenza {}%): tagli e movimento salgono e scendono con l’energia della canzone.{}
+1009	Ritmo, traccia della storia e direzione
+1010	Creo lo ZIP: {}%…
+1011	Creo lo ZIP…
+1012	Nome della pagina
+1013	Pittorico blu-verde
+1014	Surreale pittorico
+1015	Panoramica
+1016	Passphrase
+1017	Passphrase (almeno 8 caratteri)
+1018	Incolla un link YouTube o Shorts
+1019	Incolla dagli appunti
+1020	Incolla il testo
+1021	Incolla il testo, una riga per ogni verso cantato. Le righe che iniziano con un tempo come [01:23.40] vengono usate esattamente.
+1022	Incollate {} righe dagli appunti. Controllale, poi tocca Usa questo testo.
+1023	picco
+1024	Non è stato dato il permesso per questa revisione.
+1025	Persona
+1026	Vortice Petzval
+1027	Obiettivo da ritratto tipo Petzval: centro nitido, forte vortice
+1028	I telefoni più alti del video (oggi quasi tutti) riempiono lo schermo e tagliano un po’ entrambi i lati in YouTube Shorts, TikTok e Reels. Di base la linea sta appena fuori dai pulsanti Mi piace e Condividi di YouTube su un telefono tipico; spostala verso l’interno se il tuo telefono la nasconde ancora.
+1029	Movimento delle foto
+1030	Fraseggia i tagli: segui la voce, resta fermo dove la canzone respira, ogni tanto un taglio fuori tempo
+1031	Scegli una canzone
+1032	Scegli una frase d’apertura o modificala qui sotto:
+1033	Scegli le clip
+1034	Scegli la versione che corrisponde alla tua canzone.
+1035	Riprendere da dove avevi lasciato?
+1036	Riprendere da dove avevi lasciato? “{0}” con {1} clip, salvato {3}.{4}
+1037	Scegli il tuo fotogramma preferito
+1038	Scelto dall’IA
+1039	Scelto per questa canzone
+1040	Immagini/Beat Splicer
+1041	Fissa un commento
+1042	Commento fissato: {}
+1043	Pin video di Pinterest
+1044	Sfondo semplice
+1045	Pianifica tutto il video in una volta (tiene le riprese migliori per dove contano)
+1046	Pianta l’immagine ricorrente
+1047	Prima la piattaforma, per il caricamento
+1048	Piattaforme, titoli e creazione dei video
+1049	Riproduci A
+1050	Riproduci B
+1051	Riproduci questa parte
+1052	Riproduci questa inquadratura al contrario
+1053	Riproduci il tuo montaggio
+1054	Piano sequenza giocoso
+1055	Riproduco {}.
+1056	Riproduco il montaggio {}…
+1057	Riproduco da {}…
+1058	Riproduco il tuo montaggio
+1059	Pop sul beat
+1060	Verticale 4:5, la forma più alta che il feed mostra senza ritagliare.
+1062	Posizione
+1063	Pubblicalo come primo commento e fissalo. Le domande ricevono risposte, e le risposte contano come interazione.
+1064	Pre-ritornello {} {}
+1065	Composizioni a specchio precise, toni freddi e movimenti lenti e ponderati.
+1066	Preparo i fotogrammi per la revisione…
+1067	Preparo la colonna sonora: codifica {}%…
+1068	Preparo la colonna sonora: mix {}%…
+1069	Preparo la colonna sonora: regolo il volume…
+1070	Preparo la colonna sonora…
+1071	Preparo la condivisione…
+1072	Tocca “Trova la canzone e le clip migliori”.
+1073	Tocca “Leggi le mie riprese con l’IA” in Storia e ritmo, così la storia può seguire campi e volti. Fino ad allora segue l’energia e l’ordine di ripresa.
+1074	Tocca Anteprima per guardare qui il tuo montaggio.
+1075	Anteprima
+1076	Anteprima come
+1077	Anteprima terminata.
+1078	Anteprima della versione {}…
+1079	Versione precedente
+1081	Bordo di avanzamento
+1082	Nome del progetto
+1083	Progetto aperto.{}
+1084	Progetto ripristinato.
+1085	Progetto salvato. Aprilo quando vuoi con “Apri progetto…”, poi scegli la cartella con canzone e clip.
+1086	Progetti
+1087	Pubblica la mia pagina
+1088	Pubblica ora
+1089	Pacchetto di pubblicazione, creato con Beat Splicer il {}
+1090	Pubblicazione…
+1091	Allontanamento
+1092	Gli acquisti funzionano nell’app scaricata da Google Play.
+1093	Avvicinati e allontanati con la musica
+1094	Solo avvicinamento
+1095	calmo
+1096	Parti calme
+1097	Le parti calme respirano, quelle forti spingono: circa {} s per inquadratura quando è calmo e {} s alla massima energia.
+1098	Intro radiofonica: parte piccola, si apre al primo grande momento
+1099	Grezzo
+1100	Riconto il beat… {}%
+1101	Rimisuro il movimento nelle tue clip ({} di {})…
+1102	Letti {0} fotogrammi da {1} clip e trovato/i {2} personaggio/i. Ora la storia segue campi e volti; scegli i personaggi in Clip video per ordinare in base a loro.
+1103	Leggi le mie riprese con l’IA
+1104	Leggi i miei risultati
+1105	Leggi il testo con l’IA
+1106	Lettura
+1107	Lettura clip: {} di {}
+1108	Leggo il testo in cerca di immagini…
+1109	Leggo la canzone
+1110	Leggo dove se ne vanno gli spettatori: {} di {}…
+1111	Leggo il tuo canale…
+1112	Leggo le tue riprese
+1113	Leggo le tue riprese…
+1114	Leggo le tue riprese… {} di {} fotogrammi
+1115	Movimento reale: il {}% del video mostra riprese in movimento{}.
+1116	Consigliato per ogni piattaforma
+1117	Registrazione
+1118	Ripeti
+1119	Ripeti (Maiusc Ctrl/⌘ Z)
+1120	Rilassato
+1121	rilascio
+1122	Rifai il montaggio in un’atmosfera:
+1123	Ricorda le chiavi su questo computer, bloccate con una passphrase
+1124	Ricorda il mio marchio su questo dispositivo
+1125	Remix
+1126	Remixato: nuovo montaggio, apertura e ordine delle inquadrature.
+1127	Rimuovi
+1128	Rimuovi logo
+1129	Rimuovi foto
+1130	Rimuovi il marchio Beat Splicer
+1131	Rimuovi la filigrana
+1132	Rinomina
+1133	Rinomina questo personaggio
+1134	Segnala
+1135	Segnala un problema
+1136	Segnala un problema: arriva con i dettagli necessari per risolverlo
+1137	Segnala questo problema
+1138	Reimposta
+1139	Risoluzione: la nuova normalità
+1140	risolvere
+1141	Ripristina il mio progetto
+1142	Ripristina acquisti
+1143	Ripristino il tuo progetto…
+1144	Sobrietà
+1145	Sobrietà: {}, {}; tutto il resto taglia netto.
+1147	VHS rétro
+1148	Riusa le clip, ma solo riprese non ancora mostrate
+1149	Al contrario
+1150	Revisione annullata. Non è stato inviato nulla.
+1151	Revisione interrotta.
+1152	Revisori
+1153	I revisori vedono un foglio di fotogrammi fissi e le tue impostazioni, nient’altro. Claude chiede il tuo permesso prima di inviare qualsiasi cosa. Gli altri usano le chiavi API che aggiungi qui sotto.
+1154	Riscrivi la traccia
+1155	Ritmo
+1156	Destra
+1157	Proprio qui
+1158	Il tipo di inquadratura giusto per questo punto della canzone
+1159	Riser verso i drop
+1160	Azione crescente: il conflitto
+1161	Cornice arrotondata (margine nero) con linea
+1162	Esegui diagnostica
+1163	Esegui di nuovo la diagnostica
+1164	Diagnostica in corso
+1165	Diagnostica in corso…
+1166	In corso…
+1167	Stessa idea, inquadrature diverse
+1168	Salva
+1169	Salva una copia di questa app
+1170	Salva tutto come pacchetto ZIP
+1171	Salva tutto in una cartella
+1172	Salvataggio annullato.
+1173	Salva ID client
+1174	Salva chiavi bloccate
+1175	Salva rapporto
+1176	Salva questo progetto come file
+1177	Salva questo progetto come file o aprine uno
+1178	Salva sul telefono
+1179	Salvato
+1180	{0} video salvato/i in “{2}”.
+1181	Salvato ✓
+1182	Le chiavi salvate sono bloccate
+1183	Chiavi salvate rimosse.
+1184	File di progetto salvati: {} MB usati{}. Video finiti in attesa di salvataggio: {} MB.
+1185	Salvato in {} sul telefono: {}.
+1186	Salvato in Documenti/Beat Splicer: {}.
+1187	Salvato sul telefono: Film › Beat Splicer.
+1188	Salvo {}… {}%
+1189	Righe di scansione, colori sbavati e glitch: un’atmosfera nostalgica da video amatoriale.
+1190	Programmato
+1191	Programmato su YouTube per {}.
+1192	Punteggio {}/10. {}
+1193	Schermo (per effetti di luce)
+1194	Mare, lago o fiume
+1195	Cerca
+1196	Ricerca…
+1197	Seconda riga
+1198	La fidelizzazione secondo per secondo non è ancora disponibile per questi: YouTube ha bisogno di qualche giorno di visualizzazioni.
+1199	Sezioni. Nessun ritornello che ritorna, quindi gli Shorts si aprono sul momento più forte. Tocca una sezione per ascoltarla.
+1200	Sezioni{}. Primo ritornello a {}. Tocca una sezione per ascoltarla.
+1201	Vedi i piani
+1202	Verifica se è pronta una versione più recente dell’app Android
+1203	Seleziona tutto il testo qui sotto e copialo.
+1204	Selezionato, premi Ctrl+C
+1205	Inviare 2 immagini di fotogrammi fissi e le impostazioni di montaggio a {}? Saranno elaborate secondo i termini API di ciascuna azienda e addebitate sulle tue chiavi.
+1206	Invia rapporto
+1207	Invia il rapporto
+1208	Impostazioni scelte, ma qualcosa blocca l’esportazione. Vedi la checklist in Destinazione.
+1209	Più formati insieme
+1210	Condividi
+1211	Condividilo o salvalo
+1212	Condividi il tuo video
+1213	La condivisione non è disponibile qui. Usa invece Scarica.
+1214	La condivisione non è disponibile qui. Usa invece Salva.
+1215	Riprese nitide e a piena qualità per un momento chiave
+1216	{} spostato di {} s per corrispondere a questa registrazione.
+1217	Durata breve
+1218	Parola finale breve sul drop (video brevi)
+1219	Le versioni brevi usano la parte più energica della canzone e si aprono su un beat forte.
+1220	Solo video brevi
+1221	Durata video brevi
+1222	Accorcialo perché si legga a colpo d’occhio.
+1223	Più corto
+1224	Gli Shorts ora iniziano a {}. I video lunghi non cambiano.
+1225	Gli Shorts scelgono di nuovo il loro punto d’inizio.
+1226	Gli Shorts iniziano a {} (tua scelta).
+1227	Gli Shorts iniziano qui ✓ (tocca per automatico)
+1228	L’inquadratura {} ora dura {} s e finisce sul beat.
+1229	L’inquadratura {} ora va al contrario (si vede nelle esportazioni; l’anteprima rapida la riproduce in avanti).
+1230	L’inquadratura {} ora usa {}.
+1231	Inquadratura {} di {} · {}–{} ({} s) · {}{}{}
+1232	L’inquadratura {} va di nuovo in avanti.
+1233	Durata inquadratura
+1234	Campo
+1235	Le inquadrature si stringono nei crescendo ({} passaggi su {} si avvicinano).
+1236	Inquadrature:
+1237	Mostra
+1238	Mostra tutte le {} clip
+1239	Mostra meno clip
+1240	Mostra su
+1241	Mostra solo le clip con questo personaggio (scegline più d’uno per combinarli)
+1242	Mostra solo quelle dove pubblico
+1243	Mostra l’area sicura in anteprima
+1244	Mostra il testo sullo schermo
+1245	Mostrato in alto
+1246	Mostrato dal secondo 1 al 6. Loghi e titoli restano dentro l’area sicura di ogni piattaforma.
+1247	Mostra ciò che viene cantato: “{}”
+1248	Mescola inquadrature
+1249	Lati nei video verticali
+1250	L’accesso è stato annullato
+1251	Transizione distintiva
+1252	Accesso effettuato: {}.
+1253	Dimensione
+1254	La dimensione è {}×{}, attesa {}×{}.
+1255	Salta
+1256	Lento
+1257	Lento e ampio
+1258	Dissolvenze lente, correzione verde acqua e arancio, grana della pellicola e bande widescreen.
+1259	Rallentatore

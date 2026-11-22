@@ -1,0 +1,410 @@
+420	Impossibile creare lo ZIP. Salva invece i video uno alla volta con i rispettivi pulsanti Salva.
+421	Impossibile aprire quella cartella:
+422	Impossibile aprire quella sezione.
+423	Impossibile pubblicare:
+424	Impossibile ricontare il beat.
+425	Impossibile raggiungere l’accesso Google
+426	Impossibile raggiungere il servizio. Funziona solo nella copia salvata dell’app, aperta in Chrome o Edge.
+427	Impossibile leggere
+428	Impossibile leggere quel file audio. Prova un WAV, MP3 o M4A.
+429	Impossibile leggere quel logo.
+430	Impossibile leggere quel file di testo.
+431	Impossibile leggere quella foto. Prova un JPEG o un PNG.
+432	Impossibile leggere la durata della clip
+433	Impossibile leggere gli appunti qui. Tieni premuto nel riquadro e scegli Incolla.
+434	Impossibile leggere il tuo canale:
+435	Impossibile ripristinare quel progetto ({}). Aggiungi di nuovo audio e clip.
+436	Impossibile salvare in quella cartella. Usa invece il pacchetto ZIP.
+437	Impossibile salvare le chiavi su questo computer.
+438	Impossibile salvare sul telefono:
+439	Impossibile condividere:
+440	Impossibile rimuoverla:
+441	Impossibile scrivere la traccia.
+442	Immagine di copertina
+444	Ritaglia
+445	Ritagliato
+446	Dissolvenza incrociata
+447	Personalizzato, basato su
+448	Montaggio {} riprodotto. Scegli quello che preferisci.
+449	Taglio spostato a {} ({}{} s), sul beat{}.
+450	Taglio sull’azione
+451	Taglio sull’azione: il movimento di ogni inquadratura cade sul beat
+452	Taglia fuori tempo, dove la musica colpisce
+453	Ritmo dei tagli
+454	Taglia dove entra la voce
+455	Ping-pong sincronizzato ai tagli
+456	Tagli
+457	Il montaggio segue {}: {}, circa {} s per inquadratura (obiettivo {} s).
+458	Il montaggio segue {}: {}. Le regole della piattaforma qui limitano le inquadrature a 3 s, quindi quelle lunghe vengono accorciate.
+459	Scuro
+460	Scuro e desaturato
+461	Precisione oscura
+462	Correzione scura e desaturata verde-gialla, avvicinamenti controllati e tagli netti.
+463	Prima la data, per l’archivio
+464	Profondità fluttuante (sfondo sfocato)
+465	Descrizione
+466	La descrizione inizia con una frase semplice su cosa mostra il video (indicizzata per ricerca e suggerimenti).
+467	Descrizione:
+468	Deserto
+470	Diagnostica
+471	Filtro diffusore
+472	Filtro diffusore: luci morbide
+473	Diffusione: bagliore morbido
+474	Dissolvenza al nero
+475	Dirigi come:
+476	Regia in stile “{}”. {}
+477	Regia in stile “{}”{}. {}
+478	Direzione
+479	Direzione: {}. {}.
+480	Tecniche di regia
+481	Regista: segue le sezioni della canzone
+482	Nota del regista
+483	Registi
+484	Disconnetti
+485	Fai tutto
+486	Fai tutto punta su ciò che trattiene i tuoi spettatori
+487	Fai tutto sceglie uno stile per ogni nuovo montaggio, in base alla musica e alle tue riprese
+488	Non sbattere le palpebre: {}
+489	Fatto
+490	Fatto, ma {0} clip non si riproduceva/no su questo dispositivo, quindi {2} inquadrature usano altre clip: {3}{4}.
+491	Fatto: {0} video{2} pronto/i da salvare.
+492	Fatto: l’app sa cosa c’è nelle tue clip. Ora il testo trova inquadrature che mostrano ciò che viene cantato.
+493	Doodle pop
+494	Doppio ({})
+495	Velocità doppia
+496	Scarica
+497	Scarica tutti i video che hai creato, con le note di pubblicazione, in un unico ZIP
+498	Scarica ZIP
+499	Scarica ZIP ({})
+500	Download/Beat Splicer
+501	Download in corso
+502	Scarico il modello immagine-parola (circa 150 MB, una volta)…
+503	Scarico il modello immagine-parola: {}%…
+504	Scarico l’aggiornamento…
+505	Scarico l’aggiornamento… {}%
+506	Calma onirica
+507	Sognante
+508	Deriva e inclinazione
+509	drop
+510	Drop {}
+511	Ombra esterna
+512	Drop, crescendo e fine delle sezioni vengono trovati automaticamente nella canzone. Anche Ascolta e Anteprima li riproducono.
+513	Polvere e graffi della pellicola
+514	es. Seguimi per la parte 2
+515	es. solo all’inizio, diventa speranzoso nell’ultimo ritornello
+516	es. Videoclip dalla costa nord
+517	es. Paul, Sydney
+518	es. Aspetta il drop
+519	Ogni piattaforma ha la sua frase d’apertura, inquadratura e durata, montate dalle tue riprese. Le piattaforme con la stessa durata condividono un montaggio, e va bene così: pubblicare il tuo montaggio su più piattaforme conta come originale.
+520	Ogni piattaforma ha la sua frase d’apertura: da 2 a 6 parole, sullo schermo dal primo fotogramma, nel terzo superiore dell’area sicura e tenuta abbastanza a lungo da leggerla due volte. Le esportazioni videoclip hanno invece un titolo nel terzo inferiore. I titoli vengono confrontati con quelli già usati.
+521	0,25 s prima
+522	Agli inizi: l’app si basa poco su questi dati finché non arrivano altri Shorts.
+523	Coda d’eco alla fine di ogni sezione forte
+524	Echi
+525	Echi: scie di movimento sui picchi
+526	Monta come il mio video di riferimento
+527	Monta così
+528	Effetto
+529	Otto fotogrammi del montaggio attuale, in ordine, in un’unica immagine.
+530	Serif elegante (Playfair)
+531	Email per una risposta (facoltativa)
+532	Si svuota mentre il video va avanti (conto alla rovescia)
+533	Testo finale (video brevi)
+534	Cartello finale con canzone e artista (in alto a sinistra, lasciando spazio ai pulsanti della schermata finale di YouTube)
+535	Fai finire questa inquadratura un beat dopo
+536	Fai finire questa inquadratura un beat prima
+537	Finale (video lunghi)
+538	Finale (lungo)
+539	Finisce allargandosi in un campo lungo per chiudere.
+540	Finisce su una battuta e riparte subito dall’inquadratura d’apertura, così le ripetizioni sembrano senza stacchi. Ogni ripetizione conta come visualizzazione su Shorts, Reels e TikTok.
+541	Finisce stretto. Allargare in un campo lungo chiuderebbe la storia.
+542	Finisce dove è iniziato: la scena d’apertura torna a chiudere la storia.
+543	Finisce dove inizia
+544	energia
+545	Inglese
+546	Invio
+547	Dettagli dell’errore copiati. Incollali nella nostra chat.
+548	Esc
+549	Essenziali
+550	stabilire
+551	Ogni beat di {}
+552	Ogni personaggio di questo tipo
+553	Ogni clip è un’immagine fissa o un video statico. Ogni inquadratura riceve movimenti di camera e un colpo sul beat, ma il movimento reale trattiene molto di più: trasforma le tue immagini migliori in brevi clip video IA (image-to-video) o mescola riprese girate.
+554	Ogni taglio cade su un beat
+555	Ogni piattaforma
+556	Ogni piattaforma si apre con la sua frase.
+557	Tutto (versione di prova)
+558	Tutto tranne questi
+559	Tutto ciò che è in “{}” è già nel progetto.
+560	Tutto Creator, più l’apprendimento dai tuoi risultati YouTube, Monta così, Quale è meglio, il revisore IA e più formati insieme.
+561	Esporta
+562	Esporta ora
+563	Esporta senza revisione
+564	Esposizione: l’impostazione
+565	Il riconoscimento facciale non è riuscito ad avviarsi qui ({}).
+566	Il riconoscimento facciale non è riuscito ad avviarsi.
+567	Il riconoscimento facciale funziona su questo dispositivo (nulla viene caricato). Chiunque compaia in almeno due clip diventa un personaggio da scegliere per ordinare.
+568	Inquadratura attenta ai volti (ritagli e primi piani seguono i volti)
+569	Dissolvenza in entrata e in uscita
+570	Dissolvenza in entrata all’inizio
+571	Dissolvenza in uscita alla fine
+572	Azione discendente: le conseguenze
+573	Fan Edit
+574	Fantasy
+575	Tagli veloci, zoom incisivi e glitch sul drop: il look attuale dei video brevi.
+576	Veloce, incisivo
+577	Nomi dei file
+578	File system
+579	Riempi il riquadro (taglia i bordi)
+580	Compilato dal file della canzone quando ha i tag
+581	Si riempie mentre il video va avanti
+582	Grana della pellicola
+583	Esclusi dal filtro
+584	Trova un’impostazione
+585	Trova un’impostazione, es. bordo, testo, rallentatore
+586	Trova i personaggi dal volto
+587	Trova i personaggi dal volto o fai prima leggere le riprese all’IA per una traccia più ricca. Modifica ciò che vuoi qui sotto.
+588	Trova clip in base a cosa mostrano
+589	Trova clip che mostrano… es. città di notte, fuoco, una folla
+590	Trova testo sincronizzato
+591	Trova la canzone e le clip migliori
+592	Ricerca dei personaggi dal volto
+593	Ricerca dei personaggi dal volto ({} di {})…
+594	Ricerca del beat… {}%
+595	Rifinisci i fotogrammi sul chip grafico (obiettivo, look colore, grana in un solo passaggio)
+596	Finisci di capire cosa c’è nelle tue clip (mancano {} momenti)
+597	Chiudi con la canzone: taglia il silenzio finale; l’ultima inquadratura si allarga e l’immagine si ferma o sfuma come finisce la musica
+598	Rifinitura del tuo video
+599	Prima esportazione da questo dispositivo, quindi non c’è ancora nulla da ripetere.
+600	Prima riga {0} caratteri{1}, {2} hashtag{4}
+601	Primi secondi
+602	Glamour fisheye
+603	Rigonfiamento fisheye
+604	Obiettivo fisheye, luce rossa e blu satura, rallentatore e bande divise con copie dell’inquadratura nelle bande.
+605	Mostra tutta l’inquadratura (bande nere)
+606	Mostra tutta l’inquadratura (bande sfocate)
+607	Adatta alla storia{}
+608	Adatta alla tua nota: “{}”
+609	Flash
+610	Flash sui beat
+611	Piatto
+612	Cartella
+613	Cartella: {} • File: {}
+614	Riprese
+615	Riprese da video precedenti
+616	Riprese lette: {} clip comprese (campi, volti, soggetto).
+617	La lettura delle riprese richiede Claude, che qui non è disponibile.
+618	Riprese che non hai ancora visto molto
+619	Riprese, personaggi e sfondi
+620	Per {} di storia, {}: si ripeteranno, oppure altre riprese prenderanno il posto.
+621	per la filigrana
+622	Foresta
+623	Dimentica le chiavi salvate
+624	Dimentica ciò che ha imparato
+625	Avanti
+626	Trovati {} file audio. Uso {}; scegline un altro in La tua canzone se preferisci.
+627	Trovato/i {0} personaggio/i presente/i in due o più clip (su {2} volti){3}. Sceglili sopra le clip per ordinare in base a loro.
+628	Trovato/i {0} volto/i, ma nessuno compare in più di una clip.
+629	Filigrane trovate in {0} clip; saranno tenute fuori inquadratura.
+630	Preciso al fotogramma
+631	MP4 preciso al fotogramma: ogni taglio cade esattamente sul suo beat, dal primo fotogramma.
+632	La registrazione precisa al fotogramma non è disponibile ora, quindi si usa la registrazione standard.
+633	WebM preciso al fotogramma: tempi esatti. YouTube accetta WebM; converti in MP4 per Instagram e TikTok, o scegli Più compatibile.
+634	Fotogrammi che sembrano dipinti, toni blu-verdi e beige, zoom audaci e panoramiche a frusta.
+635	Inquadratura
+636	Frenetico
+637	Montaggio frenetico, stroboscopi, flash e scosse alla massima intensità.
+638	Stroboscopio frenetico
+639	Gratis
+640	tempo libero
+641	Libera spazio
+642	Da {} Shorts:
+643	Volume pieno
+644	Più dentro
+645	Futuristico / fantascienza
+647	Gemini (Google)
+648	Modello Gemini
+649	Delicato
+650	Fluttuazione delicata
+651	Delicato: uniforma colore e luminosità
+652	Ottieni la revisione IA
+653	Preparazione
+654	Prima la revisione IA. Controllala, poi esporta.
+655	Recupero delle clip di esempio…
+656	GitHub ha risposto
+657	Incubo glitch
+658	Glitch sui drop
+659	Campo di colore lucido
+660	Pop lucido
+661	Fotogrammi lucidi e grafici in cui il colore crea l’atmosfera, cambiando a ogni sezione invece di raccontare una storia.
+662	Buona varietà: {} delle tue {} clip usate, nessuna sullo schermo per più del {}% del video.
+663	ID client OAuth Google
+664	Bianco e nero sgranato, composizioni austere e lunghe inquadrature ferme.
+665	Equalizzatore grafico (10 bande)
+667	Grok (xAI)
+668	Modello Grok
+669	Metà ({})
+670	Metà velocità
+671	Scarabocchi a mano sul beat
+672	Ondeggiamento a mano
+673	Nome utente o copyright, es. @paulmakes o © Paul 2026
+674	Tagli netti
+675	Tagli netti sul beat e colori naturali. Nulla di aggiunto.
+676	Tagli netti, colori reali
+677	Hashtag: #Shorts più {0} tag di argomento nella descrizione, non nel titolo.
+678	Fiato sospeso
+679	Fiato sospeso: un fermo immagine prima di ogni drop
+680	Eccolo
+681	Cronologia cancellata: ogni clip conta di nuovo come nuova.
+682	Si ferma per un respiro prima del drop
+683	Video amatoriale
+684	Stile personale mantenuto: scritte {} e {}. Fai tutto li mantiene e varia il resto.
+685	Come appare {} ad alta voce
+686	Quante impostazioni mostrare
+688	Montaggio hype
+689	Se i tagli sembrano troppo lenti o troppo fitti, prova un’altra velocità.
+690	L’immagine 1 è un provino di 8 fotogrammi della versione {}, in ordine di tempo, a {} secondi nella canzone. L’immagine 2 mostra un fotogramma di ogni esportazione ({}, da sinistra a destra) nel momento in cui compare il testo d’apertura. La linea gialla tratteggiata indica l’area sicura della piattaforma e NON fa parte dell’esportazione.
+691	Immagini che si moltiplicano a tempo, trucchi in macchina e un calore artigianale.
+692	Immagini:
+693	Colpo d’impatto sui drop
+694	In un veicolo
+695	Nel montaggio
+696	Nel montaggio: tocca per escluderla
+697	Nell’app Google Play
+698	In uso
+699	Includi l’audio delle clip video
+700	Includi l’errore, i passaggi recenti, le impostazioni e la diagnostica (niente clip, canzone o dati personali)
+701	Indie 16 mm
+702	Interni
+703	Industriale
+704	Checklist del settore
+705	Loop infinito
+707	Feed di Instagram e Facebook
+708	Reels di Instagram e Facebook
+709	instagram.com/tu
+710	installa Google Drive per desktop o OneDrive, poi usa Scegli un’intera cartella e seleziona la cartella sincronizzata. Puoi anche trascinare le cartelle direttamente su questa pagina.
+711	Strumentale {}
+712	Interludio {}
+713	intro
+714	Intro {}
+715	presentare
+716	Presenta il mondo e il personaggio principale prima che qualcosa lo sconvolga.
+717	Montato a tempo
+718	Va in loop. Guardalo due volte
+719	Era già in modalità sicura, quindi
+720	È una frase abusata; scrivi qualcosa di specifico.
+722	Viaggio (mantiene l’ordine di ripresa)
+723	Mantieni il mio stile (scritte e finale) in ogni video
+724	Tieni aperta l’app
+725	Tieni filigrane e loghi fuori dal montaggio (ritaglia o reinquadra per ogni formato)
+726	Conservo una copia dei tuoi file nell’app (così Android non può riprenderseli): {} di {}…
+727	Mantiene vario il montaggio: queste riprese non sono usate qui vicino
+728	Resta su questo dispositivo, a meno che tu non pubblichi la tua pagina.
+729	Mantenuto: scritte {}, {}.
+730	Le chiavi vanno direttamente dal tuo browser a quell’azienda tramite una connessione cifrata, e da nessun’altra parte. Le chiavi salvate sono cifrate (AES-256) con la tua passphrase, che non viene mai memorizzata. Per maggiore sicurezza, crea una chiave a parte per questa app con un limite di spesa mensile ed eliminala se smetti di usare l’app.
+731	Chiavi salvate, bloccate con la tua passphrase.
+732	Chiavi sbloccate per questa sessione.
+733	Cade sul drop
+734	Orizzontale 16:9. Vanno bene montaggi più lunghi. YouTube riproduce a circa −14 LUFS.
+735	Lingua
+736	Gli ultimi 20 s restano calmi, con inquadrature più lunghe e uno sfondo più scuro per i pulsanti della schermata finale di YouTube.
+738	Ultimi secondi
+739	Ultimi passaggi prima che la pagina si fermasse:
+740	L’ultima volta la verifica Beat This! ha esaurito la memoria e ha bloccato la pagina. È disattivata su questo telefono; puoi riattivarla in Fotocamera e obiettivi, meglio con meno app aperte.
+741	L’ultima volta la pagina si è fermata durante l’analisi di “{}” ({} MB). È stato messo da parte: collega di nuovo la cartella e il resto verrà analizzato. Tocca “Segnala questo problema” per mandarmi cosa è successo.
+742	0,25 s dopo
+743	Più avanti nella clip ▶
+744	Punta su ciò che ha trattenuto i tuoi spettatori ({} Shorts): {}.
+745	Scopri cosa c’è nelle mie clip
+746	Apprendimento dai tuoi risultati YouTube
+747	Scopro cosa c’è nelle tue clip
+748	Scopro cosa c’è nelle tue clip: {} di {}. Puoi continuare a lavorare.
+749	Scopro cosa c’è nelle tue clip…
+750	Meno usate di recente
+751	Escludi
+752	Escludi tutte quelle mostrate
+753	Escludi le clip del mio ultimo video
+754	Niente filigrana nelle esportazioni per TV
+755	Sinistra
+756	Esclusa
+757	Esclusa dal montaggio: tocca per usarla
+758	Durata
+759	La durata è {} s, attesi {} s.
+760	Obiettivo
+761	Kit di obiettivi
+762	Obiettivi
+763	Lascia scegliere al revisore IA
+764	Permette a testi e ricerche di trovare inquadrature in base a cosa mostrano. Scarica una volta un modello da 150 MB; poi funziona offline.
+765	Scritte
+766	Chiaro
+767	Light leak
+768	Dal chiaro allo scuro
+769	Dal chiaro allo scuro: prima le riprese luminose, alla fine quelle scure
+770	Ti piace?
+771	Come le inquadrature che trattengono i tuoi spettatori su YouTube
+772	Colore della linea
+773	Linea sospesa sopra l’immagine
+774	Opacità della linea
+775	Link copiato.
+776	Feed di LinkedIn e X
+777	Ascolta
+778	Ascolta il {}
+779	In ascolto…
+780	Ascolto altre canzoni
+781	Ascolto la canzone di riferimento…
+782	Ascolto la canzone di riferimento… {}%
+783	Ascolto la tua canzone
+784	Ascolto le tue canzoni
+785	Ascolto le tue canzoni: {} di {} ({})…
+786	Vinile lo-fi
+787	Ricarica “{}”
+789	Ricarica la mia cartella
+790	Caricamento del riconoscimento facciale (circa 12 MB, una volta)…
+791	Luogo
+792	Blocca
+793	Logo impostato come filigrana.
+794	Lunghe riprese a mano, luce naturale e pochissimi tagli, per lasciar scorrere il momento.
+795	Teleobiettivo: compresso, bordi morbidi
+796	Più lungo
+797	Il più lungo
+798	Inquadratura più lunga {} s (un’immagine nuova almeno ogni 3 s tiene l’attenzione).
+799	Inquadratura più lunga prima del finale {} s.
+800	Look
+801	Simili ×{}
+802	Simili
+803	Guardo la clip {} di {}…
+804	Guardo le tue clip
+805	Guardo le tue clip…
+806	Cerco volti… clip {} di {}
+807	Cerco in “{}”…
+808	Ricerca…
+809	Look
+810	Tanto movimento per un passaggio forte
+811	Volume percepito
+812	Il volume è stimato e limitato per restare sotto 0 dB. Prima di una grande campagna controlla le pagine di aiuto di ogni piattaforma, perché i limiti cambiano.
+813	Volume impostato a {} LUFS dal mix finale.
+814	Terzo inferiore, da 1 s a 6 s
+815	Titolo nel terzo inferiore
+816	LRCLIB non ha risposto. Controlla la connessione, poi cerca di nuovo.
+817	LUFS (circa)
+818	testo
+819	Testo
+820	Crea {} video
+821	Crea un video montato sulla tua canzone.
+822	Crea un’altra versione
+823	Trasformalo in video
+824	Crea il mio
+825	Crea il mio Short
+826	Crea Short
+827	Fai il montaggio da solo appena ci sono canzone e clip, poi riproducilo
+829	Crea i video spuntati in Pubblica (YouTube Shorts se non ne scegli altri)
+830	Rendilo il personaggio principale della storia
+831	Crea video
+832	Crea video
+833	Crea uno YouTube Short. Scegline altri in Destinazione.
+834	Crea: {}. Cambiali in Destinazione.
+835	Creo {} (passaggio {} di {}, circa {} rimanenti). Tieni visibile questa scheda.
+836	Creo {}. Più formati in una volta è incluso con Pro; togli la spunta agli altri o creali uno alla volta.
+837	Creo il
+838	Creo la versione {}…
+839	Creo il video: {}%, circa {} s rimanenti.
