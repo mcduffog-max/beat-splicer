@@ -36,7 +36,11 @@ async function readTags(file){
 /* "It's No Good [Album Version]" → "It's No Good": version and edition notes in brackets aren't part of the song's name */
 function cleanTagTitle(t){ return String(t||"").replace(/\s*[\[(][^\])]*(version|remaster|edit|mix|mono|stereo|explicit|clean|official|audio|video|bonus|deluxe|single|live|demo|lyric|hq|hd|4k)[^\])]*[\])]/gi,"").replace(/\s{2,}/g," ").trim(); }
 const SONG_VER_SUFFIX={spedup:" (Sped Up)",nightcore:" (Nightcore)",slowed:" (Slowed + Reverb)"};
-function songTitle(){ const base=(S.meta&&S.meta.title)?cleanTagTitle(S.meta.title):cleanSongName(S.audioName); const v=$("songVer")&&$("songVer").value; return base?base+(SONG_VER_SUFFIX[v]||""):""; }
+/* "Depeche Mode - People Are People (Official Video).mp3" → artist "Depeche Mode", title "People Are People" (when the song has no tags) */
+function fileSongParts(name){ const raw=String(name||"").replace(/\.[^.]+$/,"").replace(/[_]+/g," ").replace(/\s*[\[(][^\])]*[\])]/g," ").replace(/\b(official|music|lyric|lyrics|video|audio|hd|hq|4k|remaster(ed)?|\d{4} remaster)\b/gi," ").replace(/^\s*\d{1,3}\s*[-.)]?\s+/,"");
+  const parts=raw.split(/\s+[-–—]\s+/).map(x=>x.replace(/\s{2,}/g," ").trim()).filter(Boolean);
+  return parts.length>=2?{artist:titleCase(parts[0]),title:cleanSongName(parts.slice(1).join(" "))}:{artist:"",title:cleanSongName(name)}; }
+function songTitle(){ const base=(S.meta&&S.meta.title)?cleanTagTitle(S.meta.title):fileSongParts(S.audioName).title; const v=$("songVer")&&$("songVer").value; return base?base+(SONG_VER_SUFFIX[v]||""):""; }
 function songArtistLine(){ const s=songTitle(), a=$("artistName").value.trim(); return s&&a?`${s} — ${a}`:s; }
 function cleanSongName(n){
   let s=String(n||"").replace(/\.[^.]+$/,"").replace(/^Recording_\d{4}-\d{2}-\d{2}_\d{2}-\d{2}-\d{2}(_EQ)?$/i,"");
@@ -45,9 +49,9 @@ function cleanSongName(n){
 }
 function smartTitle(){
   const own=$("projName").value.trim(); if(own) return safeName(own,60);
+  const song=songTitle(), art=$("artistName").value.trim(); if(song) return safeName(art?`${song} - ${art}`:song,60); // the project is the song and its artist unless named
   const topic=$("capTopic").value.trim(); if(topic) return safeName(titleCase(topic.split(/\s+/).slice(0,6).join(" ").replace(/[.,!?;:]+$/,"")),60);
   const hook=$("hookText").value.trim(); if(hook) return safeName(titleCase(hook),60);
-  const song=songTitle(), art=$("artistName").value.trim(); if(song) return safeName(art?`${art} - ${song}`:song,60);
   return "Beat Edit";
 }
 function today(){ const d=new Date(); return `${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,"0")}-${String(d.getDate()).padStart(2,"0")}`; }

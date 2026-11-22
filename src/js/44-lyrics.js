@@ -71,10 +71,10 @@ function posterSoon(){ if(!S.plan||S.running||S._auto||S.plan===_posterPlan) ret
 function foldAfter(n,next){ const d=stepNamed(n); if(!d||d._touched) return; d.open=false; const nx=next&&stepNamed(next); if(nx&&!nx._touched&&!STEPS().some(o=>o.open)) nx.open=true; }
 { const box=$("stageBox"), cv=$("stage"), work=box.closest(".work"); const upd=()=>{ const ar=parseFloat(box.style.getPropertyValue("--ar"))||1.78; work.classList.toggle("portrait",!cv.hidden&&ar<0.9); };
   new MutationObserver(upd).observe(box,{attributes:true,attributeFilter:["style"]}); new MutationObserver(upd).observe(cv,{attributes:true,attributeFilter:["hidden"]}); upd(); }
-{ const q=$("quickTitle"), hk=$("hookText"), syncQ=()=>{ q.value=$("autoTitles").checked?"":hk.value; q.placeholder=$("autoTitles").checked?"Titles are written automatically (type to use your own)":"Add a title (optional)"; };
+{ const q=$("quickTitle"), hk=$("hookText"), syncQ=()=>{ q.value=$("autoTitles").checked?"":hk.value; q.placeholder=$("autoTitles").checked?(songTitle()?`${songTitle()} (automatic)`:"Titles are written automatically (type to use your own)"):"Add a title (optional)"; };
   q.addEventListener("input",()=>{ if($("autoTitles").checked){ $("autoTitles").checked=false; renderTitles(); } hk.value=q.value; updateNamePreview(); });
   q.addEventListener("change",()=>{ saveSettings(); renderTitles(); posterRefresh(); });
-  hk.addEventListener("input",syncQ); $("autoTitles").addEventListener("change",syncQ); setTimeout(syncQ,0); }
+  hk.addEventListener("input",syncQ); $("autoTitles").addEventListener("change",syncQ); setTimeout(syncQ,0); window._syncQuickTitle=syncQ; }
 function posterRefresh(){ _posterPlan=null; posterSoon(); }
 $("makeNow").onclick=()=>{ if(!S.running&&!S.eps.length){ S.eps=["shorts"]; buildEndpointUI(); saveSettings(); updateButtons(); } $("render").click(); };
 $("foldAll").onclick=()=>{ STEPS().forEach(d=>{ d.open=false; d._touched=true; }); };

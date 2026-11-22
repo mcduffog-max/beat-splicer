@@ -157,8 +157,8 @@ async function writeTitles(useAI,onlyMissing){
         if(!fallback||sc.maxPrev<fallback.sc.maxPrev||(sc.maxPrev===fallback.sc.maxPrev&&sc.s>fallback.sc.s)) fallback={hk,sc}; }
       best=best||fallback;
       // the AI ranks its own options; without AI or a read of the footage, no text beats a generic line built from the song name
-      T.hook=aiHooks.length?aiHooks[0]:(topSubjects(1).length&&best?best.hk:songArtistLine());
-      T.hookOpts=[...new Set([...(aiHooks.length?aiHooks:cands.filter(h=>!hookIssues(h).length)).slice(0,5),songArtistLine()].filter(Boolean))];
+      const st=songTitle(); T.hook=st||(aiHooks.length?aiHooks[0]:(topSubjects(1).length&&best?best.hk:songArtistLine())); // the song's own title opens the video by default; the written lines are a tap away
+      T.hookOpts=[...new Set([st,...(aiHooks.length?aiHooks:cands.filter(h=>!hookIssues(h).length)).slice(0,5),songArtistLine()].filter(Boolean))];
       const po=typeof a.payoff==="string"&&wordCount(a.payoff)<=3&&!isCliche(a.payoff)?a.payoff.trim():PAYOFFS[Math.floor(rng(seed+ep.h)()*PAYOFFS.length)];
       T.payoff=po; ctx.used.push(T.hook);
     } else {

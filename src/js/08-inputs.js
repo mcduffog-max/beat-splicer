@@ -68,7 +68,7 @@ async function loadAudio(file,cachedAn){
     S.meta=file._meta||await readTags(file);
     S.lyrics=null; S._lyricsFor=file.name; renderLyrics(); // lyrics belong to a song: found next to it, inside it, or added again
     try{ const lf=S.lrcFiles&&S.lrcFiles.get(file.name.replace(/\.[^.]+$/,"").toLowerCase()); if(lf) S._pendingLyrics={text:await lf.text(),src:"file"}; else if(S.meta&&S.meta.lyrics) S._pendingLyrics={text:S.meta.lyrics,src:"song"}; }catch(e){}
-    if(S.meta.artist && (!$("artistName").value.trim()||S._artistAuto)){ $("artistName").value=S.meta.artist; S._artistAuto=true; }
+    { const fa=S.meta.artist||(!S.meta.title&&fileSongParts(file.name).artist)||""; if(fa && (!$("artistName").value.trim()||S._artistAuto)){ $("artistName").value=fa; S._artistAuto=true; } else if(!fa&&S._artistAuto){ $("artistName").value=""; } } // the artist from the tags, else from "Artist - Title" in the file name
     $("prog").hidden=false;
     anaMark("song",file,1,1);
     S.an=cachedAn || await analyzeAudio(S.audioBuf,p=>{ $("prog").value=p; status(`Finding the beat… ${Math.round(p*100)}%`); });
@@ -78,7 +78,7 @@ async function loadAudio(file,cachedAn){
     if(S._pendingLyrics){ const pl=S._pendingLyrics; S._pendingLyrics=null; setLyrics(pl.text,pl.src); }
     else setTimeout(()=>{ try{ autoLyrics(); }catch(e){} },0);
     setTimeout(()=>{ btReferee().catch(()=>{}); },1500); // a neural second opinion on the beat, where the device can run it
-    foldAfter("Your song",S.clips.length?null:"Video clips"); status("Audio ready."); $("listen").disabled=false; syncCapWith(); updateNamePreview(); crumb("song ready");
+    foldAfter("Your song",S.clips.length?null:"Video clips"); status("Audio ready."); $("listen").disabled=false; syncCapWith(); updateNamePreview(); if(window._syncQuickTitle) _syncQuickTitle(); crumb("song ready");
     buildPlan();
   }catch(err){
     $("prog").hidden=true;
