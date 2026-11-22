@@ -1,0 +1,416 @@
+840	Kurgun yapılıyor
+841	Kurgun yapılıyor…
+842	Videon yapılıyor: %{}
+843	Nakarat olarak işaretlendi. Short’lar ve hikâye artık senin seçimini kullanıyor.
+844	Keçeli kalem (Permanent Marker)
+845	Maskeli silme
+846	Eşleşen kesme
+847	Eşleşen kesme: şekilleri önceki çekimin bittiği yerle hizalanır
+848	Ara sıra eşleşen kesme: sonraki çekimin şekilleri öncekiyle hizalanır
+849	Telefona uy
+850	Çekimleri eşleştir
+851	Çekimleri şarkı sözleriyle eşleştir
+852	Eşleştir:
+853	Kelimelerle eşleşiyor: “{}”
+854	Hareket yönü ölçülüyor
+855	Kliplerinin hangi yöne hareket ettiği ölçülüyor: {} / {} (arka planda).
+856	Orta
+857	Ayna anlar
+858	Ayna anlar: nakaratlarda simetri
+859	Ayna simetrisi
+860	Karışık (stil karar verir)
+861	Müziğinin altına karıştırılır. Yalnızca o klibi sessize almak için herhangi bir klipteki hoparlöre dokun.
+862	Mobil ve mesajlaşma
+863	Modern sinema
+864	Modern sabit lens: temiz, net
+865	Mono
+867	Ruh hâli
+868	Kasvetli
+869	Daha fazla seçenek
+870	En uyumlu
+871	En çok hareket
+872	Seçilen karakterlere en çok ekran süresi
+873	Hareket
+874	Kamera hareketlerinde hareket bulanıklığı
+875	Dağlar
+876	Hareket
+877	Hareket önceki çekimden devam eder
+878	Hareket ölçüldü: kesmeler artık hareketin yönünü izliyor.
+879	Hareket müziğe göre zamanlandı: {} çekim artık aksiyonlarının vuruşa denk geldiği yerden başlıyor.
+880	Hareket: her kurgunun en az %{} kadarı gerçekten hareket eden görüntü gösteriyor. Fikri beğenmedin mi? “Başka bir yön dene” farklı birini seçer.
+881	Movies/Beat Splicer
+882	MP3, M4A veya WAV
+883	MP3, M4A veya WAV.
+884	Her drop’tan önceki son iki vuruşu boğuklaştır, sonra birden aç
+885	Çarp (dokular için)
+886	Vuruşta çoğalt (1, 4, 9 kopya)
+887	Müzik: {} – {}
+888	Sessiz
+889	Görüntülerim yapay zekâyla üretilmiş gerçekçi kişiler, yerler veya sahneler içeriyor
+890	Ad
+891	Yapay zekâyla adlandır
+892	Adlar
+893	Doğal
+894	Toplamda {} sn görüntü gerekiyor; sende {} sn var.
+895	En az {} klip veya fotoğraf gerekiyor; sende {} var. Daha fazla ekleyene kadar dışa aktarım engelli.
+896	Neon kırmızı ve mavi
+897	Yeni fikir
+898	Her platform için yeni başlıklar yazıldı (yerleşik yazar).
+899	Her platform için yeni başlıklar yazıldı.
+900	İleri
+901	Sonraki en iyi:
+902	Sonraki adım
+903	Bir dahaki sefere Video yap güvenli modda çalışır (daha yavaş, telefonu daha az yorar). Yine de durursa,
+904	Sonraki sürüm
+905	Sırada:
+906	Night Drive (örnek).m4a
+907	Nightcore (+%30)
+908	Görüntüleri okuyacak yapay zekâ yok, bu yüzden seçimler hareket, parlaklık ve çekim sırasına göre yapılıyor.
+909	Yapay zekâ incelemecisi ayarlanmamış (bkz. Yapay zekâ incelemesi). Kendin seç ya da oraya bir anahtar ekle.
+910	O klasörde ses dosyası yok.
+911	Orada ses veya video dosyası bulunamadı.
+912	Altyazı gelmedi. Yeniden dene.
+913	Bu bölümde belirgin bir drop yok, bu yüzden kapanış kelimesi atlandı.
+914	Elinde klip yok mu? Örnek kliplerle dene
+915	İlk 5 sn’de kesme yok. Kesme temposunu artır ya da sektör kurallarını aç.
+916	Otomatik olarak tam eşleşme bulunamadı. Sanatçı ve başlığı kontrol et ya da aşağıdan doğru sürümü seç.
+917	Tam eşleşme yok. Sanatçı ve başlığı kontrol et ya da aşağıdan doğru sürümü seç.
+918	Açılış çekiminde yüz yok. İlk saniyedeki bir yüz dikkati en iyi tutar.
+919	Döngüyü bozacak siyahtan açılma, logo girişi veya kapanış kartı yok. Harekete geçirici mesajları altyazıya koy.
+920	20 sn içinde tekrar eden görüntü yok.
+921	Görsel yok, yalnızca verilere göre değerlendir.
+922	Lens karakteri yok
+923	Hiçbir satır zamanlanmadı.
+924	O metinde şarkı sözü satırı bulunamadı.
+925	Önceki videoların hafızası yok
+926	Ekranda başlık yok. İstersen önizlemenin altına yaz.
+927	Bilerek açılış metni yok. İlk çekim tüm işi yapmalı: hareket ve bir yüzle aç.
+928	Henüz seçim yok. Her seçim uygulamaya neyi sevdiğini öğretir.
+929	Satın alım yapılmadı.
+930	Henüz referans yok.
+931	“{}” ile eşleşen ayar yok.
+932	“{}” içinde şarkı bulunamadı.
+933	Enerjik bölümlerde durağan an yok: oradaki sabit çekimler yavaş bir yaklaşma alır.
+934	Metin yok
+935	Filigran yok
+936	Filigran bulunamadı.
+937	Bu Google hesabında YouTube kanalı yok
+938	Kimse {} aynı şekilde terk etmez
+939	Bunların hiçbiri henüz uygulamanın bu sürümüyle yapılmadı, yani şimdilik öğrenilecek bir şey yok. Bundan sonra yaptığın Short’lar izlenir.
+940	Normal
+941	Nakarat değil
+942	Nakarat değil: not edildi.
+943	Kullanılmadı
+944	Son zamanlarda kullanılmadı
+945	Çalışmıyor:
+946	Not edildi: aşağı yukarı aynı.
+947	Not edildi: o klip artık “{}” ile eşleştirilmeyecek.
+948	Hiçbir şey bulunamadı. Daha az kelime ya da yalnızca şarkı adını dene.
+949	Henüz saklanan bir şey yok.
+950	“{}” içinde yeni bir şey yok.
+951	Henüz kaydedilecek bir şey yok.
+952	Yenilik: son videolarından en yakınından %{} farklı{}.
+953	Şimdi kliplerini ekle.
+954	Şimdi şarkını seç.
+955	Şimdi kliplerin
+956	Şimdi şarkın
+957	Ara sıra ters çekimler (geri sarma anları)
+958	Kapalı
+959	Kapalı (ayarlarımı kullan)
+960	Resmi Video
+961	Bilgisayarda:
+962	Telefonda:
+963	Ekranda
+964	YouTube’da
+965	Ekrandaki açılış: {}
+966	Ekran metni
+967	Ekran başlığı
+968	Tek bir cesur an: efektler yalnızca önemli yerde
+969	Tek bir seçim tüm görünümü ve hissi belirler. En yeni seçimin kazanır: buradan birini seç ya da Hepsini yap’a dokun, senin için seçsin. Aşağıda değiştirdiğin her şey onu ayarlar.
+970	Bir ek adım:
+971	{} için yalnızca {} klip. Yaklaşık {} tane daha baştan sona taze bir görünüm verir.
+972	“{}” ile yalnızca %{} farklı ({}). Platformlar neredeyse aynı, şablon yüklemelerin erişimini sınırlar. Remiks’e dokun ya da yönetmeni değiştir.
+973	Videonun yalnızca %{} kadarı hareketli görüntü gösteriyor (%{}+ hedefle). Hareketli klipler ekle: yürüme, dans, sürüş, pan çekimleri.
+974	Yalnızca bu uzunluktaki MP3 ve WAV kayıtları bölümler hâlinde açılabilir. Şu süreden kısa olacak şekilde kırp:
+975	Yalnızca bunlar
+976	Opaklık
+977	Aç
+978	Kayıtlı bir proje aç
+979	Açık manzara
+980	OpenAI modeli
+981	Açılış
+982	{} / {} açılıyor, kaynak: {}…
+983	Android yükleyicisi açılıyor: Güncelle’ye dokun. Uygulama yeni sürümle yeniden başlar.
+984	Google Play açılıyor…
+985	Açılış metni “{}” {}. Yeni başlıklar yaz’a dokun ya da düzenle.
+986	Açılış metni “{}”: {} kelime, ilk kareden itibaren {} sn boyunca tamamen ekranda, güvenli alanın üst üçte biri.{}{}
+987	Açılış metni daha önce kullandığın birine benziyor. Yeni başlıklar yaz’a dokun.
+988	Açılış metni yeni: önceki başlıklarında ona yakın bir şey yok.
+989	Açılış metni doğal okunuyor ve ekrandakiyle ilgili.
+990	Açılış metni ayarlandı; bu akış sessiz oynatıldığı için burada önemli.
+991	Açılış başlığı harf harf, her biri düzleşerek katlanıp son harften ilk harfe doğru kaybolur
+992	Sahneyi geniş bir çekimle kurarak açılır.
+993	Bir yüzle açılır: insanlar yüzler için kaydırmayı bırakır.
+994	Şarkının en güçlü kısmıyla açılır.
+995	Dar açılır. Önce daha geniş bir kuruluş çekimi sahneyi kurardı.
+996	İsteğe bağlı, ör. sanatçı
+997	ya da buraya bırak
+998	ya da buraya bırak
+999	Orijinal
+1000	Özgünlük (tüm platformlar)
+1001	Çıktı kontrolü geçti: {}, {} sn{}{}.
+1002	Çıktı kontrolü: {}
+1003	çıkış
+1004	Çıkış {}
+1005	Kaplama
+1006	Katmanlar
+1007	tempo
+1008	Tempo müziği izliyor (eşleşme %{}): kesmeler ve hareket şarkının enerjisiyle yükselip alçalıyor.{}
+1009	Tempo, hikâye taslağı ve yön
+1010	ZIP paketleniyor: %{}…
+1011	ZIP paketleniyor…
+1012	Sayfa adı
+1013	Resimsi mavi-yeşil
+1014	Resimsi gerçeküstü
+1015	Yatay kaydırma
+1016	Parola
+1017	Parola (en az 8 karakter)
+1018	Bir YouTube veya Shorts bağlantısı yapıştır
+1019	Panodan yapıştır
+1020	Şarkı sözü yapıştır
+1021	Sözleri yapıştır, her söylenen dize için bir satır. [01:23.40] gibi bir zamanla başlayan satırlar aynen kullanılır.
+1022	Panodan {} satır yapıştırıldı. Kontrol et, sonra Bu sözleri kullan’a dokun.
+1023	zirve
+1024	Bu inceleme için izin verilmedi.
+1025	Kişi
+1026	Petzval girdabı
+1027	Petzval tipi portre lensi: keskin merkez, güçlü girdap
+1028	Videodan daha uzun telefonlar (artık çoğu telefon) ekranı doldurur ve YouTube Shorts, TikTok ve Reels’te iki yandan biraz kırpar. Varsayılan olarak çizgi, tipik bir telefonda YouTube’un beğen ve paylaş düğmelerinin hemen dışında durur; telefonun hâlâ gizliyorsa içeri al.
+1029	Fotoğraf hareketi
+1030	Kesmeleri cümlele: şarkıcıyı izle, şarkının nefes aldığı yerde bekle, ara sıra vuruş dışı bir kesme
+1031	Bir şarkı seç
+1032	Bir açılış satırı seç ya da aşağıda düzenle:
+1033	Klip seç
+1034	Şarkınla eşleşen sürümü seç.
+1035	Kaldığın yerden devam edilsin mi?
+1036	Kaldığın yerden devam edilsin mi? {1} klipli “{0}”, kaydedildi: {3}.{4}
+1037	En sevdiğin kareyi seç
+1038	Yapay zekâ seçti
+1039	Bu şarkı için seçildi
+1040	Pictures/Beat Splicer
+1041	Bir yorum sabitle
+1042	Sabitlenmiş yorum: {}
+1043	Pinterest video Pin’i
+1044	Düz arka plan
+1045	Tüm videoyu tek seferde planla (en iyi görüntüleri önemli yerlere saklar)
+1046	Geri dönen imgeyi yerleştirir
+1047	Önce platform, yüklemek için
+1048	Platformlar, başlıklar ve videoların yapılması
+1049	A’yı oynat
+1050	B’yi oynat
+1051	Bu bölümü oynat
+1052	Bu çekimi tersten oynat
+1053	Kurgunu oynat
+1054	Eğlenceli tek plan
+1055	{} oynatılıyor.
+1056	{} kurgusu oynatılıyor…
+1057	{} noktasından oynatılıyor…
+1058	Kurgun oynatılıyor
+1059	Vuruşta pop
+1060	Dikey 4:5, akışın kırpmadan gösterdiği en uzun biçim.
+1062	Konum
+1063	Bunu ilk yorumun olarak paylaş ve sabitle. Sorular yanıt alır, yanıtlar da etkileşim sayılır.
+1064	Nakarat öncesi {} {}
+1065	Kusursuz ayna kompozisyonlar, soğuk tonlar ve yavaş, kasıtlı hareket.
+1066	İnceleme için kareler hazırlanıyor…
+1067	Film müziği hazırlanıyor: kodlama %{}…
+1068	Film müziği hazırlanıyor: miksleme %{}…
+1069	Film müziği hazırlanıyor: ses yüksekliği ayarlanıyor…
+1070	Film müziği hazırlanıyor…
+1071	Paylaşmaya hazırlanıyor…
+1072	“En iyi şarkıyı ve klipleri bul”a dokun.
+1073	Hikâyenin çekim ölçeklerini ve yüzleri izleyebilmesi için Hikâye ve tempo altında “Görüntülerimi yapay zekâyla oku”ya dokun. O zamana kadar enerjiyi ve çekim sırasını izler.
+1074	Kurgunu burada izlemek için Önizleme’ye dokun.
+1075	Önizleme
+1076	Şu olarak önizle
+1077	Önizleme bitti.
+1078	{} sürümü önizleniyor…
+1079	Önceki sürüm
+1081	İlerleme kenarlığı
+1082	Proje adı
+1083	Proje açıldı.{}
+1084	Proje geri yüklendi.
+1085	Proje kaydedildi. İstediğin zaman “Proje aç…” ile aç, sonra şarkının ve kliplerinin bulunduğu klasörü seç.
+1086	Projeler
+1087	Sayfamı yayınla
+1088	Şimdi yayınla
+1089	Yayın paketi, {} tarihinde Beat Splicer ile yapıldı
+1090	Yayınlanıyor…
+1091	Geri çekilme
+1092	Satın alımlar Google Play’den indirilen uygulamada çalışır.
+1093	Müzikle yaklaş ve uzaklaş
+1094	Yalnızca yaklaş
+1095	sakin
+1096	Sakin kısımlar
+1097	Sakin kısımlar nefes alır, yüksek kısımlar sürükler: sakinken çekim başına yaklaşık {} sn, tam enerjide {} sn.
+1098	Radyo girişi: küçük başlar, ilk büyük anda açılır
+1099	Ham
+1100	Vuruş yeniden sayılıyor… %{}
+1101	Kliplerindeki hareket yeniden ölçülüyor ({} / {})…
+1102	{1} klipten {0} kare okundu ve {2} karakter bulundu. Hikâye artık çekim ölçeklerini ve yüzleri izliyor; onlara göre sıralamak için Video klipler’den karakter seç.
+1103	Görüntülerimi yapay zekâyla oku
+1104	Sonuçlarımı oku
+1105	Şarkı sözlerini yapay zekâyla oku
+1106	Okunuyor
+1107	Klipler okunuyor: {} / {}
+1108	Şarkı sözlerinde imgeler aranıyor…
+1109	Şarkı okunuyor
+1110	İzleyicilerin nerede ayrıldığı okunuyor: {} / {}…
+1111	Kanalın okunuyor…
+1112	Görüntülerin okunuyor
+1113	Görüntülerin okunuyor…
+1114	Görüntülerin okunuyor… {} / {} kare
+1115	Gerçek hareket: videonun %{} kadarı hareket eden görüntü gösteriyor{}.
+1116	Her platform için önerilen
+1117	Kayıt
+1118	Yinele
+1119	Yinele (Shift Ctrl/⌘ Z)
+1120	Rahat
+1121	salıverme
+1122	Kurguyu bir ruh hâliyle yeniden yap:
+1123	Anahtarları bu bilgisayarda parolayla kilitli olarak hatırla
+1124	Markamı bu cihazda hatırla
+1125	Remiks
+1126	Remikslendi: yeni kurgu, açılış ve çekim sırası.
+1127	Kaldır
+1128	Logoyu kaldır
+1129	Fotoğrafı kaldır
+1130	Beat Splicer işaretini kaldır
+1131	Filigranı kaldır
+1132	Yeniden adlandır
+1133	Bu karakteri yeniden adlandır
+1134	Bildir
+1135	Sorun bildir
+1136	Sorun bildir: düzeltmek için gereken ayrıntılarla gelir
+1137	Bu sorunu bildir
+1138	Sıfırla
+1139	Çözüm: yeni normal
+1140	çöz
+1141	Projemi geri yükle
+1142	Satın alımları geri yükle
+1143	Projen geri yükleniyor…
+1144	Ölçülülük
+1145	Ölçülülük: {}, {}; geri kalan her şey temiz kesilir.
+1147	Retro VHS
+1148	Klipleri yeniden kullan, ama yalnızca henüz gösterilmemiş görüntüleri
+1149	Ters
+1150	İnceleme iptal edildi. Hiçbir şey gönderilmedi.
+1151	İnceleme durduruldu.
+1152	İncelemeciler
+1153	İncelemeciler yalnızca bir sabit kare sayfası ve ayarlarını görür, başka hiçbir şey. Claude herhangi bir şey göndermeden önce iznini ister. Diğerleri aşağıda eklediğin API anahtarlarını kullanır.
+1154	Taslağı yeniden yaz
+1155	Ritim
+1156	Sağ
+1157	Tam burada
+1158	Şarkının bu noktası için doğru çekim türü
+1159	Drop’lara yükselen ses
+1160	Yükselen aksiyon: çatışma
+1161	Yuvarlatılmış çerçeve (siyah kenar boşluğu) ve çizgi
+1162	Tanılamayı çalıştır
+1163	Tanılamayı yeniden çalıştır
+1164	Tanılama çalışıyor
+1165	Tanılama çalışıyor…
+1166	Çalışıyor…
+1167	Aynı fikir, farklı çekimler
+1168	Kaydet
+1169	Bu uygulamanın bir kopyasını kaydet
+1170	Hepsini ZIP paketi olarak kaydet
+1171	Hepsini bir klasöre kaydet
+1172	Kaydetme iptal edildi.
+1173	İstemci kimliğini kaydet
+1174	Kilitli anahtarları kaydet
+1175	Raporu kaydet
+1176	Bu projeyi dosya olarak kaydet
+1177	Bu projeyi dosya olarak kaydet ya da bir tane aç
+1178	Telefona kaydet
+1179	Kaydedildi
+1180	{0} video “{2}” içine kaydedildi.
+1181	Kaydedildi ✓
+1182	Kayıtlı anahtarlar kilitli
+1183	Kayıtlı anahtarlar kaldırıldı.
+1184	Kayıtlı proje dosyaları: {} MB kullanılıyor{}. Kaydedilmeyi bekleyen bitmiş videolar: {} MB.
+1185	Telefonunda {} içine kaydedildi: {}.
+1186	Documents/Beat Splicer içine kaydedildi: {}.
+1187	Telefonuna kaydedildi: Movies › Beat Splicer.
+1188	{} kaydediliyor… %{}
+1189	Tarama çizgileri, taşan renkler ve glitch’ler: nostaljik bir ev videosu hissi.
+1190	Planlandı
+1191	YouTube’da {} için planlandı.
+1192	Puan {}/10. {}
+1193	Ekran (ışık efektleri için)
+1194	Deniz, göl veya nehir
+1195	Ara
+1196	Aranıyor…
+1197	İkinci satır
+1198	Bunlar için saniye saniye izleyici tutma henüz yok: YouTube’un birkaç günlük görüntülemeye ihtiyacı var.
+1199	Bölümler. Geri dönen bir nakarat bulunamadı, bu yüzden Short’lar en güçlü anla açılıyor. Dinlemek için birine dokun.
+1200	Bölümler{}. İlk nakarat: {}. Dinlemek için birine dokun.
+1201	Planları gör
+1202	Android uygulamasının daha yeni bir sürümünün hazır olup olmadığına bak
+1203	Aşağıdaki tüm metni seç ve kopyala.
+1204	Seçildi, Ctrl+C’ye bas
+1205	{} adresine 2 sabit kare görseli ve kurgu ayarların gönderilsin mi? Her şirketin API koşullarına göre işlenir ve anahtarlarına faturalandırılır.
+1206	Rapor gönder
+1207	Raporu gönder
+1208	Ayarlar seçildi ama bir şey dışa aktarımı engelliyor. Nereye gidiyor altındaki kontrol listesine bak.
+1209	Aynı anda birkaç biçim
+1210	Paylaş
+1211	Paylaş ya da kaydet
+1212	Videonu paylaş
+1213	Paylaşım burada kullanılamıyor. Bunun yerine İndir’i kullan.
+1214	Paylaşım burada kullanılamıyor. Bunun yerine Kaydet’i kullan.
+1215	Önemli bir an için keskin, tam kaliteli görüntü
+1216	{} bu kayda uyması için {} sn kaydırıldı.
+1217	Kısa uzunluk
+1218	Drop’ta kısa kapanış kelimesi (kısa video)
+1219	Kısa sürümler şarkının en enerjik kısmını kullanır ve güçlü bir vuruşla açılır.
+1220	Yalnızca kısa videolar
+1221	Kısa video uzunluğu
+1222	Bir bakışta okunacak şekilde kısalt.
+1223	Daha kısa
+1224	Short’lar artık {} noktasından başlıyor. Uzun videolar değişmedi.
+1225	Short’lar başlangıç noktalarını yeniden kendileri seçiyor.
+1226	Short’lar {} noktasından başlıyor (senin seçimin).
+1227	Short’lar burada başlar ✓ (otomatik için dokun)
+1228	{} numaralı çekim artık {} sn, vuruşta bitiyor.
+1229	{} numaralı çekim artık tersten oynuyor (dışa aktarımlarda görünür; hızlı önizleme ileri oynatır).
+1230	{} numaralı çekim artık {} kullanıyor.
+1231	Çekim {} / {} · {}–{} ({} sn) · {}{}{}
+1232	{} numaralı çekim yeniden ileri oynuyor.
+1233	Çekim uzunluğu
+1234	Çekim ölçeği
+1235	Çekimler yükselişlerde daralıyor ({} / {} adım yaklaşıyor).
+1236	Çekimler:
+1237	Göster
+1238	{} klibin tümünü göster
+1239	Daha az klip göster
+1240	Şurada göster
+1241	Yalnızca bu karakterin olduğu klipleri göster (birleştirmek için birkaçını seç)
+1242	Yalnızca paylaştıklarımı göster
+1243	Önizlemede güvenli alanı göster
+1244	Şarkı sözlerini ekranda göster
+1245	Üstte gösterilir
+1246	1. ile 6. saniye arası gösterilir. Logolar ve başlıklar her platformun güvenli alanında tutulur.
+1247	Söyleneni gösteriyor: “{}”
+1248	Çekimleri karıştır
+1249	Dikey videolarda kenarlar
+1250	Oturum açma iptal edildi
+1251	İmza geçiş
+1252	Oturum açıldı: {}.
+1253	Boyut
+1254	Boyut {}×{}, beklenen {}×{}.
+1255	Atla
+1256	Yavaş
+1257	Yavaş ve geniş
+1258	Yavaş çapraz geçişler, camgöbeği ve turuncu renk düzeni, film greni ve geniş ekran şeritleri.
+1259	Ağır çekim

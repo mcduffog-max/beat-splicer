@@ -1,0 +1,410 @@
+420	ZIP oluşturulamadı. Videoları kendi Kaydet düğmeleriyle tek tek kaydet.
+421	O klasör açılamadı:
+422	O bölüm açılamadı.
+423	Yayınlanamadı:
+424	Vuruş yeniden sayılamadı.
+425	Google oturum açma hizmetine ulaşılamadı
+426	Hizmete ulaşılamadı. Bu yalnızca uygulamanın Chrome veya Edge’de açılan kayıtlı kopyasında çalışır.
+427	Okunamadı
+428	O ses dosyası okunamadı. WAV, MP3 veya M4A dene.
+429	O logo okunamadı.
+430	O şarkı sözü dosyası okunamadı.
+431	O fotoğraf okunamadı. JPEG veya PNG dene.
+432	Klibin uzunluğu okunamadı
+433	Pano burada okunamıyor. Kutuya uzun basıp Yapıştır’ı seç.
+434	Kanalın okunamadı:
+435	O proje geri yüklenemedi ({}). Sesini ve kliplerini yeniden ekle.
+436	O klasöre kaydedilemedi. Bunun yerine ZIP paketini kullan.
+437	Anahtarlar bu bilgisayara kaydedilemedi.
+438	Telefona kaydedilemedi:
+439	Paylaşılamadı:
+440	Yayından kaldırılamadı:
+441	Taslak yazılamadı.
+442	Kapak görseli
+444	Kırp
+445	Kırpıldı
+446	Çapraz geçiş
+447	Özel, temel alınan
+448	{} kurgusu oynatıldı. Beğendiğini seç.
+449	Kesme {} konumuna taşındı ({}{} sn), vuruşta{}.
+450	Aksiyonda kes
+451	Aksiyonda kes: her çekimdeki hareket vuruşa denk gelir
+452	Vuruş dışında, müziğin vurduğu yerde kes
+453	Kesme temposu
+454	Şarkıcının girdiği yerde kes
+455	Kesmeye senkron ping-pong
+456	Kesmeler
+457	Kurgu {} izliyor: {}, çekim başına yaklaşık {} sn (hedef {} sn).
+458	Kurgu {} izliyor: {}. Platform kuralları burada çekimleri 3 sn ile sınırlıyor, bu yüzden uzun çekimler kısaltılıyor.
+459	Koyu
+460	Koyu ve soluk
+461	Karanlık hassasiyet
+462	Koyu, soluk yeşil-sarı renk düzeni, kontrollü yaklaşmalar ve temiz kesmeler.
+463	Önce tarih, arşiv için
+464	Derinlikte süzülme (bulanık arka plan)
+465	Açıklama
+466	Açıklama, videonun ne gösterdiğini anlatan sade bir cümleyle başlar (arama ve öneriler için dizinlenir).
+467	Açıklama:
+468	Çöl
+470	Tanılama
+471	Difüzyon filtresi
+472	Difüzyon filtresi: yumuşak parlaklıklar
+473	Difüzyon: yumuşak parıltı
+474	Siyaha geçiş
+475	Yönetmen olarak:
+476	“{}” gibi yönetiliyor. {}
+477	“{}” gibi yönetiliyor{}. {}
+478	Yön
+479	Yön: {}. {}.
+480	Yönetmen teknikleri
+481	Yönetmen: şarkının bölümleriyle hareket eder
+482	Yönetmen notu
+483	Yönetmenler
+484	Bağlantıyı kes
+485	Hepsini yap
+486	Hepsini yap, izleyicilerini tutan şeylere yönelir
+487	Hepsini yap, müziğe ve görüntülerine göre her yeni kurgu için bir stil seçer
+488	Gözünü kırpma: {}
+489	Bitti
+490	Bitti, ancak {0} klip bu cihazda oynatılamadı, bu yüzden {2} çekim başka klipler kullandı: {3}{4}.
+491	Bitti: {0} video{2} kaydetmeye hazır.
+492	Bitti: uygulama kliplerinde ne olduğunu biliyor. Şarkı sözleri artık söyleneni gösteren çekimleri buluyor.
+493	Doodle pop
+494	Çift ({})
+495	Çift hız
+496	İndir
+497	Yaptığın tüm videoları yayın notlarıyla birlikte tek bir ZIP olarak indir
+498	ZIP indir
+499	ZIP indir ({})
+500	Download/Beat Splicer
+501	İndiriliyor
+502	Görsel-kelime modeli indiriliyor (yaklaşık 150 MB, bir kez)…
+503	Görsel-kelime modeli indiriliyor: %{}…
+504	Güncelleme indiriliyor…
+505	Güncelleme indiriliyor… %{}
+506	Rüya gibi sakinlik
+507	Rüya gibi
+508	Süzülme ve eğim
+509	drop
+510	Drop {}
+511	Gölge
+512	Drop’lar, yükselişler ve bölüm sonları şarkıda otomatik bulunur. Dinle ve Önizleme bunları da çalar.
+513	Toz ve film çizikleri
+514	ör. 2. bölüm için takip et
+515	ör. başta yalnız, son nakaratta umutlu
+516	ör. Kuzey kıyısından müzik videoları
+517	ör. Paul, Sydney
+518	ör. Drop’u bekle
+519	Her platform kendi görüntülerinden kesilmiş kendi açılış satırını, çerçevesini ve uzunluğunu alır. Aynı uzunluktaki platformlar bir kurguyu paylaşır ve bu sorun değil: kendi kurgunu birkaç platformda paylaşmak orijinal sayılır.
+520	Her platform kendi açılış satırını alır: 2 ila 6 kelime, ilk kareden itibaren ekranda, güvenli alanın üst üçte birinde ve iki kez okunacak kadar uzun süre. Müzik videosu dışa aktarımları bunun yerine alt üçte birde başlık kartı alır. Başlıklar daha önce kullandıklarınla karşılaştırılır.
+521	0,25 sn önce
+522	Daha başlarda: daha fazla Short gelene kadar uygulama bunlara yalnızca hafifçe dayanır.
+523	Her yüksek bölüm biterken yankı atışı
+524	Yankılar
+525	Yankılar: zirvelerde hareket izleri
+526	Referans videom gibi kurgula
+527	Bunun gibi kurgula
+528	Efekt
+529	Mevcut kurgudan sırayla sekiz kare, tek bir görselde.
+530	Zarif serif (Playfair)
+531	Yanıt için e-posta (isteğe bağlı)
+532	Video oynadıkça boşalır (geri sayım)
+533	Kapanış kartı metni (kısa videolar)
+534	Şarkı ve sanatçıyla kapanış kartı (sol üstte, YouTube bitiş ekranı düğmelerine yer bırakarak)
+535	Bu çekimi bir vuruş sonra bitir
+536	Bu çekimi bir vuruş önce bitir
+537	Kapanış (uzun videolar)
+538	Kapanış (uzun)
+539	Geniş çekime çekilerek çözülüp biter.
+540	Bir ölçü çizgisinde biter ve doğrudan açılış çekimine döner, böylece tekrar izlemeler kesintisiz hissettirir. Shorts, Reels ve TikTok’ta her tekrar bir görüntüleme sayılır.
+541	Dar biter. Geniş çekime çekilmek hikâyeyi çözerdi.
+542	Başladığı yerde biter: açılış sahnesi hikâyeyi kapatmak için geri gelir.
+543	Başladığı yerde biter
+544	enerji
+545	İngilizce
+546	Enter
+547	Hata ayrıntıları kopyalandı. Sohbetimize yapıştır.
+548	Escape
+549	Temeller
+550	tanıt
+551	{} her vuruşu
+552	Bu türdeki her karakter
+553	Her klip bir fotoğraf ya da durağan video. Her çekim kamera hareketleri ve vuruşta bir darbe alır, ama gerçek hareket izleyiciyi çok daha iyi tutar: en iyi görsellerini kısa yapay zekâ video kliplerine dönüştür (görselden videoya) ya da çekilmiş görüntülerle karıştır.
+554	Her kesme bir vuruşa denk gelir
+555	Her platform
+556	Her platform kendi satırıyla açılır.
+557	Her şey (deneme sürümü)
+558	Bunlar hariç her şey
+559	“{}” içindeki her şey zaten projede.
+560	Creator’daki her şey, artı YouTube sonuçlarından öğrenme, Bunun gibi kurgula, Hangisi daha iyi, yapay zekâ incelemecisi ve aynı anda birkaç biçim.
+561	Dışa aktar
+562	Şimdi dışa aktar
+563	İncelemeden dışa aktar
+564	Serim: giriş
+565	Yüz tanıma burada başlatılamadı ({}).
+566	Yüz tanıma başlatılamadı.
+567	Yüz tanıma bu cihazda çalışır (hiçbir şey yüklenmez). En az iki klipte görünen herkes, sıralamak için seçebileceğin bir karakter olur.
+568	Yüze duyarlı çerçeveleme (kırpmalar ve yakın çekimler yüzleri izler)
+569	Giriş ve çıkışta solma
+570	Başta solarak gir
+571	Sonda solarak çık
+572	Düşen aksiyon: sonrası
+573	Fan Edit
+574	Fantastik
+575	Hızlı kesmeler, vurucu zoomlar ve drop’ta glitch’ler: güncel kısa video görünümü.
+576	Hızlı, vurucu
+577	Dosya adları
+578	Dosya sistemi
+579	Kareyi doldur (kenarları kırpar)
+580	Etiketleri varsa şarkı dosyasından doldurulur
+581	Video oynadıkça dolar
+582	Film greni
+583	Filtrelendi
+584	Ayar bul
+585	Ayar bul, ör. kenarlık, şarkı sözleri, ağır çekim
+586	Karakterleri yüzden bul
+587	Karakterleri yüzden bul ya da daha zengin bir taslak için önce görüntülerini yapay zekâya okut. Aşağıda istediğini düzenle.
+588	Klipleri gösterdiklerine göre bul
+589	Şunu gösteren klipleri bul… ör. gece şehir, ateş, kalabalık
+590	Senkronize şarkı sözü bul
+591	En iyi şarkıyı ve klipleri bul
+592	Karakterler yüzden bulunuyor
+593	Karakterler yüzden bulunuyor ({} / {})…
+594	Vuruş bulunuyor… %{}
+595	Kareleri grafik çipinde bitir (lens, renk görünümü, gren tek geçişte)
+596	Kliplerinde ne olduğunu öğrenmeyi bitir ({} an kaldı)
+597	Şarkıyla bitir: sondaki sessizliği kırp; son çekim geri çekilir ve görüntü müziğin bittiği gibi donar veya solar
+598	Videon bitiriliyor
+599	Bu cihazdan ilk dışa aktarım, yani henüz tekrarlanacak bir şey yok.
+600	İlk satır {0} karakter{1}, {2} hashtag{4}
+601	İlk saniyeler
+602	Balıkgözü ihtişam
+603	Balıkgözü lens şişkinliği
+604	Balıkgözü lens, doygun kırmızı ve mavi ışık, ağır çekim ve şeritlerde çekimin ek kopyalarıyla bölünmüş sinema şeridi.
+605	Tüm çekimi sığdır (siyah şeritler)
+606	Tüm çekimi sığdır (bulanık şeritler)
+607	Hikâyeye uyuyor{}
+608	Notuna uyuyor: “{}”
+609	Flaş
+610	Vuruşlarda flaş
+611	Düz
+612	Klasör
+613	Klasör: {} • Dosya: {}
+614	Görüntüler
+615	Önceki videolardan görüntüler
+616	Görüntüler okundu: {} klip anlaşıldı (çekim ölçekleri, yüzler, konu).
+617	Görüntü okuma Claude gerektiriyor ve burada kullanılamıyor.
+618	Henüz pek görmediğin görüntüler
+619	Görüntüler, karakterler ve arka planlar
+620	{} hikâye için {}: tekrar edecekler ya da başka görüntüler devreye girecek.
+621	filigran için
+622	Orman
+623	Kayıtlı anahtarları unut
+624	Öğrendiklerini unut
+625	İleri
+626	{} ses dosyası bulundu. {} kullanılıyor; istersen Şarkın altından başkasını seç.
+627	İki veya daha fazla klipte görünen {0} karakter bulundu ({2} yüzden){3}. Onlara göre sıralamak için kliplerinin üstünden seç.
+628	{0} yüz bulundu ama kimse birden fazla klipte görünmüyor.
+629	{0} klipte filigran bulundu; kadrajın dışında tutulacaklar.
+630	Kare hassasiyetinde
+631	Kare hassasiyetinde MP4: her kesme ilk kareden başlayarak tam vuruşuna denk gelir.
+632	Kare hassasiyetinde kayıt şu an kullanılamıyor, bu yüzden standart kayıt kullanılıyor.
+633	Kare hassasiyetinde WebM: kesin zamanlama. YouTube WebM kabul eder; Instagram ve TikTok için MP4’e dönüştür ya da En uyumlu’yu seç.
+634	Tablo gibi görünen kareler, mavi-yeşil ve bej tonlar, cesur zoomlar ve kamçı geçişler.
+635	Çerçeveleme
+636	Çılgın
+637	Tam yoğunlukta çılgın kurgu, flaşlar, parlamalar ve sarsıntılı vuruşlar.
+638	Çılgın flaş
+639	Ücretsiz
+640	boş zaman
+641	Yer aç
+642	{} Short’tan:
+643	Tam ses
+644	Daha içeri
+645	Fütüristik / bilimkurgu
+647	Gemini (Google)
+648	Gemini modeli
+649	Nazik
+650	Nazik süzülme
+651	Nazik: renk ve parlaklığı dengele
+652	Yapay zekâ incelemesi al
+653	Hazırlanıyor
+654	Önce yapay zekâ incelemesi alınıyor. Kontrol et, sonra dışa aktar.
+655	Örnek klipler alınıyor…
+656	GitHub yanıtı
+657	Glitch kâbusu
+658	Drop’larda glitch
+659	Parlak renk alanı
+660	Parlak pop
+661	Rengin havayı belirlediği, hikâye anlatmak yerine her bölümde değişen parlak, grafik kareler.
+662	İyi çeşitlilik: {} klibinden {} tanesi kullanıldı, hiçbiri videonun %{} kadarından fazla ekranda değil.
+663	Google OAuth istemci kimliği
+664	Grenli siyah beyaz, sert kompozisyonlar ve uzun, durağan çekimler.
+665	Grafik EQ (10 bant)
+667	Grok (xAI)
+668	Grok modeli
+669	Yarım ({})
+670	Yarım hız
+671	Vuruşta el çizimi karalamalar
+672	Elde salınım
+673	Kullanıcı adı veya telif, ör. @paulmakes veya © Paul 2026
+674	Sert kesmeler
+675	Vuruşta sert kesmeler ve doğal renk. Hiçbir şey eklenmez.
+676	Sert kesmeler, gerçek renk
+677	Hashtag’ler: başlıkta değil, açıklamada #Shorts artı {0} konu etiketi.
+678	Tutulan nefes
+679	Tutulan nefes: her drop’tan önce donma
+680	İşte burada
+681	Geçmiş temizlendi: her klip yeniden taze sayılıyor.
+682	Drop’tan önce bir nefes boyunca durur
+683	Ev videosu
+684	Ev stili korundu: {} yazı ve {}. Hepsini yap bunları korur ve gerisini değiştirir.
+685	{} sesli okununca nasıl görünüyor
+686	Kaç ayar gösterilsin
+688	Hype kurgu
+689	Kesmeler fazla yavaş veya fazla yoğun geliyorsa başka bir hız dene.
+690	Görsel 1, {} sürümünden zaman sırasına göre 8 karelik bir kontak baskıdır, şarkının {}. saniyesinde. Görsel 2, açılış metninin göründüğü anda her dışa aktarımdan bir kare gösterir ({}, soldan sağa). Kesikli sarı çizgi platformun güvenli alanını gösterir ve dışa aktarımın parçası DEĞİLDİR.
+691	Vuruşa göre çoğalan görüntüler, kamera içi hileler ve el yapımı bir sıcaklık.
+692	Görseller:
+693	Drop’larda darbe vuruşu
+694	Bir araçta
+695	Kurguda
+696	Kurguda: çıkarmak için dokun
+697	Google Play uygulamasında
+698	Kullanımda
+699	Video kliplerin sesini dahil et
+700	Hatayı, son adımları, ayarları ve tanılamayı dahil et (klip, şarkı veya kişisel bilgi yok)
+701	Bağımsız 16 mm
+702	İç mekân
+703	Endüstriyel
+704	Sektör kontrol listesi
+705	Sonsuz döngü
+707	Instagram ve Facebook akışı
+708	Instagram ve Facebook Reels
+709	instagram.com/sen
+710	masaüstü için Google Drive veya OneDrive kur, sonra Bütün bir klasör seç’i kullanıp eşitlenen klasörü seç. Klasörleri doğrudan bu sayfaya da sürükleyebilirsin.
+711	Enstrümantal {}
+712	Ara bölüm {}
+713	giriş
+714	Giriş {}
+715	tanıt
+716	Bir şey onu bozmadan önce dünyayı ve ana karakteri tanıt.
+717	Vuruşa göre kesiyor
+718	Döngüye giriyor. İki kez izle
+719	Zaten güvenli moddaydı, bu yüzden
+720	Bu çok kullanılmış bir ifade; belirli bir şey yaz.
+722	Yolculuk (çekim sıranı korur)
+723	Ev stilimi (yazı ve kapanış) her videoda koru
+724	Uygulamayı açık tut
+725	Filigranları ve logoları kurgunun dışında tut (biçime göre etraflarını kırpar veya yeniden çerçeveler)
+726	Dosyalarının bir kopyası uygulamada tutuluyor (Android geri alamasın diye): {} / {}…
+727	Kurguyu çeşitli tutar: bu görüntü yakınlarda kullanılmıyor
+728	Sayfanı yayınlamadıkça bu cihazda kalır.
+729	Korundu: {} yazı, {}.
+730	Anahtarlar tarayıcından doğrudan o şirkete şifreli bir bağlantıyla gider, başka hiçbir yere değil. Kayıtlı anahtarlar hiçbir zaman saklanmayan parolanla şifrelenir (AES-256). Ekstra güvenlik için bu uygulamaya aylık harcama sınırı olan ayrı bir anahtar oluştur ve uygulamayı kullanmayı bırakırsan sil.
+731	Anahtarlar kaydedildi, parolanla kilitlendi.
+732	Anahtarların kilidi bu oturum için açıldı.
+733	Drop’a denk gelir
+734	Yatay 16:9. Daha uzun kurgular uygundur. YouTube yaklaşık −14 LUFS’ta oynatır.
+735	Dil
+736	Son 20 sn, YouTube bitiş ekranı düğmeleri için daha uzun çekimler ve daha koyu bir arka planla sakin tutuldu.
+738	Son saniyeler
+739	Sayfa durmadan önceki son adımlar:
+740	Geçen sefer Beat This! kontrolünün belleği bitti ve sayfa durdu. Bu telefonda kapatıldı; Kamera ve lensler altından yeniden açabilirsin, tercihen daha az uygulama açıkken.
+741	Geçen sefer sayfa “{}” ({} MB) analiz edilirken durdu. Bu dosya kenara alındı: klasörü yeniden bağla, gerisi analiz edilecek. Ne olduğunu bana göndermek için “Bu sorunu bildir”e dokun.
+742	0,25 sn sonra
+743	Klipte daha sonra ▶
+744	İzleyicilerini tutan şeylere yöneliyor ({} Short): {}.
+745	Kliplerimde ne olduğunu öğren
+746	YouTube sonuçlarından öğreniliyor
+747	Kliplerinde ne olduğu öğreniliyor
+748	Kliplerinde ne olduğu öğreniliyor: {} / {}. Çalışmaya devam edebilirsin.
+749	Kliplerinde ne olduğu öğreniliyor…
+750	Son zamanlarda en az kullanılan
+751	Çıkar
+752	Gösterilenlerin hepsini çıkar
+753	Son videomdaki klipleri çıkar
+754	TV dışa aktarımlarında filigran olmasın
+755	Sol
+756	Çıkarıldı
+757	Kurgudan çıkarıldı: kullanmak için dokun
+758	Uzunluk
+759	Uzunluk {} sn, beklenen {} sn.
+760	Lens
+761	Lens kitleri
+762	Lensler
+763	Yapay zekâ incelemecisi seçsin
+764	Şarkı sözlerinin ve aramaların çekimleri gösterdiklerine göre bulmasını sağlar. 150 MB’lık bir modeli bir kez indirir; sonra çevrimdışı çalışır.
+765	Yazı
+766	Açık
+767	Işık sızıntıları
+768	Açıktan koyuya
+769	Açıktan koyuya: önce parlak görüntüler, en son koyu olanlar
+770	Beğendin mi?
+771	YouTube’da izleyicilerini tutan çekimler gibi
+772	Çizgi rengi
+773	Görüntünün üstünde süzülen çizgi
+774	Çizgi opaklığı
+775	Bağlantı kopyalandı.
+776	LinkedIn ve X akışı
+777	Dinle
+778	{} için dinle
+779	Dinleniyor…
+780	Daha fazla şarkı dinleniyor
+781	Referansın şarkısı dinleniyor…
+782	Referansın şarkısı dinleniyor… %{}
+783	Şarkın dinleniyor
+784	Şarkıların dinleniyor
+785	Şarkıların dinleniyor: {} / {} ({})…
+786	Lo-fi plak
+787	“{}” yeniden yükle
+789	Klasörümü yeniden yükle
+790	Yüz tanıma yükleniyor (yaklaşık 12 MB, bir kez)…
+791	Konum
+792	Kilitle
+793	Logo filigranın olarak ayarlandı.
+794	Uzun elde çekimler, doğal ışık ve çok az kesme; anın akmasına izin verir.
+795	Uzun lens: sıkıştırılmış, yumuşak kenarlar
+796	Daha uzun
+797	En uzun
+798	En uzun çekim {} sn (en az 3 sn’de bir yeni görüntü dikkati tutar).
+799	Kapanıştan önceki en uzun çekim {} sn.
+800	Görünüm
+801	Benzer ×{}
+802	Benzerler
+803	{} / {} klibe bakılıyor…
+804	Kliplerine bakılıyor
+805	Kliplerine bakılıyor…
+806	Yüzler aranıyor… klip {} / {}
+807	“{}” içinde aranıyor…
+808	Aranıyor…
+809	Görünümler
+810	Yüksek bir pasaj için bol hareket
+811	Ses yüksekliği
+812	Ses yüksekliği tahmin edilir ve 0 dB’nin altında kalacak şekilde sınırlandırılır. Büyük bir kampanyadan önce her platformun yardım sayfalarına bak, sınırlar değişebilir.
+813	Ses yüksekliği bitmiş miksten {} LUFS olarak ayarlandı.
+814	Alt üçte bir, 1 sn ile 6 sn arası
+815	Alt üçte bir başlık
+816	LRCLIB yanıt vermedi. Bağlantıyı kontrol et, sonra yeniden ara.
+817	LUFS (yaklaşık)
+818	şarkı sözleri
+819	Şarkı sözleri
+820	{} video yap
+821	Şarkına göre kesilen bir video yap.
+822	Başka bir sürüm yap
+823	Videoya dönüştür
+824	Yap:
+825	Short’umu yap
+826	Short yap
+827	Şarkı ve klipler gelir gelmez kurguyu kendiliğinden yap, sonra oynat
+829	Yayınla altında işaretli videoları yap (başkalarını seçmezsen YouTube Shorts)
+830	Bunu hikâyenin ana karakteri yap
+831	Video yap
+832	Videoları yap
+833	Bir YouTube Short yapar. Diğerlerini Nereye gidiyor altından seç.
+834	Yapılacaklar: {}. Nereye gidiyor altından değiştir.
+835	{} yapılıyor (geçiş {} / {}, yaklaşık {} kaldı). Bu sekmeyi görünür tut.
+836	{} yapılıyor. Aynı anda birkaç biçim Pro ile gelir; diğerlerinin işaretini kaldır veya tek tek yap.
+837	Yapılıyor:
+838	{} sürümü yapılıyor…
+839	Video yapılıyor: %{}, yaklaşık {} sn kaldı.
