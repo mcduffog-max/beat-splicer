@@ -26,7 +26,7 @@ let _stillBusy=false, _stillNext=null;
 async function showFrameAt(t){ if(S.running||!S.plan) return; S.scrubT=t; drawTimeline(); if(_stillBusy){ _stillNext=t; return; } _stillBusy=true;
   try{ const ep=previewEp(), w=windowFor(ep), tt=Math.max(w[0],Math.min(w[1]-0.01,t)), P=makeExportPlan(ep,w)||S.plan, i=P.findIndex(s=>tt>=s.start&&tt<s.end); if(i<0) return;
     const cv=$("stage"); cv.hidden=false; $("stageEmpty").hidden=true; const W=Math.round(ep.w/2), H=Math.round(ep.h/2); if(cv.width!==W||cv.height!==H){ cv.width=W; cv.height=H; } $("stageBox").style.setProperty("--ar",String(ep.w/ep.h));
-    S.activePlan=P; try{ await renderStill({ep,canvas:cv,g:cv.getContext("2d"),W,H},i,tt,readFx(),$("showSafe")&&$("showSafe").checked); }finally{ S.activePlan=null; } }
+    const prevP=S.activePlan; S.activePlan=P; try{ await renderStill({ep,canvas:cv,g:cv.getContext("2d"),W,H},i,tt,readFx(),$("showSafe")&&$("showSafe").checked,P); }finally{ S.activePlan=prevP; } }
   catch(e){} finally{ _stillBusy=false; if(_stillNext!=null){ const n=_stillNext; _stillNext=null; showFrameAt(n); } } }
 /* pointer handling: mouse drags right away; on touch, hold briefly first so a quick swipe still scrolls the timeline */
 { const cv=$("timeline"); let hold=0, suppressClick=false;

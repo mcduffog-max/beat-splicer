@@ -46,7 +46,7 @@ function compareDecide(pick,who){ if(!_pair) return; const p=_pair, fA=planFeatu
 async function sheetOf(plan,win){ const F=readFx(), ep=previewEp(), tw0=ep.w>=ep.h?240:135, th=Math.round(tw0*ep.h/ep.w), sh=document.createElement("canvas"); sh.width=tw0*4; sh.height=th*2; const g=sh.getContext("2d");
   const idx=plan.map((s,i)=>i).filter(i=>plan[i].end>win[0]&&plan[i].start<win[1]), keep=S.activePlan; S.activePlan=plan;
   try{ for(let k=0;k<8;k++){ const i=idx[Math.min(idx.length-1,Math.floor(k*idx.length/8))]; if(i==null) continue; const s=plan[i], c=document.createElement("canvas"); c.width=tw0; c.height=th;
-      await renderStill({ep:{...ep,w:tw0,h:th},canvas:c,g:c.getContext("2d"),W:tw0,H:th},i,Math.max(win[0],s.start)+Math.min(0.5,(s.end-s.start)/2),F,false); g.drawImage(c,(k%4)*tw0,Math.floor(k/4)*th); } }
+      await renderStill({ep:{...ep,w:tw0,h:th},canvas:c,g:c.getContext("2d"),W:tw0,H:th},i,Math.max(win[0],s.start)+Math.min(0.5,(s.end-s.start)/2),F,false,plan); g.drawImage(c,(k%4)*tw0,Math.floor(k/4)*th); } }
   finally{ S.activePlan=keep; } return toJpeg(sh); }
 async function compareAI(){ if(!_pair) return; let id=null; for(const k of Object.keys(PROVIDERS)) if(await providerReady(k).catch(()=>false)){ id=k; break; }
   if(!id){ $("cmpMsg").textContent="No AI reviewer is set up (see Review with AI). Pick yourself, or add a key there."; return; } $("cmpMsg").textContent="Asking the AI reviewer…";

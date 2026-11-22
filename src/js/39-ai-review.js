@@ -75,8 +75,8 @@ function applyFix(fix){
   if(["pace","variety","matchTo"].includes(fix.setting)) buildPlan(); else { assignTransitions(); drawTimeline(); }
 }
 
-async function renderStill(o,segIdx,t,F,guides){
-  const seg=curPlan()[segIdx], clip=S.clips[seg.clip]; F=fxFor(F,seg,segIdx);
+async function renderStill(o,segIdx,t,F,guides,plan){
+  const seg=(plan||curPlan())[segIdx], clip=S.clips[seg.clip]; F=fxFor(F,seg,segIdx);
   const {g,W,H}=o; g.fillStyle="#000"; g.fillRect(0,0,W,H); o._seg=seg;
   if(clip.kind==="image"){
     const m=stillMotion(F,seg,segIdx,t,W,H); if(seg._focus){ m.focus=seg._focus; m.prog=(t-seg.start)/Math.max(0.3,seg.end-seg.start); } drawClip(o,clip.img,clip,F,kbScale(F,seg,t)*m.s,m.dx||0,m.dy||0,m);

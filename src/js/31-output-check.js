@@ -42,7 +42,7 @@ async function verifyExportInner(r,v){
   const TW=64, TH=Math.max(8,Math.round(64*r.ep.h/r.ep.w)), cv=document.createElement("canvas"); cv.width=TW; cv.height=TH; const g=cv.getContext("2d",{willReadFrequently:true});
   const grab=()=>{ g.drawImage(v,0,0,TW,TH); return g.getImageData(0,Math.floor(TH*0.45),TW,Math.floor(TH*0.25)).data; };
   const still=async(i,t)=>{ const c=document.createElement("canvas"); c.width=TW; c.height=TH; const o={ep:{...r.ep,w:TW,h:TH},canvas:c,g:c.getContext("2d",{willReadFrequently:true}),W:TW,H:TH};
-    S.activePlan=plan; try{ await renderStill(o,i,t,{...F,hook:"",end:"",lower:"",brand:"off",doodles:false,glitch:false,grain:false},false); }finally{ S.activePlan=null; }
+    const prevP=S.activePlan; S.activePlan=plan; try{ await renderStill(o,i,t,{...F,hook:"",end:"",lower:"",brand:"off",doodles:false,glitch:false,grain:false},false,plan); }finally{ S.activePlan=prevP; }
     return o.g.getImageData(0,Math.floor(TH*0.45),TW,Math.floor(TH*0.25)).data; };
   // effects that switch on the beat (multiplied grids, strobes, split bars, mirrors) move pixels around without changing the footage,
   // so with those on, frames are compared by their colour make-up instead of pixel by pixel

@@ -1,0 +1,14 @@
+{
+  "name": "beat-splicer-mcp",
+  "version": "1.0.0",
+  "description": "Beat Splicer as an MCP server: an assistant can cut your clips to a song and make the videos, on your own computer.",
+  "type": "module",
+  "bin": { "beat-splicer-mcp": "server.mjs" },
+  "main": "server.mjs",
+  "engines": { "node": ">=20" },
+  "dependencies": {
+    "@modelcontextprotocol/sdk": "1.32.2",
+    "playwright-core": "1.65.1",
+    "zod": "4.6.7"
+  }
+}
