@@ -49,7 +49,7 @@ function learnSummary(L){ if(!L) return []; const all=[]; Object.entries(L.eff).
   all.sort((a,b)=>b.eff-a.eff); const pct=x=>`${x>0?"+":""}${Math.round(x*100)} points`; const words=x=>`${LEARN_KEYS[x.k]}: ${x.val} (${pct(x.eff)} on ${x.n} Shorts)`;
   return [...all.filter(x=>x.eff>0.005).slice(0,3).map(x=>"Working: "+words(x)), ...all.filter(x=>x.eff<-0.005).slice(-2).reverse().map(x=>"Not working: "+words(x))]; }
 async function ytLearn(){ const out=$("ytOut"); out.textContent="Reading your channel…";
-  try{ const vids=await ytReadChannel(), pairs=matchRecipes(vids), L=learnFrom(pairs);
+  try{ const vids=await ytReadChannel(), pairs=matchRecipes(vids), L=learnFrom(pairs); try{ libFromYT(pairs); }catch(e){}
     if(L){ const withShots=pairs.filter(p=>p.r.shots&&p.r.shots.length).sort((a,b)=>(b.v.at||0)-(a.v.at||0)).slice(0,40), items=[];
       for(let i=0;i<withShots.length;i++){ const p=withShots[i]; out.textContent=`Reading where viewers leave: ${i+1} of ${withShots.length}…`; try{ items.push({shots:p.r.shots,R:await ytRetention(p.v),dur:p.v.dur,v:p.v}); }catch(e){} }
       if(items.length) L.shots=learnShots(items); try{ localStorage.setItem("beatsplicerLearn",JSON.stringify(L)); }catch(e){} }

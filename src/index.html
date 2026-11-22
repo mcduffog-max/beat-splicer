@@ -21,7 +21,8 @@
   <header class="appbar">
     <div class="brand"><span class="mark" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i></span><div class="brand-txt"><h1>Beat Splicer</h1><a class="who" id="whoName" hidden target="_blank" rel="noopener"></a></div></div>
     <div class="bar-actions">
-      <span class="projmenu"><button class="btn quiet" id="projBtn" type="button" aria-haspopup="true" aria-expanded="false" title="Save this project as a file, or open one">Projects</button>
+      <button class="btn quiet hdr-lbl" id="libBtn" type="button" title="Your videos, their numbers, and what gets views" aria-label="Library"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="4" y="4" width="7" height="7" rx="1.5"/><rect x="13" y="4" width="7" height="7" rx="1.5"/><rect x="4" y="13" width="7" height="7" rx="1.5"/><rect x="13" y="13" width="7" height="7" rx="1.5"/></svg><span>Library</span></button>
+      <span class="projmenu"><button class="btn quiet hdr-lbl" id="projBtn" type="button" aria-haspopup="true" aria-expanded="false" title="Save this project as a file, or open one" aria-label="Projects"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 7a2 2 0 0 1 2-2h4l2 2h8a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/></svg><span>Projects</span></button>
         <span class="projpop" id="projPop" hidden><label class="btn quiet" for="openProj">Open a saved project</label><button class="btn quiet" id="saveProj" type="button">Save this project as a file</button><span class="small">Your current project is also kept on this device by itself.</span></span></span>
       <input type="file" id="openProj" accept=".json,application/json" hidden>
       <button class="btn quiet" id="tierBadge" type="button" hidden title="Your plan: tap to see what each one includes">Free</button>
@@ -671,7 +672,12 @@
   <div class="fin-body"><h2 id="finHead">Your video is ready</h2><div class="chips" id="finPick"></div><p class="small" id="finSaved"></p>
     <button class="btn primary big" id="finShare" type="button">Share</button><p class="small fin-to" id="finTo">YouTube, TikTok, Instagram, WhatsApp: your phone shows where it can go.</p>
     <div class="btns"><button class="btn" id="finSave" type="button">Save to phone</button><button class="btn" id="finCaption" type="button" hidden>Copy caption</button></div><button class="btn quiet" id="finUnmark" type="button" hidden>Remove the Beat Splicer mark</button>
-    <div class="btns fin-next"><button class="btn quiet" id="finAgain" type="button">Make another version</button><button class="btn quiet" id="finClose" type="button">Back to editing</button></div></div>
+    <div class="btns fin-next"><button class="btn quiet" id="finAgain" type="button">Make another version</button><button class="btn quiet" id="finLib" type="button">Library</button><button class="btn quiet" id="finClose" type="button">Back to editing</button></div></div>
+</div></div>
+<div class="sheet" id="libSheet" hidden role="dialog" aria-modal="true" aria-labelledby="libHead"><div class="sheet-card lib-card">
+  <div class="lib-top"><h2 id="libHead">Library</h2><button class="btn quiet" id="libClose" type="button">Close</button></div>
+  <p class="small lib-intro">Every video you make, with how it was made. Add each one’s numbers once it’s posted, and the app learns which structure gets views.</p>
+  <div id="libBody"></div>
 </div></div>
 <nav class="nextbar" id="nextBar" aria-label="Next step"><div class="nb-txt"><b id="nbHead"></b><span id="nbSub"></span></div><button class="btn primary" id="nbBtn" type="button"></button></nav>
 <div id="offscreen" aria-hidden="true" style="position:fixed;left:-10000px;top:0;width:1px;height:1px;overflow:hidden"></div>
