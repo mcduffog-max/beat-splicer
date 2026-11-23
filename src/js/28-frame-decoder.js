@@ -57,6 +57,7 @@ class DecodeSlot{
     this.dropFrames(); this.ensure(); this.err=null;
     if(this.dec.state!=="unconfigured"){ try{ this.dec.reset(); }catch(e){} }
     if(S._exact&&S._exact.sw&&this.idx.configSW) this.sw=true;
+    if(S._swClips&&S._swClips.has(this.clip)&&this.idx.configSW) this.sw=true; // this clip came out black or stuck on the hardware decoder
     this.dec.configure(this.sw&&this.idx.configSW?this.idx.configSW:this.idx.config); this.feed=k; this.eof=false;
   }
   async frameAt(t){
@@ -122,6 +123,14 @@ async function runPassDecode(outs,win,plan,eng){
     if(!pool.length) return false;
     const k=pool[(j*7)%pool.length], c=S.clips[k]; s.clip=k; s.src=c.kind==="image"?0:Math.min(Math.max(0,c.dur-(s.end-s.start)-0.1),s.src%Math.max(0.5,c.dur-0.5));
     if(!swapped.includes(bad.name)) swapped.push(bad.name); return true; };
+  /* footage that comes out black (when the clip isn't dark there) or stops moving is a decoding problem on this phone, not
+     the picture: that clip tries the software decoder, then the backup player, then its shots go to another clip */
+  const lumaOf=f=>{ try{ const c=lumaOf.c||(lumaOf.c=document.createElement("canvas")); c.width=8; c.height=8; const g=c.getContext("2d",{willReadFrequently:true}); g.drawImage(f,0,0,8,8); const d=g.getImageData(0,0,8,8).data; let t=0; for(let k=0;k<d.length;k+=4) t+=d[k]*0.3+d[k+1]*0.59+d[k+2]*0.11; return t/64; }catch(e){ return -1; } };
+  const expectB=(c,t)=>{ let b=null, best=1e9; for(const x of c.samples||[]){ const d=Math.abs(x.t-t); if(d<best){ best=d; b=x.bright; } } return b; };
+  const fixClip=(j,why)=>{ const c=S.clips[plan[j].clip]; if(!c) return false; const L=c._fixLvl||0, idx=S.decIdx.get(c), onElem=!!(S._noDecode&&S._noDecode.has(c)); S._exact.fixed=(S._exact.fixed||0)+1;
+    if(L<1&&!onElem&&idx&&idx.configSW&&!S._exact.sw){ c._fixLvl=1; (S._swClips=S._swClips||new Set()).add(c); slots[j%2][0].close(); crumb(`${why}: ${c.name} on software decoding`); return true; }
+    if(L<2&&!onElem){ c._fixLvl=2; (S._noDecode=S._noDecode||new Set()).add(c); slots[j%2][0].close(); crumb(`${why}: ${c.name} on the backup player`); return true; }
+    c._fixLvl=3; const ok=swapClip(j); crumb(`${why}: ${c.name} ${ok?"swapped for "+S.clips[plan[j].clip].name:"kept (no other clip)"}`); return ok; };
   const steps=[...new Set(outs.flatMap(o=>{ const a=[]; for(let k=0;k<o.N;k++) a.push(+(ws+k/o.ep.fps).toFixed(6)); return a; }))].sort((x,y)=>x-y);
   const t0=performance.now(); S._exact={ticks:0,mode:"decode",sw:!!S._safeExport}; let memPeak=0; // safe mode: software decoding from the start
   try{
@@ -129,15 +138,20 @@ async function runPassDecode(outs,win,plan,eng){
       if(state.stopped) break;
       const tk=steps[n], i=segAt(tk), s=plan[i];
       const grab=async j=>{ for(let attempt=0;attempt<4;attempt++){
-          try{ if(isImgSeg(j)) return null; const sl=await src(j); return plan[j]._rev&&sl.frameAtRev?await sl.frameAtRev(srcT(j,tk)):await sl.frameAt(srcT(j,tk)); }
+          try{ if(isImgSeg(j)) return null; const sl=await src(j), sj=plan[j], f=sj._rev&&sl.frameAtRev?await sl.frameAtRev(srcT(j,tk)):await sl.frameAt(srcT(j,tk));
+            sj._chkN=(sj._chkN||0)+1;
+            if(f&&(sj._chkN===1||sj._chkN%24===0)){ const exp=expectB(S.clips[sj.clip],srcT(j,tk)); if(exp!=null&&exp>=30){ const lum=lumaOf(f); if(lum>=0&&lum<5&&fixClip(j,`black picture in shot ${j+1}`)){ sj._chkN=0; continue; } } }
+            return f; }
           catch(e){ if(String(e&&e.message).includes("stalled") && !(S._noDecode&&S._noDecode.has(S.clips[plan[j].clip]))){ S._noDecode=S._noDecode||new Set(); S._noDecode.add(S.clips[plan[j].clip]); slots[j%2][0].close(); continue; }
             if(!swapClip(j)) throw e; } } // this clip won't play on this device: its shots switch to another clip and the export carries on
         return null; };
-      if(!isImgSeg(i)){ const f=await grab(i); if(!f&&s._holdFrom==null){ s._holdFrom=tk; S._exact.frozen=(S._exact.frozen||0)+1; crumb(`no footage for shot ${i+1} (${S.clips[s.clip].name})`); } if(f){ elFor[i]=f; // footage that stops advancing (a stuck decoder or seek): the camera holds with it, and it's counted
+      if(!isImgSeg(i)){ let f=await grab(i); if(!f&&s._holdFrom==null&&fixClip(i,`no footage for shot ${i+1}`)) f=await grab(i); if(!f&&s._holdFrom==null){ s._holdFrom=tk; S._exact.frozen=(S._exact.frozen||0)+1; crumb(`no footage for shot ${i+1} (${S.clips[s.clip].name})`); } if(f){ elFor[i]=f; // footage that stops advancing (a stuck decoder or seek): the camera holds with it, and it's counted
           const want=srcT(i,tk), got=f.timestamp!=null?f.timestamp/1e6:(f.currentTime!=null?f.currentTime:want);
-          if(s._mtW!=null&&want-s._mtW>0.1&&Math.abs(got-s._mtG)<0.001){ s._stuckN=(s._stuckN||0)+1; if(s._stuckN>=3&&s._holdFrom==null){ s._holdFrom=tk; S._exact.frozen=(S._exact.frozen||0)+1; crumb(`footage stopped in shot ${i+1} (${S.clips[s.clip].name})`); } }
-          else if(Math.abs(got-(s._mtG??-1))>=0.001) s._stuckN=0;
-          s._mtW=want; s._mtG=got; } }
+          // the picture hasn't changed while the footage should have moved on by a third of a second: it has stopped
+          if(s._mtG==null||Math.abs(got-s._mtG)>=0.001||want<s._mtSince){ s._mtG=got; s._mtSince=want; }
+          else if(want-s._mtSince>0.33&&s._holdFrom==null){
+            if((s._unstuck||0)<3&&fixClip(i,`footage stopped in shot ${i+1}`)){ s._unstuck=(s._unstuck||0)+1; s._mtG=null; }
+            else { s._holdFrom=tk; S._exact.frozen=(S._exact.frozen||0)+1; crumb(`footage stopped in shot ${i+1} (${S.clips[s.clip].name})`); } } } }
       if(i>0 && s.tr && s.tr.dur>0 && tk<s.start+s.tr.dur && !isImgSeg(i-1)){ const f=await grab(i-1); if(f) elFor[i-1]=f; }
       const Fs=fxFor(F,s,i);
       for(const o of outs){ const bi=drawPicture(o,plan,i,tk,[],Fs); if(bi!==false) postFx(o,tk,win,Fs,bi,{}); }
@@ -146,7 +160,7 @@ async function runPassDecode(outs,win,plan,eng){
       if(n%6===0){ if(outs[0].canvas!==stage && !document.hidden) sg.drawImage(outs[0].canvas,0,0,stage.width,stage.height); $("prog").value=Math.min(1,(S.passBase+(tk-ws))/Math.max(0.01,S.passCount));
         const el=(performance.now()-t0)/1000, done=(tk-ws)/len; if(done>0.05) status(`Making the video: ${Math.round(done*100)}%, about ${Math.max(1,Math.round(el/done*(1-done)))} s left.`);
         if(n%30===0){ const mm=performance.memory?Math.round(performance.memory.usedJSHeapSize/1e6):0; if(mm>memPeak) memPeak=mm;
-          exportLog({stage:"video",pct:Math.round(done*100),formats:outs.map(o=>o.ep.id),stalls:S._exact.stalls||0,frozen:S._exact.frozen||0,fallback:(S._noDecode&&S._noDecode.size)||0,hidden:document.hidden,sw:!!S._exact.sw,safe:!!S._safeExport,peak:memPeak,shot:i,of:plan.length,clip:S.clips[s.clip]?S.clips[s.clip].name:"",res:S.clips[s.clip]?`${S.clips[s.clip].w}x${S.clips[s.clip].h}`:""}); }
+          exportLog({stage:"video",pct:Math.round(done*100),formats:outs.map(o=>o.ep.id),stalls:S._exact.stalls||0,frozen:S._exact.frozen||0,fixed:S._exact.fixed||0,fallback:(S._noDecode&&S._noDecode.size)||0,hidden:document.hidden,sw:!!S._exact.sw,safe:!!S._safeExport,peak:memPeak,shot:i,of:plan.length,clip:S.clips[s.clip]?S.clips[s.clip].name:"",res:S.clips[s.clip]?`${S.clips[s.clip].w}x${S.clips[s.clip].h}`:""}); }
         if(document.hidden) await yieldNow(); else await new Promise(r=>setTimeout(r,0)); }
     }
   } finally { slots.flat().forEach(s=>s.close()); S.elFor=null; }
