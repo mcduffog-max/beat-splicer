@@ -5,7 +5,7 @@
 5	“{}” videonun %{} kadarında ekranda. Remiks’e dokun ya da benzer klipler ekle.
 6	“{}” en büyük vuruşa denk geliyor: {}.
 7	“{}”, {} sn boyunca
-8	“{}”: {} klipli “{}”. Şimdi bunları içeren klasörü seç (alt klasörler de aranır).
+8	“{0}”: {2} klipli “{1}”. Şimdi bunları içeren klasörü seç (alt klasörler de aranır).
 9	“{0}”: {1} dosya eklendi.
 10	“{0}”: {1} dosya eklendi{3}{4}.
 11	“{}”: ortalama çekim {} sn (sakin {}, orta {}, yüksek {}); kesmelerin %{} kadarı vuruşta, %{} ilk vuruşta, %{} vuruş dışında; dakikada {} uzun çekim; {} görüntü.

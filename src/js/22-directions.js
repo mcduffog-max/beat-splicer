@@ -98,7 +98,8 @@ async function saveProject(){ try{ if(navigator.storage&&navigator.storage.persi
     const fkey=f=>"f:"+f.name+":"+f.size+":"+f.lastModified, putFile=async f=>{ if(NATIVE&&f._kept) return "k:"+(f.type||"")+"\n"+f._kept; /* the app already keeps its own copy: don't store the file twice */ const k=fkey(f); if(!S.savedKeys.has(k)){ await PDB.put(k,f); S.savedKeys.add(k); } return k; };
     let budget=3e9; budget-=S.audioFile.size; const audioKey=await putFile(S.audioFile);
     const clips=[]; for(const c of S.clips){ if(!c.samples||!c.file) continue; if(c.file.size>budget) continue; budget-=c.file.size;
-      clips.push({name:c.name,fileKey:await putFile(c.file),kind:c.kind||"video",dur:c.dur,samples:c.samples,thumb:c.thumb,w:c.w,h:c.h,crop:c.crop,mute:!!c.mute,tags:c.tags||null,mv:c.mv||1,off:!!c.off,wm:c.wm,faces:faceSave(c)}); }
+      let fileKey; try{ fileKey=await putFile(c.file); }catch(e){ if(!S._saveErrN){ S._saveErrN=1; crumb("couldn't keep "+c.name+" for next time: "+(e&&e.message||e)); } continue; } // one clip that won't store mustn't stop the rest of the project being remembered
+      clips.push({name:c.name,fileKey,kind:c.kind||"video",dur:c.dur,samples:c.samples,thumb:c.thumb,w:c.w,h:c.h,crop:c.crop,mute:!!c.mute,tags:c.tags||null,mv:c.mv||1,off:!!c.off,wm:c.wm,faces:faceSave(c)}); }
     const ovs=S.overlays.map(o=>({name:o.name,pos:o.pos,size:o.size,opacity:o.opacity,blend:o.blend,timing:o.timing,anim:o.anim,file:o.file})).filter(o=>o.file);
     { const want=new Set([audioKey,...clips.map(c=>c.fileKey)]); for(const k of [...S.savedKeys]){ if(!want.has(k)){ await PDB.del(k); S.savedKeys.delete(k); } } } // files no longer in the project
     await PDB.put("project",{v:2,vetoes:[...(S.vetoes||[])],style:S.style,trims:S.trims||[],locks:[...(S.locks||new Map())],lyrics:S.lyrics||null,outline:S.outline||null,castMode:S.castMode,sceneMode:S.sceneMode,faceCast:S.faceCast||[],cast:S.cast,mainChar:S.mainChar,meta:S.meta||null,saved:Date.now(),audioKey,audioName:S.audioName,an:S.an,clips,skipped:S.clips.filter((c,ci)=>c.samples&&!c.off&&!isExcluded(ci)).length-clips.length,overlays:ovs,seed:S.seed,winPick:S.winPick||0,direct:S.direct||null,titles:S.titles,eps:S.eps,protagonist:S.protagonist||null});
@@ -115,7 +116,10 @@ async function restoreProject(p){
   try{
     const getF=async(k,name)=>{ if(!/^k:/.test(k)) return PDB.get(k); try{ const [type,kept]=k.slice(2).split("\n"), dir=await keptDir(), g=await (await dir.getFileHandle(kept)).getFile(), f=new File([g],name,{type,lastModified:g.lastModified}); f._kept=kept; return f; }catch(e){ return null; } };
     if(p.audioKey) p.audio=await getF(p.audioKey,p.audioName||"song");
-    for(const c of p.clips){ if(c.fileKey&&!c.file) c.file=await getF(c.fileKey,c.name); }
+    if(!p.audio) p.audio=await keptByName(p.audioName);
+    for(const c of p.clips){ if(c.fileKey&&!c.file) c.file=await getF(c.fileKey,c.name); if(!c.file) c.file=await keptByName(c.name); }
+    if(!p.audio){ crumb("restore: song missing"); status(`Couldn’t find your song “${p.audioName}” on this device any more. Add it again, then add your clips.`,true); return; }
+    { const n=p.clips.filter(c=>!c.file).length; if(n){ crumb(`restore: ${n} clip(s) missing`); p.skipped=(p.skipped||0)+n; } }
     p.clips=p.clips.filter(c=>c.file);
     S.savedKeys=new Set([p.audioKey,...p.clips.map(c=>c.fileKey)].filter(k=>k&&!/^k:/.test(k)));
     S.clips=p.clips.map(c=>({...c,url:URL.createObjectURL(c.file)}));
@@ -132,7 +136,7 @@ async function restoreProject(p){
     $("audioInfo").textContent=`${S.audioName}, ${fmtTime(S.an.duration)} at about ${Math.round(S.an.bpm)} BPM. Feel: ${S.an.feel?S.an.feel.label:"4/4"}`; renderTempo(); $("listen").disabled=false;
     buildEndpointUI(); renderClips(); renderOverlays(); buildPlan(); syncCapWith(); renderTitles();
     setTimeout(()=>backfillFlow().catch(()=>{}),4000); if(S.clips.some(c=>c.samples&&c.samples.some(s=>s.ce))) setTimeout(()=>seeReady(),1500);
-    status("Project restored."+(p.skipped?` Add the ${p.skipped} very large clip${p.skipped===1?"":"s"} again if you want them.`:""));
+    status("Project restored."+(p.skipped?" "+(p.skipped===1?"Left out: 1 clip. Add it again if you want it.":`Left out: ${p.skipped} clips. Add them again if you want them.`):""));
   }catch(e){ crumb("restore failed: "+(e&&e.message||e)); status(`Couldn’t restore that project (${String(e&&e.message||e).slice(0,120)}). Add your audio and clips again.`,true); }
   finally{ S._restoring=false; }
 }

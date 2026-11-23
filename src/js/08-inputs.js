@@ -95,7 +95,10 @@ function heavy(label,fn){ _heavyN++; if(_heavyN>1) status(`${label} will start w
     .finally(async()=>{ _heavyN--; if(_heavyN===0){ crumb("idle"); if(S._deferredSong){ const d=S._deferredSong; S._deferredSong=null; await loadAudio(d.file,d.an); renderSongs(); } } });
   _heavy=run.catch(()=>{}).then(()=>new Promise(r=>setTimeout(r,1200))); // a breather between jobs so the browser can free memory
   return run; }
-function addClips(files){ const list=[...files]; return heavy("Studying your clips",()=>addClipsNow(list)); }
+function addClips(files){ const list=[...files]; return heavy("Studying your clips",async()=>{
+  // in the Android app, work from the app's own copies: Android takes picked files back once the app closes, and a reopened project couldn't read them
+  if(!NATIVE||!list.some(f=>!f._kept)) return addClipsNow(list);
+  return addClipsNow(list.filter(f=>f._kept).concat(await keepFiles(list.filter(f=>!f._kept)))); }); }
 async function addClipsNow(files){
   const vids=[...files].filter(f=>isVideo(f)||isImage(f));
   if(!vids.length) return;

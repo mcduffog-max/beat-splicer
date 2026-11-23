@@ -12,13 +12,39 @@ async function saveProjectFile(){
   status("Project saved. Open it any time with “Open project…”, then choose the folder with your song and clips.");
 }
 let pendingProj=null;
+/* a file the project used, found again on this device: the app's own copy (Android), the copy kept for "pick up where you
+   left off", or (by name) any app copy of it */
+async function keptByName(name,size){ if(!name) return null; try{ const dir=typeof keptDir==="function"?await keptDir():null; if(!dir) return null;
+    for await (const [n,h] of dir.entries()){ if(!n.endsWith("-"+name.replace(/[\\/:*?"<>|]/g,"_"))) continue; const g=await h.getFile(); if(size&&g.size!==size) continue;
+      const f=new File([g],name,{type:mimeGuessAny(name),lastModified:+(n.split("-")[1])||g.lastModified}); f._kept=n; return f; } }catch(e){} return null; }
+function mimeGuessAny(n){ return typeof mimeGuess==="function"?mimeGuess(n):""; }
+async function onDevice(r){ if(!r) return null;
+  try{ const dir=typeof keptDir==="function"?await keptDir():null; if(dir){ const key=keptName(r); const g=await (await dir.getFileHandle(key)).getFile(); if(g.size===r.size){ const f=new File([g],r.name,{type:mimeGuessAny(r.name),lastModified:r.lastModified}); f._kept=key; return f; } } }catch(e){}
+  try{ const f=await PDB.get("f:"+r.name+":"+r.size+":"+r.lastModified); if(f) return f; }catch(e){}
+  return keptByName(r.name,r.size); }
+function projRefs(p){ return [p.audio,...p.clips.map(c=>c.ref),...(p.songs||[])].filter(Boolean); }
+async function projFilesHere(p){ const out=[], seen=new Set(); for(const r of projRefs(p)){ const k=r.name+"|"+r.size; if(seen.has(k)) continue; seen.add(k); const f=await onDevice(r); if(f) out.push(f); } return out; }
 async function openProjectFile(f){
-  try{ const p=JSON.parse(await f.text()); if(p.app!=="Beat Splicer"||p.kind!=="project") throw 0; pendingProj=p;
-    $("projInfo").textContent=`“${f.name}”: “${p.audioName}” with ${p.clips.length} clips. Now choose the folder that holds them (subfolders are searched too).`; $("relinkLbl").hidden=false;
-  }catch(e){ status("That isn’t a Beat Splicer project file.",true); }
+  let p; try{ p=JSON.parse(await f.text()); if(p.app!=="Beat Splicer"||p.kind!=="project") throw 0; }catch(e){ status("That isn’t a Beat Splicer project file.",true); return; }
+  pendingProj=p; pendingProj._here=[];
+  try{ status(`Looking for “${p.audioName}” and its clips on this device…`); pendingProj._here=await projFilesHere(p); }catch(e){}
+  // the app remembers the phone folders you've used: look there too before asking
+  if(NATIVE&&typeof nativeFolderFiles==="function"&&NP("Folder")){ const want=new Set(projRefs(p).map(r=>r.name)); for(const x of pendingProj._here) want.delete(x.name);
+    for(const fo of Object.values(savedFolders())){ if(!want.size) break; try{ const r=await nativeFolderFiles(fo,x=>want.has(x.name),t=>status(t)); r.files.forEach(x=>{ pendingProj._here.push(x); want.delete(x.name); }); }catch(e){} } }
+  const names=[...new Set(projRefs(p).map(r=>r.name))], miss=names.filter(n=>!pendingProj._here.some(x=>x.name===n)).length;
+  crumb(`open project: ${names.length-miss} of ${names.length} files found on the device`);
+  if(!miss) return relinkProject([]);
+  $("projInfo").textContent=`“${f.name}”: “${p.audioName}” with ${p.clips.length} clips. `+(miss===1?"Choose the folder that holds the missing file.":`Choose the folder that holds the ${miss} missing files.`); $("relinkLbl").hidden=false;
+  status(`Choose the folder with your song and clips to finish opening the project.`);
+  try{ $("relinkLbl").scrollIntoView({block:"center",behavior:"smooth"}); }catch(e){}
 }
+/* the phone: Android's web view can't open a folder from a web page, so ask Android for it */
+async function relinkNative(){ const FP=NP("Folder"), p=pendingProj; if(!FP||!p) return false;
+  let fo; try{ fo=await FP.pick(); }catch(e){ return true; }
+  const want=new Set(projRefs(p).map(r=>r.name));
+  await heavyFolder(async()=>{ const r=await nativeFolderFiles(fo,x=>want.has(x.name),t=>status(t)); await relinkProject(r.files); }); return true; }
 async function relinkProject(files){
-  const p=pendingProj; if(!p) return; files=[...files];
+  const p=pendingProj; if(!p) return; files=[...files,...(p._here||[])];
   const find=r=>r?(files.find(f=>f.name===r.name&&f.size===r.size)||files.find(f=>f.name===r.name)||null):null;
   const audio=find(p.audio); if(!audio){ status(`Couldn’t find “${p.audioName}” in that folder. Choose the folder that has it.`,true); return; }
   const clips=[]; let missing=0; for(const c of p.clips){ const f=find(c.ref); if(f) clips.push({...c,file:f}); else missing++; }

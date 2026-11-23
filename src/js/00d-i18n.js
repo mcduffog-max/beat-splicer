@@ -20,7 +20,7 @@ function fill(tr,vals){ let i=0; return tr.replace(/\{(\d*)\}/g,(m,d)=>{ const v
 function t(s){ if(!I18N.dict||s==null) return s; const raw=String(s), key=raw.replace(/\s+/g," ").trim(); if(!key||!/[A-Za-z]/.test(key)) return raw;
   if(I18N.cache.has(key)) return keepSpace(raw,I18N.cache.get(key));
   let out=I18N.dict[key];
-  if(out==null){ for(const p of I18N.pats){ const m=key.match(p.re); if(m){ out=fill(I18N.dict[p.k],m.slice(1).map(v=>t(v))); break; } } }
+  if(out==null){ for(const p of I18N.pats){ const m=key.match(p.re); if(m&&!m.slice(1).some(v=>/[.!?…]\s+[A-Z“"(]/.test(v))){ /* a changing part never swallows a whole sentence */ out=fill(I18N.dict[p.k],m.slice(1).map(v=>t(v))); break; } } }
   if(out==null&&/[.!?]\s+\S/.test(key)){ const parts=key.split(/(?<=[.!?…])\s+(?=[A-Z“"(])/); if(parts.length>1){ const tp=parts.map(x=>t(x)); if(tp.some((x,i)=>x!==parts[i])) out=tp.join(I18N.lang==="ja"||I18N.lang==="zh"?"":" "); } } /* a message made of sentences: each one */
   if(out==null){ const b=key.match(/^([•■✓◀▶]\s?)(.+)$/); if(b){ const r=t(b[2]); if(r!==b[2]) out=b[1]+r; } } /* a marker in front */
   if(out==null&&key.includes(" · ")){ const parts=key.split(" · "), tp=parts.map(x=>t(x)); if(tp.some((x,i)=>x!==parts[i])) out=tp.join(" · "); } /* "Style · Chosen by Do everything" */
