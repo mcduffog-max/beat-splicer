@@ -48,6 +48,7 @@ async function applySongVersion(){
   finally{ $("prog").hidden=true; }
 }
 async function loadAudio(file,cachedAn){
+  if(!cachedAn&&S._waitSong&&file&&file.name===S._waitSong.name){ cachedAn=S._waitSong.an; } S._waitSong=null; // the song a restored project was waiting for
   if(!file) return;
   stopRun(); stopListen();
   if(!file._section){ const dur=file.size>25e6?await audioDuration(file):null;

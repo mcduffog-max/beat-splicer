@@ -41,6 +41,7 @@ $("moreSongs").onclick=()=>heavy("Listening to more songs",()=>analyseSongs(40))
 $("saveProj").onclick=saveProjectFile;
 $("openProj").onchange=e=>{ const f=e.target.files[0]; e.target.value=""; if(f) openProjectFile(f); };
 $("relinkInput").onchange=e=>{ const fs=[...e.target.files]; e.target.value=""; relinkProject(fs); };
+$("relinkSong").onchange=async e=>{ const f=e.target.files[0]; e.target.value=""; if(f) relinkProject(NATIVE?await keepFiles([f]):[f]); };
 $("relinkLbl").addEventListener("click",e=>{ if(NATIVE&&NP("Folder")){ e.preventDefault(); relinkNative(); } });
 if(NATIVE) $("openProj").removeAttribute("accept"); // Android's file picker can grey out .json files it doesn't recognise
 $("freeBtn").onclick=freeSpace; $("libRemoveAll").onclick=removeAllClips;

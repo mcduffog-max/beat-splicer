@@ -118,7 +118,6 @@ async function restoreProject(p){
     if(p.audioKey) p.audio=await getF(p.audioKey,p.audioName||"song");
     if(!p.audio) p.audio=await keptByName(p.audioName);
     for(const c of p.clips){ if(c.fileKey&&!c.file) c.file=await getF(c.fileKey,c.name); if(!c.file) c.file=await keptByName(c.name); }
-    if(!p.audio){ crumb("restore: song missing"); status(`Couldn’t find your song “${p.audioName}” on this device any more. Add it again, then add your clips.`,true); return; }
     { const n=p.clips.filter(c=>!c.file).length; if(n){ crumb(`restore: ${n} clip(s) missing`); p.skipped=(p.skipped||0)+n; } }
     p.clips=p.clips.filter(c=>c.file);
     S.savedKeys=new Set([p.audioKey,...p.clips.map(c=>c.fileKey)].filter(k=>k&&!/^k:/.test(k)));
@@ -127,6 +126,9 @@ async function restoreProject(p){
     { const old=S.clips.filter(c=>c.kind!=="image" && c.mv!==2); // measured with the older motion method: measure again so movement is judged correctly
       for(let k=0;k<old.length;k++){ status(`Re-measuring movement in your clips (${k+1} of ${old.length})…`); try{ const fresh=await analyzeClip(old[k].file); URL.revokeObjectURL(fresh.url); old[k].samples=fresh.samples; old[k].mv=2; old[k].wm=fresh.wm; }catch(e){} } }
     S.overlays=[]; for(const o of p.overlays||[]){ const url=URL.createObjectURL(o.file), img=new Image(); img.src=url; try{ await img.decode(); S.overlays.push({...o,url,img}); }catch(e){} }
+    if(!p.audio){ // the song has gone, the clips haven't: bring them back and wait for the song (its beat map is kept for it)
+      crumb("restore: song missing, clips restored"); S._waitSong={name:p.audioName,an:p.an}; if(p.style) S.style=p.style; renderClips(); buildFamilies(); updateButtons();
+      status(`Your clips are back, but the song “${p.audioName}” isn’t on this device any more. Add it again to carry on.`,true); return; }
     S.audioFile=p.audio; S.audioName=p.audioName; const ac=new (window.AudioContext||window.webkitAudioContext)(); S.audioBuf=await ac.decodeAudioData(await p.audio.arrayBuffer()); ac.close();
     S.audioOrig=S.audioBuf; S._endingFor=null; if($("songVer").value!=="orig") S.audioBuf=await versionedBuffer(S.audioOrig,$("songVer").value);
     buildFamilies();

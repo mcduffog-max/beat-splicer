@@ -44,9 +44,12 @@ async function relinkNative(){ const FP=NP("Folder"), p=pendingProj; if(!FP||!p)
   const want=new Set(projRefs(p).map(r=>r.name));
   await heavyFolder(async()=>{ const r=await nativeFolderFiles(fo,x=>want.has(x.name),t=>status(t)); await relinkProject(r.files); }); return true; }
 async function relinkProject(files){
-  const p=pendingProj; if(!p) return; files=[...files,...(p._here||[])];
+  const p=pendingProj; if(!p) return; { const seen=new Set(); files=[...files,...(p._here||[])].filter(f=>{ const k=f.name+"|"+f.size; if(seen.has(k)) return false; seen.add(k); return true; }); }
+  p._here=files; // everything found so far stays found: the song and the clips can live in different folders
   const find=r=>r?(files.find(f=>f.name===r.name&&f.size===r.size)||files.find(f=>f.name===r.name)||null):null;
-  const audio=find(p.audio); if(!audio){ status(`Couldn’t find “${p.audioName}” in that folder. Choose the folder that has it.`,true); return; }
+  const audio=find(p.audio); if(!audio){ const got=p.clips.filter(c=>find(c.ref)).length;
+    $("projInfo").textContent=`Found ${got} of ${p.clips.length} clips. Now choose the folder with the song “${p.audioName}”, or the song itself.`; $("relinkLbl").hidden=false; $("relinkSongLbl").hidden=false;
+    status(`Found ${got} of ${p.clips.length} clips. Now choose the folder with the song “${p.audioName}”, or the song itself.`); return; }
   const clips=[]; let missing=0; for(const c of p.clips){ const f=find(c.ref); if(f) clips.push({...c,file:f}); else missing++; }
   const an=p.an?{...p.an,peaks:new Float32Array(p.an.peaks||[]),freeEvents:p.an.freeEvents?new Set(p.an.freeEvents):null}:null;
   if(p.settings) try{ localStorage.setItem("beatsplicer2",JSON.stringify(p.settings)); }catch(e){}
@@ -54,7 +57,7 @@ async function relinkProject(files){
   if(p.look){ restore(p.look); }
   S.versions=p.versions||[]; S.verIdx=Math.min(p.verIdx||0,Math.max(0,S.versions.length-1)); renderVersions();
   if(p.songs&&p.songs.length){ S.songs=p.songs.map(r=>find(r)).filter(Boolean).map(f=>({file:f,an:f===audio?S.an:null})); renderSongs(); }
-  buildPlan(); pendingProj=null; $("relinkLbl").hidden=true; $("projInfo").textContent="";
+  buildPlan(); pendingProj=null; $("relinkLbl").hidden=true; $("relinkSongLbl").hidden=true; $("projInfo").textContent="";
   status(`Project opened.${missing?` ${missing} clip${missing===1?" wasn’t":"s weren’t"} found in that folder.`:""}`);
 }
 let checklistTimer=0;
