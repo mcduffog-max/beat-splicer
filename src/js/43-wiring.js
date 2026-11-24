@@ -43,7 +43,7 @@ $("openProj").onchange=e=>{ const f=e.target.files[0]; e.target.value=""; if(f) 
 $("relinkInput").onchange=e=>{ const fs=[...e.target.files]; e.target.value=""; relinkProject(fs); };
 $("relinkLbl").addEventListener("click",e=>{ if(NATIVE&&NP("Folder")){ e.preventDefault(); relinkNative(); } });
 if(NATIVE) $("openProj").removeAttribute("accept"); // Android's file picker can grey out .json files it doesn't recognise
-$("freeBtn").onclick=freeSpace;
+$("freeBtn").onclick=freeSpace; $("libRemoveAll").onclick=removeAllClips;
 $("aiImagery").addEventListener("change",()=>{ saveSettings(); S.eps.forEach(id=>{ const T=S.titles[id]; if(T&&T.desc&&$("aiImagery").checked&&!/AI-generated/i.test(T.desc)) T.desc=T.desc.replace(/(\n\n#[^\n]*)?$/,m=>"\n\nThis video contains AI-generated imagery."+(m||"")); if(T&&T.desc&&!$("aiImagery").checked) T.desc=T.desc.replace(/\n\nThis video contains AI-generated imagery\./,""); }); renderTitles(); scheduleChecklist(); });
 $("tagBtn").onclick=readFootage;
 $("faceBtn").onclick=findFaces;

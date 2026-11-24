@@ -100,7 +100,8 @@ async function freeSpace(){
   releaseResults(); renderResults();
   try{ const db=await PDB.open(); const keys=await new Promise(res=>{ const q=db.transaction("kv").objectStore("kv").getAllKeys(); q.onsuccess=()=>res(q.result); q.onerror=()=>res([]); });
     const keep=new Set([...(S.savedKeys||[])]); for(const k of keys){ if(String(k).startsWith("f:") && !keep.has(k)) await PDB.del(k); } }catch(e){}
-  S.decIdx=new Map(); await storageReport(); status("Space freed: old videos and leftover files from earlier projects are gone.");
+  let freed=0; if(NATIVE&&typeof tidyKept==="function"){ try{ freed=(await tidyKept(0,[],0)).freed; }catch(e){} } // the app's copies of clips no longer in the project
+  S.decIdx=new Map(); S.clipAudio={}; await storageReport(); status("Space freed: old videos and leftover files from earlier projects are gone."+(freed>=1e6?` ${Math.round(freed/1e6)} MB in all.`:""));
 }
 function showError(e,where){
   const msg=(e&&(e.message||e.name))||String(e||"unknown error");

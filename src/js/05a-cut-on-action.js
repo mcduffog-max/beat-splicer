@@ -43,6 +43,6 @@ async function measureAction(){ if(S._actBusy||!S.plan||!$("cutAction")||!$("cut
               if(prev&&pk===k-1&&!c._act.has(k-1)){ let m=0; for(let i=0;i<L.length;i++) m+=Math.abs(L[i]-prev[i]); c._act.set(k-1,+(m/L.length).toFixed(2)); }
               prev=L; pk=k; } } }
         catch(e){} finally{ v.removeAttribute("src"); v.load(); URL.revokeObjectURL(url); }
-        n++; if(n%4===0||n===byClip.size) status(`Timing movement to the music: ${n} of ${byClip.size} clips (in the background). You can keep working.`); }
+        n++; if(S.plan!==plan) break; if(n%4===0||n===byClip.size) status(`Timing movement to the music: ${n} of ${byClip.size} clips (in the background). You can keep working.`); }
       if(S.plan===plan&&!S.running){ const k=actionAlign(plan); if(k){ status(`Movement timed to the music: ${k} shots now start where their action lands on the beat.`); if(typeof renderTimeline==="function") try{ renderTimeline(); }catch(e){} } } }); }
   finally{ S._actBusy=false; } }

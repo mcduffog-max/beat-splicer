@@ -64,6 +64,18 @@ function libOrder(){
   return ix;
 }
 let _rcT=0;
+/* everything held for one clip: its player address, frame index, still and sound */
+function releaseClip(c){ if(!c) return; try{ if(c.url) URL.revokeObjectURL(c.url); }catch(e){} if(S.decIdx) S.decIdx.delete(c); try{ if(typeof _thumbImg!=="undefined") _thumbImg.delete(c.thumb); }catch(e){} c._ti=null; if(c.img){ c.img.src=""; c.img=null; } if(S._noDecode) S._noDecode.delete(c); if(S._swClips) S._swClips.delete(c); }
+let _tidyT=0; function tidyClipsSoon(){ clearTimeout(_tidyT); _tidyT=setTimeout(()=>{ if(NATIVE&&typeof tidyKept==="function") tidyKept(0,[]).catch(()=>{}); saveProjectSoon(); },2000); }
+/* one tap to start the clip library again: frees what the clips held, in memory and on the phone */
+let _rmAllArm=0;
+async function removeAllClips(){ const b=$("libRemoveAll"); if(S.running||!S.clips.length) return;
+  if(Date.now()-_rmAllArm>4000){ _rmAllArm=Date.now(); b.textContent=`Tap again to remove all ${S.clips.length} clips`; setTimeout(()=>{ if(Date.now()-_rmAllArm>=4000) b.textContent="Remove all clips"; },4100); return; }
+  _rmAllArm=0; b.textContent="Remove all clips"; const n=S.clips.length;
+  S.clips.forEach(releaseClip); S.clips=[]; S.clipAudio={}; S.decIdx=new Map(); S.locks=new Map(); S.trims=[]; S._noDecode=null; S._swClips=null; if(S.cropIdx!=null) closeCrop();
+  S.plan=null; renderClips(); buildPlan(); updateButtons(); drawTimeline(); crumb(`removed all ${n} clips`);
+  let freed=0; if(NATIVE&&typeof tidyKept==="function"){ try{ freed=(await tidyKept(0,[],0)).freed; }catch(e){} }
+  saveProjectSoon(); status(`Removed ${n} clips.`+(freed>=1e6?` Freed ${Math.round(freed/1e6)} MB on the phone.`:"")); }
 function renderClips(){ const nw=performance.now(); if(S.clips.length>60 && nw-_rcT<1200 && S.clips.some(c=>!c.samples&&!c.error)){ clearTimeout(S._rcLater); S._rcLater=setTimeout(renderClips,1300); return; } _rcT=nw; // big libraries: redraw the grid less often while analysing
   if(S.songs&&S.songs.length) setTimeout(renderSongs,0);
   renderCast(); renderScenes(); renderSee();
@@ -92,7 +104,7 @@ function renderClips(){ const nw=performance.now(); if(S.clips.length>60 && nw-_
       u.setAttribute("aria-pressed",String(!c.off)); u.setAttribute("aria-label",(c.off?"Use ":"Leave out ")+c.name);
       u.onclick=e=>{ e.stopPropagation(); if(S.running) return; c.off=!c.off; renderClips(); buildPlan(); saveProjectSoon(); }; d.appendChild(u); if(c.off) d.classList.add("off"); }
     const x=document.createElement("button"); x.textContent="×"; x.title="Remove "+c.name; x.setAttribute("aria-label","Remove "+c.name);
-    x.onclick=e=>{ e.stopPropagation(); if(S.running) return; URL.revokeObjectURL(c.url); S.clips.splice(i,1); if(S.cropIdx===i) closeCrop(); else if(S.cropIdx>i) S.cropIdx--; renderClips(); buildPlan(); };
+    x.onclick=e=>{ e.stopPropagation(); if(S.running) return; releaseClip(c); S.clips.splice(i,1); S.clipAudio={}; tidyClipsSoon(); if(S.cropIdx===i) closeCrop(); else if(S.cropIdx>i) S.cropIdx--; renderClips(); buildPlan(); };
     d.appendChild(x); box.appendChild(d);
   });
   const ok=S.clips.filter((c,ci)=>c.samples&&!c.off&&!isExcluded(ci)).length;

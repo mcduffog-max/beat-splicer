@@ -29,16 +29,32 @@ if(NATIVE) document.documentElement.classList.add("native");
    longer in your project are cleared when space runs short. */
 async function keptDir(){ if(!navigator.storage||!navigator.storage.getDirectory) return null; try{ return await (await navigator.storage.getDirectory()).getDirectoryHandle("kept",{create:true}); }catch(e){ return null; } }
 function keptName(f){ return `${f.size}-${f.lastModified}-${f.name}`.replace(/[\\/:*?"<>|]/g,"_").slice(0,180); }
+/* the app's copies: those the project uses stay; copies of files no longer in it are kept for reopening projects up to
+   KEPT_SPARE, oldest cleared first, and cleared earlier when new files need the room */
+const KEPT_SPARE=1.5e9;
+function keptLive(){ return new Set([...(S.clips||[]).map(c=>c.file&&c.file._kept), S.audioFile&&S.audioFile._kept, ...(S.songs||[]).map(x=>x.file&&x.file._kept)].filter(Boolean)); }
+async function tidyKept(need=0,incoming=[],spare=KEPT_SPARE){ const dir=await keptDir(); if(!dir) return {freed:0,room:Infinity,used:0};
+  const live=new Set([...keptLive(),...incoming]), old=[]; let used=0, spareN=0;
+  try{ for await (const [n,h] of dir.entries()){ try{ const f=await h.getFile(); used+=f.size; if(!live.has(n)){ old.push({n,size:f.size,t:f.lastModified}); spareN+=f.size; } }catch(e){} } }catch(e){}
+  let room=Infinity; try{ const e=await navigator.storage.estimate(); if(e&&e.quota) room=e.quota-(e.usage||0); }catch(e){}
+  const MARGIN=250e6; let freed=0; old.sort((a,b)=>a.t-b.t);
+  for(const x of old){ if(spareN-freed<=spare && need+MARGIN<=room+freed) break; try{ await dir.removeEntry(x.n); freed+=x.size; }catch(e){} }
+  if(freed) crumb(`app copies: cleared ${Math.round(freed/1e6)} MB of files no longer in the project`);
+  return {freed, room:room+freed-MARGIN, used:used-freed}; }
 async function keepFiles(files){ files=[...files]; if(!NATIVE||!files.length) return files; const dir=await keptDir(); if(!dir) return files;
   const name=keptName, out=[];
-  try{ const live=new Set([...(S.clips||[]).map(c=>c.file&&c.file._kept).filter(Boolean), S.audioFile&&S.audioFile._kept, ...files.map(name)].filter(Boolean)); let total=0, entries=[];
-    for await (const [n,h] of dir.entries()){ try{ const f=await h.getFile(); total+=f.size; entries.push([n,f.size]); }catch(e){} }
-    if(total>2.5e9) for(const [n] of entries) if(!live.has(n)) try{ await dir.removeEntry(n); }catch(e){} }catch(e){}
-  let fails=0; for(let i=0;i<files.length;i++){ const f=files[i], n=name(f);
+  let need=0; for(const f of files){ try{ const g=await (await dir.getFileHandle(name(f))).getFile(); if(g.size===f.size) continue; }catch(e){} need+=f.size; }
+  let {room}=await tidyKept(need,files.map(name));
+  let fails=0, full=0; for(let i=0;i<files.length;i++){ const f=files[i], n=name(f);
     try{ let h=null; try{ h=await dir.getFileHandle(n); const g=await h.getFile(); if(g.size!==f.size) h=null; }catch(e){ h=null; }
-      if(!h){ status(`Keeping a copy of your files in the app (so Android can't take them back): ${i+1} of ${files.length}…`); h=await dir.getFileHandle(n,{create:true}); const w=await h.createWritable(); await f.stream().pipeTo(w); }
+      if(!h){ if(f.size>room){ full++; out.push(f); continue; } // no room for a copy: work from the file itself for now
+        status(`Keeping a copy of your files in the app (so Android can't take them back): ${i+1} of ${files.length}…`);
+        try{ h=await dir.getFileHandle(n,{create:true}); const w=await h.createWritable(); await f.stream().pipeTo(w); }
+        catch(e){ try{ await dir.removeEntry(n); }catch(x){} if(!/quota|space/i.test(String(e&&(e.name+e.message)))) throw e; room=(await tidyKept(f.size,files.map(name))).room; if(f.size>room) throw e; h=await dir.getFileHandle(n,{create:true}); const w=await h.createWritable(); await f.stream().pipeTo(w); }
+        room-=f.size; }
       const g=await h.getFile(), k=new File([g],f.name,{type:f.type,lastModified:f.lastModified}); k._kept=n; out.push(k); }
     catch(e){ fails++; if(fails<=3) crumb("couldn't keep a copy of "+f.name+": "+(e&&e.message||e)); out.push(f); } }
+  if(full){ crumb(`app copies: no room for ${full} of ${files.length}`); S._keptFull=full; }
   if(fails) crumb(`app copies: ${files.length-fails} of ${files.length} kept`); return out; }
 
 /* the clipboard: the app's web view can't always offer Paste on a long press, so buttons read it directly */
