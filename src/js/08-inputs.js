@@ -106,7 +106,7 @@ async function addClipsNow(files){
   const vids=[...files].filter(f=>isVideo(f)||isImage(f));
   if(!vids.length) return;
   const start=S.clips.length;
-  vids.forEach(f=>S.clips.push({name:f.name, file:f, folder:folderOfFile(f)}));
+  vids.forEach(f=>S.clips.push({name:f.name, file:f, folder:folderOfFile(f), ...(f._doc?{doc:f._doc,docParent:f._parent}:{})}));
   renderClips();
   let doneN=0; const work=async k=>{ const entry=S.clips[start+k]; if(!entry) return;
     if(isSkipped(entry.file)){ entry.error="set aside (it stopped the page last time)"; }

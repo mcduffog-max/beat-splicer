@@ -50,14 +50,18 @@ function catOf(c){ if(!c) return null; if(c._catG===S._catGen&&c._cat!==undefine
   if(!r) r=st.k[k]||null; c._cat=r; c._catG=S._catGen; return r; }
 /* ---- collections ---- */
 function shootDay(c){ const t=c.file&&c.file.lastModified; if(!t||t<9e11) return ""; const d=new Date(t); return `${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,"0")}-${String(d.getDate()).padStart(2,"0")}`; }
-function dayLabel(day){ if(!day) return ""; const [y,m,d]=day.split("-").map(Number), dt=new Date(y,m-1,d); try{ return dt.toLocaleDateString(I18N&&I18N.lang&&I18N.lang!=="en"?I18N.lang:undefined,{day:"numeric",month:"short",...(y!==new Date().getFullYear()?{year:"numeric"}:{})}).replace(/\./g,"").replace(/\s+/g," ").trim(); }catch(e){ return day; } } // no full stops: "14. Nov." would read as the end of a sentence
+function dayLabel(day){ if(!day) return ""; const [y,m,d]=day.split("-").map(Number), dt=new Date(y,m-1,d||1); try{ return dt.toLocaleDateString(I18N&&I18N.lang&&I18N.lang!=="en"?I18N.lang:undefined,{...(d?{day:"numeric"}:{}),month:"short",...(y!==new Date().getFullYear()?{year:"numeric"}:{})}).replace(/\./g,"").replace(/\s+/g," ").trim(); }catch(e){ return day; } } // no full stops: "14. Nov." would read as the end of a sentence
 function autoCollId(c){ if(c.folder) return "f:"+c.folder; const r=catOf(c); return "a:"+(r?r.c:"any")+":"+shootDay(c); }
 function collIdOf(c){ const k=c.name+"|"+(c.file?c.file.size:0), mv=collUser().moves[k]; return mv&&collExists(mv)?mv:autoCollId(c); }
 function collExists(id){ return !/^u:/.test(id)||collUser().made.some(x=>x.id===id); }
 function collOf(ci){ return S._colls&&S._colls.byClip?S._colls.byClip[ci]:null; }
 /* the whole library as collections, rebuilt when clips change; deterministic, so names and moves stick */
 function buildCollections(){ S._catGen=(S._catGen||0)+1; labelVecsSaved(); const U=collUser(), map=new Map(), byClip=[];
-  S.clips.forEach((c,ci)=>{ if(!c.samples) return; const id=collIdOf(c); byClip[ci]=id; if(!map.has(id)) map.set(id,{id,clips:[],cats:{},labs:{},mot:0,vec:null}); const g=map.get(id); g.clips.push(ci);
+  /* a day with only one or two clips of a kind joins that month; a month with one or two joins the kind as a whole */
+  const ids=S.clips.map(c=>c.samples?collIdOf(c):null), merge=(re,to)=>{ const n=new Map(); ids.forEach(id=>{ if(id) n.set(id,(n.get(id)||0)+1); }); ids.forEach((id,i)=>{ const m=id&&re.exec(id); if(m&&n.get(id)<3&&!S.clips[i]._userColl) ids[i]=to(m); }); };
+  S.clips.forEach((c,i)=>{ c._userColl=!!collUser().moves[c.name+"|"+(c.file?c.file.size:0)]; });
+  merge(/^a:([^:]+):(\d{4}-\d\d)-\d\d$/,m=>`a:${m[1]}:${m[2]}`); merge(/^a:([^:]+):\d{4}-\d\d$/,m=>`a:${m[1]}:`);
+  S.clips.forEach((c,ci)=>{ if(!c.samples) return; const id=ids[ci]; byClip[ci]=id; if(!map.has(id)) map.set(id,{id,clips:[],cats:{},labs:{},mot:0,vec:null}); const g=map.get(id); g.clips.push(ci);
     const r=catOf(c); if(r){ g.cats[r.c]=(g.cats[r.c]||0)+1; (r.l||[]).slice(0,1).forEach(([li])=>{ g.labs[li]=(g.labs[li]||0)+1; }); }
     let m=0; (c.samples||[]).forEach(s=>m+=s.mN!=null?s.mN:Math.min(1,(s.motion||0)/12)); g.mot+=m/Math.max(1,c.samples.length); });
   U.made.forEach(x=>{ if(!map.has(x.id)) map.set(x.id,{id:x.id,clips:[],cats:{},labs:{},mot:0}); });
@@ -151,7 +155,7 @@ function renderCollSheet(){ const box=$("collBody"); if(!box) return; const C=bu
     if(g.n>lim){ const more=document.createElement("button"); more.type="button"; more.className="chip"; more.textContent=`+${g.n-lim} more`; more.onclick=()=>{ g._open=true; S._collOpen=(S._collOpen||new Set()).add(g.id); renderCollSheet(); }; strip.appendChild(more); }
     row.appendChild(strip); box.appendChild(row); });
   (S._collOpen||new Set()).forEach(id=>{ const g=C.byId.get(id); if(g) g._open=true; });
-  renderCollMove(); }
+  renderCollMove(); try{ renderOrganise(); }catch(e){} }
 function renderCollMove(){ const bar=$("collMove"); if(!bar) return; const n=(S._collPick||new Set()).size; bar.hidden=!n; if(!n) return; const C=S._colls;
   $("collMoveN").textContent=`${n} clip${n===1?"":"s"} selected`; const sel=$("collTo"); sel.innerHTML="";
   C.list.forEach(g=>{ const o=document.createElement("option"); o.value=g.id; o.textContent=g.name; sel.appendChild(o); }); const o=document.createElement("option"); o.value="new"; o.textContent="New collection…"; sel.appendChild(o); $("collNew").hidden=sel.value!=="new"; }
@@ -161,4 +165,4 @@ function moveToCollection(){ const U=collUser(), to=$("collTo").value; let id=to
   saveCollUser(); S._collPick=new Set(); buildCollections(); renderCollSheet(); renderCollBar(); status(`Moved ${keys.length} clip${keys.length===1?"":"s"} to “${collName(id)}”.`); if(!S.running&&S.an) buildPlan(); }
 /* learning what's in the clips runs by itself once clips are in (not on mobile data: the model is 150 MB) */
 function autoLearnOk(){ const c=navigator.connection; if(c&&(c.saveData||c.type==="cellular")) return false; let off=false; try{ off=localStorage.getItem("beatsplicerAutoLearn")==="0"; }catch(e){} return !off; }
-function learnSoon(){ if(!seeAvailable()||!autoLearnOk()||S._seeBusy) return; clearTimeout(S._learnT); S._learnT=setTimeout(()=>{ if(!S.running&&S.clips.some(c=>c.samples&&c.samples.some(s=>!s.ce))) seeAll(); },2500); }
+function learnSoon(){ if(!seeAvailable()||!autoLearnOk()||S._seeBusy) return; clearTimeout(S._learnT); S._learnT=setTimeout(()=>{ if(!S.running&&S.clips.some(c=>c.samples&&c.samples.some(s=>!s.ce))) seeAll(true); },2500); }

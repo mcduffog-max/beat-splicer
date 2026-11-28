@@ -52,7 +52,7 @@ async function keepFiles(files){ files=[...files]; if(!NATIVE||!files.length) re
         try{ h=await dir.getFileHandle(n,{create:true}); const w=await h.createWritable(); await f.stream().pipeTo(w); }
         catch(e){ try{ await dir.removeEntry(n); }catch(x){} if(!/quota|space/i.test(String(e&&(e.name+e.message)))) throw e; room=(await tidyKept(f.size,files.map(name))).room; if(f.size>room) throw e; h=await dir.getFileHandle(n,{create:true}); const w=await h.createWritable(); await f.stream().pipeTo(w); }
         room-=f.size; }
-      const g=await h.getFile(), k=new File([g],f.name,{type:f.type,lastModified:f.lastModified}); k._kept=n; k._path=f._path||f.webkitRelativePath||""; out.push(k); }
+      const g=await h.getFile(), k=new File([g],f.name,{type:f.type,lastModified:f.lastModified}); k._kept=n; k._path=f._path||f.webkitRelativePath||""; k._doc=f._doc||""; k._parent=f._parent||""; out.push(k); }
     catch(e){ fails++; if(fails<=3) crumb("couldn't keep a copy of "+f.name+": "+(e&&e.message||e)); out.push(f); } }
   if(full){ crumb(`app copies: no room for ${full} of ${files.length}`); S._keptFull=full; }
   if(fails) crumb(`app copies: ${files.length-fails} of ${files.length} kept`); return out; }

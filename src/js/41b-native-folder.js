@@ -20,7 +20,7 @@ async function nativeFolderFiles(folder,want,say){ const FP=NP("Folder"); const 
           if(dir){ h=await dir.getFileHandle(key,{create:true}); const w=await h.createWritable(); await res.body.pipeTo(w); }
           else { const b=await res.blob(); out.push(new File([b],f.name,{type,lastModified:meta.lastModified})); copied++; continue; } }
         finally{ FP.remove({path:c.path}).catch(()=>{}); } copied++; }
-      const g=await h.getFile(), k=new File([g],f.name,{type,lastModified:meta.lastModified}); k._kept=key; k._path=f.path||""; out.push(k); }
+      const g=await h.getFile(), k=new File([g],f.name,{type,lastModified:meta.lastModified}); k._kept=key; k._path=f.path||""; k._doc=f.uri||""; k._parent=f.parent||""; out.push(k); }
     catch(e){ if(dir) try{ await dir.removeEntry(key); }catch(x){} failed++; if(failed<=3) crumb(`folder: couldn't bring in ${f.name}: ${e&&e.message||e}`); } }
   crumb(`folder “${folder.name}”: ${out.length} files (${copied} new), ${failed} failed, ${full} no room`); return {files:out, copied, failed, full, total:list.length}; }
 function folderMsg(t){ const m=$("folderMsg"); if(m){ m.hidden=!t; m.textContent=t||""; } }

@@ -27,9 +27,9 @@ async function embedTexts(list){ const need=list.filter(t=>!_txtCache.has(t)); i
   return list.map(t=>_txtCache.get(t)); }
 const dotV=(a,b)=>{ let s=0; for(let i=0;i<a.length;i++) s+=a[i]*b[i]; return s; };
 /* read every moment of every clip once; runs in the background, pauses during exports, saves as it goes */
-async function seeAll(){ if(!seeAvailable()||S._seeBusy) return; const todo=S.clips.filter(c=>c.samples&&c.samples.some(s=>!s.ce)&&(c.file||c.img)); if(!todo.length){ seeReady(); return; } S._seeBusy=true; renderSee();
+async function seeAll(auto){ if(!seeAvailable()||S._seeBusy) return; if(auto&&S._seeFailAt&&Date.now()-S._seeFailAt<10*60e3) return; /* started by itself: a failed download waits ten minutes before trying again */ const todo=S.clips.filter(c=>c.samples&&c.samples.some(s=>!s.ce)&&(c.file||c.img)); if(!todo.length){ seeReady(); return; } S._seeBusy=true; renderSee();
   try{ await heavy("Learning what's in your clips",async()=>{
-      status("Downloading the picture-and-word model (about 150 MB, once)…"); await seeModel((f,q)=>status(`Downloading the picture-and-word model: ${Math.round(q*100)}%…`));
+      if(!auto) status("Downloading the picture-and-word model (about 150 MB, once)…"); await seeModel((f,q)=>status(`Downloading the picture-and-word model: ${Math.round(q*100)}%…`));
       const v=analysisPlayer(), cv=document.createElement("canvas"); cv.width=224; cv.height=224; const g=cv.getContext("2d",{willReadFrequently:true});
       const frame=src=>{ const w=src.videoWidth||src.naturalWidth, h=src.videoHeight||src.naturalHeight, k=Math.max(224/w,224/h); g.drawImage(src,(224-w*k)/2,(224-h*k)/2,w*k,h*k); };
       const shot=async(c,ks)=>{ const sm=c.samples, pick=sm.length<=5?sm:[0,1,2,3,4].map(k=>sm[Math.round(k*(sm.length-1)/4)]), want=ks.map(k=>pick[Math.min(pick.length-1,k)]).filter(s=>s&&!s.ce);
@@ -46,7 +46,7 @@ async function seeAll(){ if(!seeAvailable()||S._seeBusy) return; const todo=S.cl
           if(n%25===24){ saveProjectSoon(); try{ buildCollections(); renderCollBar(); }catch(e){} } }
         try{ buildCollections(); renderCollBar(); }catch(e){} if(pass===0&&!S.running&&S.an) buildPlan(); }
       await seeShotLanguage(); S._placeKey=null; seeReady(); saveProjectSoon(); status("Done: your clips are catalogued into collections, and lyrics find shots that show what's sung."); themeSoon(); if(!S.running) buildPlan(); }); }
-  catch(e){ status("Couldn't load the picture-and-word model: "+(e&&e.message||e),true); }
+  catch(e){ S._seeFailAt=Date.now(); if(auto) crumb("picture model unavailable: "+String(e&&e.message||e).slice(0,80)); else status("Couldn't load the picture-and-word model: "+(e&&e.message||e),true); } // by itself: no alarm (no signal, say); it tries again later
   finally{ S._seeBusy=false; renderSee(); } }
 function seeCount(){ let n=0,t=0; S.clips.forEach(c=>(c.samples||[]).forEach(s=>{ t++; if(s.ce) n++; })); return [n,t]; }
 /* once clips are read, each lyric line is described too, and scored against every moment of footage */

@@ -5,7 +5,7 @@ async function saveProjectFile(){
   const an=S.an?{...S.an, peaks:Array.from(S.an.peaks||[]), freeEvents:S.an.freeEvents?[...S.an.freeEvents]:null}:null;
   let settings=null; try{ settings=JSON.parse(localStorage.getItem("beatsplicer2")||"null"); }catch(e){}
   const proj={app:"Beat Splicer",kind:"project",v:3,vetoes:[...(S.vetoes||[])],style:S.style,trims:S.trims||[],locks:[...(S.locks||new Map())],lyrics:S.lyrics||null,outline:S.outline||null,castMode:S.castMode,sceneMode:S.sceneMode,faceCast:S.faceCast||[],cast:S.cast,mainChar:S.mainChar,meta:S.meta||null,saved:new Date().toISOString(),audio:ref(S.audioFile),audioName:S.audioName,an,
-    clips:S.clips.filter(c=>c.samples).map(c=>({ref:ref(c.file),name:c.name,folder:c.folder||"",kind:c.kind||"video",dur:c.dur,samples:c.samples,thumb:c.thumb,w:c.w,h:c.h,crop:c.crop,mute:!!c.mute,tags:c.tags||null,off:!!c.off,mv:c.mv||1,wm:c.wm,faces:faceSave(c)})),
+    clips:S.clips.filter(c=>c.samples).map(c=>({ref:ref(c.file),name:c.name,folder:c.folder||"",doc:c.doc||"",docParent:c.docParent||"",kind:c.kind||"video",dur:c.dur,samples:c.samples,thumb:c.thumb,w:c.w,h:c.h,crop:c.crop,mute:!!c.mute,tags:c.tags||null,off:!!c.off,mv:c.mv||1,wm:c.wm,faces:faceSave(c)})),
     look:snapshot(),seed:S.seed,collSel:[...(S.collSel||[])],castSeed:S._castSeed||0,winPick:S.winPick||0,direct:S.direct||null,titles:S.titles,eps:S.eps,protagonist:S.protagonist||null,versions:S.versions||[],verIdx:S.verIdx||0,settings,
     songs:S.songs.filter(s=>s.an).map(s=>ref(s.file))};
   await saveFile(`${smartTitle()}.beatsplicer.json`,new Blob([JSON.stringify(proj)],{type:"application/json"}));
