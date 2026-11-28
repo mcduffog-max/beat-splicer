@@ -99,10 +99,10 @@ async function saveProject(){ try{ if(navigator.storage&&navigator.storage.persi
     let budget=3e9; budget-=S.audioFile.size; const audioKey=await putFile(S.audioFile);
     const clips=[]; for(const c of S.clips){ if(!c.samples||!c.file) continue; if(c.file.size>budget) continue; budget-=c.file.size;
       let fileKey; try{ fileKey=await putFile(c.file); }catch(e){ if(!S._saveErrN){ S._saveErrN=1; crumb("couldn't keep "+c.name+" for next time: "+(e&&e.message||e)); } continue; } // one clip that won't store mustn't stop the rest of the project being remembered
-      clips.push({name:c.name,fileKey,kind:c.kind||"video",dur:c.dur,samples:c.samples,thumb:c.thumb,w:c.w,h:c.h,crop:c.crop,mute:!!c.mute,tags:c.tags||null,mv:c.mv||1,off:!!c.off,wm:c.wm,faces:faceSave(c)}); }
+      clips.push({name:c.name,folder:c.folder||"",fileKey,kind:c.kind||"video",dur:c.dur,samples:c.samples,thumb:c.thumb,w:c.w,h:c.h,crop:c.crop,mute:!!c.mute,tags:c.tags||null,mv:c.mv||1,off:!!c.off,wm:c.wm,faces:faceSave(c)}); }
     const ovs=S.overlays.map(o=>({name:o.name,pos:o.pos,size:o.size,opacity:o.opacity,blend:o.blend,timing:o.timing,anim:o.anim,file:o.file})).filter(o=>o.file);
     { const want=new Set([audioKey,...clips.map(c=>c.fileKey)]); for(const k of [...S.savedKeys]){ if(!want.has(k)){ await PDB.del(k); S.savedKeys.delete(k); } } } // files no longer in the project
-    await PDB.put("project",{v:2,vetoes:[...(S.vetoes||[])],style:S.style,trims:S.trims||[],locks:[...(S.locks||new Map())],lyrics:S.lyrics||null,outline:S.outline||null,castMode:S.castMode,sceneMode:S.sceneMode,faceCast:S.faceCast||[],cast:S.cast,mainChar:S.mainChar,meta:S.meta||null,saved:Date.now(),audioKey,audioName:S.audioName,an:S.an,clips,skipped:S.clips.filter((c,ci)=>c.samples&&!c.off&&!isExcluded(ci)).length-clips.length,overlays:ovs,seed:S.seed,winPick:S.winPick||0,direct:S.direct||null,titles:S.titles,eps:S.eps,protagonist:S.protagonist||null});
+    await PDB.put("project",{v:2,vetoes:[...(S.vetoes||[])],style:S.style,trims:S.trims||[],locks:[...(S.locks||new Map())],lyrics:S.lyrics||null,outline:S.outline||null,castMode:S.castMode,sceneMode:S.sceneMode,faceCast:S.faceCast||[],cast:S.cast,mainChar:S.mainChar,collSel:[...(S.collSel||[])],castSeed:S._castSeed||0,meta:S.meta||null,saved:Date.now(),audioKey,audioName:S.audioName,an:S.an,clips,skipped:S.clips.filter((c,ci)=>c.samples&&!c.off&&!isExcluded(ci)).length-clips.length,overlays:ovs,seed:S.seed,winPick:S.winPick||0,direct:S.direct||null,titles:S.titles,eps:S.eps,protagonist:S.protagonist||null});
   }catch(e){ /* storage full or unavailable: the project just won't survive a refresh */ }
 }
 async function offerRestore(){
@@ -133,11 +133,12 @@ async function restoreProject(p){
     S.audioOrig=S.audioBuf; S._endingFor=null; if($("songVer").value!=="orig") S.audioBuf=await versionedBuffer(S.audioOrig,$("songVer").value);
     buildFamilies();
     S.cast=p.cast||[]; S.faceCast=p.faceCast||[]; S.outline=p.outline||null; S.lyrics=p.lyrics||null; S.trims=p.trims||[]; S.locks=new Map(p.locks||[]); S.hist=[]; S.fut=[]; if(p.style) S.style=p.style; setTimeout(renderStyleState,0); renderLyrics(); S.castMode=p.castMode||"only"; S.sceneMode=p.sceneMode||"only"; S.mainChar=p.mainChar||""; renderOutline(); S.meta=p.meta||null; refreshChars();
+    S.collSel=new Set(p.collSel||[]); S._castSeed=p.castSeed||0; S._colls=null;
     S.an=p.an; S.seed=p.seed||1; S.winPick=p.winPick||0; S.titles=p.titles||{}; if(Array.isArray(p.eps)) S.eps=p.eps; S.protagonist=p.protagonist||null;
     if(p.direct){ S.direct=p.direct; $("direct").value=p.direct; }
     $("audioInfo").textContent=`${S.audioName}, ${fmtTime(S.an.duration)} at about ${Math.round(S.an.bpm)} BPM. Feel: ${S.an.feel?S.an.feel.label:"4/4"}`; renderTempo(); $("listen").disabled=false;
     buildEndpointUI(); renderClips(); renderOverlays(); buildPlan(); syncCapWith(); renderTitles();
-    setTimeout(()=>backfillFlow().catch(()=>{}),4000); if(S.clips.some(c=>c.samples&&c.samples.some(s=>s.ce))) setTimeout(()=>seeReady(),1500);
+    setTimeout(()=>backfillFlow().catch(()=>{}),4000); learnSoon(); if(S.clips.some(c=>c.samples&&c.samples.some(s=>s.ce))) setTimeout(()=>seeReady(),1500);
     status("Project restored."+(p.skipped?" "+(p.skipped===1?"Left out: 1 clip. Add it again if you want it.":`Left out: ${p.skipped} clips. Add them again if you want them.`):""));
   }catch(e){ crumb("restore failed: "+(e&&e.message||e)); status(`Couldn’t restore that project (${String(e&&e.message||e).slice(0,120)}). Add your audio and clips again.`,true); }
   finally{ S._restoring=false; }

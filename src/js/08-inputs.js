@@ -100,11 +100,13 @@ function addClips(files){ const list=[...files]; return heavy("Studying your cli
   // in the Android app, work from the app's own copies: Android takes picked files back once the app closes, and a reopened project couldn't read them
   if(!NATIVE||!list.some(f=>!f._kept)) return addClipsNow(list);
   return addClipsNow(list.filter(f=>f._kept).concat(await keepFiles(list.filter(f=>!f._kept)))); }); }
+/* the subfolder a clip came from, below the folder you chose ("" at the top): your own sorting becomes a collection */
+function folderOfFile(f){ let p=f._path||f.webkitRelativePath||""; if(!p) return ""; const parts=p.split("/").filter(Boolean); parts.pop(); if(f.webkitRelativePath&&!f._path) parts.shift(); return parts.join("/").slice(0,120); }
 async function addClipsNow(files){
   const vids=[...files].filter(f=>isVideo(f)||isImage(f));
   if(!vids.length) return;
   const start=S.clips.length;
-  vids.forEach(f=>S.clips.push({name:f.name, file:f}));
+  vids.forEach(f=>S.clips.push({name:f.name, file:f, folder:folderOfFile(f)}));
   renderClips();
   let doneN=0; const work=async k=>{ const entry=S.clips[start+k]; if(!entry) return;
     if(isSkipped(entry.file)){ entry.error="set aside (it stopped the page last time)"; }
@@ -121,6 +123,7 @@ async function addClipsNow(files){
   renderClips();
   if(S.an) foldAfter("Video clips");
   S._badClips=bad.map(c=>({name:c.name,size:c.file&&c.file.size,kept:!!(c.file&&c.file._kept),why:c.error}));
+  learnSoon();
   status(bad.length ? `${bad.length} clip${bad.length===1?"":"s"} couldn’t be used and ${bad.length===1?"was":"were"} skipped. ${badClipAdvice(bad)}` : "Clips ready.", bad.length>0);
   buildPlan();
 }

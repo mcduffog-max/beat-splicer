@@ -18,7 +18,7 @@ $("direct").addEventListener("change",()=>{ const v=$("direct").value;
 $("aiDirect").onclick=aiChooseDirector;
 $("titleBtn").onclick=()=>writeTitles(true);
 $("autoBtn").onclick=autopilot;
-$("newDir").onclick=()=>{ S._avoidDir=[motifId(),...dirHistory().slice(-2).map(x=>x.motif)]; autopilot(); };
+$("newDir").onclick=()=>{ S._castSeed=(S._castSeed||0)+1; S._avoidDir=[motifId(),...dirHistory().slice(-2).map(x=>x.motif)]; autopilot(); };
 $("motif").addEventListener("change",()=>{ saveSettings(); renderStyleState(); if(!S.running) buildPlan(); });
 $("sigTrans").addEventListener("change",()=>{ saveSettings(); if(!S.running) buildPlan(); });
 ["fxReverse","camMoves","lens","camEnergy","colMatch","cutAction","matchCuts","phrasing","restraint","ownMotif","planWhole"].forEach(id=>$(id).addEventListener("change",()=>{ saveSettings(); if(!S.running) buildPlan(); }));
@@ -44,7 +44,7 @@ $("relinkInput").onchange=e=>{ const fs=[...e.target.files]; e.target.value=""; 
 $("relinkSong").onchange=async e=>{ const f=e.target.files[0]; e.target.value=""; if(f) relinkProject(NATIVE?await keepFiles([f]):[f]); };
 $("relinkLbl").addEventListener("click",e=>{ if(NATIVE&&NP("Folder")){ e.preventDefault(); relinkNative(); } });
 if(NATIVE) $("openProj").removeAttribute("accept"); // Android's file picker can grey out .json files it doesn't recognise
-$("freeBtn").onclick=freeSpace; $("libRemoveAll").onclick=removeAllClips;
+$("freeBtn").onclick=freeSpace; $("collClose").onclick=()=>{ $("collSheet").hidden=true; }; $("collGo").onclick=moveToCollection; $("collTo").onchange=()=>{ $("collNew").hidden=$("collTo").value!=="new"; }; $("libRemoveAll").onclick=removeAllClips;
 $("aiImagery").addEventListener("change",()=>{ saveSettings(); S.eps.forEach(id=>{ const T=S.titles[id]; if(T&&T.desc&&$("aiImagery").checked&&!/AI-generated/i.test(T.desc)) T.desc=T.desc.replace(/(\n\n#[^\n]*)?$/,m=>"\n\nThis video contains AI-generated imagery."+(m||"")); if(T&&T.desc&&!$("aiImagery").checked) T.desc=T.desc.replace(/\n\nThis video contains AI-generated imagery\./,""); }); renderTitles(); scheduleChecklist(); });
 $("tagBtn").onclick=readFootage;
 $("faceBtn").onclick=findFaces;
@@ -136,5 +136,5 @@ sampleP.then(s=>{ if(!s){ $("rvClaude").checked=false; $("rvClaude").disabled=tr
 
 
 
-{ let tn=0; $("dirNote").addEventListener("input",()=>{ clearTimeout(tn); tn=setTimeout(()=>{ saveSettings(); S._notePh=null; if(!S.running) buildPlan(); },700); }); }
+{ let tn=0; $("dirNote").addEventListener("input",()=>{ clearTimeout(tn); tn=setTimeout(()=>{ saveSettings(); S._notePh=null; if(!S.running) buildPlan(); themeSoon(); },700); }); }
 $("houseSave").onclick=saveHouseStyle; $("houseOn").addEventListener("change",saveSettings); renderHouse();

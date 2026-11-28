@@ -78,7 +78,7 @@ async function removeAllClips(){ const b=$("libRemoveAll"); if(S.running||!S.cli
   saveProjectSoon(); status(`Removed ${n} clips.`+(freed>=1e6?` Freed ${Math.round(freed/1e6)} MB on the phone.`:"")); }
 function renderClips(){ const nw=performance.now(); if(S.clips.length>60 && nw-_rcT<1200 && S.clips.some(c=>!c.samples&&!c.error)){ clearTimeout(S._rcLater); S._rcLater=setTimeout(renderClips,1300); return; } _rcT=nw; // big libraries: redraw the grid less often while analysing
   if(S.songs&&S.songs.length) setTimeout(renderSongs,0);
-  renderCast(); renderScenes(); renderSee();
+  renderCast(); renderScenes(); renderSee(); try{ if(!S._colls||S._collsN!==S.clips.length){ buildCollections(); S._collsN=S.clips.length; } renderCollBar(); }catch(e){}
   refreshExclusion(false);
   const box=$("clipList"); box.innerHTML="";
   const order=libOrder(), ready=S.clips.filter(c=>c.samples).length, inEdit=S.clips.filter((c,i)=>c.samples&&!c.off&&!isExcluded(i)).length, exN=S._excl?S.clips.filter((c,i)=>c.samples&&S._excl.has(clipKey(i))).length:0;

@@ -32,19 +32,25 @@ async function seeAll(){ if(!seeAvailable()||S._seeBusy) return; const todo=S.cl
       status("Downloading the picture-and-word model (about 150 MB, once)…"); await seeModel((f,q)=>status(`Downloading the picture-and-word model: ${Math.round(q*100)}%…`));
       const v=analysisPlayer(), cv=document.createElement("canvas"); cv.width=224; cv.height=224; const g=cv.getContext("2d",{willReadFrequently:true});
       const frame=src=>{ const w=src.videoWidth||src.naturalWidth, h=src.videoHeight||src.naturalHeight, k=Math.max(224/w,224/h); g.drawImage(src,(224-w*k)/2,(224-h*k)/2,w*k,h*k); };
-      for(let n=0;n<todo.length;n++){ while(S.running) await new Promise(r=>setTimeout(r,2000)); const c=todo[n]; if(!S.clips.includes(c)) continue;
-        if(c.kind==="image"){ frame(c.img); const e=await embedCanvas(cv); c.samples.forEach(s=>{ s.ce=packVec(e); }); }
-        else { const url=URL.createObjectURL(c.file); try{ v.src=url; await waitEvent(v,"loadeddata",15000); const sm=c.samples, pick=sm.length<=5?sm:[0,1,2,3,4].map(k=>sm[Math.round(k*(sm.length-1)/4)]); // five well-spread moments per clip; the rest borrow the nearest
-            for(const s of pick){ if(s.ce) continue; await seekTo(v,s.t); frame(v); s.ce=packVec(await embedCanvas(cv)); }
-            sm.forEach(s=>{ if(!s.ce){ const nb=pick.reduce((a,x)=>Math.abs(x.t-s.t)<Math.abs(a.t-s.t)?x:a,pick[0]); s.ce=nb.ce; } }); }catch(e){} finally{ v.removeAttribute("src"); v.load(); URL.revokeObjectURL(url); } }
-        if(n%3===0||n===todo.length-1) status(`Learning what's in your clips: ${n+1} of ${todo.length}. You can keep working.`);
-        if(n%25===24) saveProjectSoon(); }
-      await seeShotLanguage(); S._placeKey=null; seeReady(); saveProjectSoon(); status("Done: the app knows what's in your clips. Lyrics now find shots that show what's sung."); if(!S.running) buildPlan(); }); }
+      const shot=async(c,ks)=>{ const sm=c.samples, pick=sm.length<=5?sm:[0,1,2,3,4].map(k=>sm[Math.round(k*(sm.length-1)/4)]), want=ks.map(k=>pick[Math.min(pick.length-1,k)]).filter(s=>s&&!s.ce);
+        if(c.kind==="image"){ if(!sm.some(s=>s.ce)){ frame(c.img); const e=await embedCanvas(cv); sm.forEach(s=>{ s.ce=packVec(e); }); } return; }
+        if(!want.length) return; const url=URL.createObjectURL(c.file); try{ v.src=url; await waitEvent(v,"loadeddata",15000);
+          for(const s of want){ await seekTo(v,s.t); frame(v); s.ce=packVec(await embedCanvas(cv)); } }catch(e){} finally{ v.removeAttribute("src"); v.load(); URL.revokeObjectURL(url); }
+        c._pv=null; c._catN=null; };
+      // first one moment of every clip, so the whole library is catalogued early; then the other four moments of each
+      try{ await labelVecs(); }catch(e){}
+      for(let pass=0;pass<2;pass++){ for(let n=0;n<todo.length;n++){ while(S.running) await new Promise(r=>setTimeout(r,2000)); const c=todo[n]; if(!S.clips.includes(c)) continue;
+          await shot(c,pass===0?[2]:[0,1,3,4]);
+          if(pass===1){ const sm=c.samples, pk=sm.filter(s=>s.ce); sm.forEach(s=>{ if(!s.ce&&pk.length){ const nb=pk.reduce((a,x)=>Math.abs(x.t-s.t)<Math.abs(a.t-s.t)?x:a,pk[0]); s.ce=nb.ce; } }); c._pv=null; c._catN=null; }
+          if(n%3===0||n===todo.length-1) status(pass===0?`Cataloguing your clips: ${n+1} of ${todo.length}. You can keep working.`:`Learning what's in your clips: ${n+1} of ${todo.length}. You can keep working.`);
+          if(n%25===24){ saveProjectSoon(); try{ buildCollections(); renderCollBar(); }catch(e){} } }
+        try{ buildCollections(); renderCollBar(); }catch(e){} if(pass===0&&!S.running&&S.an) buildPlan(); }
+      await seeShotLanguage(); S._placeKey=null; seeReady(); saveProjectSoon(); status("Done: your clips are catalogued into collections, and lyrics find shots that show what's sung."); themeSoon(); if(!S.running) buildPlan(); }); }
   catch(e){ status("Couldn't load the picture-and-word model: "+(e&&e.message||e),true); }
   finally{ S._seeBusy=false; renderSee(); } }
 function seeCount(){ let n=0,t=0; S.clips.forEach(c=>(c.samples||[]).forEach(s=>{ t++; if(s.ce) n++; })); return [n,t]; }
 /* once clips are read, each lyric line is described too, and scored against every moment of footage */
-async function seeReady(){ S._seeLines=null; if(!seeShotLanguageSaved()&&S.clips.some(c=>c.samples&&c.samples.some(x=>x.ce))) seeShotLanguage().then(()=>{ S._placeKey=null; if(S._seeScale&&!S.running) buildPlan(); }); if(!S.lyrics||!S.lyrics.lines.length) return; try{ const texts=[...new Set(S.lyrics.lines.map(l=>l.text).filter(Boolean))]; const vs=await embedTexts(texts);
+async function seeReady(){ S._seeLines=null; themeSoon(); if(!labelVecsSaved()) labelVecs().then(()=>{ if(!S.running&&S.an) buildPlan(); }).catch(()=>{}); if(!seeShotLanguageSaved()&&S.clips.some(c=>c.samples&&c.samples.some(x=>x.ce))) seeShotLanguage().then(()=>{ S._placeKey=null; if(S._seeScale&&!S.running) buildPlan(); }); if(!S.lyrics||!S.lyrics.lines.length) return; try{ const texts=[...new Set(S.lyrics.lines.map(l=>l.text).filter(Boolean))]; const vs=await embedTexts(texts);
     const all=[]; S.clips.forEach(c=>(c.samples||[]).forEach(s=>{ const v=sampleVec(s); if(v) all.push(v); })); if(!all.length) return;
     const map=new Map(); texts.forEach((t,i)=>{ const q=vs[i]; let m=0,m2=0; for(const v of all){ const d=dotV(q,v); m+=d; m2+=d*d; } m/=all.length; map.set(t,{q,m,sd:Math.sqrt(Math.max(1e-6,m2/all.length-m*m))}); });
     S._seeLines=map; if(!S.running) buildPlan(); }catch(e){} }

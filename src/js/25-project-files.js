@@ -5,8 +5,8 @@ async function saveProjectFile(){
   const an=S.an?{...S.an, peaks:Array.from(S.an.peaks||[]), freeEvents:S.an.freeEvents?[...S.an.freeEvents]:null}:null;
   let settings=null; try{ settings=JSON.parse(localStorage.getItem("beatsplicer2")||"null"); }catch(e){}
   const proj={app:"Beat Splicer",kind:"project",v:3,vetoes:[...(S.vetoes||[])],style:S.style,trims:S.trims||[],locks:[...(S.locks||new Map())],lyrics:S.lyrics||null,outline:S.outline||null,castMode:S.castMode,sceneMode:S.sceneMode,faceCast:S.faceCast||[],cast:S.cast,mainChar:S.mainChar,meta:S.meta||null,saved:new Date().toISOString(),audio:ref(S.audioFile),audioName:S.audioName,an,
-    clips:S.clips.filter(c=>c.samples).map(c=>({ref:ref(c.file),name:c.name,kind:c.kind||"video",dur:c.dur,samples:c.samples,thumb:c.thumb,w:c.w,h:c.h,crop:c.crop,mute:!!c.mute,tags:c.tags||null,off:!!c.off,mv:c.mv||1,wm:c.wm,faces:faceSave(c)})),
-    look:snapshot(),seed:S.seed,winPick:S.winPick||0,direct:S.direct||null,titles:S.titles,eps:S.eps,protagonist:S.protagonist||null,versions:S.versions||[],verIdx:S.verIdx||0,settings,
+    clips:S.clips.filter(c=>c.samples).map(c=>({ref:ref(c.file),name:c.name,folder:c.folder||"",kind:c.kind||"video",dur:c.dur,samples:c.samples,thumb:c.thumb,w:c.w,h:c.h,crop:c.crop,mute:!!c.mute,tags:c.tags||null,off:!!c.off,mv:c.mv||1,wm:c.wm,faces:faceSave(c)})),
+    look:snapshot(),seed:S.seed,collSel:[...(S.collSel||[])],castSeed:S._castSeed||0,winPick:S.winPick||0,direct:S.direct||null,titles:S.titles,eps:S.eps,protagonist:S.protagonist||null,versions:S.versions||[],verIdx:S.verIdx||0,settings,
     songs:S.songs.filter(s=>s.an).map(s=>ref(s.file))};
   await saveFile(`${smartTitle()}.beatsplicer.json`,new Blob([JSON.stringify(proj)],{type:"application/json"}));
   status("Project saved. Open it any time with “Open project…”, then choose the folder with your song and clips.");
@@ -53,7 +53,7 @@ async function relinkProject(files){
   const clips=[]; let missing=0; for(const c of p.clips){ const f=find(c.ref); if(f) clips.push({...c,file:f}); else missing++; }
   const an=p.an?{...p.an,peaks:new Float32Array(p.an.peaks||[]),freeEvents:p.an.freeEvents?new Set(p.an.freeEvents):null}:null;
   if(p.settings) try{ localStorage.setItem("beatsplicer2",JSON.stringify(p.settings)); }catch(e){}
-  await restoreProject({vetoes:p.vetoes,style:p.style,trims:p.trims,locks:p.locks,lyrics:p.lyrics,outline:p.outline,castMode:p.castMode,sceneMode:p.sceneMode,faceCast:p.faceCast,cast:p.cast,mainChar:p.mainChar,meta:p.meta,audio,audioName:p.audioName,an,clips,overlays:[],seed:p.seed,winPick:p.winPick,titles:p.titles,eps:p.eps,protagonist:p.protagonist,direct:p.direct,skipped:missing});
+  await restoreProject({vetoes:p.vetoes,style:p.style,trims:p.trims,locks:p.locks,lyrics:p.lyrics,outline:p.outline,castMode:p.castMode,sceneMode:p.sceneMode,faceCast:p.faceCast,cast:p.cast,mainChar:p.mainChar,meta:p.meta,audio,audioName:p.audioName,an,clips,overlays:[],seed:p.seed,collSel:p.collSel,castSeed:p.castSeed,winPick:p.winPick,titles:p.titles,eps:p.eps,protagonist:p.protagonist,direct:p.direct,skipped:missing});
   if(p.look){ restore(p.look); }
   S.versions=p.versions||[]; S.verIdx=Math.min(p.verIdx||0,Math.max(0,S.versions.length-1)); renderVersions();
   if(p.songs&&p.songs.length){ S.songs=p.songs.map(r=>find(r)).filter(Boolean).map(f=>({file:f,an:f===audio?S.an:null})); renderSongs(); }

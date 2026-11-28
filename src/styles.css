@@ -614,3 +614,15 @@ body:not(.s-song) #statsBox{display:none}
 @media (max-width:420px){.appbar .brand h1{font-size:19px}.bar-actions{gap:2px}.bar-actions .btn.quiet{padding-left:8px;padding-right:8px}}
 .hdr-lbl{display:inline-flex;align-items:center;gap:6px}.hdr-lbl svg{width:20px;height:20px;display:none}
 @media (max-width:440px){.hdr-lbl svg{display:block}.hdr-lbl span{display:none}.hdr-lbl{padding-left:10px;padding-right:10px}}
+
+/* collections */
+.chip.in-cast{border-color:var(--accent,#7c5cff);box-shadow:inset 0 0 0 1px var(--accent,#7c5cff)}
+.coll-cat{font-size:.95rem;margin:16px 0 6px}
+.coll-row{margin:0 0 12px}
+.coll-top{display:flex;gap:8px;align-items:center;margin-bottom:6px}
+.coll-top input{flex:1;min-width:0}
+.coll-strip{display:flex;flex-wrap:wrap;gap:6px;align-items:center}
+.coll-th{width:64px;height:40px;border-radius:6px;border:2px solid transparent;background:#222 center/cover no-repeat;padding:0;cursor:pointer}
+.coll-th[aria-pressed="true"]{border-color:var(--accent,#7c5cff);outline:2px solid var(--accent,#7c5cff);outline-offset:1px}
+.coll-move{position:sticky;bottom:0;display:flex;flex-wrap:wrap;gap:8px;align-items:center;padding:10px 0;background:var(--card,#fff)}
+.coll-move select,.coll-move input{min-width:0;flex:1}

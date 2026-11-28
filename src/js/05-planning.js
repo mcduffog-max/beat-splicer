@@ -126,6 +126,8 @@ function shotReasons(seg,pick){ const W=pick.why, out=[], c=S.clips[pick.clip], 
   if(seg.e>0.7&&pick.sm&&(pick.sm.motion||0)>6) out.push({k:0.4,t:"Lots of movement for a loud passage"});
   if(seg.drop) out.push({k:0.5,t:"Lands on the drop"});
   if(W.share<0.2) out.push({k:0.2,t:"Footage you haven't seen much yet"});
+  if(W.ca<-0.5){ const nm=collName(collOf(pick.clip)); if(nm) out.push({k:0.85,t:`From “${nm}”, this section’s collection`}); } else if(W.ca<-0.2){ const nm=collName(collOf(pick.clip)); if(nm) out.push({k:0.45,t:`From “${nm}”, one of this video’s collections`}); }
+  if(W.sm<-0.15) out.push({k:0.35,t:"Follows on from the shot before in what it shows"});
   if(!out.length) out.push({k:0.1,t:"Keeps the edit varied: this footage isn't used nearby"});
   return out.sort((a,b)=>b.k-a.k).slice(0,3); }
 S.vetoes=S.vetoes||new Set();
@@ -137,9 +139,11 @@ function chooseClip(seg, ctx, exclude){
   const nC=nFamilies(), fair=((ctx.total||0)+1)/nC; // variety counts look-alike families, not files
   const minGap=Math.min(20,Math.max(3,(S.an?S.an.duration:60)/nC*0.5)), jit=new Map();
   let best=null, bestCost=Infinity; const topM=ctx._topM||0, perClip=topM?new Map():null; // the beam asks for the best few clips, not just the best
+  const pool=ctx._noPool?null:S._castPool, libN=pool?pool.size:S.clips.length;
   const FZ=fatigue(), shareK=(storyOn()&&hasTags()?0.3:0.55), momOn=FZ.mom.size>0; /* the same for every clip: read once */
   S.clips.forEach((clip,ci)=>{
     if(!clip.samples || clip.off || ci===exclude || isExcluded(ci)) return;
+    if(pool&&!pool.has(ci)) return; // the video's cast: judged properly, the rest of the library left out
     const ck=clipKey(ci), shown=clip.kind!=="image"?shownSpans(ci):null, used=ctx.usage.get(ci)||[];
     jit.set(ci,ctx.rand()); // one random draw per clip, so long clips with many start points don't win more often
     const fm=famOf(ci), cnt=Math.max((ctx.count&&ctx.count.get(ci))||0,(ctx.famCount&&ctx.famCount.get(fm))||0), la=Math.max((ctx.lastAt&&ctx.lastAt.get(ci))??-1e9,(ctx.famLast&&ctx.famLast.get(fm))??-1e9);
@@ -147,7 +151,7 @@ function chooseClip(seg, ctx, exclude){
     { const fz=FZ, fc=Math.max(fz.clip.get(ck)||0,fz.fam.get(fm)||0); share+=0.55*Math.min(2,fc); }  // favour footage (and look-alikes) recent versions and exports didn't use                                  // keep every clip near its fair share
     if(la>-1e8){ const gap=seg.start-la; if(gap<minGap) share+=1.4*(1-Math.max(0,gap)/minGap); } // and spread its uses through the song
     const fits=clip.dur>=D+0.05;
-    const nS=clip.samples.length, smp=S.clips.length>250&&nS>3?[clip.samples[0],clip.samples[nS>>1],clip.samples[nS-1]]:nS>6&&S.clips.length>120?clip.samples.filter((_,k)=>k%2===0||k===nS-1):clip.samples; // big libraries: a few well-spread moments per clip are plenty
+    const nS=clip.samples.length, smp=libN>250&&nS>3?[clip.samples[0],clip.samples[nS>>1],clip.samples[nS-1]]:nS>6&&libN>120?clip.samples.filter((_,k)=>k%2===0||k===nS-1):clip.samples; // big libraries: a few well-spread moments per clip are plenty
     for(const s of smp){
       const start=fits?Math.min(Math.max(s.t,clip.kind==="image"?0:Math.min(0.25,clip.dur-D-0.05)),Math.max(0,clip.dur-D-0.35)):0;
       let cost=0;
@@ -162,7 +166,7 @@ function chooseClip(seg, ctx, exclude){
       if(clip.kind!=="image"){ for(const x of clip.samples) if((x.cut||x.dark) && x.t>start+0.1 && x.t<start+D-0.1){ cost+=1.5; break; } } // or run through one
       if(clip.wm&&clip.wm.length&&wmBlocked(clip,start,D)) cost+=6; // a watermark that can't be framed out: use other footage
       if(seg.e>0.7 && (clip.kind==="image" || s.mN<0.2)) cost+=0.35;  // loud moments want movement
-      const W={q:qualityCost(seg,clip,s,ctx), cn:continuityCost(seg,s,ctx), se:seeCost(seg,s,ci), st:storyCost(seg,clip,ci,s,ctx), mo:motifCost(seg,clip,ci,s), ou:outlineCost(seg,clip,ci,s,ctx), ly:lyricCost(seg,clip,ci,s)+vetoCost(seg,ci), pl:placeCost(seg,ci,ctx), rt:retentionCost(seg,clip,s,ctx), om:ownMotifCost(seg,ci,s), nt:noteCost(seg,clip,s), rf:refMotionCost(clip,s), mc:clip.kind==="image"?0:matchCutCost(seg,clip,ci,start,ctx), share, dcol};
+      const W={q:qualityCost(seg,clip,s,ctx), cn:continuityCost(seg,s,ctx), se:seeCost(seg,s,ci), st:storyCost(seg,clip,ci,s,ctx), mo:motifCost(seg,clip,ci,s), ou:outlineCost(seg,clip,ci,s,ctx), ly:lyricCost(seg,clip,ci,s)+vetoCost(seg,ci), pl:placeCost(seg,ci,ctx), rt:retentionCost(seg,clip,s,ctx), om:ownMotifCost(seg,ci,s), nt:noteCost(seg,clip,s), rf:refMotionCost(clip,s), ca:castCost(seg,ci), sm:meaningCost(seg,s,ctx), mc:clip.kind==="image"?0:matchCutCost(seg,clip,ci,start,ctx), share, dcol};
       cost+=tasteSum(W); // each judgement weighted by what your blind picks have taught (all 1 until then)
       { const raw=clip.kind==="image"?0:(s.motion||0), still=Math.max(0,1-raw/1.2); // only genuinely still footage is penalised; any real motion is welcome
         if(ctx.short) cost+=1.6*still+(clip.kind==="image"?0.6+Math.max(0,D-1)*0.8:0);  // short-form lives on movement; a still never holds long
@@ -180,6 +184,7 @@ function chooseClip(seg, ctx, exclude){
       if(topM){ const b=perClip.get(ci); if(!b||cost<b.cost) perClip.set(ci,{clip:ci, src:start, why:W, sm:s, cost}); }
     }
   });
+  if(!best&&pool&&!ctx._noPool){ ctx._noPool=true; try{ return chooseClip(seg,ctx,exclude); } finally{ ctx._noPool=false; } } // the cast has nothing left for this shot: the whole library may
   if(best) best.cost=bestCost;
   if(topM) ctx._cands=[...perClip.values()].sort((a,b)=>a.cost-b.cost).slice(0,topM);
   return best;
@@ -191,13 +196,14 @@ function buildPlan(){ S._planGen=(S._planGen||0)+1; refreshExclusion(); refreshF
   const segs=phraseShape(makeSegments(S.an,+$("pace").value),S.an); applyTrims(segs); markMotifSlots(segs,false);
   const ctx={ recent:[], usage:new Map(), rand:rng(S.seed), order:filmOrder(), acts:actsFor([0,S.an.duration]) };
   annotateStory(segs);
+  try{ buildCollections(); castVideo(segs); }catch(e){ S._cast=null; S._castPool=null; crumb("casting failed: "+(e&&e.message||e)); } // which collections this video draws from
   planShots(segs,ctx);
   const dc=dcut();
   if(dc && dc.pattern) for(let i=2;i<segs.length;i++){ if(i%4<2) continue; const p=segs[i-2], c=S.clips[p.clip], D=segs[i].end-segs[i].start, next=p.src+(p.end-p.start);
     if(c && (c.kind==="image" || next+D<c.dur-0.05)){ segs[i].clip=p.clip; segs[i].src=c.kind==="image"?0:next; segs[i]._pattern=true; } }
   applyRefrain(segs); advanceClips(segs); assignFocus(segs); assignReverse(segs,typeof short!=="undefined"?short:false); restrainMoves(segs); actionAlign(segs); assignCamera(segs,typeof short!=="undefined"?short:false);
   applyLocks(segs); fitFootage(segs); if(S.sel!=null && !segs[S.sel]) S.sel=null;
-  S.plan=segs; assignTransitions(); clearTimeout(S._actT); S._actT=setTimeout(()=>measureAction().catch(()=>{}),3000); drawTimeline(); renderStats(); updateButtons(); saveProjectSoon(); if(S.sel!=null) showShot(S.sel);
+  S.plan=segs; assignTransitions(); try{ renderCollBar(); }catch(e){} clearTimeout(S._actT); S._actT=setTimeout(()=>measureAction().catch(()=>{}),3000); drawTimeline(); renderStats(); updateButtons(); saveProjectSoon(); if(S.sel!=null) showShot(S.sel);
 }
 /* A clip that comes back never shows the same frames twice: each return carries on forward from its last use, or,
    when the clip has no room left ahead, steps back before its first. Refrains and bookends return to the same clip and

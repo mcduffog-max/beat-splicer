@@ -201,6 +201,8 @@
             <div class="btns" style="margin:6px 0 0"><button class="btn" id="seeBtn" type="button">Learn what's in my clips</button></div>
             <div id="seeSearchRow" hidden style="margin-top:6px"><input type="search" id="seeQ" placeholder="Find clips showing… e.g. night city, fire, a crowd" aria-label="Find clips by what they show"><div id="seeHits" style="display:flex;gap:6px;flex-wrap:wrap;margin-top:6px"></div></div>
           </div>
+          <div id="collBar" class="small" hidden style="display:flex;flex-wrap:wrap;gap:6px;align-items:center;margin:0 0 4px"></div>
+          <div id="collInfo" class="small" hidden style="margin:0 0 6px;opacity:.85"></div>
           <div id="castBar" class="small" hidden style="display:flex;flex-wrap:wrap;gap:6px;align-items:center;margin:0 0 6px"></div>
           <div id="sceneBar" class="small" hidden style="display:flex;flex-wrap:wrap;gap:6px;align-items:center;margin:0 0 6px"></div>
           <div class="clips" id="clipList"></div>
@@ -678,6 +680,12 @@
   <div class="lib-top"><h2 id="libHead">Library</h2><button class="btn quiet" id="libClose" type="button">Close</button></div>
   <p class="small lib-intro">Every video you make, with how it was made. Add each one’s numbers once it’s posted, and the app learns which structure gets views.</p>
   <div id="libBody"></div>
+</div></div>
+<div class="sheet" id="collSheet" hidden role="dialog" aria-modal="true" aria-labelledby="collHead"><div class="sheet-card lib-card">
+  <div class="lib-top"><h2 id="collHead">Collections</h2><button class="btn quiet" id="collClose" type="button">Close</button></div>
+  <p class="small lib-intro">Your clips, sorted by what they show and when they were shot. Rename a collection by typing over its name. Tap clips to select them, then move them to another collection or a new one. Your choices are kept on this phone and always win.</p>
+  <div id="collBody"></div>
+  <div class="coll-move" id="collMove" hidden><span id="collMoveN"></span><select id="collTo" aria-label="Move to"></select><input type="text" id="collNew" maxlength="40" placeholder="New collection name"><button class="btn primary" id="collGo" type="button">Move</button></div>
 </div></div>
 <nav class="nextbar" id="nextBar" aria-label="Next step"><div class="nb-txt"><b id="nbHead"></b><span id="nbSub"></span></div><button class="btn primary" id="nbBtn" type="button"></button></nav>
 <div id="offscreen" aria-hidden="true" style="position:fixed;left:-10000px;top:0;width:1px;height:1px;overflow:hidden"></div>
